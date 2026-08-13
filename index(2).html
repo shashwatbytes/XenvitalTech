@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XenvitalTech | Student Technology Platform</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
+body{background:#f5f7fb;color:#172033}
+nav{height:70px;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 7%;box-shadow:0 2px 12px rgba(0,0,0,.06);position:sticky;top:0;z-index:100}
+.logo{font-size:24px;font-weight:bold;color:#2563eb}.logo span{color:#111827}
+nav ul{display:flex;gap:25px;list-style:none}nav a{text-decoration:none;color:#374151;font-weight:600}nav a:hover{color:#2563eb}
+.login-btn,.feature-card button,.friend-input button,.chat-input button{border:0;background:#2563eb;color:#fff;border-radius:8px;cursor:pointer;font-weight:bold}
+.login-btn{padding:11px 20px}
+.hero{min-height:500px;display:flex;align-items:center;justify-content:space-between;padding:70px 8%;background:linear-gradient(135deg,#eef5ff,#fff)}
+.hero-text{max-width:600px}.hero-text h1{font-size:52px;line-height:1.1;margin-bottom:20px}.hero-text h1 span{color:#2563eb}
+.hero-text p{font-size:18px;color:#5b6475;line-height:1.7;margin-bottom:30px}
+.hero-buttons button{padding:14px 25px;border-radius:8px;cursor:pointer;font-weight:bold;margin-right:10px}
+.primary{background:#2563eb;color:#fff;border:0}.secondary{background:#fff;color:#2563eb;border:1px solid #2563eb}
+.hero-card{width:330px;padding:35px;background:#fff;border-radius:20px;box-shadow:0 15px 45px rgba(37,99,235,.15);text-align:center}
+.robot{font-size:90px;margin-bottom:15px}.hero-card h2{margin-bottom:10px}.hero-card p{color:#6b7280}
+.section{padding:70px 8%}.section-title{text-align:center;margin-bottom:45px}.section-title h2{font-size:35px;margin-bottom:10px}.section-title p{color:#6b7280}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:25px}.feature-card{background:#fff;padding:30px;border-radius:15px;box-shadow:0 5px 20px rgba(0,0,0,.06);transition:.3s}.feature-card:hover{transform:translateY(-7px)}
+.feature-icon{font-size:42px;margin-bottom:15px}.feature-card h3{margin-bottom:10px}.feature-card p{color:#6b7280;line-height:1.6}.feature-card button{margin-top:20px;padding:10px 18px}
+.photo-maker,.friends-box{background:#fff;max-width:800px;margin:auto;padding:35px;border-radius:18px;box-shadow:0 5px 25px rgba(0,0,0,.08)}
+.upload-area{border:2px dashed #2563eb;padding:40px;text-align:center;border-radius:12px;background:#f8fbff}.upload-area input{margin-top:20px}
+#preview{max-width:250px;max-height:300px;display:none;margin:25px auto;border:1px solid #ddd}.download-btn{display:none;margin:auto;padding:12px 25px;background:#16a34a;color:#fff;border:0;border-radius:8px;cursor:pointer}
+.chat-container{max-width:850px;margin:auto;background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 5px 25px rgba(0,0,0,.08)}.chat-header{background:#2563eb;color:#fff;padding:20px}
+.chat-body{min-height:350px;padding:20px;overflow-y:auto}.message{padding:12px 16px;border-radius:12px;margin-bottom:12px;max-width:70%}.bot-message{background:#eef2ff}.user-message{background:#2563eb;color:#fff;margin-left:auto}
+.chat-input{display:flex;border-top:1px solid #eee}.chat-input input{flex:1;padding:16px;border:0;outline:0}.chat-input button{width:100px}
+.friend-input{display:flex;gap:10px;margin-bottom:25px}.friend-input input{flex:1;padding:13px;border:1px solid #ddd;border-radius:7px}.friend-input button{padding:0 20px}
+.friend{display:flex;align-items:center;gap:15px;padding:15px;border-bottom:1px solid #eee}.avatar{width:45px;height:45px;background:#dbeafe;color:#2563eb;display:flex;align-items:center;justify-content:center;border-radius:50%;font-weight:bold}
+footer{background:#111827;color:#fff;text-align:center;padding:35px;margin-top:40px}footer p{color:#cbd5e1;margin-top:8px}
+@media(max-width:800px){nav ul{display:none}.hero{flex-direction:column;text-align:center;gap:40px}.hero-text h1{font-size:40px}.features{grid-template-columns:1fr}.hero-card{width:90%}}
+</style>
+</head>
+<body>
+<nav>
+<div class="logo">Xenvital<span>Tech</span></div>
+<ul><li><a href="#home">Home</a></li><li><a href="#tools">Tools</a></li><li><a href="#friends">Friends</a></li><li><a href="#xenchatbot">XenChatbot</a></li></ul>
+<button class="login-btn" onclick="login()">Student Login</button>
+</nav>
+
+<section class="hero" id="home">
+<div class="hero-text">
+<h1>One Platform. <span>Everything Students Need.</span></h1>
+<p>Welcome to XenvitalTech — a smart student platform where you can create passport-size photos, connect with friends, and learn with XenChatbot.</p>
+<div class="hero-buttons"><button class="primary" onclick="document.getElementById('tools').scrollIntoView()">Explore Tools</button><button class="secondary" onclick="document.getElementById('xenchatbot').scrollIntoView()">Ask XenChatbot</button></div>
+</div>
+<div class="hero-card"><div class="robot">🤖</div><h2>XenChatbot</h2><p>Your AI study companion for coding, education and everyday student questions.</p></div>
+</section>
+
+<section class="section" id="tools">
+<div class="section-title"><h2>Student Tools</h2><p>Useful tools specially designed for students.</p></div>
+<div class="features">
+<div class="feature-card"><div class="feature-icon">📸</div><h3>Passport Photo Maker</h3><p>Upload your photo and create a passport-size photo directly from your browser.</p><button onclick="document.getElementById('photo-section').scrollIntoView()">Create Photo</button></div>
+<div class="feature-card"><div class="feature-icon">👥</div><h3>Student Connect</h3><p>Add your friends using their username and connect with your classmates.</p><button onclick="document.getElementById('friends').scrollIntoView()">Find Friends</button></div>
+<div class="feature-card"><div class="feature-icon">🤖</div><h3>XenChatbot</h3><p>Ask questions about programming, mathematics, English and your studies.</p><button onclick="document.getElementById('xenchatbot').scrollIntoView()">Chat with Xen</button></div>
+</div>
+</section>
+
+<section class="section" id="photo-section">
+<div class="section-title"><h2>📸 Passport Size Photo Maker</h2><p>Upload your photo and download a passport-size version.</p></div>
+<div class="photo-maker">
+<div class="upload-area"><h3>Select Your Photo</h3><p>Choose an image from your computer.</p><input type="file" id="photoInput" accept="image/*"></div>
+<img id="preview">
+<button class="download-btn" id="downloadBtn" onclick="downloadPhoto()">Download Passport Photo</button>
+</div>
+</section>
+
+<section class="section" id="friends">
+<div class="section-title"><h2>👥 Student Connect</h2><p>Add your friends using their username.</p></div>
+<div class="friends-box">
+<div class="friend-input"><input type="text" id="username" placeholder="Enter friend's username"><button onclick="addFriend()">Add Friend</button></div>
+<div id="friendsList"><div class="friend"><div class="avatar">A</div><div><strong>Alex</strong><p>@alex_student</p></div></div></div>
+</div>
+</section>
+
+<section class="section" id="xenchatbot">
+<div class="section-title"><h2>🤖 XenChatbot</h2><p>Your smart AI study companion.</p></div>
+<div class="chat-container">
+<div class="chat-header"><h3>🤖 XenChatbot</h3><p>Online • Ready to help you</p></div>
+<div class="chat-body" id="chatBody"><div class="message bot-message">👋 Hello! I am XenChatbot. Ask me anything about your studies, coding, Python, C++, English and more.</div></div>
+<div class="chat-input"><input type="text" id="chatInput" placeholder="Ask XenChatbot something..." onkeydown="if(event.key==='Enter') sendMessage()"><button onclick="sendMessage()">Send</button></div>
+</div>
+</section>
+
+<footer><h2>XenvitalTech</h2><p>Empowering students with technology.</p><p>© 2026 XenvitalTech. All Rights Reserved.</p></footer>
+
+<script>
+function login(){alert("Student Login system will be connected with Firebase/Supabase in the full version.");}
+
+const photoInput=document.getElementById("photoInput"),preview=document.getElementById("preview"),downloadBtn=document.getElementById("downloadBtn");
+photoInput.addEventListener("change",function(){const file=this.files[0];if(!file)return;const reader=new FileReader();reader.onload=e=>{preview.src=e.target.result;preview.style.display="block";downloadBtn.style.display="block"};reader.readAsDataURL(file);});
+function downloadPhoto(){const canvas=document.createElement("canvas");canvas.width=413;canvas.height=531;const ctx=canvas.getContext("2d");ctx.drawImage(preview,0,0,canvas.width,canvas.height);const link=document.createElement("a");link.download="xenvitaltech-passport-photo.jpg";link.href=canvas.toDataURL("image/jpeg",.95);link.click();}
+
+function addFriend(){const input=document.getElementById("username"),username=input.value.trim();if(!username){alert("Please enter a username.");return;}const friend=document.createElement("div");friend.className="friend";friend.innerHTML=`<div class="avatar">${username.charAt(0).toUpperCase()}</div><div><strong>${username}</strong><p>@${username}</p></div>`;document.getElementById("friendsList").appendChild(friend);input.value="";}
+
+function sendMessage(){const input=document.getElementById("chatInput"),message=input.value.trim();if(!message)return;const chatBody=document.getElementById("chatBody");const userMessage=document.createElement("div");userMessage.className="message user-message";userMessage.textContent=message;chatBody.appendChild(userMessage);input.value="";chatBody.scrollTop=chatBody.scrollHeight;
+setTimeout(()=>{const botMessage=document.createElement("div");botMessage.className="message bot-message";const lower=message.toLowerCase();let response="That's a great question! In the full version, XenChatbot will use an AI model to provide a detailed answer.";if(lower.includes("python"))response="Python is a high-level, easy-to-learn programming language used for web development, AI, data science and automation.";else if(lower.includes("html"))response="HTML stands for HyperText Markup Language. It is used to create the structure of web pages.";else if(lower.includes("css"))response="CSS is used to design web pages. It controls colors, layouts, fonts, spacing and responsive design.";else if(lower.includes("javascript"))response="JavaScript makes websites interactive. It can handle buttons, forms, animations, APIs and dynamic content.";else if(lower.includes("hello")||lower.includes("hi"))response="Hello! 👋 I am XenChatbot. How can I help you with your studies today?";botMessage.textContent=response;chatBody.appendChild(botMessage);chatBody.scrollTop=chatBody.scrollHeight;},700);}
+</script>
+</body>
+</html>
