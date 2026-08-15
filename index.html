@@ -1,978 +1,827 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>MediFlow+</title>
+<title>MediFlow+ | Smart Healthcare</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<link rel="preconnect"
-href="https://fonts.googleapis.com">
-
-<link rel="preconnect"
-href="https://fonts.gstatic.com"
-crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
-rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
 <style>
-
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --cyan:#58e5ff;
+    --purple:#8b7cff;
+    --bg:#050713;
+    --text:#f5f7ff;
+    --muted:#8992aa;
+    --border:rgba(255,255,255,.10);
+}
+
+html{
+    scroll-behavior:smooth;
 }
 
 body{
-
-font-family:Inter,sans-serif;
-
-color:white;
-
-min-height:100vh;
-
-background:
-radial-gradient(
-circle at 10% 10%,
-#173d50,
-transparent 30%
-),
-radial-gradient(
-circle at 90% 10%,
-#30204d,
-transparent 30%
-),
-#050712;
-
+    min-height:100vh;
+    font-family:Inter,sans-serif;
+    color:var(--text);
+    background:
+        radial-gradient(circle at 5% 10%,#164357 0,transparent 28%),
+        radial-gradient(circle at 95% 10%,#352052 0,transparent 30%),
+        radial-gradient(circle at 50% 100%,#10263b 0,transparent 30%),
+        var(--bg);
 }
 
-button,input{
-
-font:inherit;
-
+button,input,textarea{
+    font:inherit;
 }
 
 button{
-
-cursor:pointer;
-
+    cursor:pointer;
 }
 
 .hidden{
-
-display:none!important;
-
+    display:none!important;
 }
 
 .glass{
-
-background:#ffffff08;
-
-border:1px solid #ffffff14;
-
-backdrop-filter:blur(25px);
-
-box-shadow:0 25px 80px #0005;
-
+    background:rgba(255,255,255,.055);
+    border:1px solid var(--border);
+    backdrop-filter:blur(25px);
+    -webkit-backdrop-filter:blur(25px);
+    box-shadow:0 25px 80px rgba(0,0,0,.35);
 }
 
+/* NAVBAR */
+
 .nav{
-
-height:75px;
-
-display:flex;
-
-align-items:center;
-
-justify-content:space-between;
-
-padding:0 6%;
-
-border-bottom:1px solid #ffffff12;
-
-background:#050712cc;
-
-backdrop-filter:blur(20px);
-
+    height:76px;
+    padding:0 6%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    position:sticky;
+    top:0;
+    z-index:20;
+    border-bottom:1px solid rgba(255,255,255,.08);
+    background:rgba(5,7,19,.72);
+    backdrop-filter:blur(20px);
 }
 
 .logo{
-
-font-family:"Space Grotesk";
-
-font-size:25px;
-
-font-weight:700;
-
+    font-family:"Space Grotesk";
+    font-weight:700;
+    font-size:26px;
+    letter-spacing:-1px;
 }
 
 .logo span{
-
-color:#59e6ff;
-
+    color:var(--cyan);
 }
 
+/* BUTTONS */
+
 .btn{
+    border:1px solid rgba(255,255,255,.12);
+    background:rgba(255,255,255,.055);
+    color:white;
+    padding:12px 18px;
+    border-radius:13px;
+    transition:.2s ease;
+}
 
-padding:12px 18px;
-
-border-radius:12px;
-
-border:1px solid #ffffff16;
-
-background:#ffffff09;
-
-color:white;
-
+.btn:hover{
+    transform:translateY(-2px);
+    background:rgba(255,255,255,.10);
 }
 
 .primary{
-
-border:0;
-
-color:#031017;
-
-font-weight:700;
-
-background:
-linear-gradient(
-135deg,
-#59e6ff,
-#7b8cff
-);
-
+    border:none;
+    color:#031017;
+    font-weight:800;
+    background:linear-gradient(
+        135deg,
+        var(--cyan),
+        var(--purple)
+    );
 }
 
-.btn:active{
-
-transform:scale(.98);
-
-}
+/* HOME */
 
 .hero{
+    min-height:calc(100vh - 76px);
+    display:grid;
+    place-items:center;
+    text-align:center;
+    padding:40px 20px;
+}
 
-min-height:
-calc(100vh - 75px);
+.hero-content{
+    max-width:900px;
+}
 
-display:grid;
-
-place-items:center;
-
-text-align:center;
-
-padding:30px;
-
+.eyebrow{
+    color:var(--cyan);
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:2px;
+    margin-bottom:22px;
 }
 
 .hero h1{
-
-font-family:"Space Grotesk";
-
-font-size:
-clamp(48px,9vw,100px);
-
-line-height:.95;
-
-letter-spacing:-5px;
-
+    font-family:"Space Grotesk";
+    font-size:clamp(52px,10vw,105px);
+    line-height:.91;
+    letter-spacing:-6px;
 }
 
 .gradient{
-
-background:
-linear-gradient(
-90deg,
-white,
-#59e6ff,
-#ae81ff
-);
-
--webkit-background-clip:text;
-
-color:transparent;
-
+    background:linear-gradient(
+        90deg,
+        #ffffff,
+        #58e5ff,
+        #a783ff
+    );
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
 }
 
-.hero p{
-
-max-width:650px;
-
-margin:25px auto;
-
-line-height:1.7;
-
-color:#8992ac;
-
+.hero-description{
+    max-width:680px;
+    margin:28px auto;
+    color:var(--muted);
+    line-height:1.8;
+    font-size:16px;
 }
 
 .actions{
-
-display:flex;
-
-gap:12px;
-
-justify-content:center;
-
-flex-wrap:wrap;
-
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
 }
 
+/* MODAL */
+
 .modal{
-
-position:fixed;
-
-inset:0;
-
-background:#000b;
-
-display:grid;
-
-place-items:center;
-
-padding:20px;
-
-z-index:100;
-
+    position:fixed;
+    inset:0;
+    z-index:100;
+    padding:20px;
+    display:grid;
+    place-items:center;
+    background:rgba(0,0,0,.76);
 }
 
 .auth-box{
-
-width:min(430px,100%);
-
-padding:28px;
-
-border-radius:25px;
-
+    width:min(440px,100%);
+    padding:30px;
+    border-radius:25px;
 }
 
 .close{
+    float:right;
+    border:none;
+    background:none;
+    color:#8d96ab;
+    font-size:28px;
+}
 
-float:right;
-
-background:none;
-
-border:0;
-
-color:#8d95a9;
-
-font-size:27px;
-
+.auth-label{
+    color:var(--cyan);
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:1.5px;
 }
 
 .auth-box h2{
-
-font-family:"Space Grotesk";
-
-font-size:28px;
-
-margin:8px 0 20px;
-
+    font-family:"Space Grotesk";
+    font-size:29px;
+    margin:8px 0 20px;
 }
 
 .tabs{
-
-display:grid;
-
-grid-template-columns:1fr 1fr;
-
-gap:5px;
-
-padding:5px;
-
-border-radius:12px;
-
-background:#ffffff08;
-
-margin-bottom:18px;
-
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:5px;
+    padding:5px;
+    margin-bottom:18px;
+    border-radius:12px;
+    background:rgba(255,255,255,.05);
 }
 
 .tabs button{
-
-border:0;
-
-padding:11px;
-
-border-radius:9px;
-
-background:transparent;
-
-color:#788197;
-
+    border:0;
+    padding:11px;
+    border-radius:9px;
+    color:#7e879e;
+    background:transparent;
 }
 
 .tabs button.active{
-
-background:#ffffff12;
-
-color:white;
-
+    color:white;
+    background:rgba(255,255,255,.10);
 }
 
 .form{
-
-display:grid;
-
-gap:13px;
-
+    display:grid;
+    gap:13px;
 }
 
 .input{
+    width:100%;
+    padding:14px;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,.12);
+    background:rgba(255,255,255,.055);
+    color:white;
+    outline:none;
+}
 
-width:100%;
-
-padding:13px;
-
-border-radius:12px;
-
-border:1px solid #ffffff17;
-
-background:#ffffff08;
-
-color:white;
-
-outline:none;
-
+.input::placeholder{
+    color:#69738c;
 }
 
 .input:focus{
-
-border-color:#59e6ff88;
-
+    border-color:rgba(88,229,255,.55);
+    box-shadow:0 0 0 3px rgba(88,229,255,.07);
 }
 
+textarea{
+    resize:vertical;
+}
+
+.form-note{
+    color:#707a92;
+    font-size:11px;
+    line-height:1.5;
+}
+
+/* DASHBOARD */
+
 .dashboard{
-
-min-height:
-calc(100vh - 75px);
-
-padding:25px;
-
-display:flex;
-
-gap:20px;
-
+    min-height:calc(100vh - 76px);
+    padding:25px;
+    display:flex;
+    gap:20px;
 }
 
 .sidebar{
-
-width:230px;
-
-height:max-content;
-
-padding:18px;
-
-border-radius:20px;
-
+    width:235px;
+    height:max-content;
+    padding:18px;
+    border-radius:22px;
 }
 
-.sidebar h3{
-
-font-family:"Space Grotesk";
-
-margin-bottom:18px;
-
+.sidebar-title{
+    font-family:"Space Grotesk";
+    font-size:19px;
+    margin-bottom:18px;
 }
 
 .side{
-
-width:100%;
-
-padding:12px;
-
-margin:4px 0;
-
-text-align:left;
-
-border:0;
-
-border-radius:10px;
-
-background:transparent;
-
-color:#7d869d;
-
+    width:100%;
+    display:block;
+    text-align:left;
+    border:0;
+    padding:12px;
+    margin:4px 0;
+    border-radius:10px;
+    color:#7d879e;
+    background:transparent;
 }
 
 .side:hover,
 .side.active{
-
-background:#59e6ff0d;
-
-color:#59e6ff;
-
+    color:var(--cyan);
+    background:rgba(88,229,255,.08);
 }
 
 .content{
-
-flex:1;
-
+    flex:1;
+    min-width:0;
 }
 
 .top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    margin-bottom:22px;
+}
 
-display:flex;
-
-align-items:center;
-
-justify-content:space-between;
-
-margin-bottom:20px;
-
+.portal{
+    color:var(--cyan);
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:2px;
 }
 
 .top h2{
-
-font-family:"Space Grotesk";
-
-font-size:28px;
-
+    font-family:"Space Grotesk";
+    font-size:30px;
+    margin-top:5px;
 }
 
 .cards{
-
-display:grid;
-
-grid-template-columns:
-repeat(3,1fr);
-
-gap:15px;
-
-margin-bottom:20px;
-
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin-bottom:20px;
 }
 
 .card{
-
-padding:20px;
-
-border-radius:18px;
-
+    padding:20px;
+    border-radius:19px;
 }
 
 .card small{
-
-color:#737d95;
-
+    color:#727c94;
 }
 
 .card h3{
-
-margin-top:8px;
-
-font-size:23px;
-
+    margin-top:9px;
+    font-size:22px;
 }
 
 .panel{
-
-padding:22px;
-
-border-radius:20px;
-
+    padding:22px;
+    border-radius:21px;
+    margin-bottom:20px;
 }
 
 .panel h3{
+    font-family:"Space Grotesk";
+    margin-bottom:18px;
+}
 
-font-family:"Space Grotesk";
-
-margin-bottom:18px;
-
+.table-wrap{
+    width:100%;
+    overflow-x:auto;
 }
 
 table{
-
-width:100%;
-
-border-collapse:collapse;
-
+    width:100%;
+    border-collapse:collapse;
 }
 
 th,td{
-
-padding:12px 7px;
-
-text-align:left;
-
-border-bottom:
-1px solid #ffffff0d;
-
-font-size:12px;
-
+    padding:13px 8px;
+    text-align:left;
+    border-bottom:1px solid rgba(255,255,255,.07);
+    font-size:12px;
+    white-space:nowrap;
 }
 
 th{
-
-color:#707991;
-
+    color:#707a92;
 }
 
 .status{
-
-padding:5px 9px;
-
-border-radius:20px;
-
-font-size:10px;
-
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:10px;
 }
 
 .pending{
-
-color:#ffd166;
-
-background:#ffd16615;
-
+    color:#ffd166;
+    background:rgba(255,209,102,.09);
 }
 
 .accepted{
-
-color:#51e49a;
-
-background:#51e49a15;
-
+    color:#51e49a;
+    background:rgba(81,228,154,.09);
 }
 
 .rejected{
-
-color:#ff6d83;
-
-background:#ff6d8315;
-
+    color:#ff7186;
+    background:rgba(255,113,134,.09);
 }
+
+/* FOOTER */
 
 .footer{
-
-text-align:center;
-
-padding:30px;
-
-color:#596177;
-
-font-size:11px;
-
+    text-align:center;
+    padding:35px 20px;
+    color:#555f77;
+    font-size:11px;
 }
 
-.staff{
-
-background:none;
-
-border:0;
-
-color:#596177;
-
-font-size:10px;
-
-margin-top:10px;
-
+.staff-btn{
+    border:0;
+    background:none;
+    color:#555f77;
+    font-size:10px;
+    margin-top:10px;
 }
+
+/* TOAST */
 
 .toast{
-
-position:fixed;
-
-right:20px;
-
-bottom:20px;
-
-padding:14px 18px;
-
-border-radius:13px;
-
-background:#111729;
-
-border:1px solid #ffffff18;
-
-z-index:500;
-
-transform:translateY(100px);
-
-transition:.3s;
-
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    max-width:350px;
+    z-index:500;
+    padding:14px 18px;
+    border-radius:13px;
+    color:white;
+    background:#11172a;
+    border:1px solid rgba(255,255,255,.13);
+    box-shadow:0 15px 40px #0008;
+    transform:translateY(120px);
+    opacity:0;
+    transition:.3s;
 }
 
 .toast.show{
-
-transform:translateY(0);
-
+    transform:translateY(0);
+    opacity:1;
 }
+
+/* LOADING */
+
+.loading{
+    text-align:center;
+    padding:40px;
+    color:#737d95;
+}
+
+/* MOBILE */
 
 @media(max-width:800px){
 
-.dashboard{
+    .nav{
+        padding:0 20px;
+    }
 
-flex-direction:column;
+    .dashboard{
+        flex-direction:column;
+        padding:15px;
+    }
 
-padding:15px;
+    .sidebar{
+        width:100%;
+        display:flex;
+        gap:5px;
+        overflow-x:auto;
+        padding:10px;
+    }
 
+    .sidebar-title{
+        display:none;
+    }
+
+    .side{
+        min-width:max-content;
+        width:auto;
+    }
+
+    .cards{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .top{
+        align-items:flex-start;
+    }
 }
 
-.sidebar{
+@media(max-width:500px){
 
-width:100%;
+    .logo{
+        font-size:22px;
+    }
 
+    .nav .btn{
+        padding:10px 13px;
+        font-size:12px;
+    }
+
+    .hero h1{
+        letter-spacing:-4px;
+    }
+
+    .hero-description{
+        font-size:14px;
+    }
+
+    .cards{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .top h2{
+        font-size:24px;
+    }
+
+    .auth-box{
+        padding:23px;
+    }
 }
-
-.cards{
-
-grid-template-columns:1fr 1fr;
-
-}
-
-}
-
 </style>
-
 </head>
-
 
 <body>
 
-
-<!-- NAVBAR -->
+<!-- ================= NAV ================= -->
 
 <nav class="nav">
 
-<div class="logo">
+    <div class="logo">
+        Medi<span>Flow</span>+
+    </div>
 
-Medi<span>Flow</span>+
-
-</div>
-
-<button
-class="btn primary"
-onclick="openAuth('signup')">
-
-Get Started
-
-</button>
+    <button
+        class="btn primary"
+        onclick="openAuth('signup')">
+        Get Started
+    </button>
 
 </nav>
 
 
-<!-- HOME -->
+<!-- ================= HOME ================= -->
 
-<section
-id="home"
-class="hero">
+<section id="home" class="hero">
 
-<div>
+    <div class="hero-content">
 
-<p style="color:#59e6ff;font-size:11px">
+        <div class="eyebrow">
+            SMART HEALTHCARE PLATFORM
+        </div>
 
-SMART HEALTHCARE PLATFORM
+        <h1>
+            Healthcare<br>
+            <span class="gradient">
+                Reimagined.
+            </span>
+        </h1>
 
-</p>
+        <p class="hero-description">
+            Book appointments, manage your patient
+            profile and stay connected with your
+            healthcare team through one secure
+            digital healthcare experience.
+        </p>
 
-<h1>
+        <div class="actions">
 
-Healthcare<br>
+            <button
+                class="btn primary"
+                onclick="openAuth('signup')">
+                Create Patient Account
+            </button>
 
-<span class="gradient">
+            <button
+                class="btn"
+                onclick="openAuth('signin')">
+                Patient Login
+            </button>
 
-Reimagined.
+        </div>
 
-</span>
-
-</h1>
-
-<p>
-
-Book appointments, manage your
-patient profile and stay connected
-with your healthcare team.
-
-</p>
-
-<div class="actions">
-
-<button
-class="btn primary"
-onclick="openAuth('signup')">
-
-Create Patient Account
-
-</button>
-
-<button
-class="btn"
-onclick="openAuth('signin')">
-
-Patient Login
-
-</button>
-
-</div>
-
-</div>
+    </div>
 
 </section>
 
 
-<!-- PATIENT DASHBOARD -->
+<!-- ================= PATIENT DASHBOARD ================= -->
 
 <section
-id="dashboard"
-class="dashboard hidden">
+    id="dashboard"
+    class="dashboard hidden">
+
+    <aside class="sidebar glass">
+
+        <div class="sidebar-title">
+            MediFlow+
+        </div>
+
+        <button
+            id="navDashboard"
+            class="side active"
+            onclick="showDashboard()">
+            ◈ Dashboard
+        </button>
+
+        <button
+            id="navProfile"
+            class="side"
+            onclick="showProfile()">
+            ◎ My Profile
+        </button>
+
+        <button
+            id="navAppointments"
+            class="side"
+            onclick="showAppointments()">
+            ◷ Appointments
+        </button>
+
+        <button
+            class="side"
+            onclick="logout()">
+            ↪ Logout
+        </button>
+
+    </aside>
 
 
-<aside class="sidebar glass">
+    <main class="content">
 
-<h3>MediFlow</h3>
+        <div class="top">
 
-<button
-class="side active"
-onclick="showDashboard()">
+            <div>
 
-◈ Dashboard
+                <div class="portal">
+                    PATIENT PORTAL
+                </div>
 
-</button>
+                <h2 id="welcome">
+                    Welcome
+                </h2>
 
-<button
-class="side"
-onclick="showProfile()">
+            </div>
 
-◎ My Profile
+            <button
+                class="btn primary"
+                onclick="openAppointment()">
+                + Appointment
+            </button>
 
-</button>
+        </div>
 
-<button
-class="side"
-onclick="showAppointments()">
+        <div id="content">
 
-◷ Appointments
+            <div class="loading">
+                Loading your dashboard...
+            </div>
 
-</button>
+        </div>
 
-<button
-class="side"
-onclick="logout()">
-
-↪ Logout
-
-</button>
-
-</aside>
-
-
-<main class="content">
-
-<div class="top">
-
-<div>
-
-<small
-style="color:#59e6ff">
-
-PATIENT PORTAL
-
-</small>
-
-<h2 id="welcome">
-
-Welcome
-
-</h2>
-
-</div>
-
-<button
-class="btn primary"
-onclick="openAppointment()">
-
-+ Appointment
-
-</button>
-
-</div>
-
-<div id="content"></div>
-
-</main>
+    </main>
 
 </section>
 
 
-<!-- AUTH MODAL -->
+<!-- ================= AUTH MODAL ================= -->
 
 <div
-id="authModal"
-class="modal hidden">
+    id="authModal"
+    class="modal hidden">
 
-<div class="auth-box glass">
+    <div class="auth-box glass">
 
-<button
-class="close"
-onclick="closeAuth()">
+        <button
+            class="close"
+            onclick="closeAuth()">
+            ×
+        </button>
 
-×
+        <div class="auth-label">
+            PATIENT ACCESS
+        </div>
 
-</button>
+        <h2 id="authTitle">
+            Create Patient Account
+        </h2>
 
-<p style="color:#59e6ff;font-size:10px">
+        <div class="tabs">
 
-PATIENT ACCESS
+            <button
+                id="signupTab"
+                onclick="switchAuth('signup')">
+                Sign Up
+            </button>
 
-</p>
+            <button
+                id="signinTab"
+                onclick="switchAuth('signin')">
+                Sign In
+            </button>
 
-<h2 id="authTitle">
+        </div>
 
-Patient Sign Up
+        <form
+            id="authForm"
+            class="form">
+        </form>
 
-</h2>
-
-
-<div class="tabs">
-
-<button
-id="signupTab"
-onclick="switchAuth('signup')">
-
-Sign Up
-
-</button>
-
-<button
-id="signinTab"
-onclick="switchAuth('signin')">
-
-Sign In
-
-</button>
+    </div>
 
 </div>
 
 
-<form
-id="authForm"
-class="form">
-
-</form>
-
-</div>
-
-</div>
-
-
-<!-- APPOINTMENT MODAL -->
+<!-- ================= APPOINTMENT MODAL ================= -->
 
 <div
-id="appointmentModal"
-class="modal hidden">
+    id="appointmentModal"
+    class="modal hidden">
 
-<div class="auth-box glass">
+    <div class="auth-box glass">
 
-<button
-class="close"
-onclick="closeAppointment()">
+        <button
+            class="close"
+            onclick="closeAppointment()">
+            ×
+        </button>
 
-×
+        <div class="auth-label">
+            APPOINTMENT
+        </div>
 
-</button>
+        <h2>
+            Book Doctor
+        </h2>
 
-<p style="color:#59e6ff;font-size:10px">
+        <form
+            id="appointmentForm"
+            class="form">
 
-APPOINTMENT
+            <input
+                class="input"
+                id="doctor"
+                placeholder="Doctor name"
+                required>
 
-</p>
+            <input
+                class="input"
+                id="department"
+                placeholder="Department"
+                required>
 
-<h2>
+            <input
+                class="input"
+                id="appointmentDate"
+                type="date"
+                required>
 
-Book Appointment
+            <input
+                class="input"
+                id="appointmentTime"
+                type="time"
+                required>
 
-</h2>
+            <textarea
+                class="input"
+                id="reason"
+                rows="3"
+                placeholder="Reason for visit">
+            </textarea>
 
+            <button
+                class="btn primary"
+                type="submit">
+                Book Appointment
+            </button>
 
-<form
-id="appointmentForm"
-class="form">
+        </form>
 
-
-<input
-class="input"
-id="doctor"
-placeholder="Doctor name"
-required>
-
-
-<input
-class="input"
-id="department"
-placeholder="Department"
-required>
-
-
-<input
-class="input"
-id="appointmentDate"
-type="date"
-required>
-
-
-<input
-class="input"
-id="appointmentTime"
-type="time"
-required>
-
-
-<textarea
-class="input"
-id="reason"
-placeholder="Reason for visit"
-rows="3">
-</textarea>
-
-
-<button
-class="btn primary">
-
-Book Appointment
-
-</button>
-
-</form>
+    </div>
 
 </div>
 
-</div>
 
+<!-- ================= FOOTER ================= -->
 
 <footer class="footer">
 
-MediFlow+ © 2026
+    MediFlow+ © 2026 • Smart Healthcare
 
-<br>
+    <br>
 
-<button
-class="staff"
-onclick="staffLogin()">
-
-Staff Login
-
-</button>
+    <button
+        class="staff-btn"
+        onclick="staffLogin()">
+        Staff Login
+    </button>
 
 </footer>
 
 
 <div
-id="toast"
-class="toast">
+    id="toast"
+    class="toast">
 </div>
 
 
 <script>
 
-/* =====================================
-SUPABASE
-===================================== */
+/* =========================================================
+   SUPABASE CONFIG
+========================================================= */
 
 const SUPABASE_URL =
 "https://dadcweenzllthiitmcsn.supabase.co";
@@ -982,1104 +831,1568 @@ const SUPABASE_KEY =
 
 const db =
 window.supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY
+    SUPABASE_URL,
+    SUPABASE_KEY
 );
 
-let currentUser=null;
 
-let currentProfile=null;
+let currentUser = null;
+let currentProfile = null;
 
 
-/* =====================================
-TOAST
-===================================== */
+/* =========================================================
+   TOAST
+========================================================= */
+
+let toastTimer;
 
 function toast(message){
 
-const box =
-document.getElementById("toast");
+    const box =
+        document.getElementById("toast");
 
-box.textContent=message;
+    box.textContent = message;
 
-box.classList.add("show");
+    box.classList.add("show");
 
-setTimeout(()=>{
+    clearTimeout(toastTimer);
 
-box.classList.remove("show");
-
-},4000);
-
+    toastTimer = setTimeout(() => {
+        box.classList.remove("show");
+    }, 4000);
 }
 
 
-/* =====================================
-AUTH UI
-===================================== */
+/* =========================================================
+   AUTH MODAL
+========================================================= */
 
 function openAuth(mode){
 
-document
-.getElementById("authModal")
-.classList.remove("hidden");
+    document
+        .getElementById("authModal")
+        .classList.remove("hidden");
 
-switchAuth(mode);
-
+    switchAuth(mode);
 }
 
 
 function closeAuth(){
 
-document
-.getElementById("authModal")
-.classList.add("hidden");
-
+    document
+        .getElementById("authModal")
+        .classList.add("hidden");
 }
 
 
 function switchAuth(mode){
 
-const signup =
-document.getElementById("signupTab");
+    document
+        .getElementById("signupTab")
+        .classList.toggle(
+            "active",
+            mode === "signup"
+        );
 
-const signin =
-document.getElementById("signinTab");
-
-signup.classList.toggle(
-"active",
-mode==="signup"
-);
-
-signin.classList.toggle(
-"active",
-mode==="signin"
-);
+    document
+        .getElementById("signinTab")
+        .classList.toggle(
+            "active",
+            mode === "signin"
+        );
 
 
-document.getElementById(
-"authTitle"
-).textContent =
-mode==="signup"
-?
-"Create Patient Account"
-:
-"Patient Sign In";
+    document
+        .getElementById("authTitle")
+        .textContent =
+            mode === "signup"
+            ? "Create Patient Account"
+            : "Patient Sign In";
 
 
-const form =
-document.getElementById("authForm");
+    const form =
+        document.getElementById("authForm");
 
 
-if(mode==="signup"){
+    if(mode === "signup"){
 
-form.innerHTML=`
+        form.innerHTML = `
 
-<input
-class="input"
-id="name"
-placeholder="Full name"
-required>
+            <input
+                class="input"
+                id="name"
+                type="text"
+                placeholder="Full name"
+                autocomplete="name"
+                required>
 
-<input
-class="input"
-id="email"
-type="email"
-placeholder="Email address"
-required>
+            <input
+                class="input"
+                id="email"
+                type="email"
+                placeholder="Email address"
+                autocomplete="email"
+                required>
 
-<input
-class="input"
-id="phone"
-placeholder="Phone number"
-required>
+            <input
+                class="input"
+                id="phone"
+                type="tel"
+                placeholder="Phone number"
+                autocomplete="tel"
+                required>
 
-<input
-class="input"
-id="dob"
-type="date"
-required>
+            <input
+                class="input"
+                id="dob"
+                type="date"
+                required>
 
-<input
-class="input"
-id="password"
-type="password"
-placeholder="Password"
-minlength="6"
-required>
+            <input
+                class="input"
+                id="password"
+                type="password"
+                placeholder="Password (minimum 6 characters)"
+                autocomplete="new-password"
+                minlength="6"
+                required>
 
-<button
-class="btn primary"
-type="submit">
+            <button
+                class="btn primary"
+                type="submit">
+                Create Patient Account
+            </button>
 
-Create Account
+            <div class="form-note">
+                Your account information is securely
+                stored in the healthcare database.
+            </div>
+        `;
 
-</button>
+        form.onsubmit = signup;
 
-`;
+    }else{
 
-form.onsubmit=signup;
+        form.innerHTML = `
 
-}else{
+            <input
+                class="input"
+                id="email"
+                type="email"
+                placeholder="Email address"
+                autocomplete="email"
+                required>
 
-form.innerHTML=`
+            <input
+                class="input"
+                id="password"
+                type="password"
+                placeholder="Password"
+                autocomplete="current-password"
+                required>
 
-<input
-class="input"
-id="email"
-type="email"
-placeholder="Email address"
-required>
+            <button
+                class="btn primary"
+                type="submit">
+                Sign In
+            </button>
 
-<input
-class="input"
-id="password"
-type="password"
-placeholder="Password"
-required>
+            <div class="form-note">
+                Use the email and password you
+                registered with.
+            </div>
+        `;
 
-<button
-class="btn primary"
-type="submit">
-
-Sign In
-
-</button>
-
-`;
-
-form.onsubmit=signin;
-
+        form.onsubmit = signin;
+    }
 }
 
-}
 
-
-/* =====================================
-SIGN UP
-===================================== */
+/* =========================================================
+   SIGNUP
+========================================================= */
 
 async function signup(event){
 
-event.preventDefault();
+    event.preventDefault();
 
 
-const name =
-document.getElementById("name")
-.value.trim();
+    const name =
+        document.getElementById("name")
+        .value.trim();
 
-const email =
-document.getElementById("email")
-.value.trim();
+    const email =
+        document.getElementById("email")
+        .value.trim();
 
-const phone =
-document.getElementById("phone")
-.value.trim();
+    const phone =
+        document.getElementById("phone")
+        .value.trim();
 
-const dob =
-document.getElementById("dob")
-.value;
+    const dob =
+        document.getElementById("dob")
+        .value;
 
-const password =
-document.getElementById("password")
-.value;
+    const password =
+        document.getElementById("password")
+        .value;
 
 
-if(!name ||
-!email ||
-!phone ||
-!dob ||
-!password){
+    if(
+        !name ||
+        !email ||
+        !phone ||
+        !dob ||
+        !password
+    ){
 
-toast(
-"❌ Please fill all fields"
-);
+        toast(
+            "❌ Please fill all fields."
+        );
 
-return;
+        return;
+    }
 
+
+    if(password.length < 6){
+
+        toast(
+            "❌ Password must be at least 6 characters."
+        );
+
+        return;
+    }
+
+
+    toast(
+        "Creating your account..."
+    );
+
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+        await db.auth.signUp({
+
+            email: email,
+
+            password: password,
+
+            options: {
+
+                data: {
+
+                    full_name: name,
+
+                    phone: phone,
+
+                    dob: dob,
+
+                    role: "patient"
+
+                }
+
+            }
+
+        });
+
+
+        console.log(
+            "SIGNUP DATA:",
+            data
+        );
+
+
+        if(error){
+
+            console.error(
+                "SIGNUP ERROR:",
+                error
+            );
+
+            toast(
+                "❌ " + error.message
+            );
+
+            return;
+        }
+
+
+        if(!data || !data.user){
+
+            toast(
+                "❌ Account creation failed."
+            );
+
+            return;
+        }
+
+
+        /*
+         Email confirmation is enabled.
+        */
+
+        if(!data.session){
+
+            closeAuth();
+
+            toast(
+                "✅ Account created! Please verify your email, then sign in."
+            );
+
+            return;
+        }
+
+
+        /*
+         Email confirmation is disabled.
+        */
+
+        currentUser = data.user;
+
+        closeAuth();
+
+        toast(
+            "✅ Account created successfully!"
+        );
+
+        await loadUser();
+
+    }catch(error){
+
+        console.error(error);
+
+        toast(
+            "❌ " + error.message
+        );
+    }
 }
 
 
-if(password.length < 6){
-
-toast(
-"❌ Password must contain at least 6 characters"
-);
-
-return;
-
-}
-
-
-toast(
-"Creating your account..."
-);
-
-
-const {
-data,
-error
-} =
-await db.auth.signUp({
-
-email:email,
-
-password:password,
-
-options:{
-
-data:{
-
-full_name:name,
-
-phone:phone,
-
-dob:dob,
-
-role:"patient"
-
-}
-
-}
-
-});
-
-
-if(error){
-
-console.error(
-"SUPABASE SIGNUP ERROR:",
-error
-);
-
-toast(
-"❌ "+error.message
-);
-
-return;
-
-}
-
-
-if(!data.user){
-
-toast(
-"❌ Unable to create account"
-);
-
-return;
-
-}
-
-
-/*
-EMAIL CONFIRMATION ENABLED
-*/
-
-if(!data.session){
-
-closeAuth();
-
-toast(
-"✅ Account created! Please check your email and verify your account before signing in."
-);
-
-return;
-
-}
-
-
-/*
-EMAIL CONFIRMATION DISABLED
-*/
-
-toast(
-"✅ Account created successfully!"
-);
-
-closeAuth();
-
-await loadUser();
-
-
-}
-
-
-/* =====================================
-SIGN IN
-===================================== */
+/* =========================================================
+   SIGNIN
+========================================================= */
 
 async function signin(event){
 
-event.preventDefault();
+    event.preventDefault();
 
 
-const email =
-document.getElementById("email")
-.value.trim();
+    const email =
+        document
+        .getElementById("email")
+        .value.trim();
 
-const password =
-document.getElementById("password")
-.value;
+    const password =
+        document
+        .getElementById("password")
+        .value;
 
 
-if(!email || !password){
+    if(!email || !password){
 
-toast(
-"❌ Enter email and password"
-);
+        toast(
+            "❌ Enter email and password."
+        );
 
-return;
+        return;
+    }
 
+
+    toast(
+        "Signing in..."
+    );
+
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+        await db.auth
+        .signInWithPassword({
+
+            email: email,
+
+            password: password
+
+        });
+
+
+        console.log(
+            "LOGIN DATA:",
+            data
+        );
+
+
+        if(error){
+
+            console.error(
+                "LOGIN ERROR:",
+                error
+            );
+
+
+            if(
+                error.message
+                .toLowerCase()
+                .includes("email not confirmed")
+            ){
+
+                toast(
+                    "❌ Please verify your email first."
+                );
+
+            }else{
+
+                toast(
+                    "❌ " + error.message
+                );
+            }
+
+            return;
+        }
+
+
+        if(!data.user){
+
+            toast(
+                "❌ Login failed."
+            );
+
+            return;
+        }
+
+
+        currentUser = data.user;
+
+        closeAuth();
+
+        toast(
+            "✅ Login successful!"
+        );
+
+
+        /*
+         THIS IS THE IMPORTANT PART:
+         load profile and open dashboard.
+        */
+
+        await loadUser();
+
+    }catch(error){
+
+        console.error(error);
+
+        toast(
+            "❌ " + error.message
+        );
+    }
 }
 
 
-toast(
-"Signing in..."
-);
-
-
-const {
-data,
-error
-} =
-await db.auth.signInWithPassword({
-
-email:email,
-
-password:password
-
-});
-
-
-if(error){
-
-console.error(
-"LOGIN ERROR:",
-error
-);
-
-if(
-error.message
-.toLowerCase()
-.includes("email not confirmed")
-){
-
-toast(
-"❌ Please verify your email first."
-);
-
-}else{
-
-toast(
-"❌ "+error.message
-);
-
-}
-
-return;
-
-}
-
-
-currentUser=data.user;
-
-
-toast(
-"✅ Login successful!"
-);
-
-closeAuth();
-
-
-await loadUser();
-
-}
-
-
-/* =====================================
-LOAD USER
-===================================== */
+/* =========================================================
+   LOAD USER + PROFILE
+========================================================= */
 
 async function loadUser(){
 
-const {
-data:{
-user
+    console.log(
+        "Loading authenticated user..."
+    );
+
+
+    const {
+        data: userData,
+        error: userError
+    } =
+    await db.auth.getUser();
+
+
+    if(userError){
+
+        console.error(
+            "GET USER ERROR:",
+            userError
+        );
+
+        toast(
+            "❌ " + userError.message
+        );
+
+        return;
+    }
+
+
+    const user =
+        userData.user;
+
+
+    if(!user){
+
+        console.log(
+            "No authenticated user."
+        );
+
+        return;
+    }
+
+
+    currentUser = user;
+
+
+    console.log(
+        "USER:",
+        user
+    );
+
+
+    /*
+     Get profile created by the
+     database trigger.
+    */
+
+    const {
+        data: profile,
+        error: profileError
+    } =
+    await db
+        .from("profiles")
+        .select("*")
+        .eq("id", user.id)
+        .maybeSingle();
+
+
+    console.log(
+        "PROFILE:",
+        profile
+    );
+
+    console.log(
+        "PROFILE ERROR:",
+        profileError
+    );
+
+
+    if(profileError){
+
+        console.error(
+            "PROFILE ERROR:",
+            profileError
+        );
+
+        toast(
+            "❌ Could not load profile: " +
+            profileError.message
+        );
+
+        return;
+    }
+
+
+    /*
+     If profile doesn't exist,
+     wait briefly because trigger
+     may still be completing.
+    */
+
+    if(!profile){
+
+        console.log(
+            "Profile not found. Retrying..."
+        );
+
+
+        await new Promise(
+            resolve =>
+            setTimeout(resolve,700)
+        );
+
+
+        const retry =
+            await db
+                .from("profiles")
+                .select("*")
+                .eq("id", user.id)
+                .maybeSingle();
+
+
+        if(retry.error){
+
+            toast(
+                "❌ " +
+                retry.error.message
+            );
+
+            return;
+        }
+
+
+        if(!retry.data){
+
+            toast(
+                "⚠️ Patient profile was not created."
+            );
+
+            return;
+        }
+
+
+        currentProfile =
+            retry.data;
+
+    }else{
+
+        currentProfile =
+            profile;
+    }
+
+
+    console.log(
+        "FINAL PROFILE:",
+        currentProfile
+    );
+
+
+    /*
+     SWITCH FROM HOME TO DASHBOARD
+    */
+
+    document
+        .getElementById("home")
+        .classList.add("hidden");
+
+
+    document
+        .getElementById("dashboard")
+        .classList.remove("hidden");
+
+
+    document
+        .getElementById("welcome")
+        .textContent =
+            "Welcome, " +
+            (currentProfile.full_name ||
+            "Patient");
+
+
+    await showDashboard();
 }
-} =
-await db.auth.getUser();
 
 
-if(!user){
+/* =========================================================
+   NAVIGATION
+========================================================= */
 
-return;
+function activateNav(id){
 
+    document
+        .querySelectorAll(".side")
+        .forEach(button => {
+            button.classList.remove("active");
+        });
+
+
+    const element =
+        document.getElementById(id);
+
+
+    if(element){
+        element.classList.add("active");
+    }
 }
 
 
-currentUser=user;
-
-
-const {
-data:profile,
-error
-} =
-await db
-.from("profiles")
-.select("*")
-.eq("id",user.id)
-.maybeSingle();
-
-
-if(error){
-
-console.error(error);
-
-toast(
-"❌ "+error.message
-);
-
-return;
-
-}
-
-
-/*
-Normally the database trigger
-has already created this profile.
-*/
-
-if(!profile){
-
-toast(
-"⚠️ Profile is still being created. Please refresh."
-);
-
-return;
-
-}
-
-
-currentProfile=profile;
-
-
-document
-.getElementById("home")
-.classList.add("hidden");
-
-
-document
-.getElementById("dashboard")
-.classList.remove("hidden");
-
-
-showDashboard();
-
-}
-
-
-/* =====================================
-DASHBOARD
-===================================== */
+/* =========================================================
+   DASHBOARD
+========================================================= */
 
 async function showDashboard(){
 
-if(!currentProfile){
+    activateNav("navDashboard");
 
-await loadUser();
 
-return;
+    if(!currentUser ||
+       !currentProfile){
 
+        await loadUser();
+
+        return;
+    }
+
+
+    document
+        .getElementById("welcome")
+        .textContent =
+            "Welcome, " +
+            currentProfile.full_name;
+
+
+    /*
+     Appointment table may not exist yet.
+     Therefore dashboard still works.
+    */
+
+    let appointments = [];
+
+    const {
+        data,
+        error
+    } =
+    await db
+        .from("appointments")
+        .select("*")
+        .eq(
+            "patient_id",
+            currentUser.id
+        )
+        .order(
+            "created_at",
+            {
+                ascending:false
+            }
+        );
+
+
+    if(!error){
+
+        appointments =
+            data || [];
+
+    }else{
+
+        console.warn(
+            "Appointments table:",
+            error.message
+        );
+    }
+
+
+    document
+        .getElementById("content")
+        .innerHTML = `
+
+        <div class="cards">
+
+            <div class="card glass">
+
+                <small>
+                    Appointments
+                </small>
+
+                <h3>
+                    ${appointments.length}
+                </h3>
+
+            </div>
+
+
+            <div class="card glass">
+
+                <small>
+                    Hospital Status
+                </small>
+
+                <h3 style="font-size:15px">
+
+                    ${safe(
+                        currentProfile.hospital_status
+                    )}
+
+                </h3>
+
+            </div>
+
+
+            <div class="card glass">
+
+                <small>
+                    Account
+                </small>
+
+                <h3 style="font-size:15px">
+                    Active
+                </h3>
+
+            </div>
+
+        </div>
+
+
+        <div class="panel glass">
+
+            <h3>
+                Patient Overview
+            </h3>
+
+            <p style="
+                color:#7c869d;
+                line-height:1.8;
+                font-size:13px;
+            ">
+
+                Your MediFlow patient account is
+                active. You can manage your profile
+                and book appointments from this portal.
+
+            </p>
+
+        </div>
+
+
+        <div class="panel glass">
+
+            <h3>
+                Recent Appointments
+            </h3>
+
+            ${
+                appointments.length
+                ?
+                `
+
+                <div class="table-wrap">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Doctor</th>
+                                <th>Department</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            ${
+                                appointments
+                                .slice(0,5)
+                                .map(a => `
+
+                                <tr>
+
+                                    <td>
+                                        Dr. ${safe(a.doctor)}
+                                    </td>
+
+                                    <td>
+                                        ${safe(a.department)}
+                                    </td>
+
+                                    <td>
+                                        ${safe(a.appointment_date)}
+                                    </td>
+
+                                    <td>
+                                        ${statusBadge(a.status)}
+                                    </td>
+
+                                </tr>
+
+                                `)
+                                .join("")
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                `
+                :
+                `
+
+                <p style="
+                    color:#707a92;
+                    font-size:13px;
+                ">
+
+                    No appointments yet.
+
+                </p>
+
+                `
+            }
+
+        </div>
+
+        `;
 }
 
 
-document
-.getElementById("welcome")
-.textContent =
-"Welcome, "+
-currentProfile.full_name;
-
-
-const {
-data:appointments
-} =
-await db
-.from("appointments")
-.select("*")
-.eq(
-"patient_id",
-currentUser.id
-)
-.order(
-"created_at",
-{ascending:false}
-);
-
-
-const list =
-appointments || [];
-
-
-document
-.getElementById("content")
-.innerHTML=`
-
-<div class="cards">
-
-<div class="card glass">
-
-<small>
-Appointments
-</small>
-
-<h3>
-${list.length}
-</h3>
-
-</div>
-
-
-<div class="card glass">
-
-<small>
-Hospital Status
-</small>
-
-<h3 style="font-size:16px">
-
-${currentProfile.hospital_status}
-
-</h3>
-
-</div>
-
-
-<div class="card glass">
-
-<small>
-Account
-</small>
-
-<h3 style="font-size:16px">
-
-Active
-
-</h3>
-
-</div>
-
-</div>
-
-
-<div class="panel glass">
-
-<h3>
-Recent Appointments
-</h3>
-
-${
-list.length
-?
-`
-
-<table>
-
-<tr>
-
-<th>
-Doctor
-</th>
-
-<th>
-Department
-</th>
-
-<th>
-Date
-</th>
-
-<th>
-Status
-</th>
-
-</tr>
-
-${list.map(a=>`
-
-<tr>
-
-<td>
-Dr. ${safe(a.doctor)}
-</td>
-
-<td>
-${safe(a.department)}
-</td>
-
-<td>
-${a.appointment_date}
-</td>
-
-<td>
-
-<span
-class="status
-${String(a.status).toLowerCase()}">
-
-${safe(a.status)}
-
-</span>
-
-</td>
-
-</tr>
-
-`).join("")}
-
-</table>
-
-`
-:
-`
-<p style="color:#707991">
-No appointments yet.
-</p>
-`
-}
-
-</div>
-
-`;
-
-}
-
-
-/* =====================================
-PROFILE
-===================================== */
+/* =========================================================
+   PROFILE
+========================================================= */
 
 function showProfile(){
 
-document
-.getElementById("content")
-.innerHTML=`
+    activateNav("navProfile");
 
-<div class="panel glass">
 
-<h3>
-My Profile
-</h3>
+    if(!currentProfile){
 
-<form
-class="form"
-onsubmit="updateProfile(event)">
+        return;
+    }
 
-<input
-class="input"
-id="profileName"
-value="${safe(currentProfile.full_name)}"
-placeholder="Full name"
-required>
 
-<input
-class="input"
-id="profilePhone"
-value="${safe(currentProfile.phone)}"
-placeholder="Phone">
+    document
+        .getElementById("content")
+        .innerHTML = `
 
-<input
-class="input"
-value="${safe(currentProfile.email)}"
-disabled>
+        <div class="panel glass">
 
-<input
-class="input"
-id="profileDob"
-type="date"
-value="${currentProfile.dob || ""}">
+            <h3>
+                My Profile
+            </h3>
 
-<button
-class="btn primary">
+            <form
+                class="form"
+                onsubmit="updateProfile(event)">
 
-Save Changes
+                <input
+                    class="input"
+                    id="profileName"
+                    value="${safe(
+                        currentProfile.full_name
+                    )}"
+                    placeholder="Full name"
+                    required>
 
-</button>
 
-</form>
+                <input
+                    class="input"
+                    id="profilePhone"
+                    value="${safe(
+                        currentProfile.phone
+                    )}"
+                    placeholder="Phone number">
 
-</div>
 
-`;
+                <input
+                    class="input"
+                    value="${safe(
+                        currentProfile.email
+                    )}"
+                    disabled>
 
+
+                <input
+                    class="input"
+                    id="profileDob"
+                    type="date"
+                    value="${
+                        currentProfile.dob || ""
+                    }">
+
+
+                <button
+                    class="btn primary"
+                    type="submit">
+
+                    Save Changes
+
+                </button>
+
+            </form>
+
+        </div>
+
+        `;
 }
 
 
-/* =====================================
-UPDATE PROFILE
-===================================== */
+/* =========================================================
+   UPDATE PROFILE
+========================================================= */
 
 async function updateProfile(event){
 
-event.preventDefault();
+    event.preventDefault();
 
 
-const name =
-document.getElementById("profileName")
-.value.trim();
-
-const phone =
-document.getElementById("profilePhone")
-.value.trim();
-
-const dob =
-document.getElementById("profileDob")
-.value;
+    const name =
+        document
+        .getElementById("profileName")
+        .value.trim();
 
 
-const {
-data,
-error
-} =
-await db
-.from("profiles")
-.update({
-
-full_name:name,
-
-phone:phone,
-
-dob:dob || null
-
-})
-.eq(
-"id",
-currentUser.id
-)
-.select()
-.single();
+    const phone =
+        document
+        .getElementById("profilePhone")
+        .value.trim();
 
 
-if(error){
+    const dob =
+        document
+        .getElementById("profileDob")
+        .value;
 
-toast(
-"❌ "+error.message
-);
 
-return;
+    const {
+        data,
+        error
+    } =
+    await db
+        .from("profiles")
+        .update({
 
+            full_name:name,
+
+            phone:phone,
+
+            dob:dob || null
+
+        })
+        .eq(
+            "id",
+            currentUser.id
+        )
+        .select()
+        .single();
+
+
+    if(error){
+
+        console.error(error);
+
+        toast(
+            "❌ " + error.message
+        );
+
+        return;
+    }
+
+
+    currentProfile = data;
+
+
+    document
+        .getElementById("welcome")
+        .textContent =
+            "Welcome, " +
+            currentProfile.full_name;
+
+
+    toast(
+        "✅ Profile updated successfully!"
+    );
+
+
+    showProfile();
 }
 
 
-currentProfile=data;
-
-toast(
-"✅ Profile updated!"
-);
-
-showDashboard();
-
-}
-
-
-/* =====================================
-APPOINTMENTS
-===================================== */
+/* =========================================================
+   APPOINTMENTS
+========================================================= */
 
 async function showAppointments(){
 
-const {
-data,
-error
-} =
-await db
-.from("appointments")
-.select("*")
-.eq(
-"patient_id",
-currentUser.id
-)
-.order(
-"created_at",
-{ascending:false}
-);
+    activateNav(
+        "navAppointments"
+    );
 
 
-if(error){
+    const {
+        data,
+        error
+    } =
+    await db
+        .from("appointments")
+        .select("*")
+        .eq(
+            "patient_id",
+            currentUser.id
+        )
+        .order(
+            "created_at",
+            {
+                ascending:false
+            }
+        );
 
-toast(
-"❌ "+error.message
-);
 
-return;
+    if(error){
 
+        document
+            .getElementById("content")
+            .innerHTML = `
+
+            <div class="panel glass">
+
+                <h3>
+                    Appointments
+                </h3>
+
+                <p style="
+                    color:#ff7186;
+                    line-height:1.7;
+                    font-size:13px;
+                ">
+
+                    Appointment database table is
+                    not configured yet.
+
+                </p>
+
+            </div>
+
+            `;
+
+        return;
+    }
+
+
+    document
+        .getElementById("content")
+        .innerHTML = `
+
+        <div class="panel glass">
+
+            <div style="
+                display:flex;
+                justify-content:space-between;
+                align-items:center;
+                gap:10px;
+                margin-bottom:18px;
+            ">
+
+                <h3 style="margin:0">
+                    My Appointments
+                </h3>
+
+                <button
+                    class="btn primary"
+                    onclick="openAppointment()">
+
+                    + Book
+
+                </button>
+
+            </div>
+
+
+            ${
+                data && data.length
+                ?
+                `
+
+                <div class="table-wrap">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Doctor
+                                </th>
+
+                                <th>
+                                    Department
+                                </th>
+
+                                <th>
+                                    Date
+                                </th>
+
+                                <th>
+                                    Time
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            ${
+                                data
+                                .map(a => `
+
+                                <tr>
+
+                                    <td>
+                                        Dr. ${safe(a.doctor)}
+                                    </td>
+
+                                    <td>
+                                        ${safe(a.department)}
+                                    </td>
+
+                                    <td>
+                                        ${safe(a.appointment_date)}
+                                    </td>
+
+                                    <td>
+                                        ${safe(a.appointment_time)}
+                                    </td>
+
+                                    <td>
+                                        ${statusBadge(a.status)}
+                                    </td>
+
+                                </tr>
+
+                                `)
+                                .join("")
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                `
+                :
+                `
+
+                <p style="
+                    color:#707a92;
+                    font-size:13px;
+                ">
+
+                    You haven't booked any appointment yet.
+
+                </p>
+
+                `
+            }
+
+        </div>
+
+        `;
 }
 
 
-document
-.getElementById("content")
-.innerHTML=`
-
-<div class="panel glass">
-
-<h3>
-My Appointments
-</h3>
-
-${
-data.length
-?
-`
-
-<table>
-
-<tr>
-
-<th>Doctor</th>
-
-<th>Department</th>
-
-<th>Date</th>
-
-<th>Time</th>
-
-<th>Status</th>
-
-</tr>
-
-${data.map(a=>`
-
-<tr>
-
-<td>
-Dr. ${safe(a.doctor)}
-</td>
-
-<td>
-${safe(a.department)}
-</td>
-
-<td>
-${a.appointment_date}
-</td>
-
-<td>
-${a.appointment_time}
-</td>
-
-<td>
-
-<span
-class="status
-${String(a.status).toLowerCase()}">
-
-${safe(a.status)}
-
-</span>
-
-</td>
-
-</tr>
-
-`).join("")}
-
-</table>
-
-`
-:
-`
-<p style="color:#707991">
-No appointments found.
-</p>
-`
-}
-
-</div>
-
-`;
-
-}
-
-
-/* =====================================
-APPOINTMENT MODAL
-===================================== */
+/* =========================================================
+   APPOINTMENT MODAL
+========================================================= */
 
 function openAppointment(){
 
-document
-.getElementById("appointmentModal")
-.classList.remove("hidden");
+    if(!currentUser){
 
+        toast(
+            "❌ Please login first."
+        );
+
+        return;
+    }
+
+
+    document
+        .getElementById("appointmentModal")
+        .classList
+        .remove("hidden");
 }
 
 
 function closeAppointment(){
 
+    document
+        .getElementById("appointmentModal")
+        .classList
+        .add("hidden");
+}
+
+
+/* =========================================================
+   BOOK APPOINTMENT
+========================================================= */
+
 document
-.getElementById("appointmentModal")
-.classList.add("hidden");
+    .getElementById("appointmentForm")
+    .addEventListener(
+        "submit",
+        async function(event){
 
-}
-
-
-document
-.getElementById("appointmentForm")
-.addEventListener(
-"submit",
-async function(event){
-
-event.preventDefault();
+            event.preventDefault();
 
 
-const doctor =
-document.getElementById("doctor")
-.value.trim();
-
-const department =
-document.getElementById("department")
-.value.trim();
-
-const date =
-document.getElementById("appointmentDate")
-.value;
-
-const time =
-document.getElementById("appointmentTime")
-.value;
-
-const reason =
-document.getElementById("reason")
-.value.trim();
+            const doctor =
+                document
+                .getElementById("doctor")
+                .value.trim();
 
 
-const {
-error
-} =
-await db
-.from("appointments")
-.insert({
-
-patient_id:currentUser.id,
-
-doctor:doctor,
-
-department:department,
-
-appointment_date:date,
-
-appointment_time:time,
-
-reason:reason,
-
-status:"Pending"
-
-});
+            const department =
+                document
+                .getElementById("department")
+                .value.trim();
 
 
-if(error){
-
-toast(
-"❌ "+error.message
-);
-
-return;
-
-}
+            const date =
+                document
+                .getElementById("appointmentDate")
+                .value;
 
 
-this.reset();
-
-closeAppointment();
-
-toast(
-"✅ Appointment booked!"
-);
-
-showAppointments();
-
-}
-);
+            const time =
+                document
+                .getElementById("appointmentTime")
+                .value;
 
 
-/* =====================================
-LOGOUT
-===================================== */
+            const reason =
+                document
+                .getElementById("reason")
+                .value.trim();
+
+
+            const {
+                error
+            } =
+            await db
+                .from("appointments")
+                .insert({
+
+                    patient_id:
+                        currentUser.id,
+
+                    doctor:doctor,
+
+                    department:department,
+
+                    appointment_date:date,
+
+                    appointment_time:time,
+
+                    reason:reason,
+
+                    status:"Pending"
+
+                });
+
+
+            if(error){
+
+                console.error(
+                    "APPOINTMENT ERROR:",
+                    error
+                );
+
+                toast(
+                    "❌ " + error.message
+                );
+
+                return;
+            }
+
+
+            this.reset();
+
+            closeAppointment();
+
+
+            toast(
+                "✅ Appointment booked successfully!"
+            );
+
+
+            await showAppointments();
+
+        }
+    );
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
 
 async function logout(){
 
-await db.auth.signOut();
-
-currentUser=null;
-
-currentProfile=null;
+    await db.auth.signOut();
 
 
-document
-.getElementById("dashboard")
-.classList.add("hidden");
+    currentUser = null;
+
+    currentProfile = null;
 
 
-document
-.getElementById("home")
-.classList.remove("hidden");
+    document
+        .getElementById("dashboard")
+        .classList
+        .add("hidden");
 
 
-toast(
-"✅ Logged out"
-);
+    document
+        .getElementById("home")
+        .classList
+        .remove("hidden");
 
+
+    toast(
+        "✅ Logged out successfully."
+    );
 }
 
 
-/* =====================================
-STAFF
-===================================== */
+/* =========================================================
+   STAFF
+========================================================= */
 
 function staffLogin(){
 
-toast(
-"Staff login will use a separate secure portal."
-);
-
+    toast(
+        "Staff portal will be available through the secure staff authentication system."
+    );
 }
 
 
-/* =====================================
-SECURITY / HTML ESCAPE
-===================================== */
+/* =========================================================
+   STATUS BADGE
+========================================================= */
+
+function statusBadge(status){
+
+    const value =
+        String(status || "Pending");
+
+
+    let className =
+        value.toLowerCase();
+
+
+    if(
+        className !== "pending" &&
+        className !== "accepted" &&
+        className !== "rejected"
+    ){
+
+        className = "pending";
+    }
+
+
+    return `
+        <span class="status ${className}">
+            ${safe(value)}
+        </span>
+    `;
+}
+
+
+/* =========================================================
+   HTML SECURITY
+========================================================= */
 
 function safe(value){
 
-return String(value || "")
-.replaceAll("&","&amp;")
-.replaceAll("<","&lt;")
-.replaceAll(">","&gt;")
-.replaceAll('"',"&quot;")
-.replaceAll("'","&#039;");
-
+    return String(value ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
 }
 
 
-/* =====================================
-RESTORE LOGIN
-===================================== */
+/* =========================================================
+   AUTH STATE LISTENER
+========================================================= */
+
+db.auth.onAuthStateChange(
+    async (event, session) => {
+
+        console.log(
+            "AUTH EVENT:",
+            event
+        );
+
+
+        if(
+            event === "SIGNED_IN" &&
+            session
+        ){
+
+            currentUser =
+                session.user;
+
+            await loadUser();
+
+        }
+
+
+        if(
+            event === "SIGNED_OUT"
+        ){
+
+            currentUser = null;
+
+            currentProfile = null;
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   RESTORE SESSION AFTER PAGE LOAD
+========================================================= */
 
 async function restoreSession(){
 
-const {
-data:{
-session
-}
-} =
-await db.auth.getSession();
+    console.log(
+        "Checking existing session..."
+    );
 
 
-if(session){
+    const {
+        data,
+        error
+    } =
+    await db.auth.getSession();
 
-await loadUser();
 
-}
+    if(error){
 
+        console.error(
+            "SESSION ERROR:",
+            error
+        );
+
+        return;
+    }
+
+
+    if(
+        data &&
+        data.session
+    ){
+
+        console.log(
+            "Existing session found."
+        );
+
+
+        currentUser =
+            data.session.user;
+
+
+        await loadUser();
+
+    }else{
+
+        console.log(
+            "No existing session."
+        );
+    }
 }
 
 
@@ -2088,5 +2401,4 @@ restoreSession();
 </script>
 
 </body>
-
 </html>
