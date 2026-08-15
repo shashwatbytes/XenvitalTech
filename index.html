@@ -3,2402 +3,634 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>MediFlow+ | Smart Healthcare</title>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<title>XenvitalTech Gaming Arena</title>
 
 <style>
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-:root{
-    --cyan:#58e5ff;
-    --purple:#8b7cff;
-    --bg:#050713;
-    --text:#f5f7ff;
-    --muted:#8992aa;
-    --border:rgba(255,255,255,.10);
-}
-
-html{
-    scroll-behavior:smooth;
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial, sans-serif;
 }
 
 body{
-    min-height:100vh;
-    font-family:Inter,sans-serif;
-    color:var(--text);
-    background:
-        radial-gradient(circle at 5% 10%,#164357 0,transparent 28%),
-        radial-gradient(circle at 95% 10%,#352052 0,transparent 30%),
-        radial-gradient(circle at 50% 100%,#10263b 0,transparent 30%),
-        var(--bg);
+  background:#050816;
+  color:#fff;
 }
 
-button,input,textarea{
-    font:inherit;
-}
-
-button{
-    cursor:pointer;
-}
-
-.hidden{
-    display:none!important;
-}
-
-.glass{
-    background:rgba(255,255,255,.055);
-    border:1px solid var(--border);
-    backdrop-filter:blur(25px);
-    -webkit-backdrop-filter:blur(25px);
-    box-shadow:0 25px 80px rgba(0,0,0,.35);
-}
-
-/* NAVBAR */
-
-.nav{
-    height:76px;
-    padding:0 6%;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    position:sticky;
-    top:0;
-    z-index:20;
-    border-bottom:1px solid rgba(255,255,255,.08);
-    background:rgba(5,7,19,.72);
-    backdrop-filter:blur(20px);
+header{
+  padding:18px 7%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:#070b1c;
+  border-bottom:1px solid #26304c;
+  position:sticky;
+  top:0;
+  z-index:10;
 }
 
 .logo{
-    font-family:"Space Grotesk";
-    font-weight:700;
-    font-size:26px;
-    letter-spacing:-1px;
+  font-size:25px;
+  font-weight:900;
+  color:#00eaff;
 }
 
 .logo span{
-    color:var(--cyan);
+  color:#8b5cf6;
 }
 
-/* BUTTONS */
-
-.btn{
-    border:1px solid rgba(255,255,255,.12);
-    background:rgba(255,255,255,.055);
-    color:white;
-    padding:12px 18px;
-    border-radius:13px;
-    transition:.2s ease;
+nav a{
+  color:#ddd;
+  text-decoration:none;
+  margin-left:20px;
 }
-
-.btn:hover{
-    transform:translateY(-2px);
-    background:rgba(255,255,255,.10);
-}
-
-.primary{
-    border:none;
-    color:#031017;
-    font-weight:800;
-    background:linear-gradient(
-        135deg,
-        var(--cyan),
-        var(--purple)
-    );
-}
-
-/* HOME */
 
 .hero{
-    min-height:calc(100vh - 76px);
-    display:grid;
-    place-items:center;
-    text-align:center;
-    padding:40px 20px;
+  text-align:center;
+  padding:70px 20px 50px;
+  background:radial-gradient(circle at top,#1c2865,#050816 60%);
 }
 
-.hero-content{
-    max-width:900px;
-}
-
-.eyebrow{
-    color:var(--cyan);
-    font-size:12px;
-    font-weight:700;
-    letter-spacing:2px;
-    margin-bottom:22px;
+.badge{
+  display:inline-block;
+  padding:8px 16px;
+  border:1px solid #00eaff;
+  border-radius:30px;
+  color:#00eaff;
+  margin-bottom:20px;
+  font-size:13px;
 }
 
 .hero h1{
-    font-family:"Space Grotesk";
-    font-size:clamp(52px,10vw,105px);
-    line-height:.91;
-    letter-spacing:-6px;
+  font-size:clamp(40px,8vw,75px);
+  font-weight:900;
 }
 
-.gradient{
-    background:linear-gradient(
-        90deg,
-        #ffffff,
-        #58e5ff,
-        #a783ff
-    );
-    -webkit-background-clip:text;
-    background-clip:text;
-    color:transparent;
+.hero h1 span{
+  color:#00eaff;
 }
 
-.hero-description{
-    max-width:680px;
-    margin:28px auto;
-    color:var(--muted);
-    line-height:1.8;
-    font-size:16px;
+.hero p{
+  max-width:700px;
+  margin:20px auto;
+  color:#aeb7d0;
+  line-height:1.6;
 }
 
-.actions{
-    display:flex;
-    justify-content:center;
-    gap:12px;
-    flex-wrap:wrap;
+.container{
+  width:92%;
+  max-width:1200px;
+  margin:auto;
+  padding:40px 0 70px;
 }
 
-/* MODAL */
-
-.modal{
-    position:fixed;
-    inset:0;
-    z-index:100;
-    padding:20px;
-    display:grid;
-    place-items:center;
-    background:rgba(0,0,0,.76);
+.title{
+  margin-bottom:25px;
+  font-size:28px;
 }
 
-.auth-box{
-    width:min(440px,100%);
-    padding:30px;
-    border-radius:25px;
-}
-
-.close{
-    float:right;
-    border:none;
-    background:none;
-    color:#8d96ab;
-    font-size:28px;
-}
-
-.auth-label{
-    color:var(--cyan);
-    font-size:10px;
-    font-weight:700;
-    letter-spacing:1.5px;
-}
-
-.auth-box h2{
-    font-family:"Space Grotesk";
-    font-size:29px;
-    margin:8px 0 20px;
-}
-
-.tabs{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:5px;
-    padding:5px;
-    margin-bottom:18px;
-    border-radius:12px;
-    background:rgba(255,255,255,.05);
-}
-
-.tabs button{
-    border:0;
-    padding:11px;
-    border-radius:9px;
-    color:#7e879e;
-    background:transparent;
-}
-
-.tabs button.active{
-    color:white;
-    background:rgba(255,255,255,.10);
-}
-
-.form{
-    display:grid;
-    gap:13px;
-}
-
-.input{
-    width:100%;
-    padding:14px;
-    border-radius:12px;
-    border:1px solid rgba(255,255,255,.12);
-    background:rgba(255,255,255,.055);
-    color:white;
-    outline:none;
-}
-
-.input::placeholder{
-    color:#69738c;
-}
-
-.input:focus{
-    border-color:rgba(88,229,255,.55);
-    box-shadow:0 0 0 3px rgba(88,229,255,.07);
-}
-
-textarea{
-    resize:vertical;
-}
-
-.form-note{
-    color:#707a92;
-    font-size:11px;
-    line-height:1.5;
-}
-
-/* DASHBOARD */
-
-.dashboard{
-    min-height:calc(100vh - 76px);
-    padding:25px;
-    display:flex;
-    gap:20px;
-}
-
-.sidebar{
-    width:235px;
-    height:max-content;
-    padding:18px;
-    border-radius:22px;
-}
-
-.sidebar-title{
-    font-family:"Space Grotesk";
-    font-size:19px;
-    margin-bottom:18px;
-}
-
-.side{
-    width:100%;
-    display:block;
-    text-align:left;
-    border:0;
-    padding:12px;
-    margin:4px 0;
-    border-radius:10px;
-    color:#7d879e;
-    background:transparent;
-}
-
-.side:hover,
-.side.active{
-    color:var(--cyan);
-    background:rgba(88,229,255,.08);
-}
-
-.content{
-    flex:1;
-    min-width:0;
-}
-
-.top{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:15px;
-    margin-bottom:22px;
-}
-
-.portal{
-    color:var(--cyan);
-    font-size:10px;
-    font-weight:700;
-    letter-spacing:2px;
-}
-
-.top h2{
-    font-family:"Space Grotesk";
-    font-size:30px;
-    margin-top:5px;
-}
-
-.cards{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:15px;
-    margin-bottom:20px;
+.games{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:22px;
 }
 
 .card{
-    padding:20px;
-    border-radius:19px;
+  background:linear-gradient(145deg,#111936,#080c1b);
+  border:1px solid #293453;
+  border-radius:20px;
+  padding:22px;
+  transition:.3s;
 }
 
-.card small{
-    color:#727c94;
+.card:hover{
+  transform:translateY(-6px);
+  border-color:#00eaff;
 }
 
-.card h3{
-    margin-top:9px;
-    font-size:22px;
+.icon{
+  font-size:42px;
 }
 
-.panel{
-    padding:22px;
-    border-radius:21px;
-    margin-bottom:20px;
+.card h2{
+  margin:10px 0 5px;
 }
 
-.panel h3{
-    font-family:"Space Grotesk";
-    margin-bottom:18px;
+.time{
+  color:#00eaff;
+  margin:10px 0 20px;
+  font-size:14px;
 }
 
-.table-wrap{
-    width:100%;
-    overflow-x:auto;
+.mode{
+  margin:12px 0;
+  padding:14px;
+  background:#0b1228;
+  border:1px solid #263452;
+  border-radius:12px;
 }
 
-table{
-    width:100%;
-    border-collapse:collapse;
+.mode-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 
-th,td{
-    padding:13px 8px;
-    text-align:left;
-    border-bottom:1px solid rgba(255,255,255,.07);
-    font-size:12px;
-    white-space:nowrap;
+.mode-name{
+  font-weight:bold;
 }
 
-th{
-    color:#707a92;
+.slot{
+  color:#aeb7d0;
+  font-size:13px;
+  margin-top:7px;
+}
+
+.full{
+  color:#ff6075;
+}
+
+.open{
+  color:#4cff9b;
 }
 
 .status{
-    display:inline-block;
-    padding:5px 9px;
-    border-radius:20px;
-    font-size:10px;
+  margin-top:9px;
+  font-size:12px;
+  font-weight:bold;
 }
 
-.pending{
-    color:#ffd166;
-    background:rgba(255,209,102,.09);
+.demo{
+  margin-top:35px;
+  padding:16px;
+  border-radius:12px;
+  background:#111827;
+  border:1px solid #334155;
+  color:#aeb7d0;
+  text-align:center;
+  font-size:13px;
 }
 
-.accepted{
-    color:#51e49a;
-    background:rgba(81,228,154,.09);
+footer{
+  padding:25px;
+  text-align:center;
+  border-top:1px solid #202842;
+  color:#707a96;
 }
 
-.rejected{
-    color:#ff7186;
-    background:rgba(255,113,134,.09);
-}
+@media(max-width:600px){
+  nav{
+    display:none;
+  }
 
-/* FOOTER */
-
-.footer{
-    text-align:center;
-    padding:35px 20px;
-    color:#555f77;
-    font-size:11px;
-}
-
-.staff-btn{
-    border:0;
-    background:none;
-    color:#555f77;
-    font-size:10px;
-    margin-top:10px;
-}
-
-/* TOAST */
-
-.toast{
-    position:fixed;
-    right:20px;
-    bottom:20px;
-    max-width:350px;
-    z-index:500;
-    padding:14px 18px;
-    border-radius:13px;
-    color:white;
-    background:#11172a;
-    border:1px solid rgba(255,255,255,.13);
-    box-shadow:0 15px 40px #0008;
-    transform:translateY(120px);
-    opacity:0;
-    transition:.3s;
-}
-
-.toast.show{
-    transform:translateY(0);
-    opacity:1;
-}
-
-/* LOADING */
-
-.loading{
-    text-align:center;
-    padding:40px;
-    color:#737d95;
-}
-
-/* MOBILE */
-
-@media(max-width:800px){
-
-    .nav{
-        padding:0 20px;
-    }
-
-    .dashboard{
-        flex-direction:column;
-        padding:15px;
-    }
-
-    .sidebar{
-        width:100%;
-        display:flex;
-        gap:5px;
-        overflow-x:auto;
-        padding:10px;
-    }
-
-    .sidebar-title{
-        display:none;
-    }
-
-    .side{
-        min-width:max-content;
-        width:auto;
-    }
-
-    .cards{
-        grid-template-columns:1fr 1fr;
-    }
-
-    .top{
-        align-items:flex-start;
-    }
-}
-
-@media(max-width:500px){
-
-    .logo{
-        font-size:22px;
-    }
-
-    .nav .btn{
-        padding:10px 13px;
-        font-size:12px;
-    }
-
-    .hero h1{
-        letter-spacing:-4px;
-    }
-
-    .hero-description{
-        font-size:14px;
-    }
-
-    .cards{
-        grid-template-columns:1fr 1fr;
-    }
-
-    .top h2{
-        font-size:24px;
-    }
-
-    .auth-box{
-        padding:23px;
-    }
+  header{
+    justify-content:center;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<!-- ================= NAV ================= -->
+<header>
 
-<nav class="nav">
+  <div class="logo">
+    Xenvital<span>Tech</span>
+  </div>
 
-    <div class="logo">
-        Medi<span>Flow</span>+
-    </div>
+  <nav>
+    <a href="#tournaments">Tournaments</a>
+    <a href="#about">About</a>
+  </nav>
 
-    <button
-        class="btn primary"
-        onclick="openAuth('signup')">
-        Get Started
-    </button>
-
-</nav>
+</header>
 
 
-<!-- ================= HOME ================= -->
+<section class="hero">
 
-<section id="home" class="hero">
+  <div class="badge">
+    ⚡ XENVITALTECH GAMING ARENA
+  </div>
 
-    <div class="hero-content">
+  <h1>
+    PLAY. <span>COMPETE.</span> DOMINATE.
+  </h1>
 
-        <div class="eyebrow">
-            SMART HEALTHCARE PLATFORM
-        </div>
-
-        <h1>
-            Healthcare<br>
-            <span class="gradient">
-                Reimagined.
-            </span>
-        </h1>
-
-        <p class="hero-description">
-            Book appointments, manage your patient
-            profile and stay connected with your
-            healthcare team through one secure
-            digital healthcare experience.
-        </p>
-
-        <div class="actions">
-
-            <button
-                class="btn primary"
-                onclick="openAuth('signup')">
-                Create Patient Account
-            </button>
-
-            <button
-                class="btn"
-                onclick="openAuth('signin')">
-                Patient Login
-            </button>
-
-        </div>
-
-    </div>
+  <p>
+    Compete in different gaming modes and tournaments.
+    Choose your game, mode and tournament time.
+  </p>
 
 </section>
 
 
-<!-- ================= PATIENT DASHBOARD ================= -->
+<main class="container" id="tournaments">
 
-<section
-    id="dashboard"
-    class="dashboard hidden">
-
-    <aside class="sidebar glass">
-
-        <div class="sidebar-title">
-            MediFlow+
-        </div>
-
-        <button
-            id="navDashboard"
-            class="side active"
-            onclick="showDashboard()">
-            ◈ Dashboard
-        </button>
-
-        <button
-            id="navProfile"
-            class="side"
-            onclick="showProfile()">
-            ◎ My Profile
-        </button>
-
-        <button
-            id="navAppointments"
-            class="side"
-            onclick="showAppointments()">
-            ◷ Appointments
-        </button>
-
-        <button
-            class="side"
-            onclick="logout()">
-            ↪ Logout
-        </button>
-
-    </aside>
+<h2 class="title">🔥 Tournament Schedule</h2>
 
 
-    <main class="content">
-
-        <div class="top">
-
-            <div>
-
-                <div class="portal">
-                    PATIENT PORTAL
-                </div>
-
-                <h2 id="welcome">
-                    Welcome
-                </h2>
-
-            </div>
-
-            <button
-                class="btn primary"
-                onclick="openAppointment()">
-                + Appointment
-            </button>
-
-        </div>
-
-        <div id="content">
-
-            <div class="loading">
-                Loading your dashboard...
-            </div>
-
-        </div>
-
-    </main>
-
-</section>
+<div class="games">
 
 
-<!-- ================= AUTH MODAL ================= -->
+<!-- FREE FIRE -->
 
-<div
-    id="authModal"
-    class="modal hidden">
+<div class="card">
 
-    <div class="auth-box glass">
+  <div class="icon">🔥</div>
 
-        <button
-            class="close"
-            onclick="closeAuth()">
-            ×
-        </button>
+  <h2>Free Fire</h2>
 
-        <div class="auth-label">
-            PATIENT ACCESS
-        </div>
+  <div class="time">
+    🎮 Multiple Tournament Times
+  </div>
 
-        <h2 id="authTitle">
-            Create Patient Account
-        </h2>
 
-        <div class="tabs">
+  <div class="mode">
 
-            <button
-                id="signupTab"
-                onclick="switchAuth('signup')">
-                Sign Up
-            </button>
-
-            <button
-                id="signinTab"
-                onclick="switchAuth('signin')">
-                Sign In
-            </button>
-
-        </div>
-
-        <form
-            id="authForm"
-            class="form">
-        </form>
-
+    <div class="mode-top">
+      <span class="mode-name">Solo</span>
+      <span>🕐 5:00 PM</span>
     </div>
+
+    <div class="slot">
+      Slots: 48 / 48
+    </div>
+
+    <div class="status full">
+      🔴 SLOTS FULL
+    </div>
+
+  </div>
+
+
+  <div class="mode">
+
+    <div class="mode-top">
+      <span class="mode-name">Duo</span>
+      <span>🕐 6:30 PM</span>
+    </div>
+
+    <div class="slot">
+      Teams: 24 / 24
+    </div>
+
+    <div class="status full">
+      🔴 SLOTS FULL
+    </div>
+
+  </div>
+
+
+  <div class="mode">
+
+    <div class="mode-top">
+      <span class="mode-name">Squad</span>
+      <span>🕐 8:00 PM</span>
+    </div>
+
+    <div class="slot">
+      Teams: 12 / 12
+    </div>
+
+    <div class="status full">
+      🔴 SLOTS FULL
+    </div>
+
+  </div>
 
 </div>
 
 
-<!-- ================= APPOINTMENT MODAL ================= -->
+<!-- BGMI -->
 
-<div
-    id="appointmentModal"
-    class="modal hidden">
+<div class="card">
 
-    <div class="auth-box glass">
+  <div class="icon">🎯</div>
 
-        <button
-            class="close"
-            onclick="closeAppointment()">
-            ×
-        </button>
+  <h2>BGMI</h2>
 
-        <div class="auth-label">
-            APPOINTMENT
-        </div>
+  <div class="time">
+    🎮 Multiple Tournament Times
+  </div>
 
-        <h2>
-            Book Doctor
-        </h2>
 
-        <form
-            id="appointmentForm"
-            class="form">
+  <div class="mode">
 
-            <input
-                class="input"
-                id="doctor"
-                placeholder="Doctor name"
-                required>
-
-            <input
-                class="input"
-                id="department"
-                placeholder="Department"
-                required>
-
-            <input
-                class="input"
-                id="appointmentDate"
-                type="date"
-                required>
-
-            <input
-                class="input"
-                id="appointmentTime"
-                type="time"
-                required>
-
-            <textarea
-                class="input"
-                id="reason"
-                rows="3"
-                placeholder="Reason for visit">
-            </textarea>
-
-            <button
-                class="btn primary"
-                type="submit">
-                Book Appointment
-            </button>
-
-        </form>
-
+    <div class="mode-top">
+      <span class="mode-name">Solo</span>
+      <span>🕐 4:00 PM</span>
     </div>
+
+    <div class="slot">
+      Slots: 100 / 100
+    </div>
+
+    <div class="status full">
+      🔴 SLOTS FULL
+    </div>
+
+  </div>
+
+
+  <div class="mode">
+
+    <div class="mode-top">
+      <span class="mode-name">Duo</span>
+      <span>🕐 7:00 PM</span>
+    </div>
+
+    <div class="slot">
+      Teams: 50 / 50
+    </div>
+
+    <div class="status full">
+      🔴 SLOTS FULL
+    </div>
+
+  </div>
+
+
+  <div class="mode">
+
+    <div class="mode-top">
+      <span class="mode-name">Squad</span>
+      <span>🕐 9:30 PM</span>
+    </div>
+
+    <div class="slot">
+      Teams: 25 / 25
+    </div>
+
+    <div class="status full">
+      🔴 SLOTS FULL
+    </div>
+
+  </div>
 
 </div>
 
 
-<!-- ================= FOOTER ================= -->
+<!-- COD MOBILE -->
 
-<footer class="footer">
+<div class="card">
 
-    MediFlow+ © 2026 • Smart Healthcare
+  <div class="icon">💀</div>
 
-    <br>
+  <h2>COD Mobile</h2>
 
-    <button
-        class="staff-btn"
-        onclick="staffLogin()">
-        Staff Login
-    </button>
+  <div class="time">
+    🎮 Multiple Tournament Times
+  </div>
+
+
+  <div class="mode">
+
+    <div class="mode-top">
+      <span class="mode-name">1v1</span>
+      <span>🕐 5:30 PM</span>
+    </div>
+
+    <div class="slot">
+      Slots: 32 / 32
+    </div>
+
+    <div class="status full">
+      🔴 SLOTS FULL
+    </div>
+
+  </div>
+
+
+  <div class="mode">
+
+    <div class="mode-top">
+      <span class="mode-name">2v2</span>
+      <span>🕐 7:30 PM</span>
+    </div>
+
+    <div class="slot">
+      Teams: 16 / 16
+    </div>
+
+    <div class="status full">
+      🔴 SLOTS FULL
+    </div>
+
+  </div>
+
+
+  <div class="mode">
+
+    <div class="mode-top">
+      <span class="mode-name">5v5</span>
+      <span>🕐 10:00 PM</span>
+    </div>
+
+    <div class="slot">
+      Teams: 8 / 8
+    </div>
+
+    <div class="status full">
+      🔴 SLOTS FULL
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- INDUS -->
+
+<div class="card">
+
+  <div class="icon">🚀</div>
+
+  <h2>INDUS</h2>
+
+  <div class="time">
+    🎮 Multiple Tournament Times
+  </div>
+
+
+  <div class="mode">
+
+    <div class="mode-top">
+      <span class="mode-name">Solo</span>
+      <span>🕐 6:00 PM</span>
+    </div>
+
+    <div class="slot">
+      Slots: 40 / 40
+    </div>
+
+    <div class="status full">
+      🔴 SLOTS FULL
+    </div>
+
+  </div>
+
+
+  <div class="mode">
+
+    <div class="mode-top">
+      <span class="mode-name">Duo</span>
+      <span>🕐 8:00 PM</span>
+    </div>
+
+    <div class="slot">
+      Teams: 20 / 20
+    </div>
+
+    <div class="status full">
+      🔴 SLOTS FULL
+    </div>
+
+  </div>
+
+
+  <div class="mode">
+
+    <div class="mode-top">
+      <span class="mode-name">Squad</span>
+      <span>🕐 9:45 PM</span>
+    </div>
+
+    <div class="slot">
+      Teams: 10 / 10
+    </div>
+
+    <div class="status full">
+      🔴 SLOTS FULL
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- VALORANT -->
+
+<div class="card">
+
+  <div class="icon">⚔️</div>
+
+  <h2>Valorant</h2>
+
+  <div class="time">
+    🎮 Multiple Tournament Times
+  </div>
+
+
+  <div class="mode">
+
+    <div class="mode-top">
+      <span class="mode-name">1v1</span>
+      <span>🕐 4:30 PM</span>
+    </div>
+
+    <div class="slot">
+      Slots: 32 / 32
+    </div>
+
+    <div class="status full">
+      🔴 SLOTS FULL
+    </div>
+
+  </div>
+
+
+  <div class="mode">
+
+    <div class="mode-top">
+      <span class="mode-name">5v5</span>
+      <span>🕐 8:30 PM</span>
+    </div>
+
+    <div class="slot">
+      Teams: 10 / 10
+    </div>
+
+    <div class="status full">
+      🔴 SLOTS FULL
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- APEX -->
+
+<div class="card">
+
+  <div class="icon">🏆</div>
+
+  <h2>Apex Legends</h2>
+
+  <div class="time">
+    🎮 Multiple Tournament Times
+  </div>
+
+
+  <div class="mode">
+
+    <div class="mode-top">
+      <span class="mode-name">Duo</span>
+      <span>🕐 6:45 PM</span>
+    </div>
+
+    <div class="slot">
+      Teams: 20 / 20
+    </div>
+
+    <div class="status full">
+      🔴 SLOTS FULL
+    </div>
+
+  </div>
+
+
+  <div class="mode">
+
+    <div class="mode-top">
+      <span class="mode-name">Squad</span>
+      <span>🕐 9:00 PM</span>
+    </div>
+
+    <div class="slot">
+      Teams: 15 / 15
+    </div>
+
+    <div class="status full">
+      🔴 SLOTS FULL
+    </div>
+
+  </div>
+
+</div>
+
+
+</div>
+
+
+<div class="demo">
+
+⚠️ <b>Demo Notice:</b>
+Tournament times, slot counts and availability displayed
+on this page are sample UI data. This demo does not process
+entry fees or payments.
+
+</div>
+
+</main>
+
+
+<footer id="about">
+
+© 2026 XenvitalTech Gaming Arena
 
 </footer>
-
-
-<div
-    id="toast"
-    class="toast">
-</div>
-
-
-<script>
-
-/* =========================================================
-   SUPABASE CONFIG
-========================================================= */
-
-const SUPABASE_URL =
-"https://dadcweenzllthiitmcsn.supabase.co";
-
-const SUPABASE_KEY =
-"sb_publishable_mH1OVr0JDRR28Q8uhS1Big_lE078uIW";
-
-const db =
-window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
-
-
-let currentUser = null;
-let currentProfile = null;
-
-
-/* =========================================================
-   TOAST
-========================================================= */
-
-let toastTimer;
-
-function toast(message){
-
-    const box =
-        document.getElementById("toast");
-
-    box.textContent = message;
-
-    box.classList.add("show");
-
-    clearTimeout(toastTimer);
-
-    toastTimer = setTimeout(() => {
-        box.classList.remove("show");
-    }, 4000);
-}
-
-
-/* =========================================================
-   AUTH MODAL
-========================================================= */
-
-function openAuth(mode){
-
-    document
-        .getElementById("authModal")
-        .classList.remove("hidden");
-
-    switchAuth(mode);
-}
-
-
-function closeAuth(){
-
-    document
-        .getElementById("authModal")
-        .classList.add("hidden");
-}
-
-
-function switchAuth(mode){
-
-    document
-        .getElementById("signupTab")
-        .classList.toggle(
-            "active",
-            mode === "signup"
-        );
-
-    document
-        .getElementById("signinTab")
-        .classList.toggle(
-            "active",
-            mode === "signin"
-        );
-
-
-    document
-        .getElementById("authTitle")
-        .textContent =
-            mode === "signup"
-            ? "Create Patient Account"
-            : "Patient Sign In";
-
-
-    const form =
-        document.getElementById("authForm");
-
-
-    if(mode === "signup"){
-
-        form.innerHTML = `
-
-            <input
-                class="input"
-                id="name"
-                type="text"
-                placeholder="Full name"
-                autocomplete="name"
-                required>
-
-            <input
-                class="input"
-                id="email"
-                type="email"
-                placeholder="Email address"
-                autocomplete="email"
-                required>
-
-            <input
-                class="input"
-                id="phone"
-                type="tel"
-                placeholder="Phone number"
-                autocomplete="tel"
-                required>
-
-            <input
-                class="input"
-                id="dob"
-                type="date"
-                required>
-
-            <input
-                class="input"
-                id="password"
-                type="password"
-                placeholder="Password (minimum 6 characters)"
-                autocomplete="new-password"
-                minlength="6"
-                required>
-
-            <button
-                class="btn primary"
-                type="submit">
-                Create Patient Account
-            </button>
-
-            <div class="form-note">
-                Your account information is securely
-                stored in the healthcare database.
-            </div>
-        `;
-
-        form.onsubmit = signup;
-
-    }else{
-
-        form.innerHTML = `
-
-            <input
-                class="input"
-                id="email"
-                type="email"
-                placeholder="Email address"
-                autocomplete="email"
-                required>
-
-            <input
-                class="input"
-                id="password"
-                type="password"
-                placeholder="Password"
-                autocomplete="current-password"
-                required>
-
-            <button
-                class="btn primary"
-                type="submit">
-                Sign In
-            </button>
-
-            <div class="form-note">
-                Use the email and password you
-                registered with.
-            </div>
-        `;
-
-        form.onsubmit = signin;
-    }
-}
-
-
-/* =========================================================
-   SIGNUP
-========================================================= */
-
-async function signup(event){
-
-    event.preventDefault();
-
-
-    const name =
-        document.getElementById("name")
-        .value.trim();
-
-    const email =
-        document.getElementById("email")
-        .value.trim();
-
-    const phone =
-        document.getElementById("phone")
-        .value.trim();
-
-    const dob =
-        document.getElementById("dob")
-        .value;
-
-    const password =
-        document.getElementById("password")
-        .value;
-
-
-    if(
-        !name ||
-        !email ||
-        !phone ||
-        !dob ||
-        !password
-    ){
-
-        toast(
-            "❌ Please fill all fields."
-        );
-
-        return;
-    }
-
-
-    if(password.length < 6){
-
-        toast(
-            "❌ Password must be at least 6 characters."
-        );
-
-        return;
-    }
-
-
-    toast(
-        "Creating your account..."
-    );
-
-
-    try{
-
-        const {
-            data,
-            error
-        } =
-        await db.auth.signUp({
-
-            email: email,
-
-            password: password,
-
-            options: {
-
-                data: {
-
-                    full_name: name,
-
-                    phone: phone,
-
-                    dob: dob,
-
-                    role: "patient"
-
-                }
-
-            }
-
-        });
-
-
-        console.log(
-            "SIGNUP DATA:",
-            data
-        );
-
-
-        if(error){
-
-            console.error(
-                "SIGNUP ERROR:",
-                error
-            );
-
-            toast(
-                "❌ " + error.message
-            );
-
-            return;
-        }
-
-
-        if(!data || !data.user){
-
-            toast(
-                "❌ Account creation failed."
-            );
-
-            return;
-        }
-
-
-        /*
-         Email confirmation is enabled.
-        */
-
-        if(!data.session){
-
-            closeAuth();
-
-            toast(
-                "✅ Account created! Please verify your email, then sign in."
-            );
-
-            return;
-        }
-
-
-        /*
-         Email confirmation is disabled.
-        */
-
-        currentUser = data.user;
-
-        closeAuth();
-
-        toast(
-            "✅ Account created successfully!"
-        );
-
-        await loadUser();
-
-    }catch(error){
-
-        console.error(error);
-
-        toast(
-            "❌ " + error.message
-        );
-    }
-}
-
-
-/* =========================================================
-   SIGNIN
-========================================================= */
-
-async function signin(event){
-
-    event.preventDefault();
-
-
-    const email =
-        document
-        .getElementById("email")
-        .value.trim();
-
-    const password =
-        document
-        .getElementById("password")
-        .value;
-
-
-    if(!email || !password){
-
-        toast(
-            "❌ Enter email and password."
-        );
-
-        return;
-    }
-
-
-    toast(
-        "Signing in..."
-    );
-
-
-    try{
-
-        const {
-            data,
-            error
-        } =
-        await db.auth
-        .signInWithPassword({
-
-            email: email,
-
-            password: password
-
-        });
-
-
-        console.log(
-            "LOGIN DATA:",
-            data
-        );
-
-
-        if(error){
-
-            console.error(
-                "LOGIN ERROR:",
-                error
-            );
-
-
-            if(
-                error.message
-                .toLowerCase()
-                .includes("email not confirmed")
-            ){
-
-                toast(
-                    "❌ Please verify your email first."
-                );
-
-            }else{
-
-                toast(
-                    "❌ " + error.message
-                );
-            }
-
-            return;
-        }
-
-
-        if(!data.user){
-
-            toast(
-                "❌ Login failed."
-            );
-
-            return;
-        }
-
-
-        currentUser = data.user;
-
-        closeAuth();
-
-        toast(
-            "✅ Login successful!"
-        );
-
-
-        /*
-         THIS IS THE IMPORTANT PART:
-         load profile and open dashboard.
-        */
-
-        await loadUser();
-
-    }catch(error){
-
-        console.error(error);
-
-        toast(
-            "❌ " + error.message
-        );
-    }
-}
-
-
-/* =========================================================
-   LOAD USER + PROFILE
-========================================================= */
-
-async function loadUser(){
-
-    console.log(
-        "Loading authenticated user..."
-    );
-
-
-    const {
-        data: userData,
-        error: userError
-    } =
-    await db.auth.getUser();
-
-
-    if(userError){
-
-        console.error(
-            "GET USER ERROR:",
-            userError
-        );
-
-        toast(
-            "❌ " + userError.message
-        );
-
-        return;
-    }
-
-
-    const user =
-        userData.user;
-
-
-    if(!user){
-
-        console.log(
-            "No authenticated user."
-        );
-
-        return;
-    }
-
-
-    currentUser = user;
-
-
-    console.log(
-        "USER:",
-        user
-    );
-
-
-    /*
-     Get profile created by the
-     database trigger.
-    */
-
-    const {
-        data: profile,
-        error: profileError
-    } =
-    await db
-        .from("profiles")
-        .select("*")
-        .eq("id", user.id)
-        .maybeSingle();
-
-
-    console.log(
-        "PROFILE:",
-        profile
-    );
-
-    console.log(
-        "PROFILE ERROR:",
-        profileError
-    );
-
-
-    if(profileError){
-
-        console.error(
-            "PROFILE ERROR:",
-            profileError
-        );
-
-        toast(
-            "❌ Could not load profile: " +
-            profileError.message
-        );
-
-        return;
-    }
-
-
-    /*
-     If profile doesn't exist,
-     wait briefly because trigger
-     may still be completing.
-    */
-
-    if(!profile){
-
-        console.log(
-            "Profile not found. Retrying..."
-        );
-
-
-        await new Promise(
-            resolve =>
-            setTimeout(resolve,700)
-        );
-
-
-        const retry =
-            await db
-                .from("profiles")
-                .select("*")
-                .eq("id", user.id)
-                .maybeSingle();
-
-
-        if(retry.error){
-
-            toast(
-                "❌ " +
-                retry.error.message
-            );
-
-            return;
-        }
-
-
-        if(!retry.data){
-
-            toast(
-                "⚠️ Patient profile was not created."
-            );
-
-            return;
-        }
-
-
-        currentProfile =
-            retry.data;
-
-    }else{
-
-        currentProfile =
-            profile;
-    }
-
-
-    console.log(
-        "FINAL PROFILE:",
-        currentProfile
-    );
-
-
-    /*
-     SWITCH FROM HOME TO DASHBOARD
-    */
-
-    document
-        .getElementById("home")
-        .classList.add("hidden");
-
-
-    document
-        .getElementById("dashboard")
-        .classList.remove("hidden");
-
-
-    document
-        .getElementById("welcome")
-        .textContent =
-            "Welcome, " +
-            (currentProfile.full_name ||
-            "Patient");
-
-
-    await showDashboard();
-}
-
-
-/* =========================================================
-   NAVIGATION
-========================================================= */
-
-function activateNav(id){
-
-    document
-        .querySelectorAll(".side")
-        .forEach(button => {
-            button.classList.remove("active");
-        });
-
-
-    const element =
-        document.getElementById(id);
-
-
-    if(element){
-        element.classList.add("active");
-    }
-}
-
-
-/* =========================================================
-   DASHBOARD
-========================================================= */
-
-async function showDashboard(){
-
-    activateNav("navDashboard");
-
-
-    if(!currentUser ||
-       !currentProfile){
-
-        await loadUser();
-
-        return;
-    }
-
-
-    document
-        .getElementById("welcome")
-        .textContent =
-            "Welcome, " +
-            currentProfile.full_name;
-
-
-    /*
-     Appointment table may not exist yet.
-     Therefore dashboard still works.
-    */
-
-    let appointments = [];
-
-    const {
-        data,
-        error
-    } =
-    await db
-        .from("appointments")
-        .select("*")
-        .eq(
-            "patient_id",
-            currentUser.id
-        )
-        .order(
-            "created_at",
-            {
-                ascending:false
-            }
-        );
-
-
-    if(!error){
-
-        appointments =
-            data || [];
-
-    }else{
-
-        console.warn(
-            "Appointments table:",
-            error.message
-        );
-    }
-
-
-    document
-        .getElementById("content")
-        .innerHTML = `
-
-        <div class="cards">
-
-            <div class="card glass">
-
-                <small>
-                    Appointments
-                </small>
-
-                <h3>
-                    ${appointments.length}
-                </h3>
-
-            </div>
-
-
-            <div class="card glass">
-
-                <small>
-                    Hospital Status
-                </small>
-
-                <h3 style="font-size:15px">
-
-                    ${safe(
-                        currentProfile.hospital_status
-                    )}
-
-                </h3>
-
-            </div>
-
-
-            <div class="card glass">
-
-                <small>
-                    Account
-                </small>
-
-                <h3 style="font-size:15px">
-                    Active
-                </h3>
-
-            </div>
-
-        </div>
-
-
-        <div class="panel glass">
-
-            <h3>
-                Patient Overview
-            </h3>
-
-            <p style="
-                color:#7c869d;
-                line-height:1.8;
-                font-size:13px;
-            ">
-
-                Your MediFlow patient account is
-                active. You can manage your profile
-                and book appointments from this portal.
-
-            </p>
-
-        </div>
-
-
-        <div class="panel glass">
-
-            <h3>
-                Recent Appointments
-            </h3>
-
-            ${
-                appointments.length
-                ?
-                `
-
-                <div class="table-wrap">
-
-                    <table>
-
-                        <thead>
-
-                            <tr>
-                                <th>Doctor</th>
-                                <th>Department</th>
-                                <th>Date</th>
-                                <th>Status</th>
-                            </tr>
-
-                        </thead>
-
-                        <tbody>
-
-                            ${
-                                appointments
-                                .slice(0,5)
-                                .map(a => `
-
-                                <tr>
-
-                                    <td>
-                                        Dr. ${safe(a.doctor)}
-                                    </td>
-
-                                    <td>
-                                        ${safe(a.department)}
-                                    </td>
-
-                                    <td>
-                                        ${safe(a.appointment_date)}
-                                    </td>
-
-                                    <td>
-                                        ${statusBadge(a.status)}
-                                    </td>
-
-                                </tr>
-
-                                `)
-                                .join("")
-                            }
-
-                        </tbody>
-
-                    </table>
-
-                </div>
-
-                `
-                :
-                `
-
-                <p style="
-                    color:#707a92;
-                    font-size:13px;
-                ">
-
-                    No appointments yet.
-
-                </p>
-
-                `
-            }
-
-        </div>
-
-        `;
-}
-
-
-/* =========================================================
-   PROFILE
-========================================================= */
-
-function showProfile(){
-
-    activateNav("navProfile");
-
-
-    if(!currentProfile){
-
-        return;
-    }
-
-
-    document
-        .getElementById("content")
-        .innerHTML = `
-
-        <div class="panel glass">
-
-            <h3>
-                My Profile
-            </h3>
-
-            <form
-                class="form"
-                onsubmit="updateProfile(event)">
-
-                <input
-                    class="input"
-                    id="profileName"
-                    value="${safe(
-                        currentProfile.full_name
-                    )}"
-                    placeholder="Full name"
-                    required>
-
-
-                <input
-                    class="input"
-                    id="profilePhone"
-                    value="${safe(
-                        currentProfile.phone
-                    )}"
-                    placeholder="Phone number">
-
-
-                <input
-                    class="input"
-                    value="${safe(
-                        currentProfile.email
-                    )}"
-                    disabled>
-
-
-                <input
-                    class="input"
-                    id="profileDob"
-                    type="date"
-                    value="${
-                        currentProfile.dob || ""
-                    }">
-
-
-                <button
-                    class="btn primary"
-                    type="submit">
-
-                    Save Changes
-
-                </button>
-
-            </form>
-
-        </div>
-
-        `;
-}
-
-
-/* =========================================================
-   UPDATE PROFILE
-========================================================= */
-
-async function updateProfile(event){
-
-    event.preventDefault();
-
-
-    const name =
-        document
-        .getElementById("profileName")
-        .value.trim();
-
-
-    const phone =
-        document
-        .getElementById("profilePhone")
-        .value.trim();
-
-
-    const dob =
-        document
-        .getElementById("profileDob")
-        .value;
-
-
-    const {
-        data,
-        error
-    } =
-    await db
-        .from("profiles")
-        .update({
-
-            full_name:name,
-
-            phone:phone,
-
-            dob:dob || null
-
-        })
-        .eq(
-            "id",
-            currentUser.id
-        )
-        .select()
-        .single();
-
-
-    if(error){
-
-        console.error(error);
-
-        toast(
-            "❌ " + error.message
-        );
-
-        return;
-    }
-
-
-    currentProfile = data;
-
-
-    document
-        .getElementById("welcome")
-        .textContent =
-            "Welcome, " +
-            currentProfile.full_name;
-
-
-    toast(
-        "✅ Profile updated successfully!"
-    );
-
-
-    showProfile();
-}
-
-
-/* =========================================================
-   APPOINTMENTS
-========================================================= */
-
-async function showAppointments(){
-
-    activateNav(
-        "navAppointments"
-    );
-
-
-    const {
-        data,
-        error
-    } =
-    await db
-        .from("appointments")
-        .select("*")
-        .eq(
-            "patient_id",
-            currentUser.id
-        )
-        .order(
-            "created_at",
-            {
-                ascending:false
-            }
-        );
-
-
-    if(error){
-
-        document
-            .getElementById("content")
-            .innerHTML = `
-
-            <div class="panel glass">
-
-                <h3>
-                    Appointments
-                </h3>
-
-                <p style="
-                    color:#ff7186;
-                    line-height:1.7;
-                    font-size:13px;
-                ">
-
-                    Appointment database table is
-                    not configured yet.
-
-                </p>
-
-            </div>
-
-            `;
-
-        return;
-    }
-
-
-    document
-        .getElementById("content")
-        .innerHTML = `
-
-        <div class="panel glass">
-
-            <div style="
-                display:flex;
-                justify-content:space-between;
-                align-items:center;
-                gap:10px;
-                margin-bottom:18px;
-            ">
-
-                <h3 style="margin:0">
-                    My Appointments
-                </h3>
-
-                <button
-                    class="btn primary"
-                    onclick="openAppointment()">
-
-                    + Book
-
-                </button>
-
-            </div>
-
-
-            ${
-                data && data.length
-                ?
-                `
-
-                <div class="table-wrap">
-
-                    <table>
-
-                        <thead>
-
-                            <tr>
-
-                                <th>
-                                    Doctor
-                                </th>
-
-                                <th>
-                                    Department
-                                </th>
-
-                                <th>
-                                    Date
-                                </th>
-
-                                <th>
-                                    Time
-                                </th>
-
-                                <th>
-                                    Status
-                                </th>
-
-                            </tr>
-
-                        </thead>
-
-                        <tbody>
-
-                            ${
-                                data
-                                .map(a => `
-
-                                <tr>
-
-                                    <td>
-                                        Dr. ${safe(a.doctor)}
-                                    </td>
-
-                                    <td>
-                                        ${safe(a.department)}
-                                    </td>
-
-                                    <td>
-                                        ${safe(a.appointment_date)}
-                                    </td>
-
-                                    <td>
-                                        ${safe(a.appointment_time)}
-                                    </td>
-
-                                    <td>
-                                        ${statusBadge(a.status)}
-                                    </td>
-
-                                </tr>
-
-                                `)
-                                .join("")
-                            }
-
-                        </tbody>
-
-                    </table>
-
-                </div>
-
-                `
-                :
-                `
-
-                <p style="
-                    color:#707a92;
-                    font-size:13px;
-                ">
-
-                    You haven't booked any appointment yet.
-
-                </p>
-
-                `
-            }
-
-        </div>
-
-        `;
-}
-
-
-/* =========================================================
-   APPOINTMENT MODAL
-========================================================= */
-
-function openAppointment(){
-
-    if(!currentUser){
-
-        toast(
-            "❌ Please login first."
-        );
-
-        return;
-    }
-
-
-    document
-        .getElementById("appointmentModal")
-        .classList
-        .remove("hidden");
-}
-
-
-function closeAppointment(){
-
-    document
-        .getElementById("appointmentModal")
-        .classList
-        .add("hidden");
-}
-
-
-/* =========================================================
-   BOOK APPOINTMENT
-========================================================= */
-
-document
-    .getElementById("appointmentForm")
-    .addEventListener(
-        "submit",
-        async function(event){
-
-            event.preventDefault();
-
-
-            const doctor =
-                document
-                .getElementById("doctor")
-                .value.trim();
-
-
-            const department =
-                document
-                .getElementById("department")
-                .value.trim();
-
-
-            const date =
-                document
-                .getElementById("appointmentDate")
-                .value;
-
-
-            const time =
-                document
-                .getElementById("appointmentTime")
-                .value;
-
-
-            const reason =
-                document
-                .getElementById("reason")
-                .value.trim();
-
-
-            const {
-                error
-            } =
-            await db
-                .from("appointments")
-                .insert({
-
-                    patient_id:
-                        currentUser.id,
-
-                    doctor:doctor,
-
-                    department:department,
-
-                    appointment_date:date,
-
-                    appointment_time:time,
-
-                    reason:reason,
-
-                    status:"Pending"
-
-                });
-
-
-            if(error){
-
-                console.error(
-                    "APPOINTMENT ERROR:",
-                    error
-                );
-
-                toast(
-                    "❌ " + error.message
-                );
-
-                return;
-            }
-
-
-            this.reset();
-
-            closeAppointment();
-
-
-            toast(
-                "✅ Appointment booked successfully!"
-            );
-
-
-            await showAppointments();
-
-        }
-    );
-
-
-/* =========================================================
-   LOGOUT
-========================================================= */
-
-async function logout(){
-
-    await db.auth.signOut();
-
-
-    currentUser = null;
-
-    currentProfile = null;
-
-
-    document
-        .getElementById("dashboard")
-        .classList
-        .add("hidden");
-
-
-    document
-        .getElementById("home")
-        .classList
-        .remove("hidden");
-
-
-    toast(
-        "✅ Logged out successfully."
-    );
-}
-
-
-/* =========================================================
-   STAFF
-========================================================= */
-
-function staffLogin(){
-
-    toast(
-        "Staff portal will be available through the secure staff authentication system."
-    );
-}
-
-
-/* =========================================================
-   STATUS BADGE
-========================================================= */
-
-function statusBadge(status){
-
-    const value =
-        String(status || "Pending");
-
-
-    let className =
-        value.toLowerCase();
-
-
-    if(
-        className !== "pending" &&
-        className !== "accepted" &&
-        className !== "rejected"
-    ){
-
-        className = "pending";
-    }
-
-
-    return `
-        <span class="status ${className}">
-            ${safe(value)}
-        </span>
-    `;
-}
-
-
-/* =========================================================
-   HTML SECURITY
-========================================================= */
-
-function safe(value){
-
-    return String(value ?? "")
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
-}
-
-
-/* =========================================================
-   AUTH STATE LISTENER
-========================================================= */
-
-db.auth.onAuthStateChange(
-    async (event, session) => {
-
-        console.log(
-            "AUTH EVENT:",
-            event
-        );
-
-
-        if(
-            event === "SIGNED_IN" &&
-            session
-        ){
-
-            currentUser =
-                session.user;
-
-            await loadUser();
-
-        }
-
-
-        if(
-            event === "SIGNED_OUT"
-        ){
-
-            currentUser = null;
-
-            currentProfile = null;
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   RESTORE SESSION AFTER PAGE LOAD
-========================================================= */
-
-async function restoreSession(){
-
-    console.log(
-        "Checking existing session..."
-    );
-
-
-    const {
-        data,
-        error
-    } =
-    await db.auth.getSession();
-
-
-    if(error){
-
-        console.error(
-            "SESSION ERROR:",
-            error
-        );
-
-        return;
-    }
-
-
-    if(
-        data &&
-        data.session
-    ){
-
-        console.log(
-            "Existing session found."
-        );
-
-
-        currentUser =
-            data.session.user;
-
-
-        await loadUser();
-
-    }else{
-
-        console.log(
-            "No existing session."
-        );
-    }
-}
-
-
-restoreSession();
-
-</script>
 
 </body>
 </html>
