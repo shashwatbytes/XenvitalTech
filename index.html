@@ -1,636 +1,2092 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>XenvitalTech Gaming Arena</title>
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>MediFlow+</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+rel="stylesheet">
 
 <style>
+
 *{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Arial, sans-serif;
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
 
 body{
-  background:#050816;
-  color:#fff;
+
+font-family:Inter,sans-serif;
+
+color:white;
+
+min-height:100vh;
+
+background:
+radial-gradient(
+circle at 10% 10%,
+#173d50,
+transparent 30%
+),
+radial-gradient(
+circle at 90% 10%,
+#30204d,
+transparent 30%
+),
+#050712;
+
 }
 
-header{
-  padding:18px 7%;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  background:#070b1c;
-  border-bottom:1px solid #26304c;
-  position:sticky;
-  top:0;
-  z-index:10;
+button,input{
+
+font:inherit;
+
+}
+
+button{
+
+cursor:pointer;
+
+}
+
+.hidden{
+
+display:none!important;
+
+}
+
+.glass{
+
+background:#ffffff08;
+
+border:1px solid #ffffff14;
+
+backdrop-filter:blur(25px);
+
+box-shadow:0 25px 80px #0005;
+
+}
+
+.nav{
+
+height:75px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+padding:0 6%;
+
+border-bottom:1px solid #ffffff12;
+
+background:#050712cc;
+
+backdrop-filter:blur(20px);
+
 }
 
 .logo{
-  font-size:25px;
-  font-weight:900;
-  color:#00eaff;
+
+font-family:"Space Grotesk";
+
+font-size:25px;
+
+font-weight:700;
+
 }
 
 .logo span{
-  color:#8b5cf6;
+
+color:#59e6ff;
+
 }
 
-nav a{
-  color:#ddd;
-  text-decoration:none;
-  margin-left:20px;
+.btn{
+
+padding:12px 18px;
+
+border-radius:12px;
+
+border:1px solid #ffffff16;
+
+background:#ffffff09;
+
+color:white;
+
+}
+
+.primary{
+
+border:0;
+
+color:#031017;
+
+font-weight:700;
+
+background:
+linear-gradient(
+135deg,
+#59e6ff,
+#7b8cff
+);
+
+}
+
+.btn:active{
+
+transform:scale(.98);
+
 }
 
 .hero{
-  text-align:center;
-  padding:70px 20px 50px;
-  background:radial-gradient(circle at top,#1c2865,#050816 60%);
-}
 
-.badge{
-  display:inline-block;
-  padding:8px 16px;
-  border:1px solid #00eaff;
-  border-radius:30px;
-  color:#00eaff;
-  margin-bottom:20px;
-  font-size:13px;
+min-height:
+calc(100vh - 75px);
+
+display:grid;
+
+place-items:center;
+
+text-align:center;
+
+padding:30px;
+
 }
 
 .hero h1{
-  font-size:clamp(40px,8vw,75px);
-  font-weight:900;
+
+font-family:"Space Grotesk";
+
+font-size:
+clamp(48px,9vw,100px);
+
+line-height:.95;
+
+letter-spacing:-5px;
+
 }
 
-.hero h1 span{
-  color:#00eaff;
+.gradient{
+
+background:
+linear-gradient(
+90deg,
+white,
+#59e6ff,
+#ae81ff
+);
+
+-webkit-background-clip:text;
+
+color:transparent;
+
 }
 
 .hero p{
-  max-width:700px;
-  margin:20px auto;
-  color:#aeb7d0;
-  line-height:1.6;
+
+max-width:650px;
+
+margin:25px auto;
+
+line-height:1.7;
+
+color:#8992ac;
+
 }
 
-.container{
-  width:92%;
-  max-width:1200px;
-  margin:auto;
-  padding:40px 0 70px;
+.actions{
+
+display:flex;
+
+gap:12px;
+
+justify-content:center;
+
+flex-wrap:wrap;
+
 }
 
-.title{
-  margin-bottom:25px;
-  font-size:28px;
+.modal{
+
+position:fixed;
+
+inset:0;
+
+background:#000b;
+
+display:grid;
+
+place-items:center;
+
+padding:20px;
+
+z-index:100;
+
 }
 
-.games{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:22px;
+.auth-box{
+
+width:min(430px,100%);
+
+padding:28px;
+
+border-radius:25px;
+
+}
+
+.close{
+
+float:right;
+
+background:none;
+
+border:0;
+
+color:#8d95a9;
+
+font-size:27px;
+
+}
+
+.auth-box h2{
+
+font-family:"Space Grotesk";
+
+font-size:28px;
+
+margin:8px 0 20px;
+
+}
+
+.tabs{
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+gap:5px;
+
+padding:5px;
+
+border-radius:12px;
+
+background:#ffffff08;
+
+margin-bottom:18px;
+
+}
+
+.tabs button{
+
+border:0;
+
+padding:11px;
+
+border-radius:9px;
+
+background:transparent;
+
+color:#788197;
+
+}
+
+.tabs button.active{
+
+background:#ffffff12;
+
+color:white;
+
+}
+
+.form{
+
+display:grid;
+
+gap:13px;
+
+}
+
+.input{
+
+width:100%;
+
+padding:13px;
+
+border-radius:12px;
+
+border:1px solid #ffffff17;
+
+background:#ffffff08;
+
+color:white;
+
+outline:none;
+
+}
+
+.input:focus{
+
+border-color:#59e6ff88;
+
+}
+
+.dashboard{
+
+min-height:
+calc(100vh - 75px);
+
+padding:25px;
+
+display:flex;
+
+gap:20px;
+
+}
+
+.sidebar{
+
+width:230px;
+
+height:max-content;
+
+padding:18px;
+
+border-radius:20px;
+
+}
+
+.sidebar h3{
+
+font-family:"Space Grotesk";
+
+margin-bottom:18px;
+
+}
+
+.side{
+
+width:100%;
+
+padding:12px;
+
+margin:4px 0;
+
+text-align:left;
+
+border:0;
+
+border-radius:10px;
+
+background:transparent;
+
+color:#7d869d;
+
+}
+
+.side:hover,
+.side.active{
+
+background:#59e6ff0d;
+
+color:#59e6ff;
+
+}
+
+.content{
+
+flex:1;
+
+}
+
+.top{
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+margin-bottom:20px;
+
+}
+
+.top h2{
+
+font-family:"Space Grotesk";
+
+font-size:28px;
+
+}
+
+.cards{
+
+display:grid;
+
+grid-template-columns:
+repeat(3,1fr);
+
+gap:15px;
+
+margin-bottom:20px;
+
 }
 
 .card{
-  background:linear-gradient(145deg,#111936,#080c1b);
-  border:1px solid #293453;
-  border-radius:20px;
-  padding:22px;
-  transition:.3s;
+
+padding:20px;
+
+border-radius:18px;
+
 }
 
-.card:hover{
-  transform:translateY(-6px);
-  border-color:#00eaff;
+.card small{
+
+color:#737d95;
+
 }
 
-.icon{
-  font-size:42px;
+.card h3{
+
+margin-top:8px;
+
+font-size:23px;
+
 }
 
-.card h2{
-  margin:10px 0 5px;
+.panel{
+
+padding:22px;
+
+border-radius:20px;
+
 }
 
-.time{
-  color:#00eaff;
-  margin:10px 0 20px;
-  font-size:14px;
+.panel h3{
+
+font-family:"Space Grotesk";
+
+margin-bottom:18px;
+
 }
 
-.mode{
-  margin:12px 0;
-  padding:14px;
-  background:#0b1228;
-  border:1px solid #263452;
-  border-radius:12px;
+table{
+
+width:100%;
+
+border-collapse:collapse;
+
 }
 
-.mode-top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+th,td{
+
+padding:12px 7px;
+
+text-align:left;
+
+border-bottom:
+1px solid #ffffff0d;
+
+font-size:12px;
+
 }
 
-.mode-name{
-  font-weight:bold;
-}
+th{
 
-.slot{
-  color:#aeb7d0;
-  font-size:13px;
-  margin-top:7px;
-}
+color:#707991;
 
-.full{
-  color:#ff6075;
-}
-
-.open{
-  color:#4cff9b;
 }
 
 .status{
-  margin-top:9px;
-  font-size:12px;
-  font-weight:bold;
+
+padding:5px 9px;
+
+border-radius:20px;
+
+font-size:10px;
+
 }
 
-.demo{
-  margin-top:35px;
-  padding:16px;
-  border-radius:12px;
-  background:#111827;
-  border:1px solid #334155;
-  color:#aeb7d0;
-  text-align:center;
-  font-size:13px;
+.pending{
+
+color:#ffd166;
+
+background:#ffd16615;
+
 }
 
-footer{
-  padding:25px;
-  text-align:center;
-  border-top:1px solid #202842;
-  color:#707a96;
+.accepted{
+
+color:#51e49a;
+
+background:#51e49a15;
+
 }
 
-@media(max-width:600px){
-  nav{
-    display:none;
-  }
+.rejected{
 
-  header{
-    justify-content:center;
-  }
+color:#ff6d83;
+
+background:#ff6d8315;
+
 }
+
+.footer{
+
+text-align:center;
+
+padding:30px;
+
+color:#596177;
+
+font-size:11px;
+
+}
+
+.staff{
+
+background:none;
+
+border:0;
+
+color:#596177;
+
+font-size:10px;
+
+margin-top:10px;
+
+}
+
+.toast{
+
+position:fixed;
+
+right:20px;
+
+bottom:20px;
+
+padding:14px 18px;
+
+border-radius:13px;
+
+background:#111729;
+
+border:1px solid #ffffff18;
+
+z-index:500;
+
+transform:translateY(100px);
+
+transition:.3s;
+
+}
+
+.toast.show{
+
+transform:translateY(0);
+
+}
+
+@media(max-width:800px){
+
+.dashboard{
+
+flex-direction:column;
+
+padding:15px;
+
+}
+
+.sidebar{
+
+width:100%;
+
+}
+
+.cards{
+
+grid-template-columns:1fr 1fr;
+
+}
+
+}
+
 </style>
+
 </head>
+
 
 <body>
 
-<header>
 
-  <div class="logo">
-    Xenvital<span>Tech</span>
-  </div>
+<!-- NAVBAR -->
 
-  <nav>
-    <a href="#tournaments">Tournaments</a>
-    <a href="#about">About</a>
-  </nav>
+<nav class="nav">
 
-</header>
+<div class="logo">
+
+Medi<span>Flow</span>+
+
+</div>
+
+<button
+class="btn primary"
+onclick="openAuth('signup')">
+
+Get Started
+
+</button>
+
+</nav>
 
 
-<section class="hero">
+<!-- HOME -->
 
-  <div class="badge">
-    ⚡ XENVITALTECH GAMING ARENA
-  </div>
+<section
+id="home"
+class="hero">
 
-  <h1>
-    PLAY. <span>COMPETE.</span> DOMINATE.
-  </h1>
+<div>
 
-  <p>
-    Compete in different gaming modes and tournaments.
-    Choose your game, mode and tournament time.
-  </p>
+<p style="color:#59e6ff;font-size:11px">
+
+SMART HEALTHCARE PLATFORM
+
+</p>
+
+<h1>
+
+Healthcare<br>
+
+<span class="gradient">
+
+Reimagined.
+
+</span>
+
+</h1>
+
+<p>
+
+Book appointments, manage your
+patient profile and stay connected
+with your healthcare team.
+
+</p>
+
+<div class="actions">
+
+<button
+class="btn primary"
+onclick="openAuth('signup')">
+
+Create Patient Account
+
+</button>
+
+<button
+class="btn"
+onclick="openAuth('signin')">
+
+Patient Login
+
+</button>
+
+</div>
+
+</div>
 
 </section>
 
 
-<main class="container" id="tournaments">
+<!-- PATIENT DASHBOARD -->
 
-<h2 class="title">🔥 Tournament Schedule</h2>
-
-
-<div class="games">
-
-
-<!-- FREE FIRE -->
-
-<div class="card">
-
-  <div class="icon">🔥</div>
-
-  <h2>Free Fire</h2>
-
-  <div class="time">
-    🎮 Multiple Tournament Times
-  </div>
+<section
+id="dashboard"
+class="dashboard hidden">
 
 
-  <div class="mode">
+<aside class="sidebar glass">
 
-    <div class="mode-top">
-      <span class="mode-name">Solo</span>
-      <span>🕐 5:00 PM</span>
-    </div>
+<h3>MediFlow</h3>
 
-    <div class="slot">
-      Slots: 48 / 48
-    </div>
+<button
+class="side active"
+onclick="showDashboard()">
 
-    <div class="status full">
-      🔴 SLOTS FULL
-    </div>
+◈ Dashboard
 
-  </div>
+</button>
+
+<button
+class="side"
+onclick="showProfile()">
+
+◎ My Profile
+
+</button>
+
+<button
+class="side"
+onclick="showAppointments()">
+
+◷ Appointments
+
+</button>
+
+<button
+class="side"
+onclick="logout()">
+
+↪ Logout
+
+</button>
+
+</aside>
 
 
-  <div class="mode">
+<main class="content">
 
-    <div class="mode-top">
-      <span class="mode-name">Duo</span>
-      <span>🕐 6:30 PM</span>
-    </div>
+<div class="top">
 
-    <div class="slot">
-      Teams: 24 / 24
-    </div>
+<div>
 
-    <div class="status full">
-      🔴 SLOTS FULL
-    </div>
+<small
+style="color:#59e6ff">
 
-  </div>
+PATIENT PORTAL
 
+</small>
 
-  <div class="mode">
+<h2 id="welcome">
 
-    <div class="mode-top">
-      <span class="mode-name">Squad</span>
-      <span>🕐 8:00 PM</span>
-    </div>
+Welcome
 
-    <div class="slot">
-      Teams: 12 / 12
-    </div>
-
-    <div class="status full">
-      🔴 SLOTS FULL
-    </div>
-
-  </div>
+</h2>
 
 </div>
 
+<button
+class="btn primary"
+onclick="openAppointment()">
 
-<!-- BGMI -->
++ Appointment
 
-<div class="card">
-
-  <div class="icon">🎯</div>
-
-  <h2>BGMI</h2>
-
-  <div class="time">
-    🎮 Multiple Tournament Times
-  </div>
-
-
-  <div class="mode">
-
-    <div class="mode-top">
-      <span class="mode-name">Solo</span>
-      <span>🕐 4:00 PM</span>
-    </div>
-
-    <div class="slot">
-      Slots: 100 / 100
-    </div>
-
-    <div class="status full">
-      🔴 SLOTS FULL
-    </div>
-
-  </div>
-
-
-  <div class="mode">
-
-    <div class="mode-top">
-      <span class="mode-name">Duo</span>
-      <span>🕐 7:00 PM</span>
-    </div>
-
-    <div class="slot">
-      Teams: 50 / 50
-    </div>
-
-    <div class="status full">
-      🔴 SLOTS FULL
-    </div>
-
-  </div>
-
-
-  <div class="mode">
-
-    <div class="mode-top">
-      <span class="mode-name">Squad</span>
-      <span>🕐 9:30 PM</span>
-    </div>
-
-    <div class="slot">
-      Teams: 25 / 25
-    </div>
-
-    <div class="status full">
-      🔴 SLOTS FULL
-    </div>
-
-  </div>
+</button>
 
 </div>
 
-
-<!-- COD MOBILE -->
-
-<div class="card">
-
-  <div class="icon">💀</div>
-
-  <h2>COD Mobile</h2>
-
-  <div class="time">
-    🎮 Multiple Tournament Times
-  </div>
-
-
-  <div class="mode">
-
-    <div class="mode-top">
-      <span class="mode-name">1v1</span>
-      <span>🕐 5:30 PM</span>
-    </div>
-
-    <div class="slot">
-      Slots: 32 / 32
-    </div>
-
-    <div class="status full">
-      🔴 SLOTS FULL
-    </div>
-
-  </div>
-
-
-  <div class="mode">
-
-    <div class="mode-top">
-      <span class="mode-name">2v2</span>
-      <span>🕐 7:30 PM</span>
-    </div>
-
-    <div class="slot">
-      Teams: 16 / 16
-    </div>
-
-    <div class="status full">
-      🔴 SLOTS FULL
-    </div>
-
-  </div>
-
-
-  <div class="mode">
-
-    <div class="mode-top">
-      <span class="mode-name">5v5</span>
-      <span>🕐 10:00 PM</span>
-    </div>
-
-    <div class="slot">
-      Teams: 8 / 8
-    </div>
-
-    <div class="status full">
-      🔴 SLOTS FULL
-    </div>
-
-  </div>
-
-</div>
-
-
-<!-- INDUS -->
-
-<div class="card">
-
-  <div class="icon">🚀</div>
-
-  <h2>INDUS</h2>
-
-  <div class="time">
-    🎮 Multiple Tournament Times
-  </div>
-
-
-  <div class="mode">
-
-    <div class="mode-top">
-      <span class="mode-name">Solo</span>
-      <span>🕐 6:00 PM</span>
-    </div>
-
-    <div class="slot">
-      Slots: 40 / 40
-    </div>
-
-    <div class="status full">
-      🔴 SLOTS FULL
-    </div>
-
-  </div>
-
-
-  <div class="mode">
-
-    <div class="mode-top">
-      <span class="mode-name">Duo</span>
-      <span>🕐 8:00 PM</span>
-    </div>
-
-    <div class="slot">
-      Teams: 20 / 20
-    </div>
-
-    <div class="status full">
-      🔴 SLOTS FULL
-    </div>
-
-  </div>
-
-
-  <div class="mode">
-
-    <div class="mode-top">
-      <span class="mode-name">Squad</span>
-      <span>🕐 9:45 PM</span>
-    </div>
-
-    <div class="slot">
-      Teams: 10 / 10
-    </div>
-
-    <div class="status full">
-      🔴 SLOTS FULL
-    </div>
-
-  </div>
-
-</div>
-
-
-<!-- VALORANT -->
-
-<div class="card">
-
-  <div class="icon">⚔️</div>
-
-  <h2>Valorant</h2>
-
-  <div class="time">
-    🎮 Multiple Tournament Times
-  </div>
-
-
-  <div class="mode">
-
-    <div class="mode-top">
-      <span class="mode-name">1v1</span>
-      <span>🕐 4:30 PM</span>
-    </div>
-
-    <div class="slot">
-      Slots: 32 / 32
-    </div>
-
-    <div class="status full">
-      🔴 SLOTS FULL
-    </div>
-
-  </div>
-
-
-  <div class="mode">
-
-    <div class="mode-top">
-      <span class="mode-name">5v5</span>
-      <span>🕐 8:30 PM</span>
-    </div>
-
-    <div class="slot">
-      Teams: 10 / 10
-    </div>
-
-    <div class="status full">
-      🔴 SLOTS FULL
-    </div>
-
-  </div>
-
-</div>
-
-
-<!-- APEX -->
-
-<div class="card">
-
-  <div class="icon">🏆</div>
-
-  <h2>Apex Legends</h2>
-
-  <div class="time">
-    🎮 Multiple Tournament Times
-  </div>
-
-
-  <div class="mode">
-
-    <div class="mode-top">
-      <span class="mode-name">Duo</span>
-      <span>🕐 6:45 PM</span>
-    </div>
-
-    <div class="slot">
-      Teams: 20 / 20
-    </div>
-
-    <div class="status full">
-      🔴 SLOTS FULL
-    </div>
-
-  </div>
-
-
-  <div class="mode">
-
-    <div class="mode-top">
-      <span class="mode-name">Squad</span>
-      <span>🕐 9:00 PM</span>
-    </div>
-
-    <div class="slot">
-      Teams: 15 / 15
-    </div>
-
-    <div class="status full">
-      🔴 SLOTS FULL
-    </div>
-
-  </div>
-
-</div>
-
-
-</div>
-
-
-<div class="demo">
-
-⚠️ <b>Demo Notice:</b>
-Tournament times, slot counts and availability displayed
-on this page are sample UI data. This demo does not process
-entry fees or payments.
-
-</div>
+<div id="content"></div>
 
 </main>
 
+</section>
 
-<footer id="about">
 
-© 2026 XenvitalTech Gaming Arena
+<!-- AUTH MODAL -->
+
+<div
+id="authModal"
+class="modal hidden">
+
+<div class="auth-box glass">
+
+<button
+class="close"
+onclick="closeAuth()">
+
+×
+
+</button>
+
+<p style="color:#59e6ff;font-size:10px">
+
+PATIENT ACCESS
+
+</p>
+
+<h2 id="authTitle">
+
+Patient Sign Up
+
+</h2>
+
+
+<div class="tabs">
+
+<button
+id="signupTab"
+onclick="switchAuth('signup')">
+
+Sign Up
+
+</button>
+
+<button
+id="signinTab"
+onclick="switchAuth('signin')">
+
+Sign In
+
+</button>
+
+</div>
+
+
+<form
+id="authForm"
+class="form">
+
+</form>
+
+</div>
+
+</div>
+
+
+<!-- APPOINTMENT MODAL -->
+
+<div
+id="appointmentModal"
+class="modal hidden">
+
+<div class="auth-box glass">
+
+<button
+class="close"
+onclick="closeAppointment()">
+
+×
+
+</button>
+
+<p style="color:#59e6ff;font-size:10px">
+
+APPOINTMENT
+
+</p>
+
+<h2>
+
+Book Appointment
+
+</h2>
+
+
+<form
+id="appointmentForm"
+class="form">
+
+
+<input
+class="input"
+id="doctor"
+placeholder="Doctor name"
+required>
+
+
+<input
+class="input"
+id="department"
+placeholder="Department"
+required>
+
+
+<input
+class="input"
+id="appointmentDate"
+type="date"
+required>
+
+
+<input
+class="input"
+id="appointmentTime"
+type="time"
+required>
+
+
+<textarea
+class="input"
+id="reason"
+placeholder="Reason for visit"
+rows="3">
+</textarea>
+
+
+<button
+class="btn primary">
+
+Book Appointment
+
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+
+<footer class="footer">
+
+MediFlow+ © 2026
+
+<br>
+
+<button
+class="staff"
+onclick="staffLogin()">
+
+Staff Login
+
+</button>
 
 </footer>
 
+
+<div
+id="toast"
+class="toast">
+</div>
+
+
+<script>
+
+/* =====================================
+SUPABASE
+===================================== */
+
+const SUPABASE_URL =
+"https://dadcweenzllthiitmcsn.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_mH1OVr0JDRR28Q8uhS1Big_lE078uIW";
+
+const db =
+window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
+
+let currentUser=null;
+
+let currentProfile=null;
+
+
+/* =====================================
+TOAST
+===================================== */
+
+function toast(message){
+
+const box =
+document.getElementById("toast");
+
+box.textContent=message;
+
+box.classList.add("show");
+
+setTimeout(()=>{
+
+box.classList.remove("show");
+
+},4000);
+
+}
+
+
+/* =====================================
+AUTH UI
+===================================== */
+
+function openAuth(mode){
+
+document
+.getElementById("authModal")
+.classList.remove("hidden");
+
+switchAuth(mode);
+
+}
+
+
+function closeAuth(){
+
+document
+.getElementById("authModal")
+.classList.add("hidden");
+
+}
+
+
+function switchAuth(mode){
+
+const signup =
+document.getElementById("signupTab");
+
+const signin =
+document.getElementById("signinTab");
+
+signup.classList.toggle(
+"active",
+mode==="signup"
+);
+
+signin.classList.toggle(
+"active",
+mode==="signin"
+);
+
+
+document.getElementById(
+"authTitle"
+).textContent =
+mode==="signup"
+?
+"Create Patient Account"
+:
+"Patient Sign In";
+
+
+const form =
+document.getElementById("authForm");
+
+
+if(mode==="signup"){
+
+form.innerHTML=`
+
+<input
+class="input"
+id="name"
+placeholder="Full name"
+required>
+
+<input
+class="input"
+id="email"
+type="email"
+placeholder="Email address"
+required>
+
+<input
+class="input"
+id="phone"
+placeholder="Phone number"
+required>
+
+<input
+class="input"
+id="dob"
+type="date"
+required>
+
+<input
+class="input"
+id="password"
+type="password"
+placeholder="Password"
+minlength="6"
+required>
+
+<button
+class="btn primary"
+type="submit">
+
+Create Account
+
+</button>
+
+`;
+
+form.onsubmit=signup;
+
+}else{
+
+form.innerHTML=`
+
+<input
+class="input"
+id="email"
+type="email"
+placeholder="Email address"
+required>
+
+<input
+class="input"
+id="password"
+type="password"
+placeholder="Password"
+required>
+
+<button
+class="btn primary"
+type="submit">
+
+Sign In
+
+</button>
+
+`;
+
+form.onsubmit=signin;
+
+}
+
+}
+
+
+/* =====================================
+SIGN UP
+===================================== */
+
+async function signup(event){
+
+event.preventDefault();
+
+
+const name =
+document.getElementById("name")
+.value.trim();
+
+const email =
+document.getElementById("email")
+.value.trim();
+
+const phone =
+document.getElementById("phone")
+.value.trim();
+
+const dob =
+document.getElementById("dob")
+.value;
+
+const password =
+document.getElementById("password")
+.value;
+
+
+if(!name ||
+!email ||
+!phone ||
+!dob ||
+!password){
+
+toast(
+"❌ Please fill all fields"
+);
+
+return;
+
+}
+
+
+if(password.length < 6){
+
+toast(
+"❌ Password must contain at least 6 characters"
+);
+
+return;
+
+}
+
+
+toast(
+"Creating your account..."
+);
+
+
+const {
+data,
+error
+} =
+await db.auth.signUp({
+
+email:email,
+
+password:password,
+
+options:{
+
+data:{
+
+full_name:name,
+
+phone:phone,
+
+dob:dob,
+
+role:"patient"
+
+}
+
+}
+
+});
+
+
+if(error){
+
+console.error(
+"SUPABASE SIGNUP ERROR:",
+error
+);
+
+toast(
+"❌ "+error.message
+);
+
+return;
+
+}
+
+
+if(!data.user){
+
+toast(
+"❌ Unable to create account"
+);
+
+return;
+
+}
+
+
+/*
+EMAIL CONFIRMATION ENABLED
+*/
+
+if(!data.session){
+
+closeAuth();
+
+toast(
+"✅ Account created! Please check your email and verify your account before signing in."
+);
+
+return;
+
+}
+
+
+/*
+EMAIL CONFIRMATION DISABLED
+*/
+
+toast(
+"✅ Account created successfully!"
+);
+
+closeAuth();
+
+await loadUser();
+
+
+}
+
+
+/* =====================================
+SIGN IN
+===================================== */
+
+async function signin(event){
+
+event.preventDefault();
+
+
+const email =
+document.getElementById("email")
+.value.trim();
+
+const password =
+document.getElementById("password")
+.value;
+
+
+if(!email || !password){
+
+toast(
+"❌ Enter email and password"
+);
+
+return;
+
+}
+
+
+toast(
+"Signing in..."
+);
+
+
+const {
+data,
+error
+} =
+await db.auth.signInWithPassword({
+
+email:email,
+
+password:password
+
+});
+
+
+if(error){
+
+console.error(
+"LOGIN ERROR:",
+error
+);
+
+if(
+error.message
+.toLowerCase()
+.includes("email not confirmed")
+){
+
+toast(
+"❌ Please verify your email first."
+);
+
+}else{
+
+toast(
+"❌ "+error.message
+);
+
+}
+
+return;
+
+}
+
+
+currentUser=data.user;
+
+
+toast(
+"✅ Login successful!"
+);
+
+closeAuth();
+
+
+await loadUser();
+
+}
+
+
+/* =====================================
+LOAD USER
+===================================== */
+
+async function loadUser(){
+
+const {
+data:{
+user
+}
+} =
+await db.auth.getUser();
+
+
+if(!user){
+
+return;
+
+}
+
+
+currentUser=user;
+
+
+const {
+data:profile,
+error
+} =
+await db
+.from("profiles")
+.select("*")
+.eq("id",user.id)
+.maybeSingle();
+
+
+if(error){
+
+console.error(error);
+
+toast(
+"❌ "+error.message
+);
+
+return;
+
+}
+
+
+/*
+Normally the database trigger
+has already created this profile.
+*/
+
+if(!profile){
+
+toast(
+"⚠️ Profile is still being created. Please refresh."
+);
+
+return;
+
+}
+
+
+currentProfile=profile;
+
+
+document
+.getElementById("home")
+.classList.add("hidden");
+
+
+document
+.getElementById("dashboard")
+.classList.remove("hidden");
+
+
+showDashboard();
+
+}
+
+
+/* =====================================
+DASHBOARD
+===================================== */
+
+async function showDashboard(){
+
+if(!currentProfile){
+
+await loadUser();
+
+return;
+
+}
+
+
+document
+.getElementById("welcome")
+.textContent =
+"Welcome, "+
+currentProfile.full_name;
+
+
+const {
+data:appointments
+} =
+await db
+.from("appointments")
+.select("*")
+.eq(
+"patient_id",
+currentUser.id
+)
+.order(
+"created_at",
+{ascending:false}
+);
+
+
+const list =
+appointments || [];
+
+
+document
+.getElementById("content")
+.innerHTML=`
+
+<div class="cards">
+
+<div class="card glass">
+
+<small>
+Appointments
+</small>
+
+<h3>
+${list.length}
+</h3>
+
+</div>
+
+
+<div class="card glass">
+
+<small>
+Hospital Status
+</small>
+
+<h3 style="font-size:16px">
+
+${currentProfile.hospital_status}
+
+</h3>
+
+</div>
+
+
+<div class="card glass">
+
+<small>
+Account
+</small>
+
+<h3 style="font-size:16px">
+
+Active
+
+</h3>
+
+</div>
+
+</div>
+
+
+<div class="panel glass">
+
+<h3>
+Recent Appointments
+</h3>
+
+${
+list.length
+?
+`
+
+<table>
+
+<tr>
+
+<th>
+Doctor
+</th>
+
+<th>
+Department
+</th>
+
+<th>
+Date
+</th>
+
+<th>
+Status
+</th>
+
+</tr>
+
+${list.map(a=>`
+
+<tr>
+
+<td>
+Dr. ${safe(a.doctor)}
+</td>
+
+<td>
+${safe(a.department)}
+</td>
+
+<td>
+${a.appointment_date}
+</td>
+
+<td>
+
+<span
+class="status
+${String(a.status).toLowerCase()}">
+
+${safe(a.status)}
+
+</span>
+
+</td>
+
+</tr>
+
+`).join("")}
+
+</table>
+
+`
+:
+`
+<p style="color:#707991">
+No appointments yet.
+</p>
+`
+}
+
+</div>
+
+`;
+
+}
+
+
+/* =====================================
+PROFILE
+===================================== */
+
+function showProfile(){
+
+document
+.getElementById("content")
+.innerHTML=`
+
+<div class="panel glass">
+
+<h3>
+My Profile
+</h3>
+
+<form
+class="form"
+onsubmit="updateProfile(event)">
+
+<input
+class="input"
+id="profileName"
+value="${safe(currentProfile.full_name)}"
+placeholder="Full name"
+required>
+
+<input
+class="input"
+id="profilePhone"
+value="${safe(currentProfile.phone)}"
+placeholder="Phone">
+
+<input
+class="input"
+value="${safe(currentProfile.email)}"
+disabled>
+
+<input
+class="input"
+id="profileDob"
+type="date"
+value="${currentProfile.dob || ""}">
+
+<button
+class="btn primary">
+
+Save Changes
+
+</button>
+
+</form>
+
+</div>
+
+`;
+
+}
+
+
+/* =====================================
+UPDATE PROFILE
+===================================== */
+
+async function updateProfile(event){
+
+event.preventDefault();
+
+
+const name =
+document.getElementById("profileName")
+.value.trim();
+
+const phone =
+document.getElementById("profilePhone")
+.value.trim();
+
+const dob =
+document.getElementById("profileDob")
+.value;
+
+
+const {
+data,
+error
+} =
+await db
+.from("profiles")
+.update({
+
+full_name:name,
+
+phone:phone,
+
+dob:dob || null
+
+})
+.eq(
+"id",
+currentUser.id
+)
+.select()
+.single();
+
+
+if(error){
+
+toast(
+"❌ "+error.message
+);
+
+return;
+
+}
+
+
+currentProfile=data;
+
+toast(
+"✅ Profile updated!"
+);
+
+showDashboard();
+
+}
+
+
+/* =====================================
+APPOINTMENTS
+===================================== */
+
+async function showAppointments(){
+
+const {
+data,
+error
+} =
+await db
+.from("appointments")
+.select("*")
+.eq(
+"patient_id",
+currentUser.id
+)
+.order(
+"created_at",
+{ascending:false}
+);
+
+
+if(error){
+
+toast(
+"❌ "+error.message
+);
+
+return;
+
+}
+
+
+document
+.getElementById("content")
+.innerHTML=`
+
+<div class="panel glass">
+
+<h3>
+My Appointments
+</h3>
+
+${
+data.length
+?
+`
+
+<table>
+
+<tr>
+
+<th>Doctor</th>
+
+<th>Department</th>
+
+<th>Date</th>
+
+<th>Time</th>
+
+<th>Status</th>
+
+</tr>
+
+${data.map(a=>`
+
+<tr>
+
+<td>
+Dr. ${safe(a.doctor)}
+</td>
+
+<td>
+${safe(a.department)}
+</td>
+
+<td>
+${a.appointment_date}
+</td>
+
+<td>
+${a.appointment_time}
+</td>
+
+<td>
+
+<span
+class="status
+${String(a.status).toLowerCase()}">
+
+${safe(a.status)}
+
+</span>
+
+</td>
+
+</tr>
+
+`).join("")}
+
+</table>
+
+`
+:
+`
+<p style="color:#707991">
+No appointments found.
+</p>
+`
+}
+
+</div>
+
+`;
+
+}
+
+
+/* =====================================
+APPOINTMENT MODAL
+===================================== */
+
+function openAppointment(){
+
+document
+.getElementById("appointmentModal")
+.classList.remove("hidden");
+
+}
+
+
+function closeAppointment(){
+
+document
+.getElementById("appointmentModal")
+.classList.add("hidden");
+
+}
+
+
+document
+.getElementById("appointmentForm")
+.addEventListener(
+"submit",
+async function(event){
+
+event.preventDefault();
+
+
+const doctor =
+document.getElementById("doctor")
+.value.trim();
+
+const department =
+document.getElementById("department")
+.value.trim();
+
+const date =
+document.getElementById("appointmentDate")
+.value;
+
+const time =
+document.getElementById("appointmentTime")
+.value;
+
+const reason =
+document.getElementById("reason")
+.value.trim();
+
+
+const {
+error
+} =
+await db
+.from("appointments")
+.insert({
+
+patient_id:currentUser.id,
+
+doctor:doctor,
+
+department:department,
+
+appointment_date:date,
+
+appointment_time:time,
+
+reason:reason,
+
+status:"Pending"
+
+});
+
+
+if(error){
+
+toast(
+"❌ "+error.message
+);
+
+return;
+
+}
+
+
+this.reset();
+
+closeAppointment();
+
+toast(
+"✅ Appointment booked!"
+);
+
+showAppointments();
+
+}
+);
+
+
+/* =====================================
+LOGOUT
+===================================== */
+
+async function logout(){
+
+await db.auth.signOut();
+
+currentUser=null;
+
+currentProfile=null;
+
+
+document
+.getElementById("dashboard")
+.classList.add("hidden");
+
+
+document
+.getElementById("home")
+.classList.remove("hidden");
+
+
+toast(
+"✅ Logged out"
+);
+
+}
+
+
+/* =====================================
+STAFF
+===================================== */
+
+function staffLogin(){
+
+toast(
+"Staff login will use a separate secure portal."
+);
+
+}
+
+
+/* =====================================
+SECURITY / HTML ESCAPE
+===================================== */
+
+function safe(value){
+
+return String(value || "")
+.replaceAll("&","&amp;")
+.replaceAll("<","&lt;")
+.replaceAll(">","&gt;")
+.replaceAll('"',"&quot;")
+.replaceAll("'","&#039;");
+
+}
+
+
+/* =====================================
+RESTORE LOGIN
+===================================== */
+
+async function restoreSession(){
+
+const {
+data:{
+session
+}
+} =
+await db.auth.getSession();
+
+
+if(session){
+
+await loadUser();
+
+}
+
+}
+
+
+restoreSession();
+
+</script>
+
 </body>
+
 </html>
