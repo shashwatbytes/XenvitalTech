@@ -1,5 +1,4 @@
 export default async function handler(req, res) {
-  // Only POST requests
   if (req.method !== "POST") {
     return res.status(405).json({
       error: "Method not allowed"
@@ -7,114 +6,75 @@ export default async function handler(req, res) {
   }
 
   try {
-    const body = req.body || {};
+    const { message } = req.body || {};
 
-    // Accept:
-    // { message: "Hello" }
-    // OR
-    // { messages: [{ role: "user", content: "Hello" }] }
-
-    let messages = [];
-
-    if (Array.isArray(body.messages)) {
-      messages = body.messages;
-    }
-
-    if (
-      messages.length === 0 &&
-      typeof body.message === "string" &&
-      body.message.trim()
-    ) {
-      messages = [
-        {
-          role: "user",
-          content: body.message.trim()
-        }
-      ];
-    }
-
-    // Validate messages
-    messages = messages
-      .filter(
-        (msg) =>
-          msg &&
-          (msg.role === "user" || msg.role === "assistant") &&
-          typeof msg.content === "string" &&
-          msg.content.trim()
-      )
-      .slice(-20)
-      .map((msg) => ({
-        role: msg.role,
-        content: msg.content.trim()
-      }));
-
-    if (messages.length === 0) {
+    if (!message || typeof message !== "string") {
       return res.status(400).json({
-        error: "Message is required."
+        error: "Message is required"
       });
     }
 
-    // Check API key
-    if (!process.env.OPENAI_API_KEY) {
+    if (!process.env.OPENROUTER_API_KEY) {
       return res.status(500).json({
-        error:
-          "OPENAI_API_KEY is missing in Vercel Environment Variables."
+        error: "OPENROUTER_API_KEY is missing in Vercel"
       });
     }
 
-    // OpenAI Responses API
     const response = await fetch(
-      "https://api.openai.com/v1/responses",
+      "https://openrouter.ai/api/v1/chat/completions",
       {
         method: "POST",
-
         headers: {
+          "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
           "Content-Type": "application/json",
-          "Authorization":
-            `Bearer ${process.env.OPENAI_API_KEY}`
+          "HTTP-Referer": "https://xenvital-tech.vercel.app",
+          "X-Title": "XenvitalTech AI"
         },
-
         body: JSON.stringify({
-          model: "gpt-5.6",
-
-          instructions:
-            "You are XenvitalTech AI by ShashwatBytes. " +
-            "Be helpful, friendly, accurate and concise. " +
-            "Help users with coding, study, projects, writing, " +
-            "problem solving and general questions.",
-
-          input: messages
+          model: "openai/gpt-4o-mini",
+          messages: [
+            {
+              role: "system",
+              content:
+                "You are XenvitalTech AI by ShashwatBytes. Give helpful, clear and accurate answers. Help with coding, study, projects, writing and problem solving."
+            },
+            {
+              role: "user",
+              content: message
+            }
+          ]
         })
       }
     );
 
     const data = await response.json();
 
-    // OpenAI returned an error
     if (!response.ok) {
-      console.error("OpenAI Error:", data);
-
       return res.status(response.status).json({
         error:
           data?.error?.message ||
-          "OpenAI API request failed."
+          "OpenRouter API request failed"
       });
     }
 
-    // Successful response
+    const reply =
+      data?.choices?.[0]?.message?.content;
+
+    if (!reply) {
+      return res.status(500).json({
+        error: "No AI response received"
+      });
+    }
+
     return res.status(200).json({
-      reply:
-        data?.output_text ||
-        "Sorry, I could not generate a response."
+      reply: reply
     });
 
   } catch (error) {
-    console.error("Server Error:", error);
+    console.error("OpenRouter error:", error);
 
     return res.status(500).json({
-      error:
-        error?.message ||
-        "Internal server error."
+      error: "AI connection failed"
     });
   }
 }
