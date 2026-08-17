@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
 <title>XenvitalTech AI — ShashwatBytes</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:Inter,Arial,sans-serif}
@@ -20,56 +20,48 @@ button,input{font:inherit}button{cursor:pointer}
 label{display:block;font-size:12px;font-weight:600;margin:14px 0 7px}
 input{width:100%;padding:13px;border:1px solid var(--border);border-radius:11px;outline:none;background:var(--bg);color:var(--text)}
 input:focus{border-color:var(--primary)}
-.primary{width:100%;border:0;padding:13px;margin-top:20px;border-radius:11px;background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;font-weight:700}
-.switch{text-align:center;margin-top:18px;font-size:13px;color:var(--muted)}
-.switch span{color:var(--primary);cursor:pointer;font-weight:700}
+.primary{width:100%;border:0;padding:13px;margin-top:20px;border-radius:11px;background:linear-gradient(135deg,var(--primary),var(--secondary));color:white;font-weight:700}
+.switch{text-align:center;margin-top:18px;font-size:13px;color:var(--muted)}.switch span{color:var(--primary);cursor:pointer;font-weight:700}
 .error{color:var(--danger);font-size:12px;margin-top:10px}
-.app{display:none;height:100vh}
-.sidebar{width:275px;background:var(--card);border-right:1px solid var(--border);padding:18px;display:flex;flex-direction:column}
-.brand{display:flex;gap:10px;align-items:center;margin-bottom:22px}
-.logo{width:43px;height:43px;border-radius:13px}.brand h2{font-size:16px}.brand small{color:var(--muted)}
-.new-chat{border:0;background:var(--primary);color:#fff;padding:12px;border-radius:11px;font-weight:600;margin-bottom:18px}
+.app{display:none;height:100vh;overflow:hidden}
+.sidebar{width:275px;flex:none;background:var(--card);border-right:1px solid var(--border);padding:18px;display:flex;flex-direction:column}
+.brand{display:flex;gap:10px;align-items:center;margin-bottom:22px}.logo{width:43px;height:43px;border-radius:13px}
+.brand h2{font-size:16px}.brand small{color:var(--muted)}
+.new-chat{border:0;background:var(--primary);color:white;padding:12px;border-radius:11px;font-weight:600;margin-bottom:18px}
 .nav-title{color:var(--muted);font-size:11px;text-transform:uppercase;margin:10px 4px}
 .nav-btn{width:100%;padding:12px;background:transparent;color:var(--text);border:0;border-radius:10px;text-align:left;margin-bottom:4px}
 .nav-btn:hover,.nav-btn.active{background:var(--bot)}
 .sidebar-bottom{margin-top:auto;border-top:1px solid var(--border);padding-top:10px}
-.profile-mini{display:flex;align-items:center;gap:10px;padding:10px}
-.avatar{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,var(--primary),var(--secondary));font-weight:700;flex:none}
-.profile-mini div:last-child{min-width:0}.profile-mini strong{display:block;font-size:13px}
-.profile-mini span{display:block;color:var(--muted);font-size:11px;overflow:hidden;text-overflow:ellipsis}
+.profile-mini{display:flex;align-items:center;gap:10px;padding:10px}.avatar{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:white;background:linear-gradient(135deg,var(--primary),var(--secondary));font-weight:700;flex:none}
+.profile-mini strong{display:block;font-size:13px}.profile-mini span{display:block;color:var(--muted);font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:170px}
 .logout{width:100%;padding:10px;border:0;background:transparent;color:var(--danger);text-align:left;border-radius:9px}
-.main{flex:1;display:flex;flex-direction:column;min-width:0}
-.topbar{height:65px;padding:0 20px;background:var(--card);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
-.page-title{font-weight:700}.top-actions{display:flex;gap:8px}
-.icon{width:38px;height:38px;border:1px solid var(--border);border-radius:10px;background:var(--card);color:var(--text)}
+.main{flex:1;display:flex;flex-direction:column;min-width:0;height:100%}
+.topbar{height:65px;flex:none;padding:0 20px;background:var(--card);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.page-title{font-weight:700}.top-actions{display:flex;gap:8px}.icon{width:38px;height:38px;border:1px solid var(--border);border-radius:10px;background:var(--card);color:var(--text)}
 .view{display:none;flex:1;min-height:0}.view.active{display:flex;flex-direction:column}
-.ai-chat{flex:1;overflow-y:auto;padding:30px 20px 30px}
-.messages{max-width:850px;margin:auto}.message{display:flex;gap:10px;margin:18px 0}.message.user{flex-direction:row-reverse}
+.ai-chat{flex:1;overflow-y:auto;padding:30px 20px 20px}.messages{max-width:850px;margin:auto}
+.message{display:flex;gap:10px;margin:18px 0}.message.user{flex-direction:row-reverse}
 .bubble{max-width:75%;padding:12px 15px;border-radius:14px;line-height:1.55;font-size:14px;white-space:pre-wrap;overflow-wrap:anywhere}
-.bot .bubble{background:var(--bot);border-top-left-radius:4px}.user .bubble{background:var(--primary);color:#fff;border-top-right-radius:4px}
+.bot .bubble{background:var(--bot);border-top-left-radius:4px}.user .bubble{background:var(--primary);color:white;border-top-right-radius:4px}
 .input-area{padding:12px 20px 18px;border-top:1px solid var(--border);background:var(--card)}
-.input-box{max-width:850px;margin:auto;display:flex;gap:8px}.input-box input{flex:1}.send{width:48px;border:0;border-radius:11px;color:#fff;background:var(--primary)}
+.input-box{max-width:850px;margin:auto;display:flex;gap:8px}.input-box input{flex:1}.send{width:48px;flex:none;border:0;border-radius:11px;color:white;background:var(--primary)}
+.send:disabled{opacity:.55;cursor:not-allowed}
 .friends{padding:30px;overflow-y:auto}.search-box{max-width:650px;display:flex;gap:8px;margin-top:20px}.search-box input{flex:1}
-.search-btn{border:0;padding:0 18px;border-radius:11px;background:var(--primary);color:#fff}
+.search-btn,.chat-btn{border:0;background:var(--primary);color:white;border-radius:11px}.search-btn{padding:0 18px}
 .friend-result{max-width:650px;margin-top:18px;padding:15px;background:var(--card);border:1px solid var(--border);border-radius:14px;display:flex;align-items:center;justify-content:space-between;gap:12px}
-.friend-info{display:flex;gap:10px;align-items:center;min-width:0}.chat-btn{border:0;background:var(--primary);color:#fff;padding:9px 14px;border-radius:9px}
+.friend-info{display:flex;gap:10px;align-items:center}.chat-btn{padding:9px 14px}
 .private-header{padding:15px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;background:var(--card)}
 .private-messages{flex:1;overflow-y:auto;padding:20px}.private-input{padding:12px 20px;background:var(--card);border-top:1px solid var(--border);display:flex;gap:8px}.private-input input{flex:1}
+.empty{color:var(--muted);text-align:center;padding:40px 15px}.typing{opacity:.7;font-style:italic}
 .mobile-nav{display:none}
+.nav-icon{display:inline-block;width:25px;text-align:center}
 @media(max-width:750px){
- .sidebar{display:none}
- .topbar{padding:0 12px}
- .friends{padding:20px 13px}
- .ai-chat{padding:20px 12px 15px}
- .input-area{padding:10px}
- .bubble{max-width:84%}
- .mobile-nav{display:flex;height:62px;background:var(--card);border-top:1px solid var(--border);position:relative;z-index:10}
- .mobile-nav button{flex:1;border:0;background:transparent;color:var(--muted);font-size:11px}
- .mobile-nav button.active{color:var(--primary);font-weight:700;background:var(--bot)}
- .app{height:100dvh}
- .friend-result{align-items:flex-start}
- .search-box{flex-direction:row}
- .search-btn{padding:0 13px}
+ .app{height:100dvh}.sidebar{display:none}.topbar{height:60px;padding:0 12px}
+ .main{padding-bottom:70px}.mobile-nav{position:fixed;z-index:50;bottom:0;left:0;right:0;height:70px;display:flex;background:var(--card);border-top:1px solid var(--border);padding:6px env(safe-area-inset-right) calc(6px + env(safe-area-inset-bottom)) env(safe-area-inset-left)}
+ .mobile-nav button{flex:1;border:0;background:transparent;color:var(--muted);font-size:11px;border-radius:10px}.mobile-nav button.active{color:var(--primary);background:var(--bot);font-weight:700}
+ .mobile-nav .nav-icon{display:block;width:auto;font-size:20px;margin-bottom:2px}
+ .friends{padding:20px 13px}.ai-chat{padding:20px 12px 12px}.input-area{padding:10px}.bubble{max-width:84%}
+ .private-input{padding:10px}.private-messages{padding:14px}.friend-result{padding:12px}
 }
 </style>
 </head>
@@ -82,22 +74,17 @@ input:focus{border-color:var(--primary)}
 <div class="auth-subtitle">AI Assistant by ShashwatBytes</div>
 
 <form class="form active" id="loginForm">
-<label>Email</label>
-<input id="loginEmail" type="email" placeholder="Enter your email" required>
-<label>Password</label>
-<input id="loginPassword" type="password" placeholder="Enter your password" required>
+<label>Email</label><input id="loginEmail" type="email" placeholder="Enter your email" required>
+<label>Password</label><input id="loginPassword" type="password" placeholder="Enter your password" required>
 <div class="error" id="loginError"></div>
 <button class="primary">Login</button>
 <div class="switch">New to XenvitalTech? <span onclick="showSignup()">Create account</span></div>
 </form>
 
 <form class="form" id="signupForm">
-<label>Username</label>
-<input id="signupUsername" type="text" placeholder="@yourusername" minlength="3" required>
-<label>Email</label>
-<input id="signupEmail" type="email" placeholder="Enter your email" required>
-<label>Password</label>
-<input id="signupPassword" type="password" placeholder="Create password" minlength="6" required>
+<label>Username</label><input id="signupUsername" type="text" placeholder="@yourusername" minlength="3" maxlength="30" required>
+<label>Email</label><input id="signupEmail" type="email" placeholder="Enter your email" required>
+<label>Password</label><input id="signupPassword" type="password" placeholder="Create password" minlength="6" required>
 <div class="error" id="signupError"></div>
 <button class="primary">Create Account</button>
 <div class="switch">Already have an account? <span onclick="showLogin()">Login</span></div>
@@ -110,23 +97,20 @@ input:focus{border-color:var(--primary)}
 <div class="brand"><div class="logo">X</div><div><h2>XenvitalTech</h2><small>by ShashwatBytes</small></div></div>
 <button class="new-chat" onclick="newAIChat()">＋ New AI Chat</button>
 <div class="nav-title">Workspace</div>
-<button class="nav-btn active" id="aiNav" onclick="showView('ai')">🤖 XenvitalTech AI</button>
-<button class="nav-btn" id="friendsNav" onclick="showView('friends')">👥 Find Friends</button>
-<button class="nav-btn" id="profileNav" onclick="showView('profile')">👤 My Profile</button>
+<button class="nav-btn active" id="aiNav" onclick="showView('ai')"><span class="nav-icon">🤖</span> XenvitalTech AI</button>
+<button class="nav-btn" id="friendsNav" onclick="showView('friends')"><span class="nav-icon">👥</span> Find Friends</button>
+<button class="nav-btn" id="profileNav" onclick="showView('profile')"><span class="nav-icon">👤</span> My Profile</button>
 <div class="sidebar-bottom">
-<div class="profile-mini"><div class="avatar" id="miniAvatar">U</div><div><strong id="miniUsername">User</strong><span id="miniEmail">email</span></div></div>
+<div class="profile-mini"><div class="avatar" id="miniAvatar">U</div><div><strong id="miniUsername">@user</strong><span id="miniEmail">email</span></div></div>
 <button class="logout" onclick="logout()">↪ Logout</button>
 </div>
 </aside>
 
 <main class="main">
-<header class="topbar">
-<div class="page-title" id="pageTitle">XenvitalTech AI</div>
-<div class="top-actions"><button class="icon" onclick="toggleTheme()">◐</button></div>
-</header>
+<header class="topbar"><div class="page-title" id="pageTitle">XenvitalTech AI</div><div class="top-actions"><button class="icon" onclick="toggleTheme()" aria-label="Toggle theme">◐</button></div></header>
 
 <section class="view active" id="aiView">
-<div class="ai-chat"><div class="messages" id="aiMessages">
+<div class="ai-chat" id="aiScroll"><div class="messages" id="aiMessages">
 <div class="message bot"><div class="avatar">X</div><div class="bubble">XenvitalTech AI by ShashwatBytes
 
 Hello! 👋
@@ -138,19 +122,16 @@ I can help you with coding, study, projects, writing and problem solving.
 What would you like to do today? 🚀</div></div>
 </div></div>
 <div class="input-area"><div class="input-box">
-<input id="aiInput" placeholder="Ask XenvitalTech anything..." onkeydown="aiEnter(event)">
-<button class="send" onclick="sendAI()">➤</button>
+<input id="aiInput" placeholder="Ask XenvitalTech anything..." onkeydown="aiEnter(event)" autocomplete="off">
+<button class="send" id="aiSend" onclick="sendAI()">➤</button>
 </div></div>
 </section>
 
 <section class="view" id="friendsView">
 <div class="friends">
 <h2>Find Friends 👥</h2>
-<p style="color:var(--muted);margin-top:7px">Search a user by their username.</p>
-<div class="search-box">
-<input id="friendSearch" placeholder="Search @username" onkeydown="friendEnter(event)">
-<button class="search-btn" onclick="searchFriend()">Search</button>
-</div>
+<p style="color:var(--muted);margin-top:7px">Search a registered username and start a private chat.</p>
+<div class="search-box"><input id="friendSearch" placeholder="Search @username" onkeydown="friendEnter(event)"><button class="search-btn" onclick="searchFriend()">Search</button></div>
 <div id="friendResult"></div>
 </div>
 </section>
@@ -158,250 +139,141 @@ What would you like to do today? 🚀</div></div>
 <section class="view" id="privateView">
 <div class="private-header">
 <button class="icon" onclick="showView('friends')">←</button>
-<div class="avatar" id="privateAvatar">F</div>
-<strong id="privateUsername">Friend</strong>
+<div class="avatar" id="privateAvatar">F</div><strong id="privateUsername">@friend</strong>
 </div>
 <div class="private-messages" id="privateMessages"></div>
-<div class="private-input">
-<input id="privateInput" placeholder="Write a message..." onkeydown="privateEnter(event)">
-<button class="send" onclick="sendPrivateMessage()">➤</button>
-</div>
+<div class="private-input"><input id="privateInput" placeholder="Write a message..." onkeydown="privateEnter(event)" autocomplete="off"><button class="send" onclick="sendPrivateMessage()">➤</button></div>
 </section>
 
 <section class="view" id="profileView">
-<div class="friends">
-<h2>My Profile 👤</h2>
-<div style="margin-top:25px">
-<div class="avatar" style="width:70px;height:70px;font-size:25px" id="profileAvatar">U</div>
-<h3 style="margin-top:15px" id="profileUsername">@username</h3>
-<p style="color:var(--muted);margin-top:5px" id="profileEmail">email</p>
-</div>
-</div>
+<div class="friends"><h2>My Profile 👤</h2>
+<div style="margin-top:25px"><div class="avatar" style="width:70px;height:70px;font-size:25px" id="profileAvatar">U</div>
+<h3 style="margin-top:15px" id="profileUsername">@username</h3><p style="color:var(--muted);margin-top:5px" id="profileEmail">email</p></div></div>
 </section>
 </main>
 
 <nav class="mobile-nav">
-<button id="mobileAi" class="active" onclick="showView('ai')">🤖<br>AI</button>
-<button id="mobileFriends" onclick="showView('friends')">👥<br>Friends</button>
-<button id="mobileProfile" onclick="showView('profile')">👤<br>Profile</button>
+<button id="mobileAi" class="active" onclick="showView('ai')"><span class="nav-icon">🤖</span>AI</button>
+<button id="mobileFriends" onclick="showView('friends')"><span class="nav-icon">👥</span>Friends</button>
+<button id="mobileProfile" onclick="showView('profile')"><span class="nav-icon">👤</span>Profile</button>
 </nav>
 </section>
 
 <script>
-let users=JSON.parse(localStorage.getItem("xenvital_users"))||[];
-let currentUser=JSON.parse(localStorage.getItem("xenvital_currentUser"))||null;
+let users=JSON.parse(localStorage.getItem("xenvital_users")||"[]");
+let currentUser=JSON.parse(localStorage.getItem("xenvital_currentUser")||"null");
 let activeFriend="";
+let aiHistory=[];
 
-function showSignup(){loginForm.classList.remove("active");signupForm.classList.add("active")}
-function showLogin(){signupForm.classList.remove("active");loginForm.classList.add("active")}
+function showSignup(){loginForm.classList.remove("active");signupForm.classList.add("active");loginError.textContent="";}
+function showLogin(){signupForm.classList.remove("active");loginForm.classList.add("active");signupError.textContent="";}
 
 signupForm.addEventListener("submit",e=>{
  e.preventDefault();
  const username=signupUsername.value.trim().toLowerCase().replace(/^@/,"");
- const email=signupEmail.value.trim().toLowerCase();
- const password=signupPassword.value;
- const error=signupError;
- error.textContent="";
- if(username.length<3){error.textContent="Username must be at least 3 characters.";return}
- if(users.some(u=>u.username===username)){error.textContent="Username already exists.";return}
- if(users.some(u=>u.email===email)){error.textContent="Email already registered.";return}
+ const email=signupEmail.value.trim().toLowerCase(),password=signupPassword.value;
+ signupError.textContent="";
+ if(!/^[a-z0-9_.-]{3,30}$/.test(username)){signupError.textContent="Use 3-30 letters, numbers, _, ., or -.";return}
+ if(users.some(u=>u.username===username)){signupError.textContent="Username already exists.";return}
+ if(users.some(u=>u.email===email)){signupError.textContent="Email already registered.";return}
  const user={username,email,password};
- users.push(user);
- localStorage.setItem("xenvital_users",JSON.stringify(users));
- currentUser=user;
- localStorage.setItem("xenvital_currentUser",JSON.stringify(user));
- openApp();
+ users.push(user);saveUsers();currentUser=user;saveCurrent();openApp();
 });
 
 loginForm.addEventListener("submit",e=>{
  e.preventDefault();
- const email=loginEmail.value.trim().toLowerCase(),password=loginPassword.value,error=loginError;
- error.textContent="";
+ const email=loginEmail.value.trim().toLowerCase(),password=loginPassword.value;
  const user=users.find(u=>u.email===email&&u.password===password);
- if(!user){error.textContent="Invalid email or password.";return}
- currentUser=user;
- localStorage.setItem("xenvital_currentUser",JSON.stringify(user));
- openApp();
+ if(!user){loginError.textContent="Invalid email or password.";return}
+ loginError.textContent="";currentUser=user;saveCurrent();openApp();
 });
 
-function openApp(){
- auth.style.display="none";
- app.style.display="flex";
- updateProfile();
-}
-
+function saveUsers(){localStorage.setItem("xenvital_users",JSON.stringify(users))}
+function saveCurrent(){localStorage.setItem("xenvital_currentUser",JSON.stringify(currentUser))}
+function openApp(){auth.style.display="none";app.style.display="flex";updateProfile();loadTheme();renderPrivateChat();showView("ai")}
 function updateProfile(){
  if(!currentUser)return;
- const name="@"+currentUser.username;
- miniUsername.textContent=name;
- miniEmail.textContent=currentUser.email;
- profileUsername.textContent=name;
- profileEmail.textContent=currentUser.email;
- const initial=currentUser.username.charAt(0).toUpperCase();
- miniAvatar.textContent=initial;
- profileAvatar.textContent=initial;
+ const name="@"+currentUser.username,initial=currentUser.username.charAt(0).toUpperCase();
+ miniUsername.textContent=name;miniEmail.textContent=currentUser.email;
+ profileUsername.textContent=name;profileEmail.textContent=currentUser.email;
+ miniAvatar.textContent=initial;profileAvatar.textContent=initial;
 }
-
+function logout(){currentUser=null;localStorage.removeItem("xenvital_currentUser");app.style.display="none";auth.style.display="flex";showLogin()}
 function showView(view){
  document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
  document.querySelectorAll(".nav-btn").forEach(v=>v.classList.remove("active"));
  document.querySelectorAll(".mobile-nav button").forEach(v=>v.classList.remove("active"));
-
- if(view==="ai"){
-   aiView.classList.add("active"); aiNav.classList.add("active"); mobileAi.classList.add("active");
-   pageTitle.textContent="XenvitalTech AI";
- }
- if(view==="friends"){
-   friendsView.classList.add("active"); friendsNav.classList.add("active"); mobileFriends.classList.add("active");
-   pageTitle.textContent="Find Friends";
- }
- if(view==="profile"){
-   profileView.classList.add("active"); profileNav.classList.add("active"); mobileProfile.classList.add("active");
-   pageTitle.textContent="My Profile";
- }
+ const map={ai:["aiView","aiNav","mobileAi","XenvitalTech AI"],friends:["friendsView","friendsNav","mobileFriends","Find Friends"],profile:["profileView","profileNav","mobileProfile","My Profile"]};
+ if(view==="private"){privateView.classList.add("active");pageTitle.textContent="Private Chat";return}
+ const [vid,nid,mid,title]=map[view];
+ document.getElementById(vid).classList.add("active");document.getElementById(nid).classList.add("active");document.getElementById(mid).classList.add("active");pageTitle.textContent=title;
+ if(view==="friends")friendSearch.focus();
 }
+function toggleTheme(){document.body.classList.toggle("dark");localStorage.setItem("xenvital_theme",document.body.classList.contains("dark")?"dark":"light")}
+function loadTheme(){if(localStorage.getItem("xenvital_theme")==="dark")document.body.classList.add("dark")}
+function newAIChat(){aiHistory=[];aiMessages.innerHTML="";addAIMessage("XenvitalTech AI by ShashwatBytes\n\nNew chat started. 👋\n\nHow can I help you today?","bot");showView("ai")}
 
-function aiEnter(e){if(e.key==="Enter"){e.preventDefault();sendAI()}}
-
+function aiEnter(e){if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendAI()}}
 async function sendAI(){
- const input=document.getElementById("aiInput");
- const text=input.value.trim();
- if(!text)return;
-
- addAIMessage(text,"user");
- input.value="";
- addAIMessage("Thinking... ⏳","bot");
-
+ const text=aiInput.value.trim();if(!text)return;
+ addAIMessage(text,"user");aiInput.value="";aiSend.disabled=true;
+ const typingId="typing-"+Date.now();addAIMessage("Thinking…","bot",typingId);
  try{
-   const response=await fetch("/api/chat",{
-     method:"POST",
-     headers:{"Content-Type":"application/json"},
-     body:JSON.stringify({message:text})
-   });
-   const data=await response.json();
-   const area=document.getElementById("aiMessages");
-   if(area.lastElementChild)area.lastElementChild.remove();
-
-   if(!response.ok)throw new Error(data.error||"AI request failed");
-   addAIMessage(data.reply||"No response received.","bot");
- }catch(error){
-   const area=document.getElementById("aiMessages");
-   if(area.lastElementChild)area.lastElementChild.remove();
-   addAIMessage("AI connection failed. Please check your Vercel API setup and try again.","bot");
-   console.error(error);
- }
+   aiHistory.push({role:"user",content:text});
+   const r=await fetch("/api/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:aiHistory})});
+   const data=await r.json().catch(()=>({}));
+   document.getElementById(typingId)?.remove();
+   if(!r.ok)throw new Error(data.error||"API request failed");
+   const reply=data.reply||"No response received.";
+   aiHistory.push({role:"assistant",content:reply});addAIMessage(reply,"bot");
+ }catch(err){
+   document.getElementById(typingId)?.remove();
+   addAIMessage("AI connection failed: "+err.message+"\n\nCheck that /api/chat is deployed and OPENAI_API_KEY is added in Vercel.","bot");
+ }finally{aiSend.disabled=false;aiInput.focus()}
 }
-
-function addAIMessage(text,type){
- const area=document.getElementById("aiMessages");
- const div=document.createElement("div");
- div.className="message "+type;
- const avatar=document.createElement("div");
- avatar.className="avatar";
- avatar.textContent=type==="bot"?"X":(currentUser?.username?.charAt(0).toUpperCase()||"U");
- const bubble=document.createElement("div");
- bubble.className="bubble";
- bubble.textContent=text;
- div.append(avatar,bubble);
- area.appendChild(div);
- area.parentElement.scrollTop=area.parentElement.scrollHeight;
+function addAIMessage(text,type,id){
+ const area=aiMessages,div=document.createElement("div");div.className="message "+type;if(id)div.id=id;
+ const av=document.createElement("div");av.className="avatar";av.textContent=type==="bot"?"X":(currentUser?.username?.charAt(0).toUpperCase()||"U");
+ const bubble=document.createElement("div");bubble.className="bubble";bubble.textContent=text;
+ div.append(av,bubble);area.appendChild(div);requestAnimationFrame(()=>aiScroll.scrollTop=aiScroll.scrollHeight);
 }
 
 function friendEnter(e){if(e.key==="Enter"){e.preventDefault();searchFriend()}}
-
 function searchFriend(){
- const query=friendSearch.value.trim().toLowerCase().replace(/^@/,"");
- if(!query){friendResult.innerHTML="<p style='color:var(--muted);margin-top:15px'>Enter a username.</p>";return}
-
- const friend=users.find(u=>u.username===query&&u.username!==currentUser.username);
- if(!friend){
-   friendResult.innerHTML=`<p style="color:var(--muted);margin-top:15px">No user found with @${query}</p>`;
-   return;
- }
-
- friendResult.innerHTML=`
- <div class="friend-result">
-  <div class="friend-info">
-   <div class="avatar">${friend.username.charAt(0).toUpperCase()}</div>
-   <div>
-    <strong>@${friend.username}</strong>
-    <div style="color:var(--muted);font-size:11px">XenvitalTech user</div>
-   </div>
-  </div>
-  <button class="chat-btn" onclick='openPrivateChat(${JSON.stringify(friend.username)})'>Message</button>
- </div>`;
+ const q=friendSearch.value.trim().toLowerCase().replace(/^@/,"");friendResult.innerHTML="";
+ if(!q){friendResult.innerHTML='<div class="empty">Enter a username.</div>';return}
+ const friend=users.find(u=>u.username===q&&u.username!==currentUser.username);
+ if(!friend){friendResult.innerHTML='<div class="empty">No user found with @'+escapeHTML(q)+'</div>';return}
+ friendResult.innerHTML=`<div class="friend-result"><div class="friend-info"><div class="avatar">${friend.username.charAt(0).toUpperCase()}</div><div><strong>@${escapeHTML(friend.username)}</strong><div style="color:var(--muted);font-size:11px">XenvitalTech user</div></div></div><button class="chat-btn" onclick="openPrivateChat('${escapeJS(friend.username)}')">Message</button></div>`;
 }
+function escapeHTML(s){return s.replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function escapeJS(s){return s.replace(/\\/g,"\\\\").replace(/'/g,"\\'")}
 
+function chatKey(a,b){return "xenvital_chat_"+[a,b].sort().join("__")}
 function openPrivateChat(username){
- activeFriend=username;
- privateUsername.textContent="@"+username;
- privateAvatar.textContent=username.charAt(0).toUpperCase();
- document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
- privateView.classList.add("active");
- document.querySelectorAll(".nav-btn,.mobile-nav button").forEach(v=>v.classList.remove("active"));
- pageTitle.textContent="@"+username;
- loadPrivateMessages();
+ activeFriend=username;privateUsername.textContent="@"+username;privateAvatar.textContent=username.charAt(0).toUpperCase();renderPrivateChat();showView("private");privateInput.focus();
 }
-
-function privateEnter(e){if(e.key==="Enter"){e.preventDefault();sendPrivateMessage()}}
-
-function sendPrivateMessage(){
- const text=privateInput.value.trim();
- if(!text||!activeFriend)return;
- const key=getChatKey(currentUser.username,activeFriend);
- const chats=JSON.parse(localStorage.getItem(key))||[];
- chats.push({sender:currentUser.username,text,time:new Date().toLocaleTimeString()});
- localStorage.setItem(key,JSON.stringify(chats));
- privateInput.value="";
- loadPrivateMessages();
-}
-
-function getChatKey(a,b){return "xvt_chat_"+[a,b].sort().join("_")}
-
-function loadPrivateMessages(){
- const chats=JSON.parse(localStorage.getItem(getChatKey(currentUser.username,activeFriend)))||[];
+function renderPrivateChat(){
+ if(!currentUser||!activeFriend)return;
+ const msgs=JSON.parse(localStorage.getItem(chatKey(currentUser.username,activeFriend))||"[]");
  privateMessages.innerHTML="";
- chats.forEach(c=>{
-  const div=document.createElement("div");
-  div.className="message "+(c.sender===currentUser.username?"user":"bot");
-  const av=document.createElement("div");
-  av.className="avatar";
-  av.textContent=(c.sender===currentUser.username?currentUser.username:activeFriend).charAt(0).toUpperCase();
-  const b=document.createElement("div");
-  b.className="bubble";
-  b.textContent=c.text;
-  div.append(av,b);
-  privateMessages.appendChild(div);
- });
+ if(!msgs.length){privateMessages.innerHTML='<div class="empty">No messages yet. Start the conversation 👋</div>';return}
+ msgs.forEach(m=>addPrivateBubble(m.text,m.from===currentUser.username));
  privateMessages.scrollTop=privateMessages.scrollHeight;
 }
-
-function newAIChat(){
- aiMessages.innerHTML="";
- addAIMessage(`XenvitalTech AI by ShashwatBytes
-
-Hello ${currentUser?"@"+currentUser.username:""}! 👋
-
-New chat started.
-
-How can I help you today? 🚀`,"bot");
- showView("ai");
+function addPrivateBubble(text,mine){
+ const div=document.createElement("div");div.className="message "+(mine?"user":"bot");
+ const av=document.createElement("div");av.className="avatar";av.textContent=mine?currentUser.username.charAt(0).toUpperCase():activeFriend.charAt(0).toUpperCase();
+ const b=document.createElement("div");b.className="bubble";b.textContent=text;div.append(av,b);privateMessages.appendChild(div);
 }
-
-function logout(){
- currentUser=null;
- localStorage.removeItem("xenvital_currentUser");
- app.style.display="none";
- auth.style.display="flex";
+function sendPrivateMessage(){
+ const text=privateInput.value.trim();if(!text||!activeFriend)return;
+ const key=chatKey(currentUser.username,activeFriend),msgs=JSON.parse(localStorage.getItem(key)||"[]");
+ msgs.push({from:currentUser.username,to:activeFriend,text,at:Date.now()});localStorage.setItem(key,JSON.stringify(msgs));privateInput.value="";renderPrivateChat();
 }
+function privateEnter(e){if(e.key==="Enter"){e.preventDefault();sendPrivateMessage()}}
 
-function toggleTheme(){
- document.body.classList.toggle("dark");
- localStorage.setItem("xvt_theme",document.body.classList.contains("dark")?"dark":"light");
-}
-
-if(localStorage.getItem("xvt_theme")==="dark")document.body.classList.add("dark");
-if(currentUser)openApp();
+if(currentUser)openApp();else{auth.style.display="flex";app.style.display="none";loadTheme()}
 </script>
 </body>
 </html>
