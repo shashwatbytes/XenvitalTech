@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
 <meta name="theme-color" content="#090d16">
 <title>XenvitalTech AI — ShashwatBytes</title>
+
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:Inter,Arial,sans-serif}
 :root{--bg:#f5f7fb;--card:#fff;--text:#172033;--muted:#718096;--border:#e4e8f0;--primary:#5b5ff7;--secondary:#7c3aed;--bot:#eef1f7;--danger:#ef4444}
@@ -56,47 +57,74 @@ input:focus{border-color:var(--primary)}
 .friend-info{display:flex;gap:10px;align-items:center}.chat-btn{padding:9px 14px}
 .private-header{height:60px;flex:none;padding:10px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;background:var(--card)}
 .private-messages{flex:1;min-height:0;overflow-y:auto;padding:20px}.private-input{flex:none;padding:12px 20px;background:var(--card);border-top:1px solid var(--border);display:flex;gap:8px}.private-input input{flex:1;min-width:0}
-.empty{color:var(--muted);text-align:center;padding:40px 15px}
+.empty{color:var(--muted);text-align:center;padding:40px 15px}.typing{opacity:.7;font-style:italic}
 .profile-logout{margin-top:25px;width:220px;max-width:100%;padding:12px;border:0;border-radius:11px;background:rgba(239,68,68,.1);color:var(--danger);font-weight:700}
-.mobile-nav{display:none}.nav-icon{display:inline-block;width:25px;text-align:center}
-.status{font-size:12px;color:var(--muted);margin-top:8px}
+.mobile-nav{display:none}
+.nav-icon{display:inline-block;width:25px;text-align:center}
+.status{font-size:12px;margin-top:10px;color:var(--muted);min-height:16px}
+
 @media(max-width:750px){
- html,body{width:100%;height:100%;overflow:hidden}.app{height:100dvh;min-height:100dvh;overflow:hidden}
- .sidebar{display:none}.topbar{height:58px;padding:0 12px}.main{height:100dvh;min-height:0;padding-bottom:70px;overflow:hidden}.view{height:100%;min-height:0}
+ html,body{width:100%;height:100%;overflow:hidden}
+ .app{height:100dvh;min-height:100dvh;overflow:hidden}
+ .sidebar{display:none}
+ .topbar{height:58px;padding:0 12px}
+ .main{height:100dvh;min-height:0;padding-bottom:70px;overflow:hidden}
+ .view{height:100%;min-height:0}
  .mobile-nav{position:fixed;z-index:200;left:0;right:0;bottom:0;height:70px;display:flex;background:var(--card);border-top:1px solid var(--border);padding:5px 0 calc(5px + env(safe-area-inset-bottom))}
  .mobile-nav button{flex:1;border:0;background:transparent;color:var(--muted);font-size:11px;border-radius:10px;height:60px}
- .mobile-nav button.active{color:var(--primary);background:var(--bot);font-weight:700}.mobile-nav .nav-icon{display:block;width:auto;font-size:20px;margin-bottom:2px}
- .ai-chat{height:100%;min-height:0;overflow-y:auto;padding:15px 12px 85px}.messages{width:100%}.bubble{max-width:84%;font-size:14px}
+ .mobile-nav button.active{color:var(--primary);background:var(--bot);font-weight:700}
+ .mobile-nav .nav-icon{display:block;width:auto;font-size:20px;margin-bottom:2px}
+ #aiView{position:relative;height:100%;min-height:0}
+ .ai-chat{height:100%;min-height:0;overflow-y:auto;padding:15px 12px 85px}
+ .messages{width:100%}
+ .bubble{max-width:84%;font-size:14px}
  .input-area{position:fixed;left:0;right:0;bottom:70px;width:100%;height:70px;z-index:150;padding:9px 10px;background:var(--card);border-top:1px solid var(--border);box-shadow:0 -4px 15px rgba(0,0,0,.08)}
- .input-box{width:100%;max-width:none;height:52px;display:flex;gap:8px}.input-box input{height:52px;font-size:16px;padding:12px}.send{width:52px;height:52px}
- #privateView{height:100%;min-height:0}.private-messages{padding:14px 12px 80px}
+ .input-box{width:100%;max-width:none;height:52px;display:flex;gap:8px}
+ .input-box input{height:52px;font-size:16px;padding:12px}
+ .send{width:52px;height:52px}
+ #privateView{height:100%;min-height:0}
+ .private-messages{padding:14px 12px 80px}
  .private-input{position:fixed;left:0;right:0;bottom:70px;width:100%;height:70px;z-index:150;padding:9px 10px;background:var(--card);box-shadow:0 -4px 15px rgba(0,0,0,.08)}
- .private-input input{height:52px;font-size:16px}.private-input .send{width:52px;height:52px}.private-header{height:58px;padding:9px 12px}
- .friends{padding:20px 13px}.friend-result{padding:12px}.auth{padding:15px}.auth-card{padding:24px}
+ .private-input input{height:52px;font-size:16px}
+ .private-input .send{width:52px;height:52px}
+ .private-header{height:58px;padding:9px 12px}
+ .friends{padding:20px 13px}
+ .friend-result{padding:12px}
+ .auth{padding:15px}
+ .auth-card{padding:24px}
 }
+
 @media(min-width:751px){.mobile-nav{display:none!important}}
 </style>
 </head>
+
 <body>
 
 <section class="auth" id="auth">
 <div class="auth-card">
-<div class="auth-logo">X</div><h1>XenvitalTech</h1>
+<div class="auth-logo">X</div>
+<h1>XenvitalTech</h1>
 <div class="auth-subtitle">AI Assistant by ShashwatBytes</div>
 
 <form class="form active" id="loginForm">
-<label>Email</label><input id="loginEmail" type="email" placeholder="Enter your email" required>
-<label>Password</label><input id="loginPassword" type="password" placeholder="Enter your password" required>
+<label>Email</label>
+<input id="loginEmail" type="email" placeholder="Enter your email" required>
+<label>Password</label>
+<input id="loginPassword" type="password" placeholder="Enter your password" required>
 <div class="error" id="loginError"></div>
 <button class="primary" type="submit">Login</button>
 <div class="switch">New to XenvitalTech? <span onclick="showSignup()">Create account</span></div>
 </form>
 
 <form class="form" id="signupForm">
-<label>Username</label><input id="signupUsername" type="text" placeholder="@yourusername" minlength="3" maxlength="30" required>
-<label>Email</label><input id="signupEmail" type="email" placeholder="Enter your email" required>
-<label>Password</label><input id="signupPassword" type="password" placeholder="Create password" minlength="6" required>
+<label>Username</label>
+<input id="signupUsername" type="text" placeholder="@yourusername" minlength="3" maxlength="30" required>
+<label>Email</label>
+<input id="signupEmail" type="email" placeholder="Enter your email" required>
+<label>Password</label>
+<input id="signupPassword" type="password" placeholder="Create password" minlength="6" required>
 <div class="error" id="signupError"></div>
+<div class="status" id="signupStatus"></div>
 <button class="primary" type="submit">Create Account</button>
 <div class="switch">Already have an account? <span onclick="showLogin()">Login</span></div>
 </form>
@@ -104,25 +132,43 @@ input:focus{border-color:var(--primary)}
 </section>
 
 <section class="app" id="app">
+
 <aside class="sidebar">
-<div class="brand"><div class="logo">X</div><div><h2>XenvitalTech</h2><small>by ShashwatBytes</small></div></div>
+<div class="brand">
+<div class="logo">X</div>
+<div><h2>XenvitalTech</h2><small>by ShashwatBytes</small></div>
+</div>
+
 <button class="new-chat" onclick="newAIChat()">＋ New AI Chat</button>
+
 <div class="nav-title">Workspace</div>
 <button class="nav-btn active" id="aiNav" onclick="showView('ai')"><span class="nav-icon">🤖</span> XenvitalTech AI</button>
 <button class="nav-btn" id="friendsNav" onclick="showView('friends')"><span class="nav-icon">👥</span> Find Friends</button>
 <button class="nav-btn" id="profileNav" onclick="showView('profile')"><span class="nav-icon">👤</span> My Profile</button>
+
 <div class="sidebar-bottom">
-<div class="profile-mini"><div class="avatar" id="miniAvatar">U</div><div><strong id="miniUsername">@user</strong><span id="miniEmail">email</span></div></div>
+<div class="profile-mini">
+<div class="avatar" id="miniAvatar">U</div>
+<div><strong id="miniUsername">@user</strong><span id="miniEmail">email</span></div>
+</div>
 <button class="logout" onclick="logout()">↪ Logout</button>
 </div>
 </aside>
 
 <main class="main">
-<header class="topbar"><div class="page-title" id="pageTitle">XenvitalTech AI</div><div class="top-actions"><button class="icon" onclick="toggleTheme()">◐</button></div></header>
+<header class="topbar">
+<div class="page-title" id="pageTitle">XenvitalTech AI</div>
+<div class="top-actions">
+<button class="icon" onclick="toggleTheme()" aria-label="Toggle theme">◐</button>
+</div>
+</header>
 
 <section class="view active" id="aiView">
-<div class="ai-chat" id="aiScroll"><div class="messages" id="aiMessages">
-<div class="message bot"><div class="avatar">X</div><div class="bubble">XenvitalTech AI by ShashwatBytes
+<div class="ai-chat" id="aiScroll">
+<div class="messages" id="aiMessages">
+<div class="message bot">
+<div class="avatar">X</div>
+<div class="bubble">XenvitalTech AI by ShashwatBytes
 
 Hello! 👋
 
@@ -130,34 +176,53 @@ I'm your AI assistant.
 
 I can help you with coding, study, projects, writing and problem solving.
 
-What would you like to do today? 🚀</div></div>
-</div></div>
-<div class="input-area"><div class="input-box">
+What would you like to do today? 🚀</div>
+</div>
+</div>
+</div>
+<div class="input-area">
+<div class="input-box">
 <input id="aiInput" placeholder="Ask XenvitalTech anything..." onkeydown="aiEnter(event)" autocomplete="off">
 <button class="send" id="aiSend" onclick="sendAI()">➤</button>
-</div></div>
+</div>
+</div>
 </section>
 
 <section class="view" id="friendsView">
 <div class="friends">
-<h2>Find Friends 👥</h2><p style="color:var(--muted);margin-top:7px">Search a registered username and start a private chat.</p>
-<div class="search-box"><input id="friendSearch" placeholder="Search @username" onkeydown="friendEnter(event)"><button class="search-btn" onclick="searchFriend()">Search</button></div>
+<h2>Find Friends 👥</h2>
+<p style="color:var(--muted);margin-top:7px">Search a registered username and start a private chat.</p>
+<div class="search-box">
+<input id="friendSearch" placeholder="Search @username" onkeydown="friendEnter(event)">
+<button class="search-btn" onclick="searchFriend()">Search</button>
+</div>
 <div id="friendResult"></div>
 </div>
 </section>
 
 <section class="view" id="privateView">
-<div class="private-header"><button class="icon" onclick="showView('friends')">←</button><div class="avatar" id="privateAvatar">F</div><strong id="privateUsername">@friend</strong></div>
+<div class="private-header">
+<button class="icon" onclick="showView('friends')">←</button>
+<div class="avatar" id="privateAvatar">F</div>
+<strong id="privateUsername">@friend</strong>
+</div>
 <div class="private-messages" id="privateMessages"></div>
-<div class="private-input"><input id="privateInput" placeholder="Write a message..." onkeydown="privateEnter(event)" autocomplete="off"><button class="send" onclick="sendPrivateMessage()">➤</button></div>
+<div class="private-input">
+<input id="privateInput" placeholder="Write a message..." onkeydown="privateEnter(event)" autocomplete="off">
+<button class="send" onclick="sendPrivateMessage()">➤</button>
+</div>
 </section>
 
 <section class="view" id="profileView">
-<div class="friends"><h2>My Profile 👤</h2>
-<div style="margin-top:25px"><div class="avatar" style="width:70px;height:70px;font-size:25px" id="profileAvatar">U</div>
-<h3 style="margin-top:15px" id="profileUsername">@username</h3><p style="color:var(--muted);margin-top:5px" id="profileEmail">email</p>
-<div class="status" id="accountStatus">Firebase connected</div>
-<button class="profile-logout" onclick="logout()">↪ Logout from XenvitalTech</button></div></div>
+<div class="friends">
+<h2>My Profile 👤</h2>
+<div style="margin-top:25px">
+<div class="avatar" style="width:70px;height:70px;font-size:25px" id="profileAvatar">U</div>
+<h3 style="margin-top:15px" id="profileUsername">@username</h3>
+<p style="color:var(--muted);margin-top:5px" id="profileEmail">email</p>
+<button class="profile-logout" onclick="logout()">↪ Logout from XenvitalTech</button>
+</div>
+</div>
 </section>
 </main>
 
@@ -168,243 +233,526 @@ What would you like to do today? 🚀</div></div>
 </nav>
 </section>
 
+<!-- Firebase SDK -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 import {
-  getAuth,onAuthStateChanged,createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,signOut
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut,
+  deleteUser
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-import {
-  getFirestore,doc,setDoc,getDoc,getDocs,collection,query,where,
-  addDoc,serverTimestamp,orderBy,onSnapshot
-} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
-const firebaseConfig={
- apiKey:"AIzaSyBqIALKJqGlXKlTyout4xG595kKOP0j5Rs",
- authDomain:"xenvitaltech.firebaseapp.com",
- projectId:"xenvitaltech",
- storageBucket:"xenvitaltech.firebasestorage.app",
- messagingSenderId:"141547305321",
- appId:"1:141547305321:web:043c54fe159024a0bfa5f8",
- measurementId:"G-60SY2G5CK2"
+import {
+  getDatabase,
+  ref,
+  get,
+  set,
+  push,
+  onValue,
+  runTransaction,
+  serverTimestamp,
+  off
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBqIALKJqGlXKlTyout4xG595kKOP0j5Rs",
+  authDomain: "xenvitaltech.firebaseapp.com",
+  projectId: "xenvitaltech",
+  storageBucket: "xenvitaltech.firebasestorage.app",
+  messagingSenderId: "141547305321",
+  appId: "1:141547305321:web:043c54fe159024a0bfa5f8",
+  measurementId: "G-60SY2G5CK2"
 };
 
-const firebaseApp=initializeApp(firebaseConfig);
-const auth=getAuth(firebaseApp);
-const db=getFirestore(firebaseApp);
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getDatabase(app);
+
+window.firebaseApp = app;
+window.firebaseAuth = auth;
+window.firebaseDB = db;
+
 const $=id=>document.getElementById(id);
 
 let currentUser=null;
 let currentProfile=null;
 let activeFriend="";
-let unsubscribeMessages=null;
+let activeFriendUid="";
 let aiHistory=[];
+let chatListener=null;
 
-function showSignup(){$("loginForm").classList.remove("active");$("signupForm").classList.add("active");$("loginError").textContent=""}
-function showLogin(){$("signupForm").classList.remove("active");$("loginForm").classList.add("active");$("signupError").textContent=""}
+function cleanUsername(v){
+ return v.trim().toLowerCase().replace(/^@/,"");
+}
 
-window.showSignup=showSignup;
-window.showLogin=showLogin;
+function friendlyError(error){
+ const code=error?.code||"";
+ const map={
+  "auth/email-already-in-use":"This email is already registered. Please login.",
+  "auth/invalid-email":"Please enter a valid email address.",
+  "auth/weak-password":"Password must be at least 6 characters.",
+  "auth/invalid-credential":"Invalid email or password.",
+  "auth/user-not-found":"Invalid email or password.",
+  "auth/wrong-password":"Invalid email or password.",
+  "auth/network-request-failed":"Network error. Check your internet connection.",
+  "PERMISSION_DENIED":"Firebase permission denied. Check your Realtime Database Rules."
+ };
+ return map[code]||error?.message||"Something went wrong.";
+}
+
+window.showSignup=function(){
+ $("loginForm").classList.remove("active");
+ $("signupForm").classList.add("active");
+ $("loginError").textContent="";
+};
+
+window.showLogin=function(){
+ $("signupForm").classList.remove("active");
+ $("loginForm").classList.add("active");
+ $("signupError").textContent="";
+ $("signupStatus").textContent="";
+};
 
 $("signupForm").addEventListener("submit",async e=>{
  e.preventDefault();
- const username=$("signupUsername").value.trim().toLowerCase().replace(/^@/,"");
+
+ const username=cleanUsername($("signupUsername").value);
  const email=$("signupEmail").value.trim().toLowerCase();
  const password=$("signupPassword").value;
+
  $("signupError").textContent="";
- if(!/^[a-z0-9_.-]{3,30}$/.test(username)){ $("signupError").textContent="Use 3-30 letters, numbers, _, . or -.";return; }
+ $("signupStatus").textContent="";
+
+ if(!/^[a-z0-9_.-]{3,30}$/.test(username)){
+  $("signupError").textContent="Use 3-30 letters, numbers, _, . or -.";
+  return;
+ }
 
  try{
-  const taken=await getDocs(query(collection(db,"users"),where("username","==",username)));
-  if(!taken.empty){$("signupError").textContent="Username already exists.";return}
-  const cred=await createUserWithEmailAndPassword(auth,email,password);
-  await setDoc(doc(db,"users",cred.user.uid),{
-   uid:cred.user.uid,username,email,createdAt:serverTimestamp()
+  $("signupStatus").textContent="Creating account...";
+
+  // Check username before creating the Firebase Auth account.
+  const usernameRef=ref(db,"usernames/"+username);
+  const existingUsername=await get(usernameRef);
+
+  if(existingUsername.exists()){
+   throw new Error("Username already exists.");
+  }
+
+  const credential=await createUserWithEmailAndPassword(auth,email,password);
+  const uid=credential.user.uid;
+
+  // Reserve the username atomically after authentication.
+  const reservation=await runTransaction(usernameRef,current=>{
+   if(current!==null)return;
+   return uid;
   });
+
+  if(!reservation.committed || reservation.snapshot.val()!==uid){
+   await deleteUser(credential.user);
+   throw new Error("Username already exists.");
+  }
+
+  await set(ref(db,"users/"+uid),{
+   username,
+   email,
+   createdAt:Date.now()
+  });
+
+  $("signupStatus").textContent="Account created!";
  }catch(err){
-  $("signupError").textContent=firebaseError(err);
+  $("signupStatus").textContent="";
+  $("signupError").textContent=friendlyError(err);
  }
 });
 
 $("loginForm").addEventListener("submit",async e=>{
  e.preventDefault();
+
+ const email=$("loginEmail").value.trim().toLowerCase();
+ const password=$("loginPassword").value;
+
  $("loginError").textContent="";
+
  try{
-  await signInWithEmailAndPassword(auth,$("loginEmail").value.trim().toLowerCase(),$("loginPassword").value);
- }catch(err){$("loginError").textContent=firebaseError(err)}
+  await signInWithEmailAndPassword(auth,email,password);
+ }catch(err){
+  $("loginError").textContent=friendlyError(err);
+ }
 });
 
-function firebaseError(err){
- const code=err?.code||"";
- if(code.includes("email-already-in-use"))return"Email already registered.";
- if(code.includes("invalid-credential")||code.includes("wrong-password")||code.includes("user-not-found"))return"Invalid email or password.";
- if(code.includes("weak-password"))return"Password must be at least 6 characters.";
- if(code.includes("network-request-failed"))return"Network error. Check your internet connection.";
- return err?.message||"Something went wrong.";
-}
-
-async function loadProfile(user){
- const snap=await getDoc(doc(db,"users",user.uid));
- if(!snap.exists()){await signOut(auth);throw new Error("Profile not found.");}
- currentProfile=snap.data();
- updateProfile();
-}
-
-function updateProfile(){
- if(!currentProfile)return;
- const name="@"+currentProfile.username;
- const initial=currentProfile.username.charAt(0).toUpperCase();
- $("miniUsername").textContent=name;$("miniEmail").textContent=currentProfile.email;
- $("profileUsername").textContent=name;$("profileEmail").textContent=currentProfile.email;
- $("miniAvatar").textContent=initial;$("profileAvatar").textContent=initial;
-}
-
 onAuthStateChanged(auth,async user=>{
- if(user){
-  currentUser=user;
-  try{await loadProfile(user);openApp()}
-  catch(e){console.error(e);$("loginError").textContent=e.message}
- }else{
-  currentUser=null;currentProfile=null;
-  $("app").style.display="none";$("auth").style.display="flex";
+ currentUser=user;
+
+ if(!user){
+  $("app").style.display="none";
+  $("auth").style.display="flex";
+  return;
+ }
+
+ try{
+  const snap=await get(ref(db,"users/"+user.uid));
+  if(!snap.exists()){
+   await signOut(auth);
+   $("loginError").textContent="Profile not found. Please create the account again.";
+   return;
+  }
+
+  currentProfile=snap.val();
+  openApp();
+ }catch(err){
+  $("auth").style.display="flex";
+  $("app").style.display="none";
+  $("loginError").textContent=friendlyError(err);
  }
 });
 
 function openApp(){
- $("auth").style.display="none";$("app").style.display="flex";loadTheme();showView("ai");
+ $("auth").style.display="none";
+ $("app").style.display="flex";
+ updateProfile();
+ loadTheme();
+ showView("ai");
 }
-async function logout(){
- if(unsubscribeMessages){unsubscribeMessages();unsubscribeMessages=null}
- activeFriend="";aiHistory=[];
- try{await signOut(auth)}catch(e){console.error(e)}
-}
-window.logout=logout;
 
-function showView(view){
+function updateProfile(){
+ if(!currentProfile)return;
+
+ const name="@"+currentProfile.username;
+ const initial=currentProfile.username.charAt(0).toUpperCase();
+
+ $("miniUsername").textContent=name;
+ $("miniEmail").textContent=currentProfile.email||currentUser.email;
+ $("profileUsername").textContent=name;
+ $("profileEmail").textContent=currentProfile.email||currentUser.email;
+ $("miniAvatar").textContent=initial;
+ $("profileAvatar").textContent=initial;
+}
+
+window.logout=async function(){
+ try{
+  if(chatListener)off(ref(db,"chats/"+chatId(currentUser.uid,activeFriendUid)+"/messages"),"value",chatListener);
+  chatListener=null;
+  await signOut(auth);
+ }catch(err){
+  alert(friendlyError(err));
+ }
+};
+
+window.showView=function(view){
  document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
  document.querySelectorAll(".nav-btn").forEach(v=>v.classList.remove("active"));
  document.querySelectorAll(".mobile-nav button").forEach(v=>v.classList.remove("active"));
+
  if(view==="private"){
-  $("privateView").classList.add("active");$("pageTitle").textContent="Private Chat";return;
+  $("privateView").classList.add("active");
+  $("pageTitle").textContent="Private Chat";
+  renderPrivateChat();
+  return;
  }
- const map={ai:["aiView","aiNav","mobileAi","XenvitalTech AI"],friends:["friendsView","friendsNav","mobileFriends","Find Friends"],profile:["profileView","profileNav","mobileProfile","My Profile"]};
- const item=map[view];if(!item)return;
- $(item[0]).classList.add("active");$(item[1]).classList.add("active");$(item[2]).classList.add("active");$("pageTitle").textContent=item[3];
+
+ const map={
+  ai:["aiView","aiNav","mobileAi","XenvitalTech AI"],
+  friends:["friendsView","friendsNav","mobileFriends","Find Friends"],
+  profile:["profileView","profileNav","mobileProfile","My Profile"]
+ };
+
+ const item=map[view];
+ if(!item)return;
+
+ $(item[0]).classList.add("active");
+ $(item[1]).classList.add("active");
+ $(item[2]).classList.add("active");
+ $("pageTitle").textContent=item[3];
+
  if(view==="ai")setTimeout(()=>$("aiInput").focus(),100);
+};
+
+window.toggleTheme=function(){
+ document.body.classList.toggle("dark");
+ localStorage.setItem("xenvital_theme",document.body.classList.contains("dark")?"dark":"light");
+};
+
+function loadTheme(){
+ document.body.classList.toggle("dark",localStorage.getItem("xenvital_theme")==="dark");
 }
-window.showView=showView;
 
-function toggleTheme(){document.body.classList.toggle("dark");localStorage.setItem("xenvital_theme",document.body.classList.contains("dark")?"dark":"light")}
-function loadTheme(){document.body.classList.toggle("dark",localStorage.getItem("xenvital_theme")==="dark")}
-window.toggleTheme=toggleTheme;
+window.newAIChat=function(){
+ aiHistory=[];
+ $("aiMessages").innerHTML="";
+ addAIMessage("XenvitalTech AI by ShashwatBytes\n\nNew chat started. 👋\n\nHow can I help you today?","bot");
+ showView("ai");
+};
 
-function newAIChat(){aiHistory=[];$("aiMessages").innerHTML="";addAIMessage("XenvitalTech AI by ShashwatBytes\n\nNew chat started. 👋\n\nHow can I help you today?","bot");showView("ai")}
-window.newAIChat=newAIChat;
+window.aiEnter=function(e){
+ if(e.key==="Enter"&&!e.shiftKey){
+  e.preventDefault();
+  sendAI();
+ }
+};
 
-function aiEnter(e){if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendAI()}}
-window.aiEnter=aiEnter;
+window.sendAI=async function(){
+ const text=$("aiInput").value.trim();
+ if(!text||!currentUser)return;
 
-async function sendAI(){
- const text=$("aiInput").value.trim();if(!text||!currentUser)return;
- addAIMessage(text,"user");$("aiInput").value="";$("aiSend").disabled=true;
- const typingId="typing-"+Date.now();addAIMessage("Thinking…","bot",typingId);
+ addAIMessage(text,"user");
+ $("aiInput").value="";
+ $("aiSend").disabled=true;
+
+ const typingId="typing-"+Date.now();
+ addAIMessage("Thinking…","bot",typingId);
+
  try{
   aiHistory.push({role:"user",content:text});
-  const response=await fetch("/api/chat",{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify({message:text,messages:aiHistory})});
-  const raw=await response.text();let data={};
+
+  const response=await fetch("/api/chat",{
+   method:"POST",
+   headers:{"Content-Type":"application/json","Accept":"application/json"},
+   body:JSON.stringify({message:text,messages:aiHistory})
+  });
+
+  const raw=await response.text();
+  let data={};
   try{data=raw?JSON.parse(raw):{}}catch{data={error:raw||"Invalid server response"}}
+
   $(typingId)?.remove();
+
   if(!response.ok)throw new Error(data.error||data.message||("Server error "+response.status));
+
   const reply=data.reply||data.message||data.content||data.choices?.[0]?.message?.content||"";
   if(!reply)throw new Error("No AI reply received from /api/chat.");
-  aiHistory.push({role:"assistant",content:reply});addAIMessage(reply,"bot");
+
+  aiHistory.push({role:"assistant",content:reply});
+  addAIMessage(reply,"bot");
  }catch(err){
   $(typingId)?.remove();
-  addAIMessage("AI connection failed: "+(err.message||"Unknown error")+"\n\nCheck /api/chat.js and OPENROUTER_API_KEY in Vercel.","bot");
- }finally{$("aiSend").disabled=false;$("aiInput").focus()}
-}
-window.sendAI=sendAI;
+  addAIMessage(
+   "AI connection failed: "+(err.message||"Unknown error")+
+   "\n\nMake sure /api/chat.js is deployed and OPENROUTER_API_KEY is added in Vercel.",
+   "bot"
+  );
+ }finally{
+  $("aiSend").disabled=false;
+  $("aiInput").focus();
+ }
+};
 
 function addAIMessage(text,type,id){
- const div=document.createElement("div");div.className="message "+type;if(id)div.id=id;
- const av=document.createElement("div");av.className="avatar";av.textContent=type==="bot"?"X":(currentProfile?.username?.charAt(0).toUpperCase()||"U");
- const bubble=document.createElement("div");bubble.className="bubble";bubble.textContent=text;
- div.append(av,bubble);$("aiMessages").appendChild(div);
- requestAnimationFrame(()=>$("aiScroll").scrollTop=$("aiScroll").scrollHeight);
+ const area=$("aiMessages");
+ const div=document.createElement("div");
+ div.className="message "+type;
+ if(id)div.id=id;
+
+ const av=document.createElement("div");
+ av.className="avatar";
+ av.textContent=type==="bot"?"X":(currentProfile?.username?.charAt(0).toUpperCase()||"U");
+
+ const bubble=document.createElement("div");
+ bubble.className="bubble";
+ bubble.textContent=text;
+
+ div.append(av,bubble);
+ area.appendChild(div);
+
+ requestAnimationFrame(()=>{$("aiScroll").scrollTop=$("aiScroll").scrollHeight});
 }
 
-function friendEnter(e){if(e.key==="Enter"){e.preventDefault();searchFriend()}}
-window.friendEnter=friendEnter;
+window.friendEnter=function(e){
+ if(e.key==="Enter"){
+  e.preventDefault();
+  searchFriend();
+ }
+};
 
-async function searchFriend(){
- const q=$("friendSearch").value.trim().toLowerCase().replace(/^@/,"");
+window.searchFriend=async function(){
+ const q=cleanUsername($("friendSearch").value);
  $("friendResult").innerHTML="";
- if(!q){$("friendResult").innerHTML='<div class="empty">Enter a username.</div>';return}
- if(!currentProfile)return;
+
+ if(!q){
+  $("friendResult").innerHTML='<div class="empty">Enter a username.</div>';
+  return;
+ }
+
  try{
-  const snap=await getDocs(query(collection(db,"users"),where("username","==",q)));
-  let friend=null;
-  snap.forEach(d=>{if(d.data().uid!==currentUser.uid)friend=d.data()});
-  if(!friend){$("friendResult").innerHTML='<div class="empty">No user found with @'+escapeHTML(q)+"</div>";return}
-  $("friendResult").innerHTML=`<div class="friend-result"><div class="friend-info"><div class="avatar">${escapeHTML(friend.username.charAt(0).toUpperCase())}</div><div><strong>@${escapeHTML(friend.username)}</strong><div style="color:var(--muted);font-size:11px">XenvitalTech user</div></div></div><button class="chat-btn" onclick="openPrivateChat('${escapeJS(friend.username)}')">Message</button></div>`;
- }catch(err){$("friendResult").innerHTML='<div class="empty">Could not search users: '+escapeHTML(err.message)+'</div>'}
-}
-window.searchFriend=searchFriend;
+  const snap=await get(ref(db,"usernames/"+q));
 
-function escapeHTML(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
-function escapeJS(s){return String(s).replace(/\\/g,"\\\\").replace(/'/g,"\\'")}
+  if(!snap.exists()){
+   $("friendResult").innerHTML='<div class="empty">No user found with @'+escapeHTML(q)+'</div>';
+   return;
+  }
 
-function chatKey(a,b){return [a,b].sort().join("__")}
-async function openPrivateChat(username){
- activeFriend=username;$("privateUsername").textContent="@"+username;$("privateAvatar").textContent=username.charAt(0).toUpperCase();
- showView("private");await renderPrivateChat();setTimeout(()=>$("privateInput").focus(),100);
+  const uid=snap.val();
+
+  if(uid===currentUser.uid){
+   $("friendResult").innerHTML='<div class="empty">That is your own username.</div>';
+   return;
+  }
+
+  const userSnap=await get(ref(db,"users/"+uid));
+  if(!userSnap.exists()){
+   $("friendResult").innerHTML='<div class="empty">User profile unavailable.</div>';
+   return;
+  }
+
+  const friend=userSnap.val();
+
+  const wrap=document.createElement("div");
+  wrap.className="friend-result";
+
+  const info=document.createElement("div");
+  info.className="friend-info";
+
+  const av=document.createElement("div");
+  av.className="avatar";
+  av.textContent=friend.username.charAt(0).toUpperCase();
+
+  const txt=document.createElement("div");
+  const strong=document.createElement("strong");
+  strong.textContent="@"+friend.username;
+  const sub=document.createElement("div");
+  sub.style.cssText="color:var(--muted);font-size:11px";
+  sub.textContent="XenvitalTech user";
+
+  txt.append(strong,sub);
+  info.append(av,txt);
+
+  const btn=document.createElement("button");
+  btn.className="chat-btn";
+  btn.textContent="Message";
+  btn.onclick=()=>openPrivateChat(friend.username,uid);
+
+  wrap.append(info,btn);
+  $("friendResult").appendChild(wrap);
+ }catch(err){
+  $("friendResult").innerHTML='<div class="empty">'+escapeHTML(friendlyError(err))+'</div>';
+ }
+};
+
+function escapeHTML(s){
+ return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
 }
-window.openPrivateChat=openPrivateChat;
+
+function chatId(a,b){
+ return [a,b].sort().join("_");
+}
+
+window.openPrivateChat=function(username,uid){
+ activeFriend=username;
+ activeFriendUid=uid;
+
+ $("privateUsername").textContent="@"+username;
+ $("privateAvatar").textContent=username.charAt(0).toUpperCase();
+
+ showView("private");
+ setTimeout(()=>$("privateInput").focus(),100);
+};
 
 function renderPrivateChat(){
- if(!currentProfile||!activeFriend)return;
- if(unsubscribeMessages){unsubscribeMessages();unsubscribeMessages=null}
- $("privateMessages").innerHTML='<div class="empty">Loading messages…</div>';
- const id=chatKey(currentProfile.username,activeFriend);
- const messagesRef=collection(db,"chats",id,"messages");
- const q=query(messagesRef,orderBy("createdAt","asc"));
- unsubscribeMessages=onSnapshot(q,snap=>{
+ if(!currentUser||!activeFriendUid)return;
+
+ const messagesRef=ref(db,"chats/"+chatId(currentUser.uid,activeFriendUid)+"/messages");
+
+ if(chatListener){
+  off(messagesRef,"value",chatListener);
+  chatListener=null;
+ }
+
+ chatListener=snap=>{
+  const data=snap.val()||{};
+  const msgs=Object.entries(data).sort((a,b)=>(a[1].at||0)-(b[1].at||0));
+
   $("privateMessages").innerHTML="";
-  if(snap.empty){$("privateMessages").innerHTML='<div class="empty">No messages yet. Start the conversation 👋</div>';return}
-  snap.forEach(d=>{
-   const m=d.data();addPrivateBubble(m.text,m.from===currentProfile.username);
+
+  if(!msgs.length){
+   $("privateMessages").innerHTML='<div class="empty">No messages yet. Start the conversation 👋</div>';
+   return;
+  }
+
+  msgs.forEach(([id,m])=>{
+   addPrivateBubble(m.text,m.from===currentUser.uid);
   });
+
   $("privateMessages").scrollTop=$("privateMessages").scrollHeight;
- },err=>{
-  $("privateMessages").innerHTML='<div class="empty">Chat error: '+escapeHTML(err.message)+'</div>';
- });
+ };
+
+ onValue(messagesRef,chatListener);
 }
 
 function addPrivateBubble(text,mine){
- const div=document.createElement("div");div.className="message "+(mine?"user":"bot");
- const av=document.createElement("div");av.className="avatar";av.textContent=mine?currentProfile.username.charAt(0).toUpperCase():activeFriend.charAt(0).toUpperCase();
- const b=document.createElement("div");b.className="bubble";b.textContent=text;div.append(av,b);$("privateMessages").appendChild(div);
+ const div=document.createElement("div");
+ div.className="message "+(mine?"user":"bot");
+
+ const av=document.createElement("div");
+ av.className="avatar";
+ av.textContent=mine
+  ?currentProfile.username.charAt(0).toUpperCase()
+  :activeFriend.charAt(0).toUpperCase();
+
+ const b=document.createElement("div");
+ b.className="bubble";
+ b.textContent=text;
+
+ div.append(av,b);
+ $("privateMessages").appendChild(div);
 }
 
-async function sendPrivateMessage(){
+window.sendPrivateMessage=async function(){
  const text=$("privateInput").value.trim();
- if(!text||!activeFriend||!currentProfile)return;
- $("privateInput").disabled=true;
+
+ if(!text||!activeFriendUid||!currentUser)return;
+
  try{
-  const id=chatKey(currentProfile.username,activeFriend);
-  await addDoc(collection(db,"chats",id,"messages"),{
-   from:currentProfile.username,to:activeFriend,text,createdAt:serverTimestamp()
+  const id=chatId(currentUser.uid,activeFriendUid);
+  const chatRef=ref(db,"chats/"+id);
+
+  await runTransaction(chatRef,current=>{
+   if(current===null){
+    return {
+     members:{
+      [currentUser.uid]:true,
+      [activeFriendUid]:true
+     },
+     createdAt:serverTimestamp()
+    };
+   }
+
+   if(!current.members){
+    current.members={
+     [currentUser.uid]:true,
+     [activeFriendUid]:true
+    };
+   }
+
+   return current;
   });
+
+  const messagesRef=ref(db,"chats/"+id+"/messages");
+  const newMessage=push(messagesRef);
+
+  await set(newMessage,{
+   from:currentUser.uid,
+   to:activeFriendUid,
+   text,
+   at:serverTimestamp()
+  });
+
   $("privateInput").value="";
- }catch(err){alert("Message failed: "+err.message)}
- finally{$("privateInput").disabled=false;$("privateInput").focus()}
-}
-window.sendPrivateMessage=sendPrivateMessage;
+ }catch(err){
+  alert("Message failed: "+friendlyError(err));
+ }
+};
 
-function privateEnter(e){if(e.key==="Enter"){e.preventDefault();sendPrivateMessage()}}
-window.privateEnter=privateEnter;
+window.privateEnter=function(e){
+ if(e.key==="Enter"){
+  e.preventDefault();
+  sendPrivateMessage();
+ }
+};
 
-loadTheme();
+if(localStorage.getItem("xenvital_theme")==="dark")document.body.classList.add("dark");
 </script>
 </body>
 </html>
