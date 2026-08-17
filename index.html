@@ -24,24 +24,30 @@ label{display:block;font-size:12px;font-weight:600;margin:14px 0 7px}
 input{width:100%;padding:13px;border:1px solid var(--border);border-radius:11px;outline:none;background:var(--bg);color:var(--text)}
 input:focus{border-color:var(--primary)}
 .primary{width:100%;border:0;padding:13px;margin-top:20px;border-radius:11px;background:linear-gradient(135deg,var(--primary),var(--secondary));color:white;font-weight:700}
-.switch{text-align:center;margin-top:18px;font-size:13px;color:var(--muted)}.switch span{color:var(--primary);cursor:pointer;font-weight:700}
+.switch{text-align:center;margin-top:18px;font-size:13px;color:var(--muted)}
+.switch span{color:var(--primary);cursor:pointer;font-weight:700}
 .error{color:var(--danger);font-size:12px;margin-top:10px}
+.status{font-size:12px;margin-top:10px;color:var(--muted);min-height:16px}
 .app{display:none;width:100%;height:100dvh;overflow:hidden}
 .sidebar{width:275px;flex:none;background:var(--card);border-right:1px solid var(--border);padding:18px;display:flex;flex-direction:column;height:100%}
-.brand{display:flex;gap:10px;align-items:center;margin-bottom:22px}.logo{width:43px;height:43px;border-radius:13px}
+.brand{display:flex;gap:10px;align-items:center;margin-bottom:22px}
+.logo{width:43px;height:43px;border-radius:13px}
 .brand h2{font-size:16px}.brand small{color:var(--muted)}
 .new-chat{border:0;background:var(--primary);color:white;padding:12px;border-radius:11px;font-weight:600;margin-bottom:18px}
 .nav-title{color:var(--muted);font-size:11px;text-transform:uppercase;margin:10px 4px}
 .nav-btn{width:100%;padding:12px;background:transparent;color:var(--text);border:0;border-radius:10px;text-align:left;margin-bottom:4px}
 .nav-btn:hover,.nav-btn.active{background:var(--bot)}
 .sidebar-bottom{margin-top:auto;border-top:1px solid var(--border);padding-top:10px}
-.profile-mini{display:flex;align-items:center;gap:10px;padding:10px}.avatar{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:white;background:linear-gradient(135deg,var(--primary),var(--secondary));font-weight:700;flex:none}
-.profile-mini strong{display:block;font-size:13px}.profile-mini span{display:block;color:var(--muted);font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:170px}
+.profile-mini{display:flex;align-items:center;gap:10px;padding:10px}
+.avatar{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:white;background:linear-gradient(135deg,var(--primary),var(--secondary));font-weight:700;flex:none}
+.profile-mini strong{display:block;font-size:13px}
+.profile-mini span{display:block;color:var(--muted);font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:170px}
 .logout{width:100%;padding:10px;border:0;background:transparent;color:var(--danger);text-align:left;border-radius:9px}
 .logout:hover{background:rgba(239,68,68,.08)}
 .main{flex:1;display:flex;flex-direction:column;min-width:0;height:100%;overflow:hidden}
 .topbar{height:65px;flex:none;padding:0 20px;background:var(--card);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
-.page-title{font-weight:700}.top-actions{display:flex;gap:8px}.icon{width:38px;height:38px;border:1px solid var(--border);border-radius:10px;background:var(--card);color:var(--text)}
+.page-title{font-weight:700}.top-actions{display:flex;gap:8px}
+.icon{width:38px;height:38px;border:1px solid var(--border);border-radius:10px;background:var(--card);color:var(--text)}
 .view{display:none;flex:1;min-height:0;overflow:hidden}.view.active{display:flex;flex-direction:column}
 .ai-chat{flex:1;min-height:0;overflow-y:auto;padding:30px 20px 20px}
 .messages{max-width:850px;margin:auto}
@@ -49,25 +55,27 @@ input:focus{border-color:var(--primary)}
 .bubble{max-width:75%;padding:12px 15px;border-radius:14px;line-height:1.55;font-size:14px;white-space:pre-wrap;overflow-wrap:anywhere}
 .bot .bubble{background:var(--bot);border-top-left-radius:4px}.user .bubble{background:var(--primary);color:white;border-top-right-radius:4px}
 .input-area{flex:none;padding:12px 20px 18px;border-top:1px solid var(--border);background:var(--card);z-index:10}
-.input-box{max-width:850px;margin:auto;display:flex;gap:8px}.input-box input{flex:1;min-width:0}.send{width:48px;height:48px;flex:none;border:0;border-radius:11px;color:white;background:var(--primary)}
+.input-box{max-width:850px;margin:auto;display:flex;gap:8px}.input-box input{flex:1;min-width:0}
+.send{width:48px;height:48px;flex:none;border:0;border-radius:11px;color:white;background:var(--primary)}
 .send:disabled{opacity:.55;cursor:not-allowed}
-.friends{padding:30px;overflow-y:auto;height:100%}.search-box{max-width:650px;display:flex;gap:8px;margin-top:20px}.search-box input{flex:1}
-.search-btn,.chat-btn{border:0;background:var(--primary);color:white;border-radius:11px}.search-btn{padding:0 18px}
+.friends{padding:30px;overflow-y:auto;height:100%}
+.search-box{max-width:650px;display:flex;gap:8px;margin-top:20px}.search-box input{flex:1}
+.search-btn,.chat-btn{border:0;background:var(--primary);color:white;border-radius:11px}
+.search-btn{padding:0 18px}
 .friend-result{max-width:650px;margin-top:18px;padding:15px;background:var(--card);border:1px solid var(--border);border-radius:14px;display:flex;align-items:center;justify-content:space-between;gap:12px}
 .friend-info{display:flex;gap:10px;align-items:center}.chat-btn{padding:9px 14px}
 .private-header{height:60px;flex:none;padding:10px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;background:var(--card)}
-.private-messages{flex:1;min-height:0;overflow-y:auto;padding:20px}.private-input{flex:none;padding:12px 20px;background:var(--card);border-top:1px solid var(--border);display:flex;gap:8px}.private-input input{flex:1;min-width:0}
-.empty{color:var(--muted);text-align:center;padding:40px 15px}.typing{opacity:.7;font-style:italic}
+.private-messages{flex:1;min-height:0;overflow-y:auto;padding:20px}
+.private-input{flex:none;padding:12px 20px;background:var(--card);border-top:1px solid var(--border);display:flex;gap:8px}
+.private-input input{flex:1;min-width:0}
+.empty{color:var(--muted);text-align:center;padding:40px 15px}
 .profile-logout{margin-top:25px;width:220px;max-width:100%;padding:12px;border:0;border-radius:11px;background:rgba(239,68,68,.1);color:var(--danger);font-weight:700}
-.mobile-nav{display:none}
-.nav-icon{display:inline-block;width:25px;text-align:center}
-.status{font-size:12px;margin-top:10px;color:var(--muted);min-height:16px}
-
+.mobile-nav{display:none}.nav-icon{display:inline-block;width:25px;text-align:center}
+.chat-status{font-size:11px;color:var(--muted);margin-left:auto}
 @media(max-width:750px){
  html,body{width:100%;height:100%;overflow:hidden}
  .app{height:100dvh;min-height:100dvh;overflow:hidden}
- .sidebar{display:none}
- .topbar{height:58px;padding:0 12px}
+ .sidebar{display:none}.topbar{height:58px;padding:0 12px}
  .main{height:100dvh;min-height:0;padding-bottom:70px;overflow:hidden}
  .view{height:100%;min-height:0}
  .mobile-nav{position:fixed;z-index:200;left:0;right:0;bottom:0;height:70px;display:flex;background:var(--card);border-top:1px solid var(--border);padding:5px 0 calc(5px + env(safe-area-inset-bottom))}
@@ -76,24 +84,17 @@ input:focus{border-color:var(--primary)}
  .mobile-nav .nav-icon{display:block;width:auto;font-size:20px;margin-bottom:2px}
  #aiView{position:relative;height:100%;min-height:0}
  .ai-chat{height:100%;min-height:0;overflow-y:auto;padding:15px 12px 85px}
- .messages{width:100%}
- .bubble{max-width:84%;font-size:14px}
+ .messages{width:100%}.bubble{max-width:84%;font-size:14px}
  .input-area{position:fixed;left:0;right:0;bottom:70px;width:100%;height:70px;z-index:150;padding:9px 10px;background:var(--card);border-top:1px solid var(--border);box-shadow:0 -4px 15px rgba(0,0,0,.08)}
  .input-box{width:100%;max-width:none;height:52px;display:flex;gap:8px}
- .input-box input{height:52px;font-size:16px;padding:12px}
- .send{width:52px;height:52px}
+ .input-box input{height:52px;font-size:16px;padding:12px}.send{width:52px;height:52px}
  #privateView{height:100%;min-height:0}
  .private-messages{padding:14px 12px 80px}
  .private-input{position:fixed;left:0;right:0;bottom:70px;width:100%;height:70px;z-index:150;padding:9px 10px;background:var(--card);box-shadow:0 -4px 15px rgba(0,0,0,.08)}
- .private-input input{height:52px;font-size:16px}
- .private-input .send{width:52px;height:52px}
- .private-header{height:58px;padding:9px 12px}
- .friends{padding:20px 13px}
- .friend-result{padding:12px}
- .auth{padding:15px}
- .auth-card{padding:24px}
+ .private-input input{height:52px;font-size:16px}.private-input .send{width:52px;height:52px}
+ .private-header{height:58px;padding:9px 12px}.friends{padding:20px 13px}.friend-result{padding:12px}
+ .auth{padding:15px}.auth-card{padding:24px}
 }
-
 @media(min-width:751px){.mobile-nav{display:none!important}}
 </style>
 </head>
@@ -112,7 +113,7 @@ input:focus{border-color:var(--primary)}
 <label>Password</label>
 <input id="loginPassword" type="password" placeholder="Enter your password" required>
 <div class="error" id="loginError"></div>
-<button class="primary" type="submit">Login</button>
+<button class="primary" id="loginBtn" type="submit">Login</button>
 <div class="switch">New to XenvitalTech? <span onclick="showSignup()">Create account</span></div>
 </form>
 
@@ -125,14 +126,13 @@ input:focus{border-color:var(--primary)}
 <input id="signupPassword" type="password" placeholder="Create password" minlength="6" required>
 <div class="error" id="signupError"></div>
 <div class="status" id="signupStatus"></div>
-<button class="primary" type="submit">Create Account</button>
+<button class="primary" id="signupBtn" type="submit">Create Account</button>
 <div class="switch">Already have an account? <span onclick="showLogin()">Login</span></div>
 </form>
 </div>
 </section>
 
 <section class="app" id="app">
-
 <aside class="sidebar">
 <div class="brand">
 <div class="logo">X</div>
@@ -193,7 +193,7 @@ What would you like to do today? 🚀</div>
 <h2>Find Friends 👥</h2>
 <p style="color:var(--muted);margin-top:7px">Search a registered username and start a private chat.</p>
 <div class="search-box">
-<input id="friendSearch" placeholder="Search @username" onkeydown="friendEnter(event)">
+<input id="friendSearch" placeholder="Search @username" onkeydown="friendEnter(event)" autocomplete="off">
 <button class="search-btn" onclick="searchFriend()">Search</button>
 </div>
 <div id="friendResult"></div>
@@ -205,6 +205,7 @@ What would you like to do today? 🚀</div>
 <button class="icon" onclick="showView('friends')">←</button>
 <div class="avatar" id="privateAvatar">F</div>
 <strong id="privateUsername">@friend</strong>
+<span class="chat-status" id="chatStatus"></span>
 </div>
 <div class="private-messages" id="privateMessages"></div>
 <div class="private-input">
@@ -233,7 +234,6 @@ What would you like to do today? 🚀</div>
 </nav>
 </section>
 
-<!-- Firebase SDK -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 import {
@@ -253,13 +253,14 @@ import {
   push,
   onValue,
   runTransaction,
-  serverTimestamp,
-  off
+  off,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBqIALKJqGlXKlTyout4xG595kKOP0j5Rs",
+  apiKey: "AIzaSyBqIALKJqGlXKlTyout4G595kKOP0j5Rs",
   authDomain: "xenvitaltech.firebaseapp.com",
+  databaseURL: "https://xenvitaltech-default-rtdb.firebaseio.com",
   projectId: "xenvitaltech",
   storageBucket: "xenvitaltech.firebasestorage.app",
   messagingSenderId: "141547305321",
@@ -271,488 +272,573 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase(app);
 
-window.firebaseApp = app;
-window.firebaseAuth = auth;
-window.firebaseDB = db;
+const $ = id => document.getElementById(id);
 
-const $=id=>document.getElementById(id);
-
-let currentUser=null;
-let currentProfile=null;
-let activeFriend="";
-let activeFriendUid="";
-let aiHistory=[];
-let chatListener=null;
+let currentUser = null;
+let currentProfile = null;
+let activeFriend = "";
+let activeFriendUid = "";
+let aiHistory = [];
+let chatListener = null;
 
 function cleanUsername(v){
- return v.trim().toLowerCase().replace(/^@/,"");
+  return v.trim().toLowerCase().replace(/^@/,"");
 }
 
 function friendlyError(error){
- const code=error?.code||"";
- const map={
-  "auth/email-already-in-use":"This email is already registered. Please login.",
-  "auth/invalid-email":"Please enter a valid email address.",
-  "auth/weak-password":"Password must be at least 6 characters.",
-  "auth/invalid-credential":"Invalid email or password.",
-  "auth/user-not-found":"Invalid email or password.",
-  "auth/wrong-password":"Invalid email or password.",
-  "auth/network-request-failed":"Network error. Check your internet connection.",
-  "PERMISSION_DENIED":"Firebase permission denied. Check your Realtime Database Rules."
- };
- return map[code]||error?.message||"Something went wrong.";
-}
-
-window.showSignup=function(){
- $("loginForm").classList.remove("active");
- $("signupForm").classList.add("active");
- $("loginError").textContent="";
-};
-
-window.showLogin=function(){
- $("signupForm").classList.remove("active");
- $("loginForm").classList.add("active");
- $("signupError").textContent="";
- $("signupStatus").textContent="";
-};
-
-$("signupForm").addEventListener("submit",async e=>{
- e.preventDefault();
-
- const username=cleanUsername($("signupUsername").value);
- const email=$("signupEmail").value.trim().toLowerCase();
- const password=$("signupPassword").value;
-
- $("signupError").textContent="";
- $("signupStatus").textContent="";
-
- if(!/^[a-z0-9_.-]{3,30}$/.test(username)){
-  $("signupError").textContent="Use 3-30 letters, numbers, _, . or -.";
-  return;
- }
-
- try{
-  $("signupStatus").textContent="Creating account...";
-
-  // Check username before creating the Firebase Auth account.
-  const usernameRef=ref(db,"usernames/"+username);
-  const existingUsername=await get(usernameRef);
-
-  if(existingUsername.exists()){
-   throw new Error("Username already exists.");
-  }
-
-  const credential=await createUserWithEmailAndPassword(auth,email,password);
-  const uid=credential.user.uid;
-
-  // Reserve the username atomically after authentication.
-  const reservation=await runTransaction(usernameRef,current=>{
-   if(current!==null)return;
-   return uid;
-  });
-
-  if(!reservation.committed || reservation.snapshot.val()!==uid){
-   await deleteUser(credential.user);
-   throw new Error("Username already exists.");
-  }
-
-  await set(ref(db,"users/"+uid),{
-   username,
-   email,
-   createdAt:Date.now()
-  });
-
-  $("signupStatus").textContent="Account created!";
- }catch(err){
-  $("signupStatus").textContent="";
-  $("signupError").textContent=friendlyError(err);
- }
-});
-
-$("loginForm").addEventListener("submit",async e=>{
- e.preventDefault();
-
- const email=$("loginEmail").value.trim().toLowerCase();
- const password=$("loginPassword").value;
-
- $("loginError").textContent="";
-
- try{
-  await signInWithEmailAndPassword(auth,email,password);
- }catch(err){
-  $("loginError").textContent=friendlyError(err);
- }
-});
-
-onAuthStateChanged(auth,async user=>{
- currentUser=user;
-
- if(!user){
-  $("app").style.display="none";
-  $("auth").style.display="flex";
-  return;
- }
-
- try{
-  const snap=await get(ref(db,"users/"+user.uid));
-  if(!snap.exists()){
-   await signOut(auth);
-   $("loginError").textContent="Profile not found. Please create the account again.";
-   return;
-  }
-
-  currentProfile=snap.val();
-  openApp();
- }catch(err){
-  $("auth").style.display="flex";
-  $("app").style.display="none";
-  $("loginError").textContent=friendlyError(err);
- }
-});
-
-function openApp(){
- $("auth").style.display="none";
- $("app").style.display="flex";
- updateProfile();
- loadTheme();
- showView("ai");
-}
-
-function updateProfile(){
- if(!currentProfile)return;
-
- const name="@"+currentProfile.username;
- const initial=currentProfile.username.charAt(0).toUpperCase();
-
- $("miniUsername").textContent=name;
- $("miniEmail").textContent=currentProfile.email||currentUser.email;
- $("profileUsername").textContent=name;
- $("profileEmail").textContent=currentProfile.email||currentUser.email;
- $("miniAvatar").textContent=initial;
- $("profileAvatar").textContent=initial;
-}
-
-window.logout=async function(){
- try{
-  if(chatListener)off(ref(db,"chats/"+chatId(currentUser.uid,activeFriendUid)+"/messages"),"value",chatListener);
-  chatListener=null;
-  await signOut(auth);
- }catch(err){
-  alert(friendlyError(err));
- }
-};
-
-window.showView=function(view){
- document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
- document.querySelectorAll(".nav-btn").forEach(v=>v.classList.remove("active"));
- document.querySelectorAll(".mobile-nav button").forEach(v=>v.classList.remove("active"));
-
- if(view==="private"){
-  $("privateView").classList.add("active");
-  $("pageTitle").textContent="Private Chat";
-  renderPrivateChat();
-  return;
- }
-
- const map={
-  ai:["aiView","aiNav","mobileAi","XenvitalTech AI"],
-  friends:["friendsView","friendsNav","mobileFriends","Find Friends"],
-  profile:["profileView","profileNav","mobileProfile","My Profile"]
- };
-
- const item=map[view];
- if(!item)return;
-
- $(item[0]).classList.add("active");
- $(item[1]).classList.add("active");
- $(item[2]).classList.add("active");
- $("pageTitle").textContent=item[3];
-
- if(view==="ai")setTimeout(()=>$("aiInput").focus(),100);
-};
-
-window.toggleTheme=function(){
- document.body.classList.toggle("dark");
- localStorage.setItem("xenvital_theme",document.body.classList.contains("dark")?"dark":"light");
-};
-
-function loadTheme(){
- document.body.classList.toggle("dark",localStorage.getItem("xenvital_theme")==="dark");
-}
-
-window.newAIChat=function(){
- aiHistory=[];
- $("aiMessages").innerHTML="";
- addAIMessage("XenvitalTech AI by ShashwatBytes\n\nNew chat started. 👋\n\nHow can I help you today?","bot");
- showView("ai");
-};
-
-window.aiEnter=function(e){
- if(e.key==="Enter"&&!e.shiftKey){
-  e.preventDefault();
-  sendAI();
- }
-};
-
-window.sendAI=async function(){
- const text=$("aiInput").value.trim();
- if(!text||!currentUser)return;
-
- addAIMessage(text,"user");
- $("aiInput").value="";
- $("aiSend").disabled=true;
-
- const typingId="typing-"+Date.now();
- addAIMessage("Thinking…","bot",typingId);
-
- try{
-  aiHistory.push({role:"user",content:text});
-
-  const response=await fetch("/api/chat",{
-   method:"POST",
-   headers:{"Content-Type":"application/json","Accept":"application/json"},
-   body:JSON.stringify({message:text,messages:aiHistory})
-  });
-
-  const raw=await response.text();
-  let data={};
-  try{data=raw?JSON.parse(raw):{}}catch{data={error:raw||"Invalid server response"}}
-
-  $(typingId)?.remove();
-
-  if(!response.ok)throw new Error(data.error||data.message||("Server error "+response.status));
-
-  const reply=data.reply||data.message||data.content||data.choices?.[0]?.message?.content||"";
-  if(!reply)throw new Error("No AI reply received from /api/chat.");
-
-  aiHistory.push({role:"assistant",content:reply});
-  addAIMessage(reply,"bot");
- }catch(err){
-  $(typingId)?.remove();
-  addAIMessage(
-   "AI connection failed: "+(err.message||"Unknown error")+
-   "\n\nMake sure /api/chat.js is deployed and OPENROUTER_API_KEY is added in Vercel.",
-   "bot"
-  );
- }finally{
-  $("aiSend").disabled=false;
-  $("aiInput").focus();
- }
-};
-
-function addAIMessage(text,type,id){
- const area=$("aiMessages");
- const div=document.createElement("div");
- div.className="message "+type;
- if(id)div.id=id;
-
- const av=document.createElement("div");
- av.className="avatar";
- av.textContent=type==="bot"?"X":(currentProfile?.username?.charAt(0).toUpperCase()||"U");
-
- const bubble=document.createElement("div");
- bubble.className="bubble";
- bubble.textContent=text;
-
- div.append(av,bubble);
- area.appendChild(div);
-
- requestAnimationFrame(()=>{$("aiScroll").scrollTop=$("aiScroll").scrollHeight});
-}
-
-window.friendEnter=function(e){
- if(e.key==="Enter"){
-  e.preventDefault();
-  searchFriend();
- }
-};
-
-window.searchFriend=async function(){
- const q=cleanUsername($("friendSearch").value);
- $("friendResult").innerHTML="";
-
- if(!q){
-  $("friendResult").innerHTML='<div class="empty">Enter a username.</div>';
-  return;
- }
-
- try{
-  const snap=await get(ref(db,"usernames/"+q));
-
-  if(!snap.exists()){
-   $("friendResult").innerHTML='<div class="empty">No user found with @'+escapeHTML(q)+'</div>';
-   return;
-  }
-
-  const uid=snap.val();
-
-  if(uid===currentUser.uid){
-   $("friendResult").innerHTML='<div class="empty">That is your own username.</div>';
-   return;
-  }
-
-  const userSnap=await get(ref(db,"users/"+uid));
-  if(!userSnap.exists()){
-   $("friendResult").innerHTML='<div class="empty">User profile unavailable.</div>';
-   return;
-  }
-
-  const friend=userSnap.val();
-
-  const wrap=document.createElement("div");
-  wrap.className="friend-result";
-
-  const info=document.createElement("div");
-  info.className="friend-info";
-
-  const av=document.createElement("div");
-  av.className="avatar";
-  av.textContent=friend.username.charAt(0).toUpperCase();
-
-  const txt=document.createElement("div");
-  const strong=document.createElement("strong");
-  strong.textContent="@"+friend.username;
-  const sub=document.createElement("div");
-  sub.style.cssText="color:var(--muted);font-size:11px";
-  sub.textContent="XenvitalTech user";
-
-  txt.append(strong,sub);
-  info.append(av,txt);
-
-  const btn=document.createElement("button");
-  btn.className="chat-btn";
-  btn.textContent="Message";
-  btn.onclick=()=>openPrivateChat(friend.username,uid);
-
-  wrap.append(info,btn);
-  $("friendResult").appendChild(wrap);
- }catch(err){
-  $("friendResult").innerHTML='<div class="empty">'+escapeHTML(friendlyError(err))+'</div>';
- }
-};
-
-function escapeHTML(s){
- return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+  const code = error?.code || "";
+  const msg = error?.message || "";
+
+  const map = {
+    "auth/email-already-in-use":"This email is already registered. Please login.",
+    "auth/invalid-email":"Please enter a valid email address.",
+    "auth/weak-password":"Password must be at least 6 characters.",
+    "auth/invalid-credential":"Invalid email or password.",
+    "auth/user-not-found":"Invalid email or password.",
+    "auth/wrong-password":"Invalid email or password.",
+    "auth/network-request-failed":"Network error. Check your internet connection.",
+    "PERMISSION_DENIED":"Firebase permission denied. Check your Realtime Database Rules."
+  };
+
+  if(map[code]) return map[code];
+  if(msg.includes("PERMISSION_DENIED")) return "Firebase permission denied. Check your Realtime Database Rules.";
+  return msg || "Something went wrong.";
 }
 
 function chatId(a,b){
- return [a,b].sort().join("_");
+  return [a,b].sort().join("_");
 }
 
-window.openPrivateChat=function(username,uid){
- activeFriend=username;
- activeFriendUid=uid;
-
- $("privateUsername").textContent="@"+username;
- $("privateAvatar").textContent=username.charAt(0).toUpperCase();
-
- showView("private");
- setTimeout(()=>$("privateInput").focus(),100);
+window.showSignup = function(){
+  $("loginForm").classList.remove("active");
+  $("signupForm").classList.add("active");
+  $("loginError").textContent = "";
 };
 
-function renderPrivateChat(){
- if(!currentUser||!activeFriendUid)return;
+window.showLogin = function(){
+  $("signupForm").classList.remove("active");
+  $("loginForm").classList.add("active");
+  $("signupError").textContent = "";
+  $("signupStatus").textContent = "";
+};
 
- const messagesRef=ref(db,"chats/"+chatId(currentUser.uid,activeFriendUid)+"/messages");
+$("signupForm").addEventListener("submit", async e => {
+  e.preventDefault();
 
- if(chatListener){
-  off(messagesRef,"value",chatListener);
-  chatListener=null;
- }
+  const username = cleanUsername($("signupUsername").value);
+  const email = $("signupEmail").value.trim().toLowerCase();
+  const password = $("signupPassword").value;
 
- chatListener=snap=>{
-  const data=snap.val()||{};
-  const msgs=Object.entries(data).sort((a,b)=>(a[1].at||0)-(b[1].at||0));
+  $("signupError").textContent = "";
+  $("signupStatus").textContent = "";
 
-  $("privateMessages").innerHTML="";
-
-  if(!msgs.length){
-   $("privateMessages").innerHTML='<div class="empty">No messages yet. Start the conversation 👋</div>';
-   return;
+  if(!/^[a-z0-9_.-]{3,30}$/.test(username)){
+    $("signupError").textContent = "Use 3-30 letters, numbers, _, . or -.";
+    return;
   }
 
-  msgs.forEach(([id,m])=>{
-   addPrivateBubble(m.text,m.from===currentUser.uid);
+  $("signupBtn").disabled = true;
+  $("signupStatus").textContent = "Creating account...";
+
+  let credential = null;
+
+  try{
+    // Authentication is created FIRST.
+    // This fixes the previous Permission Denied error.
+    credential = await createUserWithEmailAndPassword(auth,email,password);
+    const uid = credential.user.uid;
+
+    // Reserve username after auth exists.
+    const usernameRef = ref(db,"usernames/"+username);
+
+    const reservation = await runTransaction(usernameRef,currentValue => {
+      if(currentValue !== null) return;
+      return uid;
+    });
+
+    if(!reservation.committed || reservation.snapshot.val() !== uid){
+      await deleteUser(credential.user);
+      throw new Error("Username already exists. Please choose another username.");
+    }
+
+    // Save profile.
+    await set(ref(db,"users/"+uid),{
+      username: username,
+      email: email,
+      createdAt: Date.now()
+    });
+
+    $("signupStatus").textContent = "Account created successfully!";
+  }catch(err){
+    console.error(err);
+
+    if(credential && err?.message?.includes("Username already exists")){
+      $("signupError").textContent = err.message;
+    }else{
+      $("signupError").textContent = friendlyError(err);
+    }
+
+    $("signupStatus").textContent = "";
+  }finally{
+    $("signupBtn").disabled = false;
+  }
+});
+
+$("loginForm").addEventListener("submit", async e => {
+  e.preventDefault();
+
+  const email = $("loginEmail").value.trim().toLowerCase();
+  const password = $("loginPassword").value;
+
+  $("loginError").textContent = "";
+  $("loginBtn").disabled = true;
+  $("loginBtn").textContent = "Logging in...";
+
+  try{
+    await signInWithEmailAndPassword(auth,email,password);
+  }catch(err){
+    $("loginError").textContent = friendlyError(err);
+  }finally{
+    $("loginBtn").disabled = false;
+    $("loginBtn").textContent = "Login";
+  }
+});
+
+onAuthStateChanged(auth, async user => {
+  currentUser = user;
+
+  if(!user){
+    $("app").style.display = "none";
+    $("auth").style.display = "flex";
+    return;
+  }
+
+  try{
+    const snap = await get(ref(db,"users/"+user.uid));
+
+    if(!snap.exists()){
+      await signOut(auth);
+      $("loginError").textContent = "Profile not found. Please create the account again.";
+      return;
+    }
+
+    currentProfile = snap.val();
+    openApp();
+
+  }catch(err){
+    console.error(err);
+    $("app").style.display = "none";
+    $("auth").style.display = "flex";
+    $("loginError").textContent = friendlyError(err);
+  }
+});
+
+function openApp(){
+  $("auth").style.display = "none";
+  $("app").style.display = "flex";
+  updateProfile();
+  loadTheme();
+  showView("ai");
+}
+
+function updateProfile(){
+  if(!currentProfile) return;
+
+  const name = "@"+currentProfile.username;
+  const initial = currentProfile.username.charAt(0).toUpperCase();
+
+  $("miniUsername").textContent = name;
+  $("miniEmail").textContent = currentProfile.email || currentUser.email;
+  $("profileUsername").textContent = name;
+  $("profileEmail").textContent = currentProfile.email || currentUser.email;
+  $("miniAvatar").textContent = initial;
+  $("profileAvatar").textContent = initial;
+}
+
+window.logout = async function(){
+  try{
+    removeChatListener();
+    await signOut(auth);
+  }catch(err){
+    alert(friendlyError(err));
+  }
+};
+
+window.showView = function(view){
+  document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
+  document.querySelectorAll(".nav-btn").forEach(v => v.classList.remove("active"));
+  document.querySelectorAll(".mobile-nav button").forEach(v => v.classList.remove("active"));
+
+  if(view === "private"){
+    $("privateView").classList.add("active");
+    $("pageTitle").textContent = "Private Chat";
+    $("privateMessages").innerHTML = '<div class="empty">Loading messages...</div>';
+    renderPrivateChat();
+    return;
+  }
+
+  if(view !== "private") removeChatListener();
+
+  const map = {
+    ai:["aiView","aiNav","mobileAi","XenvitalTech AI"],
+    friends:["friendsView","friendsNav","mobileFriends","Find Friends"],
+    profile:["profileView","profileNav","mobileProfile","My Profile"]
+  };
+
+  const item = map[view];
+  if(!item) return;
+
+  $(item[0]).classList.add("active");
+  $(item[1]).classList.add("active");
+  $(item[2]).classList.add("active");
+  $("pageTitle").textContent = item[3];
+
+  if(view === "ai") setTimeout(() => $("aiInput").focus(),100);
+};
+
+window.toggleTheme = function(){
+  document.body.classList.toggle("dark");
+  localStorage.setItem(
+    "xenvital_theme",
+    document.body.classList.contains("dark") ? "dark" : "light"
+  );
+};
+
+function loadTheme(){
+  document.body.classList.toggle(
+    "dark",
+    localStorage.getItem("xenvital_theme") === "dark"
+  );
+}
+
+window.newAIChat = function(){
+  aiHistory = [];
+  $("aiMessages").innerHTML = "";
+  addAIMessage(
+    "XenvitalTech AI by ShashwatBytes\n\nNew chat started. 👋\n\nHow can I help you today?",
+    "bot"
+  );
+  showView("ai");
+};
+
+window.aiEnter = function(e){
+  if(e.key === "Enter" && !e.shiftKey){
+    e.preventDefault();
+    sendAI();
+  }
+};
+
+window.sendAI = async function(){
+  const text = $("aiInput").value.trim();
+  if(!text || !currentUser) return;
+
+  addAIMessage(text,"user");
+  $("aiInput").value = "";
+  $("aiSend").disabled = true;
+
+  const typingId = "typing-"+Date.now();
+  addAIMessage("Thinking…","bot",typingId);
+
+  try{
+    aiHistory.push({role:"user",content:text});
+
+    const response = await fetch("/api/chat",{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json",
+        "Accept":"application/json"
+      },
+      body:JSON.stringify({
+        message:text,
+        messages:aiHistory
+      })
+    });
+
+    const raw = await response.text();
+
+    let data = {};
+    try{
+      data = raw ? JSON.parse(raw) : {};
+    }catch{
+      data = {error:raw || "Invalid server response"};
+    }
+
+    $(typingId)?.remove();
+
+    if(!response.ok){
+      throw new Error(
+        data.error ||
+        data.message ||
+        ("Server error "+response.status)
+      );
+    }
+
+    const reply =
+      data.reply ||
+      data.message ||
+      data.content ||
+      data.choices?.[0]?.message?.content ||
+      "";
+
+    if(!reply){
+      throw new Error("No AI reply received from /api/chat.");
+    }
+
+    aiHistory.push({role:"assistant",content:reply});
+    addAIMessage(reply,"bot");
+
+  }catch(err){
+    $(typingId)?.remove();
+
+    addAIMessage(
+      "AI connection failed: "+(err.message || "Unknown error")+
+      "\n\nCheck that /api/chat.js is deployed and OPENROUTER_API_KEY is configured in Vercel.",
+      "bot"
+    );
+  }finally{
+    $("aiSend").disabled = false;
+    $("aiInput").focus();
+  }
+};
+
+function addAIMessage(text,type,id){
+  const area = $("aiMessages");
+  const div = document.createElement("div");
+
+  div.className = "message "+type;
+  if(id) div.id = id;
+
+  const av = document.createElement("div");
+  av.className = "avatar";
+  av.textContent =
+    type === "bot"
+      ? "X"
+      : (currentProfile?.username?.charAt(0).toUpperCase() || "U");
+
+  const bubble = document.createElement("div");
+  bubble.className = "bubble";
+  bubble.textContent = text;
+
+  div.append(av,bubble);
+  area.appendChild(div);
+
+  requestAnimationFrame(() => {
+    $("aiScroll").scrollTop = $("aiScroll").scrollHeight;
+  });
+}
+
+window.friendEnter = function(e){
+  if(e.key === "Enter"){
+    e.preventDefault();
+    searchFriend();
+  }
+};
+
+window.searchFriend = async function(){
+  if(!currentUser) return;
+
+  const q = cleanUsername($("friendSearch").value);
+  $("friendResult").innerHTML = "";
+
+  if(!q){
+    $("friendResult").innerHTML = '<div class="empty">Enter a username.</div>';
+    return;
+  }
+
+  if(q === currentProfile?.username){
+    $("friendResult").innerHTML = '<div class="empty">You cannot message yourself.</div>';
+    return;
+  }
+
+  $("friendResult").innerHTML = '<div class="empty">Searching...</div>';
+
+  try{
+    const snap = await get(ref(db,"usernames/"+q));
+
+    if(!snap.exists()){
+      $("friendResult").innerHTML =
+        '<div class="empty">No user found with @'+escapeHTML(q)+'</div>';
+      return;
+    }
+
+    const uid = snap.val();
+
+    // Only public username mapping is read here.
+    // The private profile is not exposed by the database rules.
+    $("friendResult").innerHTML =
+      `<div class="friend-result">
+        <div class="friend-info">
+          <div class="avatar">${escapeHTML(q.charAt(0).toUpperCase())}</div>
+          <div>
+            <strong>@${escapeHTML(q)}</strong>
+            <div style="color:var(--muted);font-size:11px">XenvitalTech user</div>
+          </div>
+        </div>
+        <button class="chat-btn" onclick="openPrivateChat('${escapeJS(q)}','${escapeJS(uid)}')">Message</button>
+      </div>`;
+
+  }catch(err){
+    console.error(err);
+    $("friendResult").innerHTML =
+      '<div class="empty">'+escapeHTML(friendlyError(err))+'</div>';
+  }
+};
+
+function escapeHTML(s){
+  return String(s).replace(/[&<>"']/g,m => ({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#039;"
+  }[m]));
+}
+
+function escapeJS(s){
+  return String(s)
+    .replace(/\\/g,"\\\\")
+    .replace(/'/g,"\\'");
+}
+
+window.openPrivateChat = async function(username,uid){
+  activeFriend = username;
+  activeFriendUid = uid;
+
+  $("privateUsername").textContent = "@"+username;
+  $("privateAvatar").textContent = username.charAt(0).toUpperCase();
+  $("chatStatus").textContent = "Online";
+
+  showView("private");
+
+  setTimeout(() => $("privateInput").focus(),100);
+};
+
+function removeChatListener(){
+  if(chatListener && currentUser && activeFriendUid){
+    off(
+      ref(db,"chats/"+chatId(currentUser.uid,activeFriendUid)+"/messages"),
+      "value",
+      chatListener
+    );
+  }
+  chatListener = null;
+}
+
+function renderPrivateChat(){
+  if(!currentUser || !activeFriendUid) return;
+
+  removeChatListener();
+
+  const id = chatId(currentUser.uid,activeFriendUid);
+  const chatRef = ref(db,"chats/"+id);
+
+  // Create chat membership record if it does not exist.
+  set(chatRef+"/members",{
+    [currentUser.uid]:true,
+    [activeFriendUid]:true
+  }).catch(err => {
+    console.error("Chat setup error:",err);
   });
 
-  $("privateMessages").scrollTop=$("privateMessages").scrollHeight;
- };
+  const messagesRef = ref(db,"chats/"+id+"/messages");
 
- onValue(messagesRef,chatListener);
+  chatListener = snapshot => {
+    const data = snapshot.val() || {};
+    const msgs = Object.entries(data)
+      .map(([key,value]) => ({id:key,...value}))
+      .sort((a,b) => (a.createdAt||0)-(b.createdAt||0));
+
+    $("privateMessages").innerHTML = "";
+
+    if(!msgs.length){
+      $("privateMessages").innerHTML =
+        '<div class="empty">No messages yet. Start the conversation 👋</div>';
+      return;
+    }
+
+    msgs.forEach(m => {
+      addPrivateBubble(
+        m.text || "",
+        m.from === currentUser.uid
+      );
+    });
+
+    $("privateMessages").scrollTop =
+      $("privateMessages").scrollHeight;
+  };
+
+  onValue(messagesRef,chatListener,err => {
+    console.error(err);
+    $("privateMessages").innerHTML =
+      '<div class="empty">Unable to load messages: '+
+      escapeHTML(friendlyError(err))+
+      '</div>';
+  });
 }
 
 function addPrivateBubble(text,mine){
- const div=document.createElement("div");
- div.className="message "+(mine?"user":"bot");
+  const div = document.createElement("div");
+  div.className = "message "+(mine ? "user" : "bot");
 
- const av=document.createElement("div");
- av.className="avatar";
- av.textContent=mine
-  ?currentProfile.username.charAt(0).toUpperCase()
-  :activeFriend.charAt(0).toUpperCase();
+  const av = document.createElement("div");
+  av.className = "avatar";
+  av.textContent = mine
+    ? currentProfile.username.charAt(0).toUpperCase()
+    : activeFriend.charAt(0).toUpperCase();
 
- const b=document.createElement("div");
- b.className="bubble";
- b.textContent=text;
+  const b = document.createElement("div");
+  b.className = "bubble";
+  b.textContent = text;
 
- div.append(av,b);
- $("privateMessages").appendChild(div);
+  div.append(av,b);
+  $("privateMessages").appendChild(div);
 }
 
-window.sendPrivateMessage=async function(){
- const text=$("privateInput").value.trim();
+window.sendPrivateMessage = async function(){
+  const text = $("privateInput").value.trim();
 
- if(!text||!activeFriendUid||!currentUser)return;
+  if(!text || !currentUser || !activeFriendUid) return;
 
- try{
-  const id=chatId(currentUser.uid,activeFriendUid);
-  const chatRef=ref(db,"chats/"+id);
+  const id = chatId(currentUser.uid,activeFriendUid);
+  const chatRef = ref(db,"chats/"+id);
 
-  await runTransaction(chatRef,current=>{
-   if(current===null){
-    return {
-     members:{
+  $("privateInput").disabled = true;
+
+  try{
+    // Ensure members exist before writing message.
+    await set(chatRef+"/members",{
       [currentUser.uid]:true,
       [activeFriendUid]:true
-     },
-     createdAt:serverTimestamp()
-    };
-   }
+    });
 
-   if(!current.members){
-    current.members={
-     [currentUser.uid]:true,
-     [activeFriendUid]:true
-    };
-   }
+    const messagesRef = ref(db,"chats/"+id+"/messages");
 
-   return current;
-  });
+    await push(messagesRef,{
+      from: currentUser.uid,
+      to: activeFriendUid,
+      text: text,
+      createdAt: serverTimestamp()
+    });
 
-  const messagesRef=ref(db,"chats/"+id+"/messages");
-  const newMessage=push(messagesRef);
+    $("privateInput").value = "";
 
-  await set(newMessage,{
-   from:currentUser.uid,
-   to:activeFriendUid,
-   text,
-   at:serverTimestamp()
-  });
-
-  $("privateInput").value="";
- }catch(err){
-  alert("Message failed: "+friendlyError(err));
- }
+  }catch(err){
+    console.error(err);
+    alert("Message failed: "+friendlyError(err));
+  }finally{
+    $("privateInput").disabled = false;
+    $("privateInput").focus();
+  }
 };
 
-window.privateEnter=function(e){
- if(e.key==="Enter"){
-  e.preventDefault();
-  sendPrivateMessage();
- }
+window.privateEnter = function(e){
+  if(e.key === "Enter"){
+    e.preventDefault();
+    sendPrivateMessage();
+  }
 };
 
-if(localStorage.getItem("xenvital_theme")==="dark")document.body.classList.add("dark");
+loadTheme();
 </script>
 </body>
 </html>
