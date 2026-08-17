@@ -8,560 +8,146 @@
 *{box-sizing:border-box;margin:0;padding:0;font-family:Inter,Arial,sans-serif}
 :root{--bg:#f5f7fb;--card:#fff;--text:#172033;--muted:#718096;--border:#e4e8f0;--primary:#5b5ff7;--secondary:#7c3aed;--bot:#eef1f7;--danger:#ef4444}
 body.dark{--bg:#090d16;--card:#111827;--text:#f5f7ff;--muted:#9ca8bb;--border:#263244;--bot:#1c2635}
-body{background:var(--bg);color:var(--text);min-height:100vh}
-button,input{font:inherit}button{cursor:pointer}
+body{background:var(--bg);color:var(--text);min-height:100vh}button,input{font:inherit}button{cursor:pointer}
 .auth{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
 .auth-card{width:100%;max-width:430px;background:var(--card);border:1px solid var(--border);border-radius:24px;padding:30px;box-shadow:0 20px 60px rgba(0,0,0,.08)}
 .auth-logo,.logo{display:grid;place-items:center;color:#fff;font-weight:800;background:linear-gradient(135deg,var(--primary),var(--secondary))}
-.auth-logo{width:65px;height:65px;border-radius:19px;margin:auto;font-size:28px}
-.auth-card h1{text-align:center;margin-top:18px;font-size:25px}
-.auth-subtitle{text-align:center;color:var(--muted);font-size:13px;margin:8px 0 25px}
-.form{display:none}.form.active{display:block}
-label{display:block;font-size:12px;font-weight:600;margin:14px 0 7px}
-input{width:100%;padding:13px;border:1px solid var(--border);border-radius:11px;outline:none;background:var(--bg);color:var(--text)}
-input:focus{border-color:var(--primary)}
+.auth-logo{width:65px;height:65px;border-radius:19px;margin:auto;font-size:28px}.auth-card h1{text-align:center;margin-top:18px;font-size:25px}
+.auth-subtitle{text-align:center;color:var(--muted);font-size:13px;margin:8px 0 25px}.form{display:none}.form.active{display:block}
+label{display:block;font-size:12px;font-weight:600;margin:14px 0 7px}input{width:100%;padding:13px;border:1px solid var(--border);border-radius:11px;outline:none;background:var(--bg);color:var(--text)}input:focus{border-color:var(--primary)}
 .primary{width:100%;border:0;padding:13px;margin-top:20px;border-radius:11px;background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;font-weight:700}
-.switch{text-align:center;margin-top:18px;font-size:13px;color:var(--muted)}
-.switch span{color:var(--primary);cursor:pointer;font-weight:700}
-.error{color:var(--danger);font-size:12px;margin-top:10px}
-.app{display:none;height:100vh;overflow:hidden}
-.sidebar{width:275px;flex:none;background:var(--card);border-right:1px solid var(--border);padding:18px;display:flex;flex-direction:column}
-.brand{display:flex;gap:10px;align-items:center;margin-bottom:22px}
-.logo{width:43px;height:43px;border-radius:13px}
-.brand h2{font-size:16px}.brand small{color:var(--muted)}
-.new-chat{border:0;background:var(--primary);color:#fff;padding:12px;border-radius:11px;font-weight:600;margin-bottom:18px}
-.nav-title{color:var(--muted);font-size:11px;text-transform:uppercase;margin:10px 4px}
-.nav-btn{width:100%;padding:12px;background:transparent;color:var(--text);border:0;border-radius:10px;text-align:left;margin-bottom:4px}
-.nav-btn:hover,.nav-btn.active{background:var(--bot)}
-.nav-icon{display:inline-block;width:25px;text-align:center}
-.sidebar-bottom{margin-top:auto;border-top:1px solid var(--border);padding-top:10px}
-.profile-mini{display:flex;align-items:center;gap:10px;padding:10px}
+.switch{text-align:center;margin-top:18px;font-size:13px;color:var(--muted)}.switch span{color:var(--primary);cursor:pointer;font-weight:700}.error{color:var(--danger);font-size:12px;margin-top:10px}
+.app{display:none;height:100vh;overflow:hidden}.sidebar{width:275px;flex:none;background:var(--card);border-right:1px solid var(--border);padding:18px;display:flex;flex-direction:column}
+.brand{display:flex;gap:10px;align-items:center;margin-bottom:22px}.logo{width:43px;height:43px;border-radius:13px}.brand h2{font-size:16px}.brand small{color:var(--muted)}
+.new-chat{border:0;background:var(--primary);color:#fff;padding:12px;border-radius:11px;font-weight:600;margin-bottom:18px}.nav-title{color:var(--muted);font-size:11px;text-transform:uppercase;margin:10px 4px}
+.nav-btn{width:100%;padding:12px;background:transparent;color:var(--text);border:0;border-radius:10px;text-align:left;margin-bottom:4px}.nav-btn:hover,.nav-btn.active{background:var(--bot)}
+.sidebar-bottom{margin-top:auto;border-top:1px solid var(--border);padding-top:10px}.profile-mini{display:flex;align-items:center;gap:10px;padding:10px}
 .avatar{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,var(--primary),var(--secondary));font-weight:700;flex:none}
-.profile-mini strong{display:block;font-size:13px}
-.profile-mini span{display:block;color:var(--muted);font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:170px}
-.logout{width:100%;padding:10px;border:0;background:transparent;color:var(--danger);text-align:left;border-radius:9px}
-.logout:hover{background:rgba(239,68,68,.08)}
-.main{flex:1;display:flex;flex-direction:column;min-width:0;height:100%}
-.topbar{height:65px;flex:none;padding:0 20px;background:var(--card);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
-.page-title{font-weight:700}.top-actions{display:flex;gap:8px}
-.icon{width:38px;height:38px;border:1px solid var(--border);border-radius:10px;background:var(--card);color:var(--text)}
-.view{display:none;flex:1;min-height:0}.view.active{display:flex;flex-direction:column}
-.ai-chat{flex:1;overflow-y:auto;padding:30px 20px 20px}
-.messages{max-width:850px;margin:auto}
-.message{display:flex;gap:10px;margin:18px 0}.message.user{flex-direction:row-reverse}
-.bubble{max-width:75%;padding:12px 15px;border-radius:14px;line-height:1.55;font-size:14px;white-space:pre-wrap;overflow-wrap:anywhere}
-.bot .bubble{background:var(--bot);border-top-left-radius:4px}
-.user .bubble{background:var(--primary);color:#fff;border-top-right-radius:4px}
-.input-area{padding:12px 20px 18px;border-top:1px solid var(--border);background:var(--card)}
-.input-box{max-width:850px;margin:auto;display:flex;gap:8px}
-.input-box input{flex:1}.send{width:48px;flex:none;border:0;border-radius:11px;color:#fff;background:var(--primary)}
-.send:disabled{opacity:.55;cursor:not-allowed}
-.friends{padding:30px;overflow-y:auto}
-.search-box{max-width:650px;display:flex;gap:8px;margin-top:20px}.search-box input{flex:1}
-.search-btn,.chat-btn{border:0;background:var(--primary);color:#fff;border-radius:11px}
-.search-btn{padding:0 18px}
-.friend-result{max-width:650px;margin-top:18px;padding:15px;background:var(--card);border:1px solid var(--border);border-radius:14px;display:flex;align-items:center;justify-content:space-between;gap:12px}
-.friend-info{display:flex;gap:10px;align-items:center}.chat-btn{padding:9px 14px}
-.private-header{padding:15px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;background:var(--card)}
-.private-messages{flex:1;overflow-y:auto;padding:20px}
-.private-input{padding:12px 20px;background:var(--card);border-top:1px solid var(--border);display:flex;gap:8px}
-.private-input input{flex:1}
-.empty{color:var(--muted);text-align:center;padding:40px 15px}.typing{opacity:.7;font-style:italic}
-.mobile-nav{display:none}
-.status{font-size:11px;color:var(--muted);margin:8px auto 0;max-width:850px}
-@media(max-width:750px){
- .app{height:100dvh}.sidebar{display:none}.topbar{height:60px;padding:0 12px}
- .main{padding-bottom:70px}
- .mobile-nav{position:fixed;z-index:50;bottom:0;left:0;right:0;height:70px;display:flex;background:var(--card);border-top:1px solid var(--border);padding:6px env(safe-area-inset-right) calc(6px + env(safe-area-inset-bottom)) env(safe-area-inset-left)}
- .mobile-nav button{flex:1;border:0;background:transparent;color:var(--muted);font-size:11px;border-radius:10px}
- .mobile-nav button.active{color:var(--primary);background:var(--bot);font-weight:700}
- .mobile-nav .nav-icon{display:block;width:auto;font-size:20px;margin-bottom:2px}
- .friends{padding:20px 13px}.ai-chat{padding:20px 12px 12px}.input-area{padding:10px}
- .bubble{max-width:84%}.private-input{padding:10px}.private-messages{padding:14px}.friend-result{padding:12px}
-}
+.profile-mini div:last-child{min-width:0}.profile-mini strong{display:block;font-size:13px}.profile-mini span{display:block;color:var(--muted);font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:170px}
+.logout{width:100%;padding:11px;border:0;background:rgba(239,68,68,.08);color:var(--danger);text-align:left;border-radius:9px;font-weight:700;margin-top:5px}
+.main{flex:1;display:flex;flex-direction:column;min-width:0;height:100%}.topbar{height:65px;flex:none;padding:0 20px;background:var(--card);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.page-title{font-weight:700}.top-actions{display:flex;gap:8px}.icon{width:38px;height:38px;border:1px solid var(--border);border-radius:10px;background:var(--card);color:var(--text)}
+.view{display:none;flex:1;min-height:0}.view.active{display:flex;flex-direction:column}.ai-chat{flex:1;overflow-y:auto;padding:30px 20px 20px}.messages{max-width:850px;margin:auto}
+.message{display:flex;gap:10px;margin:18px 0}.message.user{flex-direction:row-reverse}.bubble{max-width:75%;padding:12px 15px;border-radius:14px;line-height:1.55;font-size:14px;white-space:pre-wrap;overflow-wrap:anywhere}
+.bot .bubble{background:var(--bot);border-top-left-radius:4px}.user .bubble{background:var(--primary);color:#fff;border-top-right-radius:4px}
+.input-area{padding:12px 20px 18px;border-top:1px solid var(--border);background:var(--card)}.input-box{max-width:850px;margin:auto;display:flex;gap:8px}.input-box input{flex:1}.send{width:48px;flex:none;border:0;border-radius:11px;color:#fff;background:var(--primary)}.send:disabled{opacity:.55;cursor:not-allowed}
+.friends{padding:30px;overflow-y:auto}.search-box{max-width:650px;display:flex;gap:8px;margin-top:20px}.search-box input{flex:1}.search-btn,.chat-btn{border:0;background:var(--primary);color:#fff;border-radius:11px}.search-btn{padding:0 18px}
+.friend-result{max-width:650px;margin-top:18px;padding:15px;background:var(--card);border:1px solid var(--border);border-radius:14px;display:flex;align-items:center;justify-content:space-between;gap:12px}.friend-info{display:flex;gap:10px;align-items:center}.chat-btn{padding:9px 14px}
+.private-header{padding:15px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;background:var(--card)}.private-messages{flex:1;overflow-y:auto;padding:20px}.private-input{padding:12px 20px;background:var(--card);border-top:1px solid var(--border);display:flex;gap:8px}.private-input input{flex:1}
+.empty{color:var(--muted);text-align:center;padding:40px 15px}.mobile-nav{display:none}
+@media(max-width:750px){.sidebar{display:none}.topbar{height:60px;padding:0 12px}.main{padding-bottom:70px}.mobile-nav{position:fixed;z-index:50;bottom:0;left:0;right:0;height:70px;display:flex;background:var(--card);border-top:1px solid var(--border);padding:6px env(safe-area-inset-right) calc(6px + env(safe-area-inset-bottom)) env(safe-area-inset-left)}.mobile-nav button{flex:1;border:0;background:transparent;color:var(--muted);font-size:11px;border-radius:10px}.mobile-nav button.active{color:var(--primary);background:var(--bot);font-weight:700}.mobile-nav .nav-icon{display:block;font-size:20px;margin-bottom:2px}.friends{padding:20px 13px}.ai-chat{padding:20px 12px 12px}.input-area{padding:10px}.bubble{max-width:84%}.private-input{padding:10px}.private-messages{padding:14px}}
 </style>
 </head>
 <body>
 
-<section class="auth" id="auth">
-<div class="auth-card">
-<div class="auth-logo">X</div>
-<h1>XenvitalTech</h1>
-<div class="auth-subtitle">AI Assistant by ShashwatBytes</div>
-
-<form class="form active" id="loginForm">
-<label>Email</label>
-<input id="loginEmail" type="email" placeholder="Enter your email" required>
-<label>Password</label>
-<input id="loginPassword" type="password" placeholder="Enter your password" required>
-<div class="error" id="loginError"></div>
-<button class="primary" type="submit">Login</button>
-<div class="switch">New to XenvitalTech? <span onclick="showSignup()">Create account</span></div>
-</form>
-
-<form class="form" id="signupForm">
-<label>Username</label>
-<input id="signupUsername" type="text" placeholder="@yourusername" minlength="3" maxlength="30" required>
-<label>Email</label>
-<input id="signupEmail" type="email" placeholder="Enter your email" required>
-<label>Password</label>
-<input id="signupPassword" type="password" placeholder="Create password" minlength="6" required>
-<div class="error" id="signupError"></div>
-<button class="primary" type="submit">Create Account</button>
-<div class="switch">Already have an account? <span onclick="showLogin()">Login</span></div>
-</form>
-</div>
-</section>
+<section class="auth" id="auth"><div class="auth-card">
+<div class="auth-logo">X</div><h1>XenvitalTech</h1><div class="auth-subtitle">AI Assistant by ShashwatBytes</div>
+<form class="form active" id="loginForm"><label>Email</label><input id="loginEmail" type="email" required>
+<label>Password</label><input id="loginPassword" type="password" required><div class="error" id="loginError"></div>
+<button class="primary">Login</button><div class="switch">New to XenvitalTech? <span onclick="showSignup()">Create account</span></div></form>
+<form class="form" id="signupForm"><label>Username</label><input id="signupUsername" type="text" placeholder="@yourusername" minlength="3" maxlength="30" required>
+<label>Email</label><input id="signupEmail" type="email" required><label>Password</label><input id="signupPassword" type="password" minlength="6" required>
+<div class="error" id="signupError"></div><button class="primary">Create Account</button><div class="switch">Already have an account? <span onclick="showLogin()">Login</span></div></form>
+</div></section>
 
 <section class="app" id="app">
-<aside class="sidebar">
-<div class="brand"><div class="logo">X</div><div><h2>XenvitalTech</h2><small>by ShashwatBytes</small></div></div>
-<button class="new-chat" onclick="newAIChat()">＋ New AI Chat</button>
-<div class="nav-title">Workspace</div>
-<button class="nav-btn active" id="aiNav" onclick="showView('ai')"><span class="nav-icon">🤖</span> XenvitalTech AI</button>
-<button class="nav-btn" id="friendsNav" onclick="showView('friends')"><span class="nav-icon">👥</span> Find Friends</button>
-<button class="nav-btn" id="profileNav" onclick="showView('profile')"><span class="nav-icon">👤</span> My Profile</button>
+<aside class="sidebar"><div class="brand"><div class="logo">X</div><div><h2>XenvitalTech</h2><small>by ShashwatBytes</small></div></div>
+<button class="new-chat" onclick="newAIChat()">＋ New AI Chat</button><div class="nav-title">Workspace</div>
+<button class="nav-btn active" id="aiNav" onclick="showView('ai')">🤖 XenvitalTech AI</button>
+<button class="nav-btn" id="friendsNav" onclick="showView('friends')">👥 Find Friends</button>
+<button class="nav-btn" id="profileNav" onclick="showView('profile')">👤 My Profile</button>
+<div class="sidebar-bottom"><div class="profile-mini"><div class="avatar" id="miniAvatar">U</div><div><strong id="miniUsername">@user</strong><span id="miniEmail">email</span></div></div>
+<button class="logout" onclick="logout()">🚪 Logout</button></div></aside>
 
-<div class="sidebar-bottom">
-<div class="profile-mini">
-<div class="avatar" id="miniAvatar">U</div>
-<div><strong id="miniUsername">@user</strong><span id="miniEmail">email</span></div>
-</div>
-<button class="logout" onclick="logout()">↪ Logout</button>
-</div>
-</aside>
+<main class="main"><header class="topbar"><div class="page-title" id="pageTitle">XenvitalTech AI</div><div class="top-actions"><button class="icon" onclick="toggleTheme()">◐</button><button class="icon" onclick="logout()" title="Logout">↪</button></div></header>
 
-<main class="main">
-<header class="topbar">
-<div class="page-title" id="pageTitle">XenvitalTech AI</div>
-<div class="top-actions"><button class="icon" onclick="toggleTheme()" aria-label="Toggle theme">◐</button></div>
-</header>
-
-<section class="view active" id="aiView">
-<div class="ai-chat" id="aiScroll">
-<div class="messages" id="aiMessages">
-<div class="message bot">
-<div class="avatar">X</div>
-<div class="bubble">XenvitalTech AI by ShashwatBytes
+<section class="view active" id="aiView"><div class="ai-chat" id="aiScroll"><div class="messages" id="aiMessages"><div class="message bot"><div class="avatar">X</div><div class="bubble">XenvitalTech AI by ShashwatBytes
 
 Hello! 👋
 
 I'm your AI assistant.
 
-I can help you with coding, study, projects, writing and problem solving.
+What would you like to do today? 🚀</div></div></div></div>
+<div class="input-area"><div class="input-box"><input id="aiInput" placeholder="Ask XenvitalTech anything..." onkeydown="aiEnter(event)" autocomplete="off"><button class="send" id="aiSend" onclick="sendAI()">➤</button></div></div></section>
 
-What would you like to do today? 🚀</div>
-</div>
-</div>
-</div>
-<div class="input-area">
-<div class="input-box">
-<input id="aiInput" placeholder="Ask XenvitalTech anything..." onkeydown="aiEnter(event)" autocomplete="off">
-<button class="send" id="aiSend" onclick="sendAI()">➤</button>
-</div>
-<div class="status" id="aiStatus"></div>
-</div>
-</section>
+<section class="view" id="friendsView"><div class="friends"><h2>Find Friends 👥</h2><p style="color:var(--muted);margin-top:7px">Search a registered username and start a private chat.</p>
+<div class="search-box"><input id="friendSearch" placeholder="Search @username" onkeydown="friendEnter(event)"><button class="search-btn" onclick="searchFriend()">Search</button></div><div id="friendResult"></div></div></section>
 
-<section class="view" id="friendsView">
-<div class="friends">
-<h2>Find Friends 👥</h2>
-<p style="color:var(--muted);margin-top:7px">Search a registered username and start a private chat.</p>
-<div class="search-box">
-<input id="friendSearch" placeholder="Search @username" onkeydown="friendEnter(event)">
-<button class="search-btn" onclick="searchFriend()">Search</button>
-</div>
-<div id="friendResult"></div>
-</div>
-</section>
+<section class="view" id="privateView"><div class="private-header"><button class="icon" onclick="showView('friends')">←</button><div class="avatar" id="privateAvatar">F</div><strong id="privateUsername">@friend</strong></div>
+<div class="private-messages" id="privateMessages"></div><div class="private-input"><input id="privateInput" placeholder="Write a message..." onkeydown="privateEnter(event)"><button class="send" onclick="sendPrivateMessage()">➤</button></div></section>
 
-<section class="view" id="privateView">
-<div class="private-header">
-<button class="icon" onclick="showView('friends')">←</button>
-<div class="avatar" id="privateAvatar">F</div>
-<strong id="privateUsername">@friend</strong>
-</div>
-<div class="private-messages" id="privateMessages"></div>
-<div class="private-input">
-<input id="privateInput" placeholder="Write a message..." onkeydown="privateEnter(event)" autocomplete="off">
-<button class="send" onclick="sendPrivateMessage()">➤</button>
-</div>
-</section>
-
-<section class="view" id="profileView">
-<div class="friends">
-<h2>My Profile 👤</h2>
-<div style="margin-top:25px">
-<div class="avatar" style="width:70px;height:70px;font-size:25px" id="profileAvatar">U</div>
-<h3 style="margin-top:15px" id="profileUsername">@username</h3>
-<p style="color:var(--muted);margin-top:5px" id="profileEmail">email</p>
-<button class="logout" style="margin-top:25px;border:1px solid var(--border)" onclick="logout()">🚪 Logout</button>
-</div>
-</div>
-</section>
+<section class="view" id="profileView"><div class="friends"><h2>My Profile 👤</h2><div style="margin-top:25px"><div class="avatar" style="width:70px;height:70px;font-size:25px" id="profileAvatar">U</div>
+<h3 style="margin-top:15px" id="profileUsername">@username</h3><p style="color:var(--muted);margin-top:5px" id="profileEmail">email</p>
+<button class="logout" style="margin-top:25px;max-width:200px" onclick="logout()">🚪 Logout</button></div></div></section>
 </main>
-
-<nav class="mobile-nav">
-<button id="mobileAi" class="active" onclick="showView('ai')"><span class="nav-icon">🤖</span>AI</button>
-<button id="mobileFriends" onclick="showView('friends')"><span class="nav-icon">👥</span>Friends</button>
-<button id="mobileProfile" onclick="showView('profile')"><span class="nav-icon">👤</span>Profile</button>
-</nav>
+<nav class="mobile-nav"><button id="mobileAi" class="active" onclick="showView('ai')">🤖<br>AI</button><button id="mobileFriends" onclick="showView('friends')">👥<br>Friends</button><button id="mobileProfile" onclick="showView('profile')">👤<br>Profile</button></nav>
 </section>
 
 <script>
-"use strict";
+const $=id=>document.getElementById(id);
+let users=JSON.parse(localStorage.getItem("xenvital_users")||"[]");
+let currentUser=JSON.parse(localStorage.getItem("xenvital_currentUser")||"null");
+let activeFriend="",aiHistory=[];
 
-let users = JSON.parse(localStorage.getItem("xenvital_users") || "[]");
-let currentUser = JSON.parse(localStorage.getItem("xenvital_currentUser") || "null");
-let activeFriend = "";
-let aiHistory = [];
+function showSignup(){$("loginForm").classList.remove("active");$("signupForm").classList.add("active")}
+function showLogin(){$("signupForm").classList.remove("active");$("loginForm").classList.add("active")}
+function saveUsers(){localStorage.setItem("xenvital_users",JSON.stringify(users))}
+function saveCurrent(){localStorage.setItem("xenvital_currentUser",JSON.stringify(currentUser))}
 
-const $ = id => document.getElementById(id);
-
-function saveUsers(){ localStorage.setItem("xenvital_users", JSON.stringify(users)); }
-function saveCurrent(){ localStorage.setItem("xenvital_currentUser", JSON.stringify(currentUser)); }
-
-function showSignup(){
- $("loginForm").classList.remove("active");
- $("signupForm").classList.add("active");
- $("loginError").textContent="";
-}
-function showLogin(){
- $("signupForm").classList.remove("active");
- $("loginForm").classList.add("active");
+$("signupForm").addEventListener("submit",e=>{
+ e.preventDefault();const username=$("signupUsername").value.trim().toLowerCase().replace(/^@/,""),email=$("signupEmail").value.trim().toLowerCase(),password=$("signupPassword").value;
  $("signupError").textContent="";
-}
-
-$("signupForm").addEventListener("submit", e => {
- e.preventDefault();
- const username=$("signupUsername").value.trim().toLowerCase().replace(/^@/,"");
- const email=$("signupEmail").value.trim().toLowerCase();
- const password=$("signupPassword").value;
- $("signupError").textContent="";
-
- if(!/^[a-z0-9_.-]{3,30}$/.test(username)){
-  $("signupError").textContent="Use 3-30 letters, numbers, _, . or -.";
-  return;
- }
- if(users.some(u=>u.username===username)){
-  $("signupError").textContent="Username already exists.";
-  return;
- }
- if(users.some(u=>u.email===email)){
-  $("signupError").textContent="Email already registered.";
-  return;
- }
-
- currentUser={username,email,password};
- users.push(currentUser);
- saveUsers();
- saveCurrent();
- openApp();
+ if(!/^[a-z0-9_.-]{3,30}$/.test(username))return $("signupError").textContent="Use 3-30 letters, numbers, _, ., or -.";
+ if(users.some(u=>u.username===username))return $("signupError").textContent="Username already exists.";
+ if(users.some(u=>u.email===email))return $("signupError").textContent="Email already registered.";
+ currentUser={username,email,password};users.push(currentUser);saveUsers();saveCurrent();openApp();
 });
-
-$("loginForm").addEventListener("submit", e => {
- e.preventDefault();
- const email=$("loginEmail").value.trim().toLowerCase();
- const password=$("loginPassword").value;
- const user=users.find(u=>u.email===email && u.password===password);
-
- if(!user){
-  $("loginError").textContent="Invalid email or password.";
-  return;
- }
- $("loginError").textContent="";
- currentUser=user;
- saveCurrent();
- openApp();
+$("loginForm").addEventListener("submit",e=>{
+ e.preventDefault();const email=$("loginEmail").value.trim().toLowerCase(),password=$("loginPassword").value;
+ const u=users.find(x=>x.email===email&&x.password===password);if(!u)return $("loginError").textContent="Invalid email or password.";
+ currentUser=u;saveCurrent();openApp();
 });
+function openApp(){$("auth").style.display="none";$("app").style.display="flex";updateProfile();showView("ai")}
+function updateProfile(){if(!currentUser)return;const n="@"+currentUser.username,i=currentUser.username[0].toUpperCase();$("miniUsername").textContent=n;$("miniEmail").textContent=currentUser.email;$("profileUsername").textContent=n;$("profileEmail").textContent=currentUser.email;$("miniAvatar").textContent=i;$("profileAvatar").textContent=i}
+function logout(){currentUser=null;activeFriend="";aiHistory=[];localStorage.removeItem("xenvital_currentUser");$("app").style.display="none";$("auth").style.display="flex";$("loginForm").reset();$("loginError").textContent="";showLogin()}
+function toggleTheme(){document.body.classList.toggle("dark");localStorage.setItem("xenvital_theme",document.body.classList.contains("dark")?"dark":"light")}
+if(localStorage.getItem("xenvital_theme")==="dark")document.body.classList.add("dark");
 
-function openApp(){
- $("auth").style.display="none";
- $("app").style.display="flex";
- updateProfile();
- loadTheme();
- renderPrivateChat();
- showView("ai");
+function showView(v){
+ document.querySelectorAll(".view").forEach(x=>x.classList.remove("active"));document.querySelectorAll(".nav-btn,.mobile-nav button").forEach(x=>x.classList.remove("active"));
+ if(v==="private"){$("privateView").classList.add("active");$("pageTitle").textContent="Private Chat";return}
+ const m={ai:["aiView","aiNav","mobileAi","XenvitalTech AI"],friends:["friendsView","friendsNav","mobileFriends","Find Friends"],profile:["profileView","profileNav","mobileProfile","My Profile"]}[v];
+ $(m[0]).classList.add("active");$(m[1]).classList.add("active");$(m[2]).classList.add("active");$("pageTitle").textContent=m[3];
 }
 
-function updateProfile(){
- if(!currentUser)return;
- const name="@"+currentUser.username;
- const initial=currentUser.username.charAt(0).toUpperCase();
- $("miniUsername").textContent=name;
- $("miniEmail").textContent=currentUser.email;
- $("profileUsername").textContent=name;
- $("profileEmail").textContent=currentUser.email;
- $("miniAvatar").textContent=initial;
- $("profileAvatar").textContent=initial;
-}
-
-function logout(){
- currentUser=null;
- activeFriend="";
- aiHistory=[];
- localStorage.removeItem("xenvital_currentUser");
- $("app").style.display="none";
- $("auth").style.display="flex";
- $("loginEmail").value="";
- $("loginPassword").value="";
- $("loginError").textContent="";
- showLogin();
-}
-
-function showView(view){
- document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
- document.querySelectorAll(".nav-btn").forEach(v=>v.classList.remove("active"));
- document.querySelectorAll(".mobile-nav button").forEach(v=>v.classList.remove("active"));
-
- if(view==="private"){
-  $("privateView").classList.add("active");
-  $("pageTitle").textContent="Private Chat";
-  return;
- }
-
- const map={
-  ai:["aiView","aiNav","mobileAi","XenvitalTech AI"],
-  friends:["friendsView","friendsNav","mobileFriends","Find Friends"],
-  profile:["profileView","profileNav","mobileProfile","My Profile"]
- };
-
- const [vid,nid,mid,title]=map[view];
- $(vid).classList.add("active");
- $(nid).classList.add("active");
- $(mid).classList.add("active");
- $("pageTitle").textContent=title;
-
- if(view==="friends") setTimeout(()=>$("friendSearch").focus(),50);
-}
-
-function toggleTheme(){
- document.body.classList.toggle("dark");
- localStorage.setItem("xenvital_theme",document.body.classList.contains("dark")?"dark":"light");
-}
-function loadTheme(){
- if(localStorage.getItem("xenvital_theme")==="dark") document.body.classList.add("dark");
-}
-
-function newAIChat(){
- aiHistory=[];
- $("aiMessages").innerHTML="";
- addAIMessage("XenvitalTech AI by ShashwatBytes\n\nNew chat started. 👋\n\nHow can I help you today?","bot");
- showView("ai");
-}
-
-function aiEnter(e){
- if(e.key==="Enter" && !e.shiftKey){
-  e.preventDefault();
-  sendAI();
- }
-}
-
+function aiEnter(e){if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendAI()}}
 async function sendAI(){
- const input=$("aiInput");
- const text=input.value.trim();
- if(!text || $("aiSend").disabled)return;
-
- addAIMessage(text,"user");
- input.value="";
- $("aiSend").disabled=true;
- $("aiStatus").textContent="Connecting to XenvitalTech AI…";
-
- const typingId="typing-"+Date.now();
- addAIMessage("Thinking…","bot",typingId);
-
+ const text=$("aiInput").value.trim();if(!text)return;
+ addAIMessage(text,"user");$("aiInput").value="";$("aiSend").disabled=true;
+ const tid="typing-"+Date.now();addAIMessage("Thinking…","bot",tid);aiHistory.push({role:"user",content:text});
  try{
-  aiHistory.push({role:"user",content:text});
-
-  const response=await fetch("/api/chat",{
-   method:"POST",
-   headers:{"Content-Type":"application/json"},
-   body:JSON.stringify({message:text,messages:aiHistory})
-  });
-
-  const data=await response.json().catch(()=>({}));
-
-  $(typingId)?.remove();
-
-  if(!response.ok){
-   throw new Error(data.error || data.message || "AI request failed");
-  }
-
-  const reply=data.reply || data.content || data.choices?.[0]?.message?.content;
-
-  if(!reply) throw new Error("No AI reply received from /api/chat.");
-
-  aiHistory.push({role:"assistant",content:reply});
-  addAIMessage(reply,"bot");
-  $("aiStatus").textContent="";
-
- }catch(error){
-  $(typingId)?.remove();
-  $("aiStatus").textContent="";
-  addAIMessage(
-   "AI connection failed: "+error.message+
-   "\n\nCheck that /api/chat is deployed and OPENROUTER_API_KEY is added in Vercel.",
-   "bot"
-  );
- }finally{
-  $("aiSend").disabled=false;
-  input.focus();
- }
+  const r=await fetch("/api/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({message:text,messages:aiHistory})});
+  const raw=await r.text();let data={};try{data=JSON.parse(raw)}catch{}
+  $(tid)?.remove();
+  if(!r.ok)throw new Error(data.error||data.message||("Server error "+r.status));
+  const reply=data.reply||data.choices?.[0]?.message?.content||data.output_text;
+  if(!reply)throw new Error("API returned no reply.");
+  aiHistory.push({role:"assistant",content:reply});addAIMessage(reply,"bot");
+ }catch(err){
+  $(tid)?.remove();addAIMessage("AI connection failed: "+err.message+"\n\nCheck Vercel /api/chat and OPENROUTER_API_KEY.","bot");
+ }finally{$("aiSend").disabled=false;$("aiInput").focus()}
 }
+function addAIMessage(text,type,id){const d=document.createElement("div");d.className="message "+type;if(id)d.id=id;const a=document.createElement("div");a.className="avatar";a.textContent=type==="bot"?"X":(currentUser?.username?.[0]?.toUpperCase()||"U");const b=document.createElement("div");b.className="bubble";b.textContent=text;d.append(a,b);$("aiMessages").appendChild(d);$("aiScroll").scrollTop=$("aiScroll").scrollHeight}
+function newAIChat(){aiHistory=[];$("aiMessages").innerHTML="";addAIMessage("XenvitalTech AI by ShashwatBytes\n\nNew chat started. 👋\n\nHow can I help you today?","bot");showView("ai")}
 
-function addAIMessage(text,type,id){
- const area=$("aiMessages");
- const div=document.createElement("div");
- div.className="message "+type;
- if(id)div.id=id;
-
- const av=document.createElement("div");
- av.className="avatar";
- av.textContent=type==="bot"?"X":(currentUser?.username?.charAt(0).toUpperCase()||"U");
-
- const bubble=document.createElement("div");
- bubble.className="bubble";
- bubble.textContent=text;
-
- div.append(av,bubble);
- area.appendChild(div);
-
- requestAnimationFrame(()=>$("aiScroll").scrollTop=$("aiScroll").scrollHeight);
-}
-
-function friendEnter(e){
- if(e.key==="Enter"){
-  e.preventDefault();
-  searchFriend();
- }
-}
-
-function searchFriend(){
- const q=$("friendSearch").value.trim().toLowerCase().replace(/^@/,"");
- $("friendResult").innerHTML="";
-
- if(!q){
-  $("friendResult").innerHTML='<div class="empty">Enter a username.</div>';
-  return;
- }
-
- const friend=users.find(u=>u.username===q && u.username!==currentUser.username);
-
- if(!friend){
-  $("friendResult").innerHTML='<div class="empty">No user found with @'+escapeHTML(q)+'</div>';
-  return;
- }
-
- const box=document.createElement("div");
- box.className="friend-result";
-
- const info=document.createElement("div");
- info.className="friend-info";
-
- const av=document.createElement("div");
- av.className="avatar";
- av.textContent=friend.username.charAt(0).toUpperCase();
-
- const details=document.createElement("div");
- details.innerHTML="<strong>@"+escapeHTML(friend.username)+"</strong><div style='color:var(--muted);font-size:11px'>XenvitalTech user</div>";
-
- const btn=document.createElement("button");
- btn.className="chat-btn";
- btn.textContent="Message";
- btn.onclick=()=>openPrivateChat(friend.username);
-
- info.append(av,details);
- box.append(info,btn);
- $("friendResult").appendChild(box);
-}
-
-function escapeHTML(s){
- return s.replace(/[&<>"']/g,m=>({
-  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
- }[m]));
-}
-
-function chatKey(a,b){
- return "xenvital_chat_"+[a,b].sort().join("__");
-}
-
-function openPrivateChat(username){
- activeFriend=username;
- $("privateUsername").textContent="@"+username;
- $("privateAvatar").textContent=username.charAt(0).toUpperCase();
- renderPrivateChat();
- showView("private");
- $("privateInput").focus();
-}
-
-function renderPrivateChat(){
- if(!currentUser || !activeFriend)return;
-
- const msgs=JSON.parse(localStorage.getItem(chatKey(currentUser.username,activeFriend)) || "[]");
- $("privateMessages").innerHTML="";
-
- if(!msgs.length){
-  $("privateMessages").innerHTML='<div class="empty">No messages yet. Start the conversation 👋</div>';
-  return;
- }
-
- msgs.forEach(m=>addPrivateBubble(m.text,m.from===currentUser.username));
- $("privateMessages").scrollTop=$("privateMessages").scrollHeight;
-}
-
-function addPrivateBubble(text,mine){
- const div=document.createElement("div");
- div.className="message "+(mine?"user":"bot");
-
- const av=document.createElement("div");
- av.className="avatar";
- av.textContent=mine
-  ? currentUser.username.charAt(0).toUpperCase()
-  : activeFriend.charAt(0).toUpperCase();
-
- const b=document.createElement("div");
- b.className="bubble";
- b.textContent=text;
-
- div.append(av,b);
- $("privateMessages").appendChild(div);
-}
-
-function sendPrivateMessage(){
- const input=$("privateInput");
- const text=input.value.trim();
-
- if(!text || !activeFriend || !currentUser)return;
-
- const key=chatKey(currentUser.username,activeFriend);
- const msgs=JSON.parse(localStorage.getItem(key) || "[]");
-
- msgs.push({
-  from:currentUser.username,
-  to:activeFriend,
-  text,
-  at:Date.now()
- });
-
- localStorage.setItem(key,JSON.stringify(msgs));
- input.value="";
- renderPrivateChat();
-}
-
-function privateEnter(e){
- if(e.key==="Enter"){
-  e.preventDefault();
-  sendPrivateMessage();
- }
-}
-
-if(currentUser){
- openApp();
-}else{
- $("auth").style.display="flex";
- $("app").style.display="none";
- loadTheme();
-}
+function friendEnter(e){if(e.key==="Enter"){e.preventDefault();searchFriend()}}
+function searchFriend(){const q=$("friendSearch").value.trim().toLowerCase().replace(/^@/,"");$("friendResult").innerHTML="";if(!q)return $("friendResult").innerHTML='<div class="empty">Enter a username.</div>';const f=users.find(u=>u.username===q&&u.username!==currentUser.username);if(!f)return $("friendResult").innerHTML='<div class="empty">No user found with @'+q+'</div>';$("friendResult").innerHTML='<div class="friend-result"><div class="friend-info"><div class="avatar">'+f.username[0].toUpperCase()+'</div><div><strong>@'+f.username+'</strong><div style="color:var(--muted);font-size:11px">XenvitalTech user</div></div></div><button class="chat-btn" onclick="openPrivateChat(\''+f.username.replace(/'/g,"\\'")+'\')">Message</button></div>'}
+function chatKey(a,b){return "xenvital_chat_"+[a,b].sort().join("__")}
+function openPrivateChat(u){activeFriend=u;$("privateUsername").textContent="@"+u;$("privateAvatar").textContent=u[0].toUpperCase();renderPrivateChat();showView("private");$("privateInput").focus()}
+function renderPrivateChat(){if(!currentUser||!activeFriend)return;const m=JSON.parse(localStorage.getItem(chatKey(currentUser.username,activeFriend))||"[]");$("privateMessages").innerHTML=m.length?"":'<div class="empty">No messages yet. Start the conversation 👋</div>';m.forEach(x=>{const d=document.createElement("div");d.className="message "+(x.from===currentUser.username?"user":"bot");const a=document.createElement("div");a.className="avatar";a.textContent=(x.from===currentUser.username?currentUser.username:activeFriend)[0].toUpperCase();const b=document.createElement("div");b.className="bubble";b.textContent=x.text;d.append(a,b);$("privateMessages").appendChild(d)});$("privateMessages").scrollTop=$("privateMessages").scrollHeight}
+function sendPrivateMessage(){const t=$("privateInput").value.trim();if(!t||!activeFriend)return;const k=chatKey(currentUser.username,activeFriend),m=JSON.parse(localStorage.getItem(k)||"[]");m.push({from:currentUser.username,to:activeFriend,text:t,at:Date.now()});localStorage.setItem(k,JSON.stringify(m));$("privateInput").value="";renderPrivateChat()}
+function privateEnter(e){if(e.key==="Enter"){e.preventDefault();sendPrivateMessage()}}
+if(currentUser)openApp();else{$("auth").style.display="flex";$("app").style.display="none"}
 </script>
 </body>
 </html>
