@@ -6,15 +6,17 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { message } = req.body || {};
+    const { messages } = req.body || {};
 
-    if (!message || typeof message !== "string") {
+    if (!Array.isArray(messages) || messages.length === 0) {
       return res.status(400).json({
-        error: "Message is required"
+        error: "Messages are required"
       });
     }
 
-    if (!process.env.OPENROUTER_API_KEY) {
+    const apiKey = process.env.OPENROUTER_API_KEY;
+
+    if (!apiKey) {
       return res.status(500).json({
         error: "OPENROUTER_API_KEY is missing in Vercel"
       });
@@ -25,10 +27,8 @@ export default async function handler(req, res) {
       {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
-          "Content-Type": "application/json",
-          "HTTP-Referer": "https://xenvital-tech.vercel.app",
-          "X-Title": "XenvitalTech AI"
+          "Authorization": `Bearer ${apiKey}`,
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({
           model: "openai/gpt-4o-mini",
@@ -36,12 +36,9 @@ export default async function handler(req, res) {
             {
               role: "system",
               content:
-                "You are XenvitalTech AI by ShashwatBytes. Give helpful, clear and accurate answers. Help with coding, study, projects, writing and problem solving."
+                "You are XenvitalTech AI by ShashwatBytes. Be helpful, clear and accurate."
             },
-            {
-              role: "user",
-              content: message
-            }
+            ...messages
           ]
         })
       }
@@ -60,21 +57,18 @@ export default async function handler(req, res) {
     const reply =
       data?.choices?.[0]?.message?.content;
 
-    if (!reply) {
-      return res.status(500).json({
-        error: "No AI response received"
-      });
-    }
-
     return res.status(200).json({
-      reply: reply
+      reply: reply || "No response received."
     });
 
   } catch (error) {
-    console.error("OpenRouter error:", error);
+
+    console.error(error);
 
     return res.status(500).json({
-      error: "AI connection failed"
+      error:
+        error.message ||
+        "AI connection failed"
     });
   }
 }
