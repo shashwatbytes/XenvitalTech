@@ -1,17 +1,17 @@
 export default async function handler(req, res) {
   if (req.method !== "POST") {
-    return res.status(405).json({
-      error: "Method not allowed"
-    });
+    return res.status(405).json({ error: "Method not allowed" });
   }
 
   try {
-    const { messages } = req.body || {};
+    const { message, messages } = req.body || {};
 
-    if (!Array.isArray(messages) || messages.length === 0) {
-      return res.status(400).json({
-        error: "Messages are required"
-      });
+    const chatMessages = Array.isArray(messages) && messages.length
+      ? messages
+      : [{ role: "user", content: message }];
+
+    if (!chatMessages.length || !chatMessages[0]?.content) {
+      return res.status(400).json({ error: "Message is required" });
     }
 
     const apiKey = process.env.OPENROUTER_API_KEY;
@@ -28,17 +28,18 @@ export default async function handler(req, res) {
         method: "POST",
         headers: {
           "Authorization": `Bearer ${apiKey}`,
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "HTTP-Referer": "https://xenvitaltech.vercel.app",
+          "X-Title": "XenvitalTech AI"
         },
         body: JSON.stringify({
           model: "openai/gpt-4o-mini",
           messages: [
             {
               role: "system",
-              content:
-                "You are XenvitalTech AI by ShashwatBytes. Be helpful, clear and accurate."
+              content: "You are XenvitalTech AI by ShashwatBytes. Give helpful, clear and concise answers."
             },
-            ...messages
+            ...chatMessages
           ]
         })
       }
@@ -47,28 +48,33 @@ export default async function handler(req, res) {
     const data = await response.json();
 
     if (!response.ok) {
+      console.error("OpenRouter error:", data);
+
       return res.status(response.status).json({
         error:
           data?.error?.message ||
-          "OpenRouter API request failed"
+          data?.error ||
+          "OpenRouter request failed"
       });
     }
 
-    const reply =
-      data?.choices?.[0]?.message?.content;
+    const reply = data?.choices?.[0]?.message?.content;
+
+    if (!reply) {
+      return res.status(500).json({
+        error: "OpenRouter returned no reply"
+      });
+    }
 
     return res.status(200).json({
-      reply: reply || "No response received."
+      reply
     });
 
   } catch (error) {
-
     console.error(error);
 
     return res.status(500).json({
-      error:
-        error.message ||
-        "AI connection failed"
+      error: error.message || "Server error"
     });
   }
 }
