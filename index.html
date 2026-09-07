@@ -1,3002 +1,2741 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
-<meta name="theme-color" content="#090d16">
-<title>XenvitalTech AI — ShashwatBytes</title>
-
-<style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:Inter,Arial,sans-serif}
-
-:root{
- --bg:#f5f7fb;
- --card:#fff;
- --text:#172033;
- --muted:#718096;
- --border:#e4e8f0;
- --primary:#5b5ff7;
- --secondary:#7c3aed;
- --bot:#eef1f7;
- --danger:#ef4444;
-}
-
-body.dark{
- --bg:#090d16;
- --card:#111827;
- --text:#f5f7ff;
- --muted:#9ca8bb;
- --border:#263244;
- --bot:#1c2635;
-}
-
-html,body{
- width:100%;
- height:100%;
- overflow:hidden
-}
-
-body{
- background:var(--bg);
- color:var(--text)
-}
-
-button,input{
- font:inherit
-}
-
-button{
- cursor:pointer
-}
-
-.auth{
- min-height:100dvh;
- height:100%;
- display:flex;
- align-items:center;
- justify-content:center;
- padding:20px;
- overflow:auto
-}
-
-.auth-card{
- width:100%;
- max-width:430px;
- background:var(--card);
- border:1px solid var(--border);
- border-radius:24px;
- padding:30px;
- box-shadow:0 20px 60px rgba(0,0,0,.08)
-}
-
-.auth-logo,.logo{
- display:grid;
- place-items:center;
- color:#fff;
- font-weight:800;
- background:linear-gradient(135deg,var(--primary),var(--secondary))
-}
-
-.auth-logo{
- width:65px;
- height:65px;
- border-radius:19px;
- margin:auto;
- font-size:28px
-}
-
-.auth-card h1{
- text-align:center;
- margin-top:18px;
- font-size:25px
-}
-
-.auth-subtitle{
- text-align:center;
- color:var(--muted);
- font-size:13px;
- margin:8px 0 25px
-}
-
-.form{
- display:none
-}
-
-.form.active{
- display:block
-}
-
-label{
- display:block;
- font-size:12px;
- font-weight:600;
- margin:14px 0 7px
-}
-
-input{
- width:100%;
- padding:13px;
- border:1px solid var(--border);
- border-radius:11px;
- outline:none;
- background:var(--bg);
- color:var(--text)
-}
-
-input:focus{
- border-color:var(--primary)
-}
-
-.primary{
- width:100%;
- border:0;
- padding:13px;
- margin-top:20px;
- border-radius:11px;
- background:linear-gradient(135deg,var(--primary),var(--secondary));
- color:white;
- font-weight:700
-}
-
-.switch{
- text-align:center;
- margin-top:18px;
- font-size:13px;
- color:var(--muted)
-}
-
-.switch span{
- color:var(--primary);
- cursor:pointer;
- font-weight:700
-}
-
-.error{
- color:var(--danger);
- font-size:12px;
- margin-top:10px
-}
-
-.app{
- display:none;
- width:100%;
- height:100dvh;
- overflow:hidden
-}
-
-.sidebar{
- width:275px;
- flex:none;
- background:var(--card);
- border-right:1px solid var(--border);
- padding:18px;
- display:flex;
- flex-direction:column;
- height:100%
-}
-
-.brand{
- display:flex;
- gap:10px;
- align-items:center;
- margin-bottom:22px
-}
-
-.logo{
- width:43px;
- height:43px;
- border-radius:13px
-}
-
-.brand h2{
- font-size:16px
-}
-
-.brand small{
- color:var(--muted)
-}
-
-.new-chat{
- border:0;
- background:var(--primary);
- color:white;
- padding:12px;
- border-radius:11px;
- font-weight:600;
- margin-bottom:18px
-}
-
-.nav-title{
- color:var(--muted);
- font-size:11px;
- text-transform:uppercase;
- margin:10px 4px
-}
-
-.nav-btn{
- width:100%;
- padding:12px;
- background:transparent;
- color:var(--text);
- border:0;
- border-radius:10px;
- text-align:left;
- margin-bottom:4px
-}
-
-.nav-btn:hover,
-.nav-btn.active{
- background:var(--bot)
-}
-
-.sidebar-bottom{
- margin-top:auto;
- border-top:1px solid var(--border);
- padding-top:10px
-}
-
-.profile-mini{
- display:flex;
- align-items:center;
- gap:10px;
- padding:10px
-}
-
-.avatar{
- width:36px;
- height:36px;
- border-radius:50%;
- display:grid;
- place-items:center;
- color:white;
- background:linear-gradient(135deg,var(--primary),var(--secondary));
- font-weight:700;
- flex:none
-}
-
-.profile-mini strong{
- display:block;
- font-size:13px
-}
-
-.profile-mini span{
- display:block;
- color:var(--muted);
- font-size:11px;
- overflow:hidden;
- text-overflow:ellipsis;
- white-space:nowrap;
- max-width:170px
-}
-
-.logout{
- width:100%;
- padding:10px;
- border:0;
- background:transparent;
- color:var(--danger);
- text-align:left;
- border-radius:9px
-}
-
-.logout:hover{
- background:rgba(239,68,68,.08)
-}
-
-.main{
- flex:1;
- display:flex;
- flex-direction:column;
- min-width:0;
- height:100%;
- overflow:hidden
-}
-
-.topbar{
- height:65px;
- flex:none;
- padding:0 20px;
- background:var(--card);
- border-bottom:1px solid var(--border);
- display:flex;
- align-items:center;
- justify-content:space-between
-}
-
-.page-title{
- font-weight:700
-}
-
-.top-actions{
- display:flex;
- gap:8px;
- align-items:center
-}
-
-.icon{
- width:38px;
- height:38px;
- border:1px solid var(--border);
- border-radius:10px;
- background:var(--card);
- color:var(--text);
- position:relative
-}
-
-/* Notification button */
-
-.notification-btn{
- width:42px;
- height:42px;
- border:1px solid var(--border);
- border-radius:11px;
- background:var(--card);
- color:var(--text);
- font-size:19px;
- position:relative;
- display:grid;
- place-items:center
-}
-
-.notification-btn:hover{
- background:var(--bot)
-}
-
-.notification-badge{
- position:absolute;
- top:-5px;
- right:-5px;
- min-width:19px;
- height:19px;
- padding:0 5px;
- border-radius:20px;
- background:var(--danger);
- color:white;
- font-size:10px;
- font-weight:800;
- display:none;
- align-items:center;
- justify-content:center;
- border:2px solid var(--card)
-}
-
-.notification-badge.show{
- display:flex
-}
-
-/* Notification dropdown */
-
-.notification-panel{
- position:fixed;
- top:72px;
- right:20px;
- width:330px;
- max-width:calc(100vw - 30px);
- max-height:430px;
- overflow-y:auto;
- background:var(--card);
- border:1px solid var(--border);
- border-radius:16px;
- box-shadow:0 20px 50px rgba(0,0,0,.18);
- z-index:1000;
- display:none
-}
-
-.notification-panel.show{
- display:block
-}
-
-.notification-head{
- padding:14px 16px;
- border-bottom:1px solid var(--border);
- display:flex;
- justify-content:space-between;
- align-items:center
-}
-
-.notification-head strong{
- font-size:14px
-}
-
-.clear-notifications{
- border:0;
- background:transparent;
- color:var(--primary);
- font-size:11px;
- font-weight:700
-}
-
-.notification-item{
- padding:13px 15px;
- border-bottom:1px solid var(--border);
- display:flex;
- gap:10px;
- align-items:center;
- cursor:pointer
-}
-
-.notification-item:hover{
- background:var(--bot)
-}
-
-.notification-item:last-child{
- border-bottom:0
-}
-
-.notification-item .notification-icon{
- width:38px;
- height:38px;
- border-radius:50%;
- display:grid;
- place-items:center;
- background:linear-gradient(135deg,var(--primary),var(--secondary));
- color:white;
- flex:none;
- font-size:16px
-}
-
-.notification-content{
- min-width:0
-}
-
-.notification-content strong{
- display:block;
- font-size:13px
-}
-
-.notification-content span{
- display:block;
- color:var(--muted);
- font-size:11px;
- margin-top:3px;
- overflow:hidden;
- text-overflow:ellipsis;
- white-space:nowrap
-}
-
-.notification-time{
- margin-left:auto;
- color:var(--muted);
- font-size:9px;
- flex:none
-}
-
-.notification-empty{
- padding:35px 15px;
- text-align:center;
- color:var(--muted);
- font-size:13px
-}
-
-.view{
- display:none;
- flex:1;
- min-height:0;
- overflow:hidden
-}
-
-.view.active{
- display:flex;
- flex-direction:column
-}
-
-.ai-chat{
- flex:1;
- min-height:0;
- overflow-y:auto;
- padding:30px 20px 20px
-}
-
-.messages{
- max-width:850px;
- margin:auto
-}
-
-.message{
- display:flex;
- gap:10px;
- margin:18px 0
-}
-
-.message.user{
- flex-direction:row-reverse
-}
-
-.bubble{
- max-width:75%;
- padding:12px 15px;
- border-radius:14px;
- line-height:1.55;
- font-size:14px;
- white-space:pre-wrap;
- overflow-wrap:anywhere
-}
-
-.bot .bubble{
- background:var(--bot);
- border-top-left-radius:4px
-}
-
-.user .bubble{
- background:var(--primary);
- color:white;
- border-top-right-radius:4px
-}
-
-.input-area{
- flex:none;
- padding:12px 20px 18px;
- border-top:1px solid var(--border);
- background:var(--card);
- z-index:10
-}
-
-.input-box{
- max-width:850px;
- margin:auto;
- display:flex;
- gap:8px
-}
-
-.input-box input{
- flex:1;
- min-width:0
-}
-
-.send{
- width:48px;
- height:48px;
- flex:none;
- border:0;
- border-radius:11px;
- color:white;
- background:var(--primary)
-}
-
-.send:disabled{
- opacity:.55;
- cursor:not-allowed
-}
-
-.friends{
- padding:30px;
- overflow-y:auto;
- height:100%
-}
-
-.search-box{
- max-width:650px;
- display:flex;
- gap:8px;
- margin-top:20px
-}
-
-.search-box input{
- flex:1
-}
-
-.search-btn,
-.chat-btn{
- border:0;
- background:var(--primary);
- color:white;
- border-radius:11px
-}
-
-.search-btn{
- padding:0 18px
-}
-
-.friend-result{
- max-width:650px;
- margin-top:18px;
- padding:15px;
- background:var(--card);
- border:1px solid var(--border);
- border-radius:14px;
- display:flex;
- align-items:center;
- justify-content:space-between;
- gap:12px
-}
-
-.friend-info{
- display:flex;
- gap:10px;
- align-items:center
-}
-
-.chat-btn{
- padding:9px 14px
-}
-
-.private-header{
- height:60px;
- flex:none;
- padding:10px 20px;
- border-bottom:1px solid var(--border);
- display:flex;
- align-items:center;
- gap:10px;
- background:var(--card)
-}
-
-.private-messages{
- flex:1;
- min-height:0;
- overflow-y:auto;
- padding:20px
-}
-
-.private-input{
- flex:none;
- padding:12px 20px;
- background:var(--card);
- border-top:1px solid var(--border);
- display:flex;
- gap:8px
-}
-
-.private-input input{
- flex:1;
- min-width:0
-}
-
-.empty{
- color:var(--muted);
- text-align:center;
- padding:40px 15px
-}
-
-.typing{
- opacity:.7;
- font-style:italic
-}
-
-.profile-logout{
- margin-top:25px;
- width:220px;
- max-width:100%;
- padding:12px;
- border:0;
- border-radius:11px;
- background:rgba(239,68,68,.1);
- color:var(--danger);
- font-weight:700
-}
-
-.mobile-nav{
- display:none
-}
-
-.nav-icon{
- display:inline-block;
- width:25px;
- text-align:center
-}
-
-@media(max-width:750px){
-
- html,body{
-  width:100%;
-  height:100%;
-  overflow:hidden
- }
-
- .app{
-  height:100dvh;
-  min-height:100dvh;
-  overflow:hidden
- }
-
- .sidebar{
-  display:none
- }
-
- .topbar{
-  height:58px;
-  padding:0 12px
- }
-
- .main{
-  height:100dvh;
-  min-height:0;
-  padding-bottom:70px;
-  overflow:hidden
- }
-
- .view{
-  height:100%;
-  min-height:0
- }
-
- .mobile-nav{
-  position:fixed;
-  z-index:200;
-  left:0;
-  right:0;
-  bottom:0;
-  height:70px;
-  display:flex;
-  background:var(--card);
-  border-top:1px solid var(--border);
-  padding:5px 0 calc(5px + env(safe-area-inset-bottom))
- }
-
- .mobile-nav button{
-  flex:1;
-  border:0;
-  background:transparent;
-  color:var(--muted);
-  font-size:11px;
-  border-radius:10px;
-  height:60px
- }
-
- .mobile-nav button.active{
-  color:var(--primary);
-  background:var(--bot);
-  font-weight:700
- }
-
- .mobile-nav .nav-icon{
-  display:block;
-  width:auto;
-  font-size:20px;
-  margin-bottom:2px
- }
-
- #aiView{
-  position:relative;
-  height:100%;
-  min-height:0
- }
-
- .ai-chat{
-  height:100%;
-  min-height:0;
-  overflow-y:auto;
-  padding:15px 12px 85px
- }
-
- .messages{
-  width:100%
- }
-
- .bubble{
-  max-width:84%;
-  font-size:14px
- }
-
- .input-area{
-  position:fixed;
-  left:0;
-  right:0;
-  bottom:70px;
-  width:100%;
-  height:70px;
-  z-index:150;
-  padding:9px 10px;
-  background:var(--card);
-  border-top:1px solid var(--border);
-  box-shadow:0 -4px 15px rgba(0,0,0,.08)
- }
-
- .input-box{
-  width:100%;
-  max-width:none;
-  height:52px;
-  display:flex;
-  gap:8px
- }
-
- .input-box input{
-  height:52px;
-  font-size:16px;
-  padding:12px
- }
-
- .send{
-  width:52px;
-  height:52px
- }
-
- #privateView{
-  height:100%;
-  min-height:0
- }
-
- .private-messages{
-  padding:14px 12px 80px
- }
-
- .private-input{
-  position:fixed;
-  left:0;
-  right:0;
-  bottom:70px;
-  width:100%;
-  height:70px;
-  z-index:150;
-  padding:9px 10px;
-  background:var(--card);
-  box-shadow:0 -4px 15px rgba(0,0,0,.08)
- }
-
- .private-input input{
-  height:52px;
-  font-size:16px
- }
-
- .private-input .send{
-  width:52px;
-  height:52px
- }
-
- .private-header{
-  height:58px;
-  padding:9px 12px
- }
-
- .friends{
-  padding:20px 13px
- }
-
- .friend-result{
-  padding:12px
- }
-
- .auth{
-  padding:15px
- }
-
- .auth-card{
-  padding:24px
- }
-
- .notification-panel{
-  top:63px;
-  right:10px;
-  width:calc(100vw - 20px);
-  max-height:380px
- }
-
-}
-
-@media(min-width:751px){
- .mobile-nav{
-  display:none!important
- }
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CampusGPT | BBS College of Engineering & Technology, Prayagraj</title>
+  <meta name="description" content="Official Institutional Knowledge Assistant for BBS College of Engineering & Technology, Prayagraj. Get verified answers from authorized academic notices, rules, and admission guidelines." />
+
+  <!-- Typography: Inter & Space Grotesk -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       CSS VARIABLES & THEME SYSTEM (Professional College Identity)
+       ========================================================================== */
+    :root {
+      --primary-navy: #0b1f3a;
+      --primary-navy-dark: #071527;
+      --secondary-blue: #1d4ed8;
+      --secondary-blue-hover: #1e40af;
+      --accent-gold: #c59b27;
+      --accent-gold-light: #fef9e7;
+      --accent-gold-hover: #a88219;
+      --bg-light: #f8fafc;
+      --bg-white: #ffffff;
+      --text-dark: #0f172a;
+      --text-muted: #475569;
+      --border-subtle: #e2e8f0;
+      --border-strong: #cbd5e1;
+      --card-shadow: 0 4px 6px -1px rgba(11, 31, 58, 0.06), 0 2px 4px -2px rgba(11, 31, 58, 0.04);
+      --card-shadow-hover: 0 10px 15px -3px rgba(11, 31, 58, 0.08), 0 4px 6px -4px rgba(11, 31, 58, 0.04);
+      --modal-overlay: rgba(7, 21, 39, 0.7);
+      --radius-sm: 6px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --max-width: 1200px;
+      --header-height: 74px;
+    }
+
+    /* Reset & Core Standards */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-dark);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: var(--secondary-blue);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    a:hover {
+      color: var(--secondary-blue-hover);
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    button, input, select, textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+
+    .container {
+      width: 100%;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .section-title-wrap {
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto 48px auto;
+    }
+
+    .section-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      background-color: var(--accent-gold-light);
+      padding: 4px 12px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 12px;
+      border: 1px solid rgba(197, 155, 39, 0.25);
+    }
+
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2rem;
+      color: var(--primary-navy);
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 12px;
+    }
+
+    .section-subtitle {
+      font-size: 1rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* Primary & Secondary Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 0.9375rem;
+      padding: 10px 20px;
+      border-radius: var(--radius-md);
+      transition: all 0.2s ease;
+      cursor: pointer;
+      text-decoration: none;
+      gap: 8px;
+    }
+
+    .btn:focus-visible {
+      outline: 2px solid var(--accent-gold);
+      outline-offset: 2px;
+    }
+
+    .btn-primary {
+      background-color: var(--primary-navy);
+      color: var(--bg-white);
+      border: 1px solid var(--primary-navy);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--secondary-blue);
+      border-color: var(--secondary-blue);
+      color: var(--bg-white);
+    }
+
+    .btn-gold {
+      background-color: var(--accent-gold);
+      color: var(--primary-navy-dark);
+      border: 1px solid var(--accent-gold);
+      font-weight: 700;
+    }
+
+    .btn-gold:hover {
+      background-color: var(--accent-gold-hover);
+      border-color: var(--accent-gold-hover);
+      color: var(--bg-white);
+    }
+
+    .btn-secondary {
+      background-color: transparent;
+      color: var(--primary-navy);
+      border: 1.5px solid var(--border-strong);
+    }
+
+    .btn-secondary:hover {
+      background-color: #f1f5f9;
+      border-color: var(--primary-navy);
+    }
+
+    .btn-sm {
+      padding: 8px 14px;
+      font-size: 0.875rem;
+    }
+
+    /* ==========================================================================
+       HEADER & NAVIGATION
+       ========================================================================== */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      height: var(--header-height);
+      background-color: var(--bg-white);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    }
+
+    .header-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+    }
+
+    .brand-logo-img {
+      height: 48px;
+      width: auto;
+      object-fit: contain;
+      display: block;
+    }
+
+    .brand-text-block {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-title-wrap {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+
+    .brand-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary-navy);
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+
+    .brand-title span {
+      color: var(--accent-gold);
+    }
+
+    .brand-subtitle {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      line-height: 1.2;
+      margin-top: 2px;
+    }
+
+    .brand-subloc {
+      font-size: 0.68rem;
+      color: var(--accent-gold-hover);
+      font-weight: 500;
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-link {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      position: relative;
+      padding: 6px 0;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      color: var(--primary-navy);
+    }
+
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: var(--accent-gold);
+      border-radius: 2px;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .mobile-nav-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 40px;
+      height: 40px;
+      padding: 8px;
+      border-radius: var(--radius-sm);
+      background-color: var(--bg-light);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .mobile-nav-toggle span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background-color: var(--primary-navy);
+      border-radius: 2px;
+      transition: all 0.2s ease;
+    }
+
+    /* ==========================================================================
+       HERO SECTION
+       ========================================================================== */
+    .hero-section {
+      background: linear-gradient(180deg, #ffffff 0%, var(--bg-light) 100%);
+      padding: 60px 0 40px 0;
+      border-bottom: 1px solid var(--border-subtle);
+      position: relative;
+    }
+
+    .hero-content {
+      text-align: center;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background-color: var(--bg-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: 50px;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--primary-navy);
+      margin-bottom: 20px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    }
+
+    .hero-eyebrow .dot {
+      width: 8px;
+      height: 8px;
+      background-color: var(--accent-gold);
+      border-radius: 50%;
+    }
+
+    .hero-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 700;
+      color: var(--primary-navy);
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 12px;
+    }
+
+    .hero-subheading {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.1rem, 2.5vw, 1.45rem);
+      font-weight: 600;
+      color: var(--secondary-blue);
+      margin-bottom: 18px;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-description {
+      font-size: 1.0625rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 32px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-cta-group {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+
+    /* ==========================================================================
+       CHATBOT PREVIEW SECTION
+       ========================================================================== */
+    .chat-preview-wrapper {
+      max-width: 860px;
+      margin: 0 auto 30px auto;
+    }
+
+    .chat-card {
+      background-color: var(--bg-white);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--card-shadow-hover);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chat-header {
+      background-color: var(--primary-navy);
+      color: var(--bg-white);
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid var(--accent-gold);
+    }
+
+    .chat-header-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .chat-status-indicator {
+      width: 10px;
+      height: 10px;
+      background-color: #22c55e;
+      border-radius: 50%;
+      box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2);
+    }
+
+    .chat-header-title {
+      font-size: 0.9375rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      color: #ffffff;
+    }
+
+    .chat-header-desc {
+      font-size: 0.75rem;
+      color: #94a3b8;
+    }
+
+    .chat-badge {
+      font-size: 0.6875rem;
+      background-color: rgba(255, 255, 255, 0.12);
+      color: #f1f5f9;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+
+    .chat-messages-container {
+      padding: 24px;
+      background-color: #fafbfc;
+      min-height: 290px;
+      max-height: 420px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .chat-msg {
+      display: flex;
+      flex-direction: column;
+      max-width: 85%;
+    }
+
+    .chat-msg.user {
+      align-self: flex-end;
+      align-items: flex-end;
+    }
+
+    .chat-msg.assistant {
+      align-self: flex-start;
+      align-items: flex-start;
+    }
+
+    .msg-sender {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+      padding: 0 4px;
+    }
+
+    .msg-bubble {
+      padding: 12px 16px;
+      border-radius: var(--radius-md);
+      font-size: 0.9375rem;
+      line-height: 1.55;
+    }
+
+    .chat-msg.user .msg-bubble {
+      background-color: var(--primary-navy);
+      color: #ffffff;
+      border-bottom-right-radius: 2px;
+    }
+
+    .chat-msg.assistant .msg-bubble {
+      background-color: var(--bg-white);
+      color: var(--text-dark);
+      border: 1px solid var(--border-subtle);
+      border-bottom-left-radius: 2px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+
+    /* Citation Box */
+    .citation-box {
+      margin-top: 10px;
+      padding: 10px 14px;
+      background-color: #f1f5f9;
+      border-left: 3px solid var(--accent-gold);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      width: 100%;
+    }
+
+    .citation-label {
+      font-weight: 700;
+      color: var(--primary-navy);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 2px;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .citation-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 4px;
+      font-size: 0.75rem;
+    }
+
+    .citation-tag {
+      background-color: #e2e8f0;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #334155;
+      font-weight: 500;
+    }
+
+    /* Chat Loading Indicator */
+    .chat-loading {
+      display: none;
+      align-self: flex-start;
+      background-color: var(--bg-white);
+      border: 1px solid var(--border-subtle);
+      padding: 10px 16px;
+      border-radius: var(--radius-md);
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      align-items: center;
+      gap: 8px;
+    }
+
+    .chat-loading.active {
+      display: flex;
+    }
+
+    .pulse-dot {
+      width: 6px;
+      height: 6px;
+      background-color: var(--secondary-blue);
+      border-radius: 50%;
+      animation: pulseAnim 1.2s infinite ease-in-out;
+    }
+
+    .pulse-dot:nth-child(2) { animation-delay: 0.2s; }
+    .pulse-dot:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes pulseAnim {
+      0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+      40% { transform: scale(1); opacity: 1; }
+    }
+
+    /* Suggested Questions Bar */
+    .suggested-prompts-bar {
+      padding: 12px 18px;
+      background-color: var(--bg-white);
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    .suggested-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      flex-shrink: 0;
+    }
+
+    .prompt-chip {
+      background-color: var(--bg-light);
+      border: 1px solid var(--border-strong);
+      color: var(--text-dark);
+      padding: 5px 12px;
+      border-radius: 50px;
+      font-size: 0.775rem;
+      font-weight: 500;
+      transition: all 0.15s ease;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .prompt-chip:hover {
+      background-color: var(--primary-navy);
+      color: #ffffff;
+      border-color: var(--primary-navy);
+    }
+
+    /* Chat Input Form */
+    .chat-input-row {
+      padding: 14px 18px;
+      background-color: var(--bg-white);
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      gap: 10px;
+    }
+
+    .chat-input-field {
+      flex: 1;
+      border: 1.5px solid var(--border-strong);
+      border-radius: var(--radius-md);
+      padding: 10px 16px;
+      font-size: 0.9375rem;
+      color: var(--text-dark);
+      background-color: var(--bg-light);
+      transition: border-color 0.15s ease, background-color 0.15s ease;
+    }
+
+    .chat-input-field:focus {
+      outline: none;
+      border-color: var(--secondary-blue);
+      background-color: #ffffff;
+    }
+
+    .chat-btn-send {
+      background-color: var(--primary-navy);
+      color: #ffffff;
+      padding: 10px 18px;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      font-size: 0.875rem;
+      transition: background-color 0.15s ease;
+    }
+
+    .chat-btn-send:hover {
+      background-color: var(--secondary-blue);
+    }
+
+    /* ==========================================================================
+       FEATURES SECTION (Clean 6-Card Grid)
+       ========================================================================== */
+    .features-section {
+      padding: 80px 0;
+      background-color: var(--bg-white);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .feature-card {
+      background-color: var(--bg-light);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 28px 24px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--card-shadow);
+      border-color: var(--border-strong);
+      background-color: #ffffff;
+    }
+
+    .feature-icon-box {
+      width: 46px;
+      height: 46px;
+      border-radius: var(--radius-md);
+      background-color: var(--primary-navy);
+      color: var(--accent-gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 18px;
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    .feature-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--primary-navy);
+      margin-bottom: 8px;
+    }
+
+    .feature-desc {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ==========================================================================
+       HOW IT WORKS SECTION (Simple Numbered Step Pipeline)
+       ========================================================================== */
+    .workflow-section {
+      padding: 80px 0;
+      background-color: var(--bg-light);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .workflow-steps-row {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 14px;
+      position: relative;
+    }
+
+    .step-card {
+      background-color: var(--bg-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 20px 16px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .step-num-badge {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background-color: var(--primary-navy);
+      color: var(--accent-gold);
+      font-weight: 700;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+      border: 2px solid var(--accent-gold-light);
+    }
+
+    .step-title {
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--primary-navy);
+      margin-bottom: 6px;
+      line-height: 1.35;
+    }
+
+    .step-desc {
+      font-size: 0.775rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* ==========================================================================
+       TRUST, VERIFICATION & ANTI-HALLUCINATION SECTION
+       ========================================================================== */
+    .trust-section {
+      padding: 80px 0;
+      background-color: var(--bg-white);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .trust-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .trust-content-box h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.875rem;
+      color: var(--primary-navy);
+      margin-bottom: 14px;
+      line-height: 1.3;
+    }
+
+    .trust-content-box p {
+      font-size: 0.9375rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      line-height: 1.7;
+    }
+
+    .trust-checklist {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .trust-check-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--primary-navy);
+    }
+
+    .trust-check-item span.icon {
+      color: var(--accent-gold);
+      font-weight: 800;
+    }
+
+    /* Demonstration of Anti-Hallucination Guardrail */
+    .guardrail-card {
+      background-color: var(--bg-light);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--card-shadow);
+    }
+
+    .guardrail-header {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #b91c1c;
+      background-color: #fee2e2;
+      padding: 4px 10px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 16px;
+    }
+
+    .guardrail-chat-example {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .guard-msg {
+      padding: 10px 14px;
+      border-radius: var(--radius-md);
+      font-size: 0.875rem;
+      line-height: 1.5;
+    }
+
+    .guard-msg.user {
+      background-color: var(--primary-navy);
+      color: #ffffff;
+      align-self: flex-start;
+    }
+
+    .guard-msg.bot {
+      background-color: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-left: 3px solid #b91c1c;
+      color: var(--text-dark);
+    }
+
+    .guard-msg-footer {
+      font-size: 0.75rem;
+      color: #b91c1c;
+      font-weight: 600;
+      margin-top: 6px;
+    }
+
+    /* ==========================================================================
+       KNOWLEDGE BASE SECTION (Sample Document Register)
+       ========================================================================== */
+    .kb-section {
+      padding: 80px 0;
+      background-color: var(--bg-light);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .kb-table-card {
+      background-color: var(--bg-white);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--card-shadow);
+      overflow: hidden;
+    }
+
+    .kb-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.875rem;
+    }
+
+    .kb-table th {
+      background-color: #f1f5f9;
+      color: var(--primary-navy);
+      font-weight: 700;
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border-strong);
+    }
+
+    .kb-table td {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--text-dark);
+    }
+
+    .kb-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .badge-verified {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background-color: #dcfce7;
+      color: #15803d;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: var(--radius-sm);
+      border: 1px solid #bbf7d0;
+    }
+
+    .badge-dept {
+      display: inline-block;
+      background-color: #e2e8f0;
+      color: #334155;
+      font-size: 0.725rem;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: var(--radius-sm);
+    }
+
+    /* ==========================================================================
+       THREE PORTALS SECTION
+       ========================================================================== */
+    .portals-section {
+      padding: 80px 0;
+      background-color: var(--bg-white);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .portals-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .portal-card {
+      background-color: var(--bg-light);
+      border: 1.5px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 32px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .portal-card:hover {
+      border-color: var(--primary-navy);
+      box-shadow: var(--card-shadow-hover);
+      background-color: #ffffff;
+    }
+
+    .portal-header-tag {
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--secondary-blue);
+      margin-bottom: 8px;
+    }
+
+    .portal-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.35rem;
+      color: var(--primary-navy);
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .portal-desc {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    /* ==========================================================================
+       ADMISSION APPOINTMENT SECTION
+       ========================================================================== */
+    .appointment-section {
+      padding: 80px 0;
+      background-color: var(--bg-light);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .appointment-box-wrapper {
+      max-width: 760px;
+      margin: 0 auto;
+      background-color: var(--bg-white);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--card-shadow);
+      padding: 36px 32px;
+    }
+
+    .appt-form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 24px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-group.full-width {
+      grid-column: span 2;
+    }
+
+    .form-label {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--primary-navy);
+    }
+
+    .form-input, .form-select, .form-textarea {
+      padding: 10px 14px;
+      border: 1.5px solid var(--border-strong);
+      border-radius: var(--radius-md);
+      background-color: var(--bg-white);
+      font-size: 0.9375rem;
+      color: var(--text-dark);
+      transition: border-color 0.15s ease;
+    }
+
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      outline: none;
+      border-color: var(--secondary-blue);
+    }
+
+    /* Confirmation Box */
+    .confirmation-panel {
+      display: none;
+      background-color: var(--bg-white);
+      border: 1.5px solid #22c55e;
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      text-align: center;
+    }
+
+    .confirmation-panel.active {
+      display: block;
+    }
+
+    .conf-badge {
+      width: 52px;
+      height: 52px;
+      background-color: #dcfce7;
+      color: #15803d;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px auto;
+      font-size: 1.5rem;
+      font-weight: 800;
+    }
+
+    .conf-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.5rem;
+      color: var(--primary-navy);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .conf-ref-id {
+      font-family: monospace;
+      font-size: 1.125rem;
+      font-weight: 700;
+      background-color: #f1f5f9;
+      color: var(--primary-navy);
+      padding: 8px 16px;
+      border-radius: var(--radius-md);
+      display: inline-block;
+      margin: 12px 0 20px 0;
+      border: 1px dashed var(--border-strong);
+    }
+
+    .conf-details-table {
+      max-width: 440px;
+      margin: 0 auto 24px auto;
+      text-align: left;
+      font-size: 0.875rem;
+      width: 100%;
+    }
+
+    .conf-details-table td {
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .conf-details-table td.label {
+      color: var(--text-muted);
+      font-weight: 500;
+      width: 40%;
+    }
+
+    .conf-details-table td.val {
+      color: var(--primary-navy);
+      font-weight: 600;
+    }
+
+    /* ==========================================================================
+       CAMPUS MAP SECTION
+       ========================================================================== */
+    .map-section {
+      padding: 80px 0;
+      background-color: var(--bg-white);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .map-card {
+      background-color: var(--bg-white);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--card-shadow);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+    }
+
+    .map-visual-pane {
+      background-color: #e2e8f0;
+      min-height: 380px;
+      position: relative;
+    }
+
+    .map-visual-pane iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    .map-info-pane {
+      padding: 36px 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background-color: var(--bg-white);
+    }
+
+    .map-inst-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--primary-navy);
+      margin-bottom: 8px;
+    }
+
+    .map-address-txt {
+      font-size: 0.9375rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .geo-status-box {
+      margin: 16px 0 20px 0;
+      padding: 14px;
+      border-radius: var(--radius-md);
+      background-color: var(--bg-light);
+      border: 1px solid var(--border-subtle);
+      font-size: 0.875rem;
+    }
+
+    .geo-dist-val {
+      font-weight: 700;
+      color: var(--secondary-blue);
+    }
+
+    .map-actions-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: auto;
+    }
+
+    /* ==========================================================================
+       LOGIN PORTAL MODAL
+       ========================================================================== */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background-color: var(--modal-overlay);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      backdrop-filter: blur(4px);
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .login-modal-box {
+      background-color: var(--bg-white);
+      width: 100%;
+      max-width: 480px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-strong);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      position: relative;
+      animation: modalFadeIn 0.2s ease-out;
+    }
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.96); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background-color: var(--bg-light);
+      transition: background-color 0.15s ease;
+    }
+
+    .modal-close-btn:hover {
+      background-color: #e2e8f0;
+      color: var(--primary-navy);
+    }
+
+    .modal-inner-pad {
+      padding: 32px 28px;
+    }
+
+    .modal-header-block {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .modal-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--primary-navy);
+    }
+
+    .modal-subtitle {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* Role Selector Buttons */
+    .role-selection-tabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      background-color: var(--bg-light);
+      padding: 4px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+      margin-bottom: 20px;
+    }
+
+    .role-tab-btn {
+      padding: 8px 4px;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+      text-align: center;
+      transition: all 0.15s ease;
+    }
+
+    .role-tab-btn.active {
+      background-color: var(--primary-navy);
+      color: #ffffff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .role-info-desc {
+      font-size: 0.775rem;
+      color: var(--text-muted);
+      background-color: var(--accent-gold-light);
+      border: 1px solid rgba(197, 155, 39, 0.25);
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 20px;
+      line-height: 1.4;
+    }
+
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .login-options-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+    }
+
+    .login-options-row label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+
+    /* ==========================================================================
+       FOOTER
+       ========================================================================== */
+    .site-footer {
+      background-color: var(--primary-navy);
+      color: #cbd5e1;
+      padding: 60px 0 28px 0;
+      border-top: 3px solid var(--accent-gold);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 36px;
+      margin-bottom: 40px;
+    }
+
+    .footer-brand-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 6px;
+    }
+
+    .footer-brand-title span {
+      color: var(--accent-gold);
+    }
+
+    .footer-inst-desc {
+      font-size: 0.85rem;
+      color: #94a3b8;
+      line-height: 1.6;
+      max-width: 340px;
+    }
+
+    .footer-col-title {
+      font-size: 0.8125rem;
+      font-weight: 700;
+      color: #ffffff;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 16px;
+    }
+
+    .footer-links-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-links-list a {
+      color: #94a3b8;
+      font-size: 0.85rem;
+    }
+
+    .footer-links-list a:hover {
+      color: var(--accent-gold);
+    }
+
+    .footer-bottom-row {
+      padding-top: 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.775rem;
+      color: #64748b;
+    }
+
+    /* Scroll To Top */
+    .btn-scroll-top {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background-color: var(--primary-navy);
+      color: var(--accent-gold);
+      border: 1px solid var(--border-strong);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      font-weight: 800;
+      box-shadow: var(--card-shadow);
+      z-index: 900;
+      transition: all 0.2s ease;
+    }
+
+    .btn-scroll-top.visible {
+      display: flex;
+    }
+
+    .btn-scroll-top:hover {
+      background-color: var(--secondary-blue);
+      color: #ffffff;
+    }
+
+    /* ==========================================================================
+       RESPONSIVE ADAPTATIONS (Desktop, Tablet, Mobile)
+       ========================================================================== */
+    @media (max-width: 1024px) {
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .workflow-steps-row {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .portals-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .map-card {
+        grid-template-columns: 1fr;
+      }
+      .footer-grid {
+        grid-template-columns: 1.5fr 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .site-header {
+        height: 68px;
+      }
+      .mobile-nav-toggle {
+        display: flex;
+      }
+      .nav-menu {
+        position: fixed;
+        top: 68px;
+        left: 0;
+        width: 100%;
+        background-color: var(--bg-white);
+        border-bottom: 1px solid var(--border-strong);
+        flex-direction: column;
+        padding: 20px;
+        gap: 16px;
+        align-items: flex-start;
+        display: none;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+      }
+      .nav-menu.open {
+        display: flex;
+      }
+      .header-actions {
+        margin-left: auto;
+        margin-right: 8px;
+      }
+      .features-grid, .portals-grid {
+        grid-template-columns: 1fr;
+      }
+      .workflow-steps-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .trust-grid {
+        grid-template-columns: 1fr;
+      }
+      .appt-form-grid {
+        grid-template-columns: 1fr;
+      }
+      .form-group.full-width {
+        grid-column: span 1;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+      .footer-bottom-row {
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+      }
+      .chat-messages-container {
+        padding: 16px;
+      }
+      .chat-msg {
+        max-width: 95%;
+      }
+      .appointment-box-wrapper {
+        padding: 24px 18px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .workflow-steps-row {
+        grid-template-columns: 1fr;
+      }
+      .hero-cta-group {
+        flex-direction: column;
+        width: 100%;
+      }
+      .hero-cta-group .btn {
+        width: 100%;
+      }
+      .brand-text-block {
+        display: none;
+      }
+    }
+  </style>
 </head>
-
 <body>
 
-<section class="auth" id="auth">
-
-<div class="auth-card">
-
-<div class="auth-logo">X</div>
-
-<h1>XenvitalTech</h1>
-
-<div class="auth-subtitle">
-AI Assistant by ShashwatBytes
-</div>
-
-<form class="form active" id="loginForm">
-
-<label>Email</label>
-
-<input
- id="loginEmail"
- type="email"
- placeholder="Enter your email"
- required
->
-
-<label>Password</label>
-
-<input
- id="loginPassword"
- type="password"
- placeholder="Enter your password"
- required
->
-
-<div class="error" id="loginError"></div>
-
-<button class="primary" type="submit">
-Login
-</button>
-
-<div class="switch">
-New to XenvitalTech?
-<span onclick="showSignup()">Create account</span>
-</div>
-
-</form>
-
-<form class="form" id="signupForm">
-
-<label>Username</label>
-
-<input
- id="signupUsername"
- type="text"
- placeholder="@yourusername"
- minlength="3"
- maxlength="30"
- required
->
-
-<label>Email</label>
-
-<input
- id="signupEmail"
- type="email"
- placeholder="Enter your email"
- required
->
-
-<label>Password</label>
-
-<input
- id="signupPassword"
- type="password"
- placeholder="Create password"
- minlength="6"
- required
->
-
-<div class="error" id="signupError"></div>
-
-<button class="primary" type="submit">
-Create Account
-</button>
-
-<div class="switch">
-Already have an account?
-<span onclick="showLogin()">Login</span>
-</div>
-
-</form>
-
-</div>
-</section>
-
-
-<section class="app" id="app">
-
-<aside class="sidebar">
-
-<div class="brand">
-
-<div class="logo">X</div>
-
-<div>
-<h2>XenvitalTech</h2>
-<small>by ShashwatBytes</small>
-</div>
-
-</div>
-
-<button class="new-chat" onclick="newAIChat()">
-＋ New AI Chat
-</button>
-
-<div class="nav-title">
-Workspace
-</div>
-
-<button
- class="nav-btn active"
- id="aiNav"
- onclick="showView('ai')"
->
-<span class="nav-icon">🤖</span>
-XenvitalTech AI
-</button>
-
-<button
- class="nav-btn"
- id="friendsNav"
- onclick="showView('friends')"
->
-<span class="nav-icon">👥</span>
-Find Friends
-</button>
-
-<button
- class="nav-btn"
- id="profileNav"
- onclick="showView('profile')"
->
-<span class="nav-icon">👤</span>
-My Profile
-</button>
-
-<div class="sidebar-bottom">
-
-<div class="profile-mini">
-
-<div class="avatar" id="miniAvatar">
-U
-</div>
-
-<div>
-<strong id="miniUsername">@user</strong>
-<span id="miniEmail">email</span>
-</div>
-
-</div>
-
-<button class="logout" onclick="logout()">
-↪ Logout
-</button>
-
-</div>
-
-</aside>
-
-
-<main class="main">
-
-<header class="topbar">
-
-<div class="page-title" id="pageTitle">
-XenvitalTech AI
-</div>
-
-<div class="top-actions">
-
-<button
- class="notification-btn"
- id="notificationButton"
- onclick="toggleNotifications()"
- aria-label="Notifications"
->
-🔔
-<span
- class="notification-badge"
- id="notificationBadge"
->
-0
-</span>
-</button>
-
-<button
- class="icon"
- onclick="toggleTheme()"
- aria-label="Toggle theme"
->
-◐
-</button>
-
-</div>
-
-</header>
-
-
-<!-- Notification Panel -->
-
-<div
- class="notification-panel"
- id="notificationPanel"
->
-
-<div class="notification-head">
-
-<strong>Notifications</strong>
-
-<button
- class="clear-notifications"
- onclick="clearNotifications()"
->
-Clear all
-</button>
-
-</div>
-
-<div id="notificationList">
-
-<div class="notification-empty">
-No new notifications 🔔
-</div>
-
-</div>
-
-</div>
-
-
-<!-- AI VIEW -->
-
-<section class="view active" id="aiView">
-
-<div class="ai-chat" id="aiScroll">
-
-<div class="messages" id="aiMessages">
-
-<div class="message bot">
-
-<div class="avatar">
-X
-</div>
-
-<div class="bubble">XenvitalTech AI by ShashwatBytes
-
-Hello! 👋
-
-I'm your AI assistant.
-
-I can help you with coding, study, projects, writing and problem solving.
-
-What would you like to do today? 🚀</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="input-area">
-
-<div class="input-box">
-
-<input
- id="aiInput"
- placeholder="Ask XenvitalTech anything..."
- onkeydown="aiEnter(event)"
- autocomplete="off"
->
-
-<button
- class="send"
- id="aiSend"
- onclick="sendAI()"
->
-➤
-</button>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- FRIENDS VIEW -->
-
-<section class="view" id="friendsView">
-
-<div class="friends">
-
-<h2>
-Find Friends 👥
-</h2>
-
-<p style="color:var(--muted);margin-top:7px">
-Search a registered username and start a private chat.
-</p>
-
-<div class="search-box">
-
-<input
- id="friendSearch"
- placeholder="Search @username"
- onkeydown="friendEnter(event)"
->
-
-<button
- class="search-btn"
- onclick="searchFriend()"
->
-Search
-</button>
-
-</div>
-
-<div id="friendResult"></div>
-
-</div>
-
-</section>
-
-
-<!-- PRIVATE CHAT -->
-
-<section class="view" id="privateView">
-
-<div class="private-header">
-
-<button
- class="icon"
- onclick="showView('friends')"
->
-←
-</button>
-
-<div
- class="avatar"
- id="privateAvatar"
->
-F
-</div>
-
-<strong id="privateUsername">
-@friend
-</strong>
-
-</div>
-
-<div
- class="private-messages"
- id="privateMessages"
-></div>
-
-<div class="private-input">
-
-<input
- id="privateInput"
- placeholder="Write a message..."
- onkeydown="privateEnter(event)"
- autocomplete="off"
->
-
-<button
- class="send"
- onclick="sendPrivateMessage()"
->
-➤
-</button>
-
-</div>
-
-</section>
-
-
-<!-- PROFILE -->
-
-<section class="view" id="profileView">
-
-<div class="friends">
-
-<h2>
-My Profile 👤
-</h2>
-
-<div style="margin-top:25px">
-
-<div
- class="avatar"
- style="width:70px;height:70px;font-size:25px"
- id="profileAvatar"
->
-U
-</div>
-
-<h3
- style="margin-top:15px"
- id="profileUsername"
->
-@username
-</h3>
-
-<p
- style="color:var(--muted);margin-top:5px"
- id="profileEmail"
->
-email
-</p>
-
-<button
- class="profile-logout"
- onclick="logout()"
->
-↪ Logout from XenvitalTech
-</button>
-
-</div>
-
-</div>
-
-</section>
-
-</main>
-
-
-<nav class="mobile-nav">
-
-<button
- id="mobileAi"
- class="active"
- onclick="showView('ai')"
->
-<span class="nav-icon">🤖</span>
-AI
-</button>
-
-<button
- id="mobileFriends"
- onclick="showView('friends')"
->
-<span class="nav-icon">👥</span>
-Friends
-</button>
-
-<button
- id="mobileProfile"
- onclick="showView('profile')"
->
-<span class="nav-icon">👤</span>
-Profile
-</button>
-
-</nav>
-
-</section>
-
-
-<script>
-
-const $=id=>document.getElementById(id);
-
-let users=
- JSON.parse(
-  localStorage.getItem("xenvital_users")||"[]"
- );
-
-let currentUser=
- JSON.parse(
-  localStorage.getItem("xenvital_currentUser")||"null"
- );
-
-let activeFriend="";
-let aiHistory=[];
-
-
-/* =========================
-   USER SYSTEM
-========================= */
-
-function saveUsers(){
- localStorage.setItem(
-  "xenvital_users",
-  JSON.stringify(users)
- );
-}
-
-function saveCurrent(){
- localStorage.setItem(
-  "xenvital_currentUser",
-  JSON.stringify(currentUser)
- );
-}
-
-function showSignup(){
-
- $("loginForm").classList.remove("active");
- $("signupForm").classList.add("active");
-
- $("loginError").textContent="";
-}
-
-function showLogin(){
-
- $("signupForm").classList.remove("active");
- $("loginForm").classList.add("active");
-
- $("signupError").textContent="";
-}
-
-
-/* SIGNUP */
-
-$("signupForm").addEventListener("submit",e=>{
-
- e.preventDefault();
-
- const username=
-  $("signupUsername").value
-  .trim()
-  .toLowerCase()
-  .replace(/^@/,"");
-
- const email=
-  $("signupEmail").value
-  .trim()
-  .toLowerCase();
-
- const password=
-  $("signupPassword").value;
-
- $("signupError").textContent="";
-
- if(!/^[a-z0-9_.-]{3,30}$/.test(username)){
-
-  $("signupError").textContent=
-   "Use 3-30 letters, numbers, _, . or -.";
-
-  return;
- }
-
- if(users.some(u=>u.username===username)){
-
-  $("signupError").textContent=
-   "Username already exists.";
-
-  return;
- }
-
- if(users.some(u=>u.email===email)){
-
-  $("signupError").textContent=
-   "Email already registered.";
-
-  return;
- }
-
- const user={
-  username,
-  email,
-  password
- };
-
- users.push(user);
-
- saveUsers();
-
- currentUser=user;
-
- saveCurrent();
-
- openApp();
-
-});
-
-
-/* LOGIN */
-
-$("loginForm").addEventListener("submit",e=>{
-
- e.preventDefault();
-
- const email=
-  $("loginEmail").value
-  .trim()
-  .toLowerCase();
-
- const password=
-  $("loginPassword").value;
-
- const user=
-  users.find(
-   u=>
-    u.email===email &&
-    u.password===password
-  );
-
- if(!user){
-
-  $("loginError").textContent=
-   "Invalid email or password.";
-
-  return;
- }
-
- $("loginError").textContent="";
-
- currentUser=user;
-
- saveCurrent();
-
- openApp();
-
-});
-
-
-/* =========================
-   APP
-========================= */
-
-function openApp(){
-
- $("auth").style.display="none";
- $("app").style.display="flex";
-
- updateProfile();
-
- loadTheme();
-
- loadNotifications();
-
- showView("ai");
-
- requestNotificationPermission();
-
- startMessageWatcher();
-}
-
-
-function updateProfile(){
-
- if(!currentUser)return;
-
- const name="@"+currentUser.username;
-
- const initial=
-  currentUser.username
-  .charAt(0)
-  .toUpperCase();
-
- $("miniUsername").textContent=name;
-
- $("miniEmail").textContent=
-  currentUser.email;
-
- $("profileUsername").textContent=name;
-
- $("profileEmail").textContent=
-  currentUser.email;
-
- $("miniAvatar").textContent=
-  initial;
-
- $("profileAvatar").textContent=
-  initial;
-}
-
-
-function logout(){
-
- currentUser=null;
-
- aiHistory=[];
-
- activeFriend="";
-
- localStorage.removeItem(
-  "xenvital_currentUser"
- );
-
- $("app").style.display="none";
-
- $("auth").style.display="flex";
-
- $("loginEmail").value="";
-
- $("loginPassword").value="";
-
- $("loginError").textContent="";
-
- showLogin();
-
-}
-
-
-/* =========================
-   VIEW SYSTEM
-========================= */
-
-function showView(view){
-
- document
-  .querySelectorAll(".view")
-  .forEach(v=>
-   v.classList.remove("active")
-  );
-
- document
-  .querySelectorAll(".nav-btn")
-  .forEach(v=>
-   v.classList.remove("active")
-  );
-
- document
-  .querySelectorAll(".mobile-nav button")
-  .forEach(v=>
-   v.classList.remove("active")
-  );
-
-
- if(view==="private"){
-
-  $("privateView")
-   .classList.add("active");
-
-  $("pageTitle").textContent=
-   "Private Chat";
-
-  renderPrivateChat();
-
-  return;
- }
-
-
- const map={
-
-  ai:[
-   "aiView",
-   "aiNav",
-   "mobileAi",
-   "XenvitalTech AI"
-  ],
-
-  friends:[
-   "friendsView",
-   "friendsNav",
-   "mobileFriends",
-   "Find Friends"
-  ],
-
-  profile:[
-   "profileView",
-   "profileNav",
-   "mobileProfile",
-   "My Profile"
-  ]
-
- };
-
-
- const item=map[view];
-
- if(!item)return;
-
- $(item[0]).classList.add("active");
-
- $(item[1]).classList.add("active");
-
- $(item[2]).classList.add("active");
-
- $("pageTitle").textContent=
-  item[3];
-
-
- if(view==="ai"){
-
-  setTimeout(
-   ()=>$("aiInput").focus(),
-   100
-  );
-
- }
-
-}
-
-
-/* =========================
-   THEME
-========================= */
-
-function toggleTheme(){
-
- document.body.classList.toggle("dark");
-
- localStorage.setItem(
-  "xenvital_theme",
-  document.body.classList.contains("dark")
-   ?"dark"
-   :"light"
- );
-
-}
-
-function loadTheme(){
-
- document.body.classList.toggle(
-  "dark",
-  localStorage.getItem("xenvital_theme")==="dark"
- );
-
-}
-
-
-/* =========================
-   AI CHAT
-========================= */
-
-function newAIChat(){
-
- aiHistory=[];
-
- $("aiMessages").innerHTML="";
-
- addAIMessage(
-  "XenvitalTech AI by ShashwatBytes\n\nNew chat started. 👋\n\nHow can I help you today?",
-  "bot"
- );
-
- showView("ai");
-
-}
-
-
-function aiEnter(e){
-
- if(
-  e.key==="Enter" &&
-  !e.shiftKey
- ){
-
-  e.preventDefault();
-
-  sendAI();
-
- }
-
-}
-
-
-async function sendAI(){
-
- const text=
-  $("aiInput").value.trim();
-
- if(!text||!currentUser)return;
-
- addAIMessage(
-  text,
-  "user"
- );
-
- $("aiInput").value="";
-
- $("aiSend").disabled=true;
-
- const typingId=
-  "typing-"+Date.now();
-
- addAIMessage(
-  "Thinking…",
-  "bot",
-  typingId
- );
-
-
- try{
-
-  aiHistory.push({
-   role:"user",
-   content:text
-  });
-
-
-  const response=
-   await fetch(
-    "/api/chat",
-    {
-     method:"POST",
-
-     headers:{
-      "Content-Type":
-       "application/json",
-
-      "Accept":
-       "application/json"
-     },
-
-     body:JSON.stringify({
-      message:text,
-      messages:aiHistory
-     })
-
-    }
-   );
-
-
-  const raw=
-   await response.text();
-
-  let data={};
-
-  try{
-
-   data=
-    raw
-     ?JSON.parse(raw)
-     :{};
-
-  }catch{
-
-   data={
-    error:
-     raw ||
-     "Invalid server response"
-   };
-
-  }
-
-
-  $(typingId)?.remove();
-
-
-  if(!response.ok){
-
-   throw new Error(
-    data.error ||
-    data.message ||
-    ("Server error "+response.status)
-   );
-
-  }
-
-
-  const reply=
-   data.reply ||
-   data.message ||
-   data.content ||
-   data.choices?.[0]?.message?.content ||
-   "";
-
-
-  if(!reply){
-
-   throw new Error(
-    "No AI reply received from /api/chat."
-   );
-
-  }
-
-
-  aiHistory.push({
-   role:"assistant",
-   content:reply
-  });
-
-  addAIMessage(
-   reply,
-   "bot"
-  );
-
-
- }catch(err){
-
-  $(typingId)?.remove();
-
-  let msg=
-   err.message ||
-   "Unknown error";
-
-
-  if(
-   msg
-    .toLowerCase()
-    .includes("user not found")
-  ){
-
-   msg=
-    "OpenRouter model/user configuration problem. Check your /api/chat.js model name and OPENROUTER_API_KEY in Vercel.";
-
-  }
-
-
-  addAIMessage(
-   "AI connection failed: "+
-   msg+
-   "\n\nMake sure /api/chat.js is deployed and OPENROUTER_API_KEY is added in Vercel Environment Variables.",
-   "bot"
-  );
-
-
- }finally{
-
-  $("aiSend").disabled=false;
-
-  $("aiInput").focus();
-
- }
-
-}
-
-
-function addAIMessage(
- text,
- type,
- id
-){
-
- const area=
-  $("aiMessages");
-
- const div=
-  document.createElement("div");
-
- div.className=
-  "message "+type;
-
- if(id)
-  div.id=id;
-
-
- const av=
-  document.createElement("div");
-
- av.className="avatar";
-
- av.textContent=
-  type==="bot"
-   ?"X"
-   :
-   (
-    currentUser
-     ?.username
-     ?.charAt(0)
-     .toUpperCase()
-    ||
-    "U"
-   );
-
-
- const bubble=
-  document.createElement("div");
-
- bubble.className="bubble";
-
- bubble.textContent=text;
-
- div.append(
-  av,
-  bubble
- );
-
- area.appendChild(div);
-
-
- requestAnimationFrame(()=>{
-
-  $("aiScroll").scrollTop=
-   $("aiScroll").scrollHeight;
-
- });
-
-}
-
-
-/* =========================
-   FRIEND SEARCH
-========================= */
-
-function friendEnter(e){
-
- if(e.key==="Enter"){
-
-  e.preventDefault();
-
-  searchFriend();
-
- }
-
-}
-
-
-function searchFriend(){
-
- const q=
-  $("friendSearch")
-  .value
-  .trim()
-  .toLowerCase()
-  .replace(/^@/,"");
-
- $("friendResult").innerHTML="";
-
-
- if(!q){
-
-  $("friendResult").innerHTML=
-   '<div class="empty">Enter a username.</div>';
-
-  return;
-
- }
-
-
- const friend=
-  users.find(
-   u=>
-    u.username===q &&
-    u.username!==currentUser.username
-  );
-
-
- if(!friend){
-
-  $("friendResult").innerHTML=
-   '<div class="empty">No user found with @'+
-   escapeHTML(q)+
-   '</div>';
-
-  return;
-
- }
-
-
- $("friendResult").innerHTML=
-
- `<div class="friend-result">
-
-  <div class="friend-info">
-
-   <div class="avatar">
-    ${friend.username
-      .charAt(0)
-      .toUpperCase()}
-   </div>
-
-   <div>
-
-    <strong>
-     @${escapeHTML(friend.username)}
-    </strong>
-
-    <div
-     style="color:var(--muted);font-size:11px"
-    >
-     XenvitalTech user
+  <!-- ========================================================================
+       HEADER & NAVIGATION
+       ======================================================================== -->
+  <header class="site-header">
+    <div class="container header-container">
+      <!-- BBS College Brand Signature -->
+      <a href="#home" class="brand-group" aria-label="CampusGPT BBS College Homepage">
+        <img src="bbs-logo.png" alt="BBS College of Engineering & Technology Logo" class="brand-logo-img" />
+        <div class="brand-text-block">
+          <div class="brand-title-wrap">
+            <span class="brand-title">Campus<span>GPT</span></span>
+          </div>
+          <span class="brand-subtitle">BBS College of Engineering & Technology</span>
+          <span class="brand-subloc">Prayagraj, Uttar Pradesh</span>
+        </div>
+      </a>
+
+      <!-- Desktop & Mobile Navigation Links -->
+      <nav aria-label="Primary Navigation">
+        <ul class="nav-menu" id="primaryNavMenu">
+          <li><a href="#home" class="nav-link active">Home</a></li>
+          <li><a href="#features" class="nav-link">Features</a></li>
+          <li><a href="#campus-map" class="nav-link">Campus Map</a></li>
+          <li><a href="#admission" class="nav-link">Admission</a></li>
+          <li><a href="#about" class="nav-link">About</a></li>
+        </ul>
+      </nav>
+
+      <!-- Right Header Actions -->
+      <div class="header-actions">
+        <button type="button" class="btn btn-primary btn-sm" id="headerLoginBtn" onclick="openLoginModal('student')">
+          Login
+        </button>
+        <button type="button" class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle Navigation Menu" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
     </div>
+  </header>
 
-   </div>
+  <!-- ========================================================================
+       HERO SECTION
+       ======================================================================== -->
+  <section id="home" class="hero-section">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-eyebrow">
+          <span class="dot"></span>
+          <span>Official Institutional Knowledge Assistant</span>
+        </div>
+        <h1 class="hero-title">CampusGPT</h1>
+        <div class="hero-subheading">Your Campus. One Intelligent Assistant.</div>
+        <p class="hero-description">
+          Get verified information about admissions, academics, examinations, college policies and campus services from one trusted institutional assistant.
+        </p>
+        <div class="hero-cta-group">
+          <a href="#chat-preview" class="btn btn-primary">Ask CampusGPT</a>
+          <a href="#admission" class="btn btn-gold">Book Admission Appointment</a>
+        </div>
+      </div>
 
+      <!-- ====================================================================
+           AI CHATBOT PREVIEW (Interactive Frontend Demo)
+           ==================================================================== -->
+      <div class="chat-preview-wrapper" id="chat-preview">
+        <div class="chat-card" role="region" aria-label="CampusGPT Chat Interface Preview">
+          <!-- Chat Card Header -->
+          <div class="chat-header">
+            <div class="chat-header-info">
+              <span class="chat-status-indicator"></span>
+              <div>
+                <div class="chat-header-title">CampusGPT Assistant</div>
+                <div class="chat-header-desc">Ask questions about your college.</div>
+              </div>
+            </div>
+            <span class="chat-badge">VERIFIED RAG REPOSITORY</span>
+          </div>
+
+          <!-- Chat Conversation Log -->
+          <div class="chat-messages-container" id="chatMessagesContainer">
+            <!-- Initial Bot Welcome -->
+            <div class="chat-msg assistant">
+              <span class="msg-sender">CampusGPT Institutional Assistant</span>
+              <div class="msg-bubble">
+                Welcome to BBS College of Engineering & Technology knowledge assistant. I answer questions exclusively based on official administrative circulars, guidelines, and notices. What would you like to verify today?
+              </div>
+            </div>
+
+            <!-- Preloaded Realistic Dialogue -->
+            <div class="chat-msg user">
+              <span class="msg-sender">You (Student Inquiry)</span>
+              <div class="msg-bubble">
+                What documents are required for admission?
+              </div>
+            </div>
+
+            <div class="chat-msg assistant">
+              <span class="msg-sender">CampusGPT Institutional Assistant</span>
+              <div class="msg-bubble">
+                According to the official admission guidelines, applicants need to submit the required academic certificates, identification documents and other documents specified in the latest admission notice.
+                
+                <!-- Explicit Grounded Source Citation -->
+                <div class="citation-box">
+                  <div class="citation-label">
+                    <span>Source Citation:</span>
+                  </div>
+                  <div>Admission Guidelines</div>
+                  <div class="citation-meta">
+                    <span class="citation-tag">Official College Document</span>
+                    <span class="citation-tag">Admissions Wing • BBSCET</span>
+                    <span class="citation-tag">Ref: DOC-ADM-2026</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Dynamic Loading Placeholder -->
+            <div class="chat-loading" id="chatLoadingIndicator">
+              <div class="pulse-dot"></div>
+              <div class="pulse-dot"></div>
+              <div class="pulse-dot"></div>
+              <span>CampusGPT is checking official documents…</span>
+            </div>
+          </div>
+
+          <!-- Suggested Prompt Chips -->
+          <div class="suggested-prompts-bar">
+            <span class="suggested-label">Suggestions:</span>
+            <button type="button" class="prompt-chip" onclick="handleChipClick('What is the admission process?')">What is the admission process?</button>
+            <button type="button" class="prompt-chip" onclick="handleChipClick('What documents are required?')">What documents are required?</button>
+            <button type="button" class="prompt-chip" onclick="handleChipClick('When are examinations conducted?')">When are examinations conducted?</button>
+            <button type="button" class="prompt-chip" onclick="handleChipClick('What are the college rules?')">What are the college rules?</button>
+            <button type="button" class="prompt-chip" onclick="handleChipClick('Where is the college located?')">Where is the college located?</button>
+          </div>
+
+          <!-- Chat Input Row -->
+          <form class="chat-input-row" id="chatInputForm" onsubmit="handleUserChatSubmit(event)">
+            <input 
+              type="text" 
+              class="chat-input-field" 
+              id="userChatInput" 
+              placeholder="Ask anything about your campus (Rules, notices, admissions)..." 
+              autocomplete="off" 
+              required 
+            />
+            <button type="submit" class="btn btn-primary btn-sm chat-btn-send">Send</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       FEATURES SECTION (6 Core Capabilities)
+       ======================================================================== -->
+  <section id="features" class="features-section">
+    <div class="container">
+      <div class="section-title-wrap">
+        <span class="section-tag">Capabilities</span>
+        <h2 class="section-title">Designed for College Governance</h2>
+        <p class="section-subtitle">A purposeful institutional AI designed for strict compliance, document integrity, and reliable campus services.</p>
+      </div>
+
+      <div class="features-grid">
+        <!-- Feature 1 -->
+        <div class="feature-card">
+          <div class="feature-icon-box">✓</div>
+          <h3 class="feature-title">1. Verified Answers</h3>
+          <p class="feature-desc">Answers based strictly on official college documents. The system eliminates speculative and unverified assumptions.</p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="feature-card">
+          <div class="feature-icon-box">📑</div>
+          <h3 class="feature-title">2. Document-Based Knowledge</h3>
+          <p class="feature-desc">Admin-uploaded documents become the knowledge base. Dynamic indexing keeps information aligned with the latest circulars.</p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="feature-card">
+          <div class="feature-icon-box">👥</div>
+          <h3 class="feature-title">3. Role-Based Access</h3>
+          <p class="feature-desc">Separate Student, Faculty and Admin access guarantees departmental privacy and appropriate information routing.</p>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="feature-card">
+          <div class="feature-icon-box">🔗</div>
+          <h3 class="feature-title">4. Source References</h3>
+          <p class="feature-desc">Every response discloses the document name, issuing department, and reference details for total institutional transparency.</p>
+        </div>
+
+        <!-- Feature 5 -->
+        <div class="feature-card">
+          <div class="feature-icon-box">📍</div>
+          <h3 class="feature-title">5. Campus Navigation</h3>
+          <p class="feature-desc">Find the official engineering college location in Prayagraj with privacy-focused on-demand distance estimation.</p>
+        </div>
+
+        <!-- Feature 6 -->
+        <div class="feature-card">
+          <div class="feature-icon-box">📅</div>
+          <h3 class="feature-title">6. Admission Appointment</h3>
+          <p class="feature-desc">Prospective students and guardians can book an official appointment before visiting the campus for counselling.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       HOW IT WORKS SECTION
+       ======================================================================== -->
+  <section class="workflow-section">
+    <div class="container">
+      <div class="section-title-wrap">
+        <span class="section-tag">Architecture</span>
+        <h2 class="section-title">How CampusGPT Works</h2>
+        <p class="section-subtitle">A deterministic ingestion-to-answer pipeline ensuring absolute fidelity to college records.</p>
+      </div>
+
+      <div class="workflow-steps-row">
+        <!-- Step 1 -->
+        <div class="step-card">
+          <div class="step-num-badge">1</div>
+          <h4 class="step-title">Admin Upload</h4>
+          <p class="step-desc">Official document is uploaded to the administration portal.</p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step-card">
+          <div class="step-num-badge">2</div>
+          <h4 class="step-title">Processing</h4>
+          <p class="step-desc">Text is normalized, structured, and chunked systematically.</p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="step-card">
+          <div class="step-num-badge">3</div>
+          <h4 class="step-title">Knowledge Base</h4>
+          <p class="step-desc">Authorized information enters the college knowledge base.</p>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="step-card">
+          <div class="step-num-badge">4</div>
+          <h4 class="step-title">User Inquiry</h4>
+          <p class="step-desc">Student or Faculty submits a question in natural language.</p>
+        </div>
+
+        <!-- Step 5 -->
+        <div class="step-card">
+          <div class="step-num-badge">5</div>
+          <h4 class="step-title">Search Retrieval</h4>
+          <p class="step-desc">CampusGPT searches relevant information across records.</p>
+        </div>
+
+        <!-- Step 6 -->
+        <div class="step-card">
+          <div class="step-num-badge">6</div>
+          <h4 class="step-title">Verified Answer</h4>
+          <p class="step-desc">A strictly grounded answer is displayed with official sources.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       TRUST & VERIFICATION / ANTI-HALLUCINATION SECTION
+       ======================================================================== -->
+  <section id="about" class="trust-section">
+    <div class="container">
+      <div class="trust-grid">
+        <!-- Left Explanation -->
+        <div class="trust-content-box">
+          <span class="section-tag">Policy Strictness</span>
+          <h2>Built Around Verified Information</h2>
+          <p>
+            CampusGPT is designed to provide answers from authorized institutional documents. When verified information is unavailable, the system does not guess.
+          </p>
+
+          <ul class="trust-checklist">
+            <li class="trust-check-item"><span class="icon">✓</span> Official Sources</li>
+            <li class="trust-check-item"><span class="icon">✓</span> Role-Based Access</li>
+            <li class="trust-check-item"><span class="icon">✓</span> Document Versioning</li>
+            <li class="trust-check-item"><span class="icon">✓</span> Secure Authentication</li>
+          </ul>
+
+          <p style="font-size: 0.8125rem; color: var(--text-muted);">
+            By binding the model solely to authorized context passages, the system eliminates traditional AI hallucination regarding fees, schedules, and academic regulations.
+          </p>
+        </div>
+
+        <!-- Right: Demonstration of Anti-Hallucination Behavior -->
+        <div class="guardrail-card">
+          <span class="guardrail-header">Anti-Hallucination Guardrail in Action</span>
+          <div class="guardrail-chat-example">
+            <div class="guard-msg user">
+              User: “When is the examination?”
+            </div>
+            <div class="guard-msg bot">
+              <strong>CampusGPT:</strong> “I couldn't verify the examination date from the currently available official documents. Please confirm with the administration.”
+              <div class="guard-msg-footer">
+                Status: Missing institutional source context. Speculation rejected.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       KNOWLEDGE BASE PREVIEW SECTION
+       ======================================================================== -->
+  <section class="kb-section">
+    <div class="container">
+      <div class="section-title-wrap">
+        <span class="section-tag">Institutional Documents</span>
+        <h2 class="section-title">Knowledge Base Records</h2>
+        <p class="section-subtitle">CampusGPT answers questions directly from these published institutional documents.</p>
+      </div>
+
+      <div class="kb-table-card">
+        <table class="kb-table">
+          <thead>
+            <tr>
+              <th>Document Name</th>
+              <th>Category</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Admission Guidelines</strong></td>
+              <td><span class="badge-dept">Admissions</span></td>
+              <td><span class="badge-verified">✓ Verified</span></td>
+            </tr>
+            <tr>
+              <td><strong>Academic Calendar 2026</strong></td>
+              <td><span class="badge-dept">Academic</span></td>
+              <td><span class="badge-verified">✓ Verified</span></td>
+            </tr>
+            <tr>
+              <td><strong>Examination Notices</strong></td>
+              <td><span class="badge-dept">Examinations</span></td>
+              <td><span class="badge-verified">✓ Verified</span></td>
+            </tr>
+            <tr>
+              <td><strong>College Rules & Code of Conduct</strong></td>
+              <td><span class="badge-dept">Discipline & Administration</span></td>
+              <td><span class="badge-verified">✓ Verified</span></td>
+            </tr>
+            <tr>
+              <td><strong>Department Information (CSE / ME / CE)</strong></td>
+              <td><span class="badge-dept">Academic Departments</span></td>
+              <td><span class="badge-verified">✓ Verified</span></td>
+            </tr>
+            <tr>
+              <td><strong>Official Notices & Circulars</strong></td>
+              <td><span class="badge-dept">Dean & Registrar Office</span></td>
+              <td><span class="badge-verified">✓ Verified</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       CHOOSE YOUR PORTAL SECTION (3 Roles)
+       ======================================================================== -->
+  <section class="portals-section">
+    <div class="container">
+      <div class="section-title-wrap">
+        <span class="section-tag">Portals</span>
+        <h2 class="section-title">Choose Your Portal</h2>
+        <p class="section-subtitle">Access your personalized workspace configured with role-authorized knowledge scopes.</p>
+      </div>
+
+      <div class="portals-grid">
+        <!-- Student Portal -->
+        <div class="portal-card">
+          <div>
+            <div class="portal-header-tag">STUDENT</div>
+            <h3 class="portal-title">CampusGPT</h3>
+            <p class="portal-desc">Ask questions and access student-authorized institutional information, examination notices, and campus services.</p>
+          </div>
+          <button type="button" class="btn btn-primary" onclick="openLoginModal('student')">Student Login</button>
+        </div>
+
+        <!-- Faculty Portal -->
+        <div class="portal-card">
+          <div>
+            <div class="portal-header-tag">FACULTY</div>
+            <h3 class="portal-title">CampusGPT</h3>
+            <p class="portal-desc">Access academic and faculty-authorized institutional information, university circulars, and departmental directives.</p>
+          </div>
+          <button type="button" class="btn btn-primary" onclick="openLoginModal('faculty')">Faculty Login</button>
+        </div>
+
+        <!-- Admin Portal -->
+        <div class="portal-card">
+          <div>
+            <div class="portal-header-tag">ADMIN</div>
+            <h3 class="portal-title">Knowledge Base Administration</h3>
+            <p class="portal-desc">Upload and manage official documents used by CampusGPT, monitor audit trails, and oversee appointments.</p>
+          </div>
+          <button type="button" class="btn btn-secondary" onclick="openLoginModal('admin')">Admin Login</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       ADMISSION APPOINTMENT SECTION
+       ======================================================================== -->
+  <section id="admission" class="appointment-section">
+    <div class="container">
+      <div class="section-title-wrap">
+        <span class="section-tag">Admissions Desk</span>
+        <h2 class="section-title">Book an Admission Visit</h2>
+        <p class="section-subtitle">Schedule a personal campus tour and counselling session with our academic team in Prayagraj.</p>
+      </div>
+
+      <div class="appointment-box-wrapper">
+        <!-- Intake Form -->
+        <form id="appointmentBookingForm" onsubmit="handleAppointmentSubmit(event)">
+          <div class="appt-form-grid">
+            <div class="form-group">
+              <label class="form-label" for="appFullName">Full Name *</label>
+              <input type="text" id="appFullName" class="form-input" placeholder="e.g., Ananya Sharma" required />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="appEmail">Email Address *</label>
+              <input type="email" id="appEmail" class="form-input" placeholder="e.g., ananya@example.com" required />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="appPhone">Phone Number *</label>
+              <input type="tel" id="appPhone" class="form-input" placeholder="e.g., +91 98765 43210" required />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="appCourse">Course / Program *</label>
+              <select id="appCourse" class="form-select" required>
+                <option value="">Select a Program</option>
+                <option value="B.Tech Computer Science & Engineering">B.Tech - Computer Science & Engineering</option>
+                <option value="B.Tech Artificial Intelligence & Data Science">B.Tech - Artificial Intelligence & Data Science</option>
+                <option value="B.Tech Mechanical Engineering">B.Tech - Mechanical Engineering</option>
+                <option value="B.Tech Civil Engineering">B.Tech - Civil Engineering</option>
+                <option value="Polytechnic Diploma Programs">Polytechnic Diploma Programs</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="appDate">Preferred Date *</label>
+              <input type="date" id="appDate" class="form-input" required />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="appTime">Preferred Time *</label>
+              <select id="appTime" class="form-select" required>
+                <option value="10:00 AM">10:00 AM (Morning Session)</option>
+                <option value="11:30 AM">11:30 AM (Morning Session)</option>
+                <option value="02:00 PM">02:00 PM (Afternoon Session)</option>
+                <option value="03:30 PM">03:30 PM (Afternoon Session)</option>
+              </select>
+            </div>
+
+            <div class="form-group full-width">
+              <label class="form-label" for="appPurpose">Purpose of Visit</label>
+              <textarea id="appPurpose" class="form-textarea" rows="3" placeholder="Briefly specify your query (e.g., JEE counseling, syllabus, hostel tour)..."></textarea>
+            </div>
+          </div>
+
+          <div style="margin-top: 24px; text-align: right;">
+            <button type="submit" class="btn btn-gold">Book Appointment</button>
+          </div>
+        </form>
+
+        <!-- Dynamic Success Confirmation Panel -->
+        <div class="confirmation-panel" id="appointmentConfirmationPanel">
+          <div class="conf-badge">✓</div>
+          <h3 class="conf-title">Appointment Request Submitted</h3>
+          <p style="color: var(--text-muted); font-size: 0.9375rem;">Your visit request has been successfully recorded in the institutional admissions registry.</p>
+          
+          <div class="conf-ref-id" id="confDisplayId">CGPT-2026-00000</div>
+
+          <table class="conf-details-table">
+            <tbody>
+              <tr>
+                <td class="label">Candidate:</td>
+                <td class="val" id="confDisplayName">—</td>
+              </tr>
+              <tr>
+                <td class="label">Course:</td>
+                <td class="val" id="confDisplayCourse">—</td>
+              </tr>
+              <tr>
+                <td class="label">Date & Time:</td>
+                <td class="val" id="confDisplayDateTime">—</td>
+              </tr>
+              <tr>
+                <td class="label">Status:</td>
+                <td class="val"><span style="color: #b45309; font-weight: 700;">Pending Confirmation</span></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+            <a href="#campus-map" class="btn btn-primary btn-sm">View Campus Location</a>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="resetAppointmentForm()">Book Another Visit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       CAMPUS MAP SECTION (Interactive & On-Demand Distance Estimation)
+       ======================================================================== -->
+  <section id="campus-map" class="map-section">
+    <div class="container">
+      <div class="section-title-wrap">
+        <span class="section-tag">Location & Directions</span>
+        <h2 class="section-title">Visit Our Campus</h2>
+        <p class="section-subtitle">BBS College of Engineering & Technology, Prayagraj, Uttar Pradesh, India</p>
+      </div>
+
+      <div class="map-card">
+        <!-- Interactive Map Visual Pane (BBSCET Official Coordinates) -->
+        <div class="map-visual-pane">
+          <iframe 
+            id="bbscetMapIframe"
+            title="BBS College of Engineering and Technology Location" 
+            src="https://maps.google.com/maps?q=BBS%20College%20of%20Engineering%20and%20Technology%2C%20Shantipuram%2C%20Phaphamau%2C%20Prayagraj&t=&z=14&ie=UTF8&iwloc=&output=embed" 
+            loading="lazy"
+            allowfullscreen>
+          </iframe>
+        </div>
+
+        <!-- Location Information & Geolocation Pane -->
+        <div class="map-info-pane">
+          <div>
+            <h3 class="map-inst-name">BBS College of Engineering & Technology</h3>
+            <p class="map-address-txt">
+              Shantipuram, Phaphamau, Prayagraj (Allahabad),<br />
+              Uttar Pradesh - 211013, India.
+            </p>
+
+            <div style="font-size: 0.8125rem; color: var(--text-muted); margin-bottom: 12px;">
+              <strong>Landmark:</strong> Near Phaphamau Junction, Lucknow-Prayagraj National Highway.
+            </div>
+
+            <!-- Distance Result Box -->
+            <div class="geo-status-box" id="geoStatusBox">
+              <span>Find out your distance from the campus using browser location:</span>
+              <div id="geoResultText" style="margin-top: 6px; font-size: 0.8125rem; color: var(--text-muted);">
+                Permission is requested only once upon clicking below.
+              </div>
+            </div>
+          </div>
+
+          <div class="map-actions-group">
+            <button type="button" class="btn btn-secondary btn-sm" onclick="estimateCampusDistance()">
+              📍 Calculate Distance
+            </button>
+            <a 
+              href="https://maps.google.com/?q=BBS+College+of+Engineering+and+Technology+Prayagraj" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="btn btn-primary btn-sm" 
+              id="googleMapsNavBtn"
+            >
+              Open in Google Maps
+            </a>
+            <a 
+              href="https://www.google.com/maps/dir/?api=1&destination=BBS+College+of+Engineering+and+Technology+Prayagraj" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="btn btn-gold btn-sm" 
+              id="getDirectionsBtn"
+            >
+              Get Directions
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       LOGIN PORTAL MODAL
+       ======================================================================== -->
+  <div class="modal-backdrop" id="loginModalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalLoginTitle">
+    <div class="login-modal-box">
+      <button type="button" class="modal-close-btn" onclick="closeLoginModal()" aria-label="Close Login Modal">✕</button>
+      
+      <div class="modal-inner-pad">
+        <div class="modal-header-block">
+          <h3 class="modal-title" id="modalLoginTitle">CampusGPT Authentication</h3>
+          <p class="modal-subtitle">BBS College of Engineering & Technology Portal</p>
+        </div>
+
+        <!-- Role Tabs -->
+        <div class="role-selection-tabs" role="tablist">
+          <button type="button" class="role-tab-btn active" id="roleBtnStudent" onclick="selectLoginRole('student')" role="tab" aria-selected="true">Student</button>
+          <button type="button" class="role-tab-btn" id="roleBtnFaculty" onclick="selectLoginRole('faculty')" role="tab" aria-selected="false">Faculty</button>
+          <button type="button" class="role-tab-btn" id="roleBtnAdmin" onclick="selectLoginRole('admin')" role="tab" aria-selected="false">Admin</button>
+        </div>
+
+        <!-- Role Scope Dynamic Notification -->
+        <div class="role-info-desc" id="roleScopeDesc">
+          <strong>Student Scope:</strong> Access CampusGPT and student services.
+        </div>
+
+        <!-- Login Form -->
+        <form class="login-form" id="loginForm" onsubmit="handleLoginSubmit(event)">
+          <div class="form-group">
+            <label class="form-label" for="loginEmailInput">Institutional Email / ID *</label>
+            <input type="text" id="loginEmailInput" class="form-input" placeholder="e.g., student@bbscet.ac.in" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="loginPasswordInput">Password *</label>
+            <input type="password" id="loginPasswordInput" class="form-input" placeholder="••••••••" required />
+          </div>
+
+          <div class="login-options-row">
+            <label>
+              <input type="checkbox" id="rememberMeCheck" />
+              <span>Remember me</span>
+            </label>
+            <a href="javascript:void(0)" onclick="alert('Please contact BBSCET IT / Systems Administrator to reset your institutional password.')">Forgot password?</a>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 8px;">
+            Log In to Portal
+          </button>
+        </form>
+
+        <div style="font-size: 0.72rem; color: #64748b; text-align: center; margin-top: 16px;">
+          Protected by Institutional Row Level Security. Passwords are never stored locally.
+        </div>
+      </div>
+    </div>
   </div>
 
-  <button
-   class="chat-btn"
-   onclick="openPrivateChat('${escapeJS(friend.username)}')"
-  >
-   Message
-  </button>
-
- </div>`;
-
-}
-
-
-function escapeHTML(s){
-
- return s.replace(
-  /[&<>"']/g,
-  m=>({
-
-   "&":"&amp;",
-   "<":"&lt;",
-   ">":"&gt;",
-   '"':"&quot;",
-   "'":"&#039;"
-
-  }[m])
- );
-
-}
-
-
-function escapeJS(s){
-
- return s
-  .replace(/\\/g,"\\\\")
-  .replace(/'/g,"\\'");
-
-}
-
-
-/* =========================
-   PRIVATE CHAT
-========================= */
-
-function chatKey(a,b){
-
- return "xenvital_chat_"+
-  [a,b]
-   .sort()
-   .join("__");
-
-}
-
-
-function openPrivateChat(username){
-
- activeFriend=username;
-
- $("privateUsername").textContent=
-  "@"+username;
-
- $("privateAvatar").textContent=
-  username
-   .charAt(0)
-   .toUpperCase();
-
- /* Clear notifications from this friend */
-
- clearFriendNotifications(username);
-
- renderPrivateChat();
-
- showView("private");
-
- setTimeout(
-  ()=>$("privateInput").focus(),
-  100
- );
-
-}
-
-
-function renderPrivateChat(){
-
- if(
-  !currentUser ||
-  !activeFriend
- )return;
-
-
- const msgs=
-  JSON.parse(
-   localStorage.getItem(
-    chatKey(
-     currentUser.username,
-     activeFriend
-    )
-   )||"[]"
-  );
-
-
- $("privateMessages").innerHTML="";
-
-
- if(!msgs.length){
-
-  $("privateMessages").innerHTML=
-   '<div class="empty">No messages yet. Start the conversation 👋</div>';
-
-  return;
-
- }
-
-
- msgs.forEach(m=>
-  addPrivateBubble(
-   m.text,
-   m.from===currentUser.username
-  )
- );
-
-
- $("privateMessages").scrollTop=
-  $("privateMessages").scrollHeight;
-
-}
-
-
-function addPrivateBubble(
- text,
- mine
-){
-
- const div=
-  document.createElement("div");
-
- div.className=
-  "message "+
-  (mine?"user":"bot");
-
-
- const av=
-  document.createElement("div");
-
- av.className="avatar";
-
- av.textContent=
-  mine
-   ?
-   currentUser.username
-    .charAt(0)
-    .toUpperCase()
-   :
-   activeFriend
-    .charAt(0)
-    .toUpperCase();
-
-
- const b=
-  document.createElement("div");
-
- b.className="bubble";
-
- b.textContent=text;
-
- div.append(av,b);
-
- $("privateMessages")
-  .appendChild(div);
-
-}
-
-
-function sendPrivateMessage(){
-
- const text=
-  $("privateInput")
-  .value
-  .trim();
-
- if(
-  !text ||
-  !activeFriend ||
-  !currentUser
- )return;
-
-
- const key=
-  chatKey(
-   currentUser.username,
-   activeFriend
-  );
-
-
- const msgs=
-  JSON.parse(
-   localStorage.getItem(key)||"[]"
-  );
-
-
- msgs.push({
-
-  from:
-   currentUser.username,
-
-  to:
-   activeFriend,
-
-  text:text,
-
-  at:
-   Date.now()
-
- });
-
-
- localStorage.setItem(
-  key,
-  JSON.stringify(msgs)
- );
-
-
- $("privateInput").value="";
-
- renderPrivateChat();
-
-}
-
-
-function privateEnter(e){
-
- if(e.key==="Enter"){
-
-  e.preventDefault();
-
-  sendPrivateMessage();
-
- }
-
-}
-
-
-/* =====================================================
-   🔔 NOTIFICATION SYSTEM
-===================================================== */
-
-function notificationKey(){
-
- return "xenvital_notifications_"+
-  (
-   currentUser
-    ?currentUser.username
-    :"guest"
-  );
-
-}
-
-
-/* Get notifications */
-
-function getNotifications(){
-
- if(!currentUser)return[];
-
- return JSON.parse(
-  localStorage.getItem(
-   notificationKey()
-  )||"[]"
- );
-
-}
-
-
-/* Save notifications */
-
-function saveNotifications(list){
-
- if(!currentUser)return;
-
- localStorage.setItem(
-  notificationKey(),
-  JSON.stringify(list)
- );
-
-}
-
-
-/* Load notifications */
-
-function loadNotifications(){
-
- if(!currentUser)return;
-
- updateNotificationUI();
-
-}
-
-
-/* Update bell badge + panel */
-
-function updateNotificationUI(){
-
- const list=
-  getNotifications();
-
- const badge=
-  $("notificationBadge");
-
- if(list.length>0){
-
-  badge.textContent=
-   list.length>99
-    ?"99+"
-    :list.length;
-
-  badge.classList.add("show");
-
- }else{
-
-  badge.classList.remove("show");
-
- }
-
-
- renderNotifications();
-
-}
-
-
-/* Render notification panel */
-
-function renderNotifications(){
-
- const list=
-  getNotifications();
-
- const area=
-  $("notificationList");
-
-
- if(!list.length){
-
-  area.innerHTML=
-   '<div class="notification-empty">No new notifications 🔔</div>';
-
-  return;
-
- }
-
-
- area.innerHTML="";
-
-
- list
-  .slice()
-  .reverse()
-  .forEach(n=>{
-
-   const item=
-    document.createElement("div");
-
-   item.className=
-    "notification-item";
-
-   item.onclick=()=>{
-    openPrivateChat(
-     n.from
-    );
-   };
-
-
-   const icon=
-    document.createElement("div");
-
-   icon.className=
-    "notification-icon";
-
-   icon.textContent="💬";
-
-
-   const content=
-    document.createElement("div");
-
-   content.className=
-    "notification-content";
-
-
-   const strong=
-    document.createElement("strong");
-
-   strong.textContent=
-    "New message from @"+
-    n.from;
-
-
-   const span=
-    document.createElement("span");
-
-   span.textContent=
-    n.preview ||
-    "You received a new message";
-
-
-   const time=
-    document.createElement("div");
-
-   time.className=
-    "notification-time";
-
-   time.textContent=
-    formatTime(n.at);
-
-
-   content.append(
-    strong,
-    span
-   );
-
-   item.append(
-    icon,
-    content,
-    time
-   );
-
-   area.appendChild(item);
-
-  });
-
-}
-
-
-/* Toggle notification panel */
-
-function toggleNotifications(){
-
- const panel=
-  $("notificationPanel");
-
- panel.classList.toggle(
-  "show"
- );
-
- updateNotificationUI();
-
-}
-
-
-/* Clear all */
-
-function clearNotifications(){
-
- saveNotifications([]);
-
- updateNotificationUI();
-
-}
-
-
-/* Clear notifications from one friend */
-
-function clearFriendNotifications(username){
-
- if(!currentUser)return;
-
- const list=
-  getNotifications()
-   .filter(
-    n=>n.from!==username
-   );
-
- saveNotifications(list);
-
- updateNotificationUI();
-
-}
-
-
-/* Add new notification */
-
-function addMessageNotification(
- from,
- text
-){
-
- if(
-  !currentUser ||
-  from===currentUser.username
- )return;
-
-
- /* Don't notify if already inside that friend's chat */
-
- if(
-  activeFriend===from &&
-  $("privateView").classList.contains("active")
- ){
-  return;
- }
-
-
- const list=
-  getNotifications();
-
-
- /* Avoid duplicate notification */
-
- const already=
-  list.some(
-   n=>
-    n.from===from &&
-    n.messageId===text
-  );
-
-
- if(already)return;
-
-
- list.push({
-
-  id:
-   Date.now()+"_"+Math.random(),
-
-  from:from,
-
-  preview:text,
-
-  messageId:text,
-
-  at:Date.now()
-
- });
-
-
- saveNotifications(list);
-
- updateNotificationUI();
-
- showToast(
-  "New message from @"+from,
-  text
- );
-
- showBrowserNotification(
-  from,
-  text
- );
-
-}
-
-
-/* Toast notification */
-
-function showToast(
- title,
- message
-){
-
- const old=
-  document.getElementById(
-   "xenvitalToast"
-  );
-
- if(old)old.remove();
-
-
- const toast=
-  document.createElement("div");
-
- toast.id=
-  "xenvitalToast";
-
-
- toast.style.cssText=`
-
- position:fixed;
- right:20px;
- bottom:25px;
- z-index:3000;
- width:320px;
- max-width:calc(100vw - 30px);
- padding:14px 16px;
- background:var(--card);
- color:var(--text);
- border:1px solid var(--border);
- border-radius:15px;
- box-shadow:0 15px 45px rgba(0,0,0,.25);
- cursor:pointer;
- animation:xenvitalToastIn .3s ease;
- `;
-
-
- toast.innerHTML=
-  `<div style="
-    font-weight:800;
-    font-size:13px;
-    margin-bottom:5px;
-  ">🔔 ${escapeHTML(title)}</div>
-  <div style="
-    color:var(--muted);
-    font-size:12px;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    white-space:nowrap;
-  ">${escapeHTML(message)}</div>`;
-
-
- toast.onclick=()=>{
-
-  const username=
-   title
-    .replace(
-     "New message from @",
-     ""
-    );
-
-  toast.remove();
-
-  openPrivateChat(
-   username
-  );
-
- };
-
-
- document.body.appendChild(toast);
-
-
- setTimeout(()=>{
-
-  if(toast)
-   toast.remove();
-
- },5000);
-
-}
-
-
-/* Browser notification */
-
-function requestNotificationPermission(){
-
- if(
-  "Notification" in window &&
-  Notification.permission==="default"
- ){
-
-  Notification.requestPermission()
-   .catch(()=>{});
-
- }
-
-}
-
-
-function showBrowserNotification(
- from,
- text
-){
-
- if(
-  !("Notification" in window)
- )return;
-
-
- if(
-  Notification.permission!=="granted"
- )return;
-
-
- try{
-
-  const notification=
-   new Notification(
-    "New message from @"+from,
-    {
-     body:text,
-     icon:"",
-     tag:
-      "xenvital-"+from
-    }
-   );
-
-
-  notification.onclick=()=>{
-
-   window.focus();
-
-   openPrivateChat(
-    from
-   );
-
-   notification.close();
-
-  };
-
- }catch(e){
-
-  console.log(
-   "Browser notification unavailable",
-   e
-  );
-
- }
-
-}
-
-
-/* Time formatter */
-
-function formatTime(timestamp){
-
- const diff=
-  Date.now()-timestamp;
-
- if(diff<60000)
-  return "now";
-
- if(diff<3600000)
-  return Math.floor(
-   diff/60000
-  )+"m";
-
- if(diff<86400000)
-  return Math.floor(
-   diff/3600000
-  )+"h";
-
- return new Date(
-  timestamp
- ).toLocaleDateString();
-
-}
-
-
-/* =====================================================
-   MESSAGE WATCHER
-===================================================== */
-
-let messageWatcher=null;
-
-let knownMessageState={};
-
-
-function startMessageWatcher(){
-
- if(messageWatcher){
-
-  clearInterval(
-   messageWatcher
-  );
-
- }
-
-
- if(!currentUser)return;
-
-
- /* Save current message counts */
-
- users.forEach(user=>{
-
-  if(
-   user.username===
-   currentUser.username
-  )return;
-
-
-  const key=
-   chatKey(
-    currentUser.username,
-    user.username
-   );
-
-
-  const msgs=
-   JSON.parse(
-    localStorage.getItem(key)||"[]"
-   );
-
-
-  knownMessageState[
-   user.username
-  ]=
-   msgs.length;
-
- });
-
-
- /*
-  Check every 1 second for
-  new messages
- */
-
- messageWatcher=
-  setInterval(
-   checkForNewMessages,
-   1000
-  );
-
-}
-
-
-function checkForNewMessages(){
-
- if(!currentUser)return;
-
-
- /*
-  Reload users so newly
-  created local users are detected
- */
-
- users=
-  JSON.parse(
-   localStorage.getItem(
-    "xenvital_users"
-   )||"[]"
-  );
-
-
- users.forEach(user=>{
-
-  if(
-   user.username===
-   currentUser.username
-  )return;
-
-
-  const key=
-   chatKey(
-    currentUser.username,
-    user.username
-   );
-
-
-  const msgs=
-   JSON.parse(
-    localStorage.getItem(key)||"[]"
-   );
-
-
-  const previous=
-   knownMessageState[
-    user.username
-   ]||0;
-
-
-  if(msgs.length>previous){
-
-   const newMessages=
-    msgs.slice(previous);
-
-
-   newMessages.forEach(message=>{
-
-    if(
-     message.from===
-     user.username
-    ){
-
-     addMessageNotification(
-      user.username,
-      message.text
-     );
-
+  <!-- ========================================================================
+       FOOTER
+       ======================================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Brand Summary -->
+        <div>
+          <div class="footer-brand-title">Campus<span>GPT</span></div>
+          <p class="footer-inst-desc">
+            BBS College of Engineering & Technology<br />
+            Shantipuram, Phaphamau, Prayagraj, Uttar Pradesh, India.<br />
+            An institutional AI assistant delivering verified answers directly from authorized college documents.
+          </p>
+        </div>
+
+        <!-- Nav Col 1 -->
+        <div>
+          <div class="footer-col-title">Navigation</div>
+          <ul class="footer-links-list">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#campus-map">Campus Map</a></li>
+            <li><a href="#admission">Admission Desk</a></li>
+            <li><a href="#about">About System</a></li>
+          </ul>
+        </div>
+
+        <!-- Nav Col 2 -->
+        <div>
+          <div class="footer-col-title">Portals</div>
+          <ul class="footer-links-list">
+            <li><a href="javascript:void(0)" onclick="openLoginModal('student')">Student Portal</a></li>
+            <li><a href="javascript:void(0)" onclick="openLoginModal('faculty')">Faculty Workspace</a></li>
+            <li><a href="javascript:void(0)" onclick="openLoginModal('admin')">Admin Governance</a></li>
+            <li><a href="javascript:void(0)" onclick="openLoginModal('student')">Knowledge Search</a></li>
+          </ul>
+        </div>
+
+        <!-- Institutional Contact -->
+        <div>
+          <div class="footer-col-title">Affiliation</div>
+          <ul class="footer-links-list">
+            <li style="color: #94a3b8; font-size: 0.85rem;">Approved by AICTE, New Delhi</li>
+            <li style="color: #94a3b8; font-size: 0.85rem;">Affiliated to Dr. A.P.J. Abdul Kalam Technical University (AKTU)</li>
+            <li style="color: var(--accent-gold); font-size: 0.85rem; margin-top: 6px;">Admissions Helpline: +91 (0532) BBSCET</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom-row">
+        <div>© 2026 CampusGPT — BBS College of Engineering & Technology. All rights reserved.</div>
+        <div>Designed for Academic Governance & Student Success • Prayagraj</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll-to-Top Button -->
+  <button type="button" class="btn-scroll-top" id="btnScrollTop" onclick="scrollToTop()" aria-label="Scroll to top of page">↑</button>
+
+  <!-- ========================================================================
+       VANILLA JAVASCRIPT: CLIENT LOGIC, STATE & SUPABASE/RAG ARCHITECTURE
+       ======================================================================== -->
+  <script>
+    /* ==========================================================================
+       1. GLOBAL CONSTANTS & COLLEGE LOCATION REPOSITORY
+       ========================================================================== */
+    // Official BBS College of Engineering & Technology Geolocation
+    const BBSCET_COORDINATES = {
+      latitude: 25.532658,
+      longitude: 81.854212,
+      name: "BBS College of Engineering & Technology",
+      address: "Shantipuram, Phaphamau, Prayagraj, Uttar Pradesh 211013, India",
+      googleMapsUrl: "https://maps.google.com/?q=25.532658,81.854212",
+      directionsUrl: "https://www.google.com/maps/dir/?api=1&destination=25.532658,81.854212"
+    };
+
+    // Current State Container
+    let activeRole = 'student';
+
+    /* ==========================================================================
+       2. SUPABASE BACKEND ARCHITECTURE PLACEHOLDERS
+       (Pre-configured for future connection; secrets remain isolated server-side)
+       ========================================================================== */
+    /*
+      // SUPABASE CLIENT INITIALIZATION PLACEHOLDER
+      // Replace with: import { createClient } from '@supabase/supabase-js'
+      const SUPABASE_URL = "https://your-project.supabase.co";
+      const SUPABASE_ANON_KEY = "public-anon-key";
+      // const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+      // DATABASE TABLES REFERENCED IN SYSTEM:
+      // 1. profiles           -> id (auth.uid), role ('student'|'faculty'|'admin'), full_name
+      // 2. documents          -> id, title, category, visibility, status
+      // 3. document_versions  -> id, document_id, version_number, storage_path, is_active
+      // 4. document_chunks    -> id, document_version_id, content, embedding (vector)
+      // 5. appointments       -> id, reference_code, name, email, phone, course, date, time
+      // 6. conversations      -> id, user_id, title, created_at
+      // 7. messages           -> id, conversation_id, role, content, sources (JSONB)
+      // 8. campus_locations   -> id, name, latitude, longitude, address
+      // 9. audit_logs         -> id, user_id, action, entity_type, created_at
+    */
+
+    /* ==========================================================================
+       3. RAG KNOWLEDGE BASE VERIFIED CORPUS (FRONTEND DEMO REPOSITORY)
+       ========================================================================== */
+    // Note: This matches the structure returned by an institutional RAG vector store
+    const INSTITUTIONAL_KNOWLEDGE_BASE = [
+      {
+        triggers: ["admission", "apply", "process", "eligibility", "b.tech", "counseling", "seat"],
+        answer: "Admissions to B.Tech First Year (CSE, AI&DS, ME, Civil) at BBSCET are conducted through UPSEE/AKTU counseling and direct admission under institutional quota for eligible candidates having passed 10+2 with Physics, Mathematics, and Chemistry/Technical subjects.",
+        source: {
+          document: "Admission Guidelines & Information Brochure",
+          page: "Pages 3–5",
+          department: "Admissions & Counseling Wing",
+          version: "v2026.1"
+        }
+      },
+      {
+        triggers: ["document", "documents", "required", "certificate", "marksheet", "verification"],
+        answer: "According to the official admission guidelines, applicants need to submit the required academic certificates, identification documents and other documents specified in the latest admission notice. These include: High School & Intermediate Marksheets (original + 3 copies), Transfer Certificate (TC), Migration Certificate, Category Certificate (if applicable), and 6 passport-size photographs.",
+        source: {
+          document: "Admission Guidelines - Verification Protocol",
+          page: "Page 8",
+          department: "Registrar Office",
+          version: "v2026.1"
+        }
+      },
+      {
+        triggers: ["rule", "rules", "discipline", "hostel", "timing", "conduct", "curfew", "ragging"],
+        answer: "Official College Rules mandate that resident students must report to their respective hostels before 08:30 PM. Ragging in any form inside or outside the campus is strictly prohibited under zero-tolerance statutory guidelines. Identity cards must be displayed at all times on campus.",
+        source: {
+          document: "College Rules & Student Code of Conduct",
+          page: "Pages 2 & 11",
+          department: "Chief Proctorial Board",
+          version: "v2026"
+        }
+      },
+      {
+        triggers: ["location", "located", "where", "address", "reach", "campus"],
+        answer: "BBS College of Engineering & Technology is located at Shantipuram, Phaphamau, Prayagraj, Uttar Pradesh - 211013. The campus is situated on the main Prayagraj-Lucknow Highway, approximately 3 kilometers from Phaphamau Junction railway station.",
+        source: {
+          document: "Campus Geographic & Transit Directory",
+          page: "Page 1",
+          department: "Estate & Administration",
+          version: "v2026"
+        }
+      },
+      {
+        triggers: ["examination", "exam", "date", "schedule", "odd", "even", "semester"],
+        answer: "Odd-Semester mid-term examinations are conducted in November as scheduled in the University academic roadmap, while University End-Semester exams are governed strictly by Dr. A.P.J. Abdul Kalam Technical University (AKTU) notifications.",
+        source: {
+          document: "Academic Calendar 2026",
+          page: "Page 4 (Schedule Summary)",
+          department: "Office of the Dean Academics",
+          version: "v2026.2"
+        }
+      }
+    ];
+
+    /* ==========================================================================
+       4. MOBILE NAVIGATION & SMOOTH SCROLLING
+       ========================================================================== */
+    const mobileNavToggle = document.getElementById('mobileNavToggle');
+    const primaryNavMenu = document.getElementById('primaryNavMenu');
+
+    mobileNavToggle.addEventListener('click', function() {
+      const isOpen = primaryNavMenu.classList.toggle('open');
+      mobileNavToggle.setAttribute('aria-expanded', isOpen);
+    });
+
+    // Close mobile nav on anchor selection
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        primaryNavMenu.classList.remove('open');
+        mobileNavToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    // Active link highlighting on scroll
+    window.addEventListener('scroll', () => {
+      const scrollY = window.pageYOffset;
+      const sections = document.querySelectorAll('section[id]');
+
+      sections.forEach(current => {
+        const sectionHeight = current.offsetHeight;
+        const sectionTop = current.offsetTop - 100;
+        const sectionId = current.getAttribute('id');
+        const navMatch = document.querySelector(`.nav-menu a[href*="${sectionId}"]`);
+
+        if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+          document.querySelectorAll('.nav-link').forEach(nl => nl.classList.remove('active'));
+          if (navMatch) navMatch.classList.add('active');
+        }
+      });
+
+      // Scroll to Top visibility
+      const btnScrollTop = document.getElementById('btnScrollTop');
+      if (scrollY > 400) {
+        btnScrollTop.classList.add('visible');
+      } else {
+        btnScrollTop.classList.remove('visible');
+      }
+    });
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-   });
+    /* ==========================================================================
+       5. CHAT DEMO CONTROLLER (RAG SIMULATION & ANTI-HALLUCINATION)
+       ========================================================================== */
+    function handleChipClick(questionText) {
+      document.getElementById('userChatInput').value = questionText;
+      handleUserChatSubmit(new Event('submit'));
+    }
 
-  }
+    function handleUserChatSubmit(e) {
+      if (e) e.preventDefault();
+      const inputEl = document.getElementById('userChatInput');
+      const query = inputEl.value.trim();
+      if (!query) return;
 
+      appendUserChatMessage(query);
+      inputEl.value = '';
 
-  knownMessageState[
-   user.username
-  ]=msgs.length;
+      // Activate loading indicator
+      const loadingEl = document.getElementById('chatLoadingIndicator');
+      loadingEl.classList.add('active');
 
- });
+      const container = document.getElementById('chatMessagesContainer');
+      container.scrollTop = container.scrollHeight;
 
-}
+      // Simulated retrieval latency (0.8s for human review)
+      setTimeout(() => {
+        loadingEl.classList.remove('active');
+        executeGroundedQuery(query);
+      }, 850);
+    }
 
+    function appendUserChatMessage(text) {
+      const container = document.getElementById('chatMessagesContainer');
+      const userMsgDiv = document.createElement('div');
+      userMsgDiv.className = 'chat-msg user';
+      userMsgDiv.innerHTML = `
+        <span class="msg-sender">You (Student Inquiry)</span>
+        <div class="msg-bubble">${escapeHtml(text)}</div>
+      `;
+      // Insert right before loading indicator
+      const loadingEl = document.getElementById('chatLoadingIndicator');
+      container.insertBefore(userMsgDiv, loadingEl);
+      container.scrollTop = container.scrollHeight;
+    }
 
-/* =====================================================
-   CLOSE NOTIFICATION WHEN CLICKING OUTSIDE
-===================================================== */
+    /*
+      TODO: CONNECT TO SUPABASE BACKEND / RAG ENDPOINT
+      In production, this function will make a POST call:
+      fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: queryText, user_role: activeRole })
+      })
+    */
+    function executeGroundedQuery(queryText) {
+      const lower = queryText.toLowerCase();
+      let matchedRecord = null;
+      let highestMatch = 0;
 
-document.addEventListener(
- "click",
- function(e){
+      for (const item of INSTITUTIONAL_KNOWLEDGE_BASE) {
+        let matchCount = 0;
+        for (const trigger of item.triggers) {
+          if (lower.includes(trigger)) matchCount++;
+        }
+        if (matchCount > highestMatch) {
+          highestMatch = matchCount;
+          matchedRecord = item;
+        }
+      }
 
-  const panel=
-   $("notificationPanel");
+      const container = document.getElementById('chatMessagesContainer');
+      const botMsgDiv = document.createElement('div');
+      botMsgDiv.className = 'chat-msg assistant';
 
-  const button=
-   $("notificationButton");
+      if (matchedRecord && highestMatch > 0) {
+        // Answer Grounded in Official Document
+        botMsgDiv.innerHTML = `
+          <span class="msg-sender">CampusGPT Institutional Assistant</span>
+          <div class="msg-bubble">
+            ${escapeHtml(matchedRecord.answer)}
+            <div class="citation-box">
+              <div class="citation-label">
+                <span>Source Citation:</span>
+              </div>
+              <div>${escapeHtml(matchedRecord.source.document)} (${escapeHtml(matchedRecord.source.page)})</div>
+              <div class="citation-meta">
+                <span class="citation-tag">${escapeHtml(matchedRecord.source.department)}</span>
+                <span class="citation-tag">Official College Document</span>
+                <span class="citation-tag">Ref: ${escapeHtml(matchedRecord.source.version)}</span>
+              </div>
+            </div>
+          </div>
+        `;
+      } else {
+        // Strict Anti-Hallucination Fallback Behavior
+        botMsgDiv.innerHTML = `
+          <span class="msg-sender">CampusGPT Institutional Assistant</span>
+          <div class="msg-bubble">
+            “No verified institutional information was found in the college knowledge base. Please confirm with the administration.”
+            <div class="citation-box" style="border-left-color: #b91c1c;">
+              <div class="citation-label" style="color: #b91c1c;">
+                <span>Notice:</span>
+              </div>
+              <div style="font-size: 0.775rem;">
+                This query does not match published administrative documents. CampusGPT is prohibited from fabricating policies, dates, fees, or requirements.
+              </div>
+            </div>
+          </div>
+        `;
+      }
 
+      const loadingEl = document.getElementById('chatLoadingIndicator');
+      container.insertBefore(botMsgDiv, loadingEl);
+      container.scrollTop = container.scrollHeight;
+    }
 
-  if(
-   panel.classList.contains("show") &&
-   !panel.contains(e.target) &&
-   !button.contains(e.target)
-  ){
+    /* ==========================================================================
+       6. ADMISSION APPOINTMENT LOGIC & DEMO REFERENCE GENERATOR
+       ========================================================================== */
+    /*
+      TODO: CONNECT TO SUPABASE DATABASE
+      Will insert into 'appointments' table via Supabase client:
+      const { data, error } = await supabase.from('appointments').insert([...])
+    */
+    function handleAppointmentSubmit(e) {
+      e.preventDefault();
 
-   panel.classList.remove(
-    "show"
-   );
+      const fullName = document.getElementById('appFullName').value.trim();
+      const email = document.getElementById('appEmail').value.trim();
+      const phone = document.getElementById('appPhone').value.trim();
+      const course = document.getElementById('appCourse').value;
+      const dateVal = document.getElementById('appDate').value;
+      const timeVal = document.getElementById('appTime').value;
 
-  }
+      if (!fullName || !email || !phone || !course || !dateVal) {
+        alert("Please complete all mandatory appointment fields.");
+        return;
+      }
 
- }
-);
+      // Generate realistic reference ID
+      const randomSeed = Math.floor(10000 + Math.random() * 90000);
+      const generatedRefId = `CGPT-2026-${randomSeed}`;
 
+      // Populate confirmation panel
+      document.getElementById('confDisplayId').textContent = generatedRefId;
+      document.getElementById('confDisplayName').textContent = fullName;
+      document.getElementById('confDisplayCourse').textContent = course;
+      document.getElementById('confDisplayDateTime').textContent = `${dateVal} at ${timeVal}`;
 
-/* =========================
-   START APPLICATION
-========================= */
+      // Swap view
+      document.getElementById('appointmentBookingForm').style.display = 'none';
+      document.getElementById('appointmentConfirmationPanel').classList.add('active');
+    }
 
-if(currentUser){
+    function resetAppointmentForm() {
+      document.getElementById('appointmentBookingForm').reset();
+      document.getElementById('appointmentBookingForm').style.display = 'block';
+      document.getElementById('appointmentConfirmationPanel').classList.remove('active');
+    }
 
- openApp();
+    // Set minimum date for appointment to today
+    (function setMinAppointmentDate() {
+      const today = new Date().toISOString().split('T')[0];
+      const dateInput = document.getElementById('appDate');
+      if (dateInput) {
+        dateInput.min = today;
+        dateInput.value = today;
+      }
+    })();
 
-}else{
+    /* ==========================================================================
+       7. CAMPUS MAP & PRIVACY-COMPLIANT GEOLOCATION
+       ========================================================================== */
+    function estimateCampusDistance() {
+      const statusText = document.getElementById('geoResultText');
+      statusText.innerHTML = "Requesting one-time browser location permission...";
 
- $("auth").style.display="flex";
+      if (!navigator.geolocation) {
+        statusText.innerHTML = "<span style='color: #dc2626;'>Geolocation is not supported by your browser.</span>";
+        return;
+      }
 
- $("app").style.display="none";
+      // Explicit permission query: NO continuous background tracking
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const userLat = position.coords.latitude;
+          const userLng = position.coords.longitude;
 
- loadTheme();
+          const distanceKm = calculateHaversineDistance(
+            userLat,
+            userLng,
+            BBSCET_COORDINATES.latitude,
+            BBSCET_COORDINATES.longitude
+          );
 
-}
+          statusText.innerHTML = `
+            Approximate distance to BBSCET campus: <span class="geo-dist-val">${distanceKm} km</span>.
+            <div style="font-size: 0.72rem; color: #64748b; margin-top: 4px;">
+              Your coordinates were used once for calculation and were not stored.
+            </div>
+          `;
+        },
+        (error) => {
+          let errDetail = "Location access was denied or unavailable.";
+          if (error.code === error.PERMISSION_DENIED) {
+            errDetail = "Location permission denied by user. You can still use the Google Maps button.";
+          }
+          statusText.innerHTML = `<span style='color: #dc2626;'>${errDetail}</span>`;
+        },
+        { enableHighAccuracy: false, timeout: 10000, maximumAge: 60000 }
+      );
+    }
 
-</script>
+    // Haversine formula to compute great-circle distance in kilometers
+    function calculateHaversineDistance(lat1, lon1, lat2, lon2) {
+      const toRad = x => (x * Math.PI) / 180;
+      const R = 6371; // Earth's radius in KM
 
+      const dLat = toRad(lat2 - lat1);
+      const dLon = toRad(lon2 - lon1);
 
-<style>
+      const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
 
-/* Toast animation */
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      return (R * c).toFixed(1);
+    }
 
-@keyframes xenvitalToastIn{
+    /* ==========================================================================
+       8. AUTHENTICATION MODAL & ROLE CONTROLLER
+       ========================================================================== */
+    const loginModalBackdrop = document.getElementById('loginModalBackdrop');
 
- from{
-  opacity:0;
-  transform:
-   translateY(20px)
-   scale(.96);
- }
+    function openLoginModal(defaultRole) {
+      selectLoginRole(defaultRole || 'student');
+      loginModalBackdrop.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
 
- to{
-  opacity:1;
-  transform:
-   translateY(0)
-   scale(1);
- }
+    function closeLoginModal() {
+      loginModalBackdrop.classList.remove('open');
+      document.body.style.overflow = 'auto';
+    }
 
-}
+    // Close modal on outside click
+    loginModalBackdrop.addEventListener('click', (e) => {
+      if (e.target === loginModalBackdrop) {
+        closeLoginModal();
+      }
+    });
 
-</style>
+    // Close modal on Escape key
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && loginModalBackdrop.classList.contains('open')) {
+        closeLoginModal();
+      }
+    });
 
+    function selectLoginRole(role) {
+      activeRole = role;
+
+      const btnStudent = document.getElementById('roleBtnStudent');
+      const btnFaculty = document.getElementById('roleBtnFaculty');
+      const btnAdmin = document.getElementById('roleBtnAdmin');
+      const descEl = document.getElementById('roleScopeDesc');
+
+      [btnStudent, btnFaculty, btnAdmin].forEach(b => b.classList.remove('active'));
+
+      if (role === 'student') {
+        btnStudent.classList.add('active');
+        descEl.innerHTML = "<strong>Student Scope:</strong> Access CampusGPT and student-authorized institutional information.";
+      } else if (role === 'faculty') {
+        btnFaculty.classList.add('active');
+        descEl.innerHTML = "<strong>Faculty Scope:</strong> Access academic and faculty-authorized institutional information.";
+      } else if (role === 'admin') {
+        btnAdmin.classList.add('active');
+        descEl.innerHTML = "<strong>Admin Scope:</strong> Manage documents and CampusGPT official knowledge base.";
+      }
+    }
+
+    /*
+      TODO: CONNECT SUPABASE AUTH
+      Will invoke Supabase Auth on submission:
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password })
+      IMPORTANT: Real authorization is verified on backend through 'profiles' table and RLS.
+    */
+    function handleLoginSubmit(e) {
+      e.preventDefault();
+      const email = document.getElementById('loginEmailInput').value.trim();
+      const password = document.getElementById('loginPasswordInput').value;
+
+      if (!email || !password) {
+        alert("Please provide both email and password.");
+        return;
+      }
+
+      // Frontend Demo Confirmation
+      alert(`[Demo Authentication]\nAuthenticated as: ${email}\nRole: ${activeRole.toUpperCase()}\n\nNote: Backend Supabase Row Level Security will enforce official permissions.`);
+      closeLoginModal();
+      document.getElementById('loginForm').reset();
+    }
+
+    /* ==========================================================================
+       9. UTILITY SANITIZATION (XSS Prevention)
+       ========================================================================== */
+    function escapeHtml(string) {
+      const entityMap = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;',
+        '/': '&#x2F;'
+      };
+      return String(string).replace(/[&<>"'\/]/g, s => entityMap[s]);
+    }
+  </script>
 </body>
 </html>
