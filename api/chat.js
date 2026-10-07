@@ -1,25 +1,21 @@
 export default async function handler(req, res) {
 
-    if(req.method !== "POST"){
+    if (req.method !== "POST") {
         return res.status(405).json({
-            error:"Method not allowed"
+            error: "Method not allowed"
         });
     }
 
-
-    try{
+    try {
 
         const apiKey =
             process.env.OPENROUTER_API_KEY;
 
-
-        if(!apiKey){
-
+        if (!apiKey) {
             return res.status(500).json({
                 error:
                     "OPENROUTER_API_KEY is missing in Vercel."
             });
-
         }
 
 
@@ -33,52 +29,49 @@ export default async function handler(req, res) {
                 : [];
 
 
+        /*
+         * Keep request small for faster response.
+         */
+
         messages =
             messages
-                .filter(message => {
-
-                    return (
-                        message &&
-                        (
-                            message.role === "user" ||
-                            message.role === "assistant"
-                        ) &&
-                        typeof message.content === "string" &&
-                        message.content.trim()
-                    );
-
-                })
-                .slice(-7)
+                .filter(message =>
+                    message &&
+                    (
+                        message.role === "user" ||
+                        message.role === "assistant"
+                    ) &&
+                    typeof message.content === "string" &&
+                    message.content.trim()
+                )
+                .slice(-6)
                 .map(message => ({
-
-                    role:
-                        message.role,
-
+                    role: message.role,
                     content:
                         message.content
                             .trim()
-                            .slice(0,5000)
-
+                            .slice(0, 4000)
                 }));
 
 
-        if(!messages.length){
-
+        if (!messages.length) {
             return res.status(400).json({
-                error:"Message is required."
+                error: "Message is required."
             });
-
         }
 
 
-        const openRouter =
+        /*
+         * OpenRouter streaming request
+         */
+
+        const response =
             await fetch(
                 "https://openrouter.ai/api/v1/chat/completions",
                 {
-                    method:"POST",
+                    method: "POST",
 
-                    headers:{
-
+                    headers: {
                         "Authorization":
                             `Bearer ${apiKey}`,
 
@@ -90,83 +83,104 @@ export default async function handler(req, res) {
 
                         "X-Title":
                             "XenvitalTech AI"
-
                     },
 
-                    body:JSON.stringify({
+                    body: JSON.stringify({
+
+                        /*
+                         * Fast lightweight model
+                         */
 
                         model:
                             "openai/gpt-4o-mini",
 
-                        stream:true,
+                        stream:
+                            true,
 
-                        messages:[
+                        messages: [
 
                             {
-                                role:"system",
+                                role: "system",
 
                                 content:
-                                    "You are XenvitalTech AI by ShashwatBytes. Give accurate, helpful and concise answers. For coding questions provide working code. Avoid unnecessary repetition."
+                                    "You are XenvitalTech AI by ShashwatBytes. Answer accurately, naturally and concisely. Give direct answers. For coding questions provide working code. Avoid unnecessary explanations."
                             },
 
                             ...messages
-
                         ],
 
-                        temperature:0.4,
+                        /*
+                         * Lower temperature
+                         * helps fast consistent answers.
+                         */
 
-                        max_tokens:900
+                        temperature:
+                            0.3,
 
+                        /*
+                         * Smaller response =
+                         * faster completion.
+                         */
+
+                        max_tokens:
+                            700
                     })
-
                 }
             );
 
 
-        if(!openRouter.ok){
+        /*
+         * OpenRouter error
+         */
+
+        if (!response.ok) {
 
             const errorText =
-                await openRouter.text();
+                await response.text();
 
             console.error(
                 "OpenRouter Error:",
                 errorText
             );
 
-            let message =
+
+            let errorMessage =
                 "OpenRouter request failed.";
 
-            try{
+            try {
 
-                const parsed =
+                const errorData =
                     JSON.parse(errorText);
 
-                message =
-                    parsed?.error?.message ||
-                    parsed?.error?.code ||
-                    message;
+                errorMessage =
+                    errorData?.error?.message ||
+                    errorData?.error?.code ||
+                    errorMessage;
 
-            }catch{}
+            } catch {}
+
 
             return res.status(
-                openRouter.status
+                response.status
             ).json({
+
                 error:
-                    `OpenRouter: ${message}`
+                    `OpenRouter: ${errorMessage}`
+
             });
 
         }
 
 
         /*
-         * STREAM RESPONSE
+         * STREAM HEADERS
          */
 
         res.statusCode = 200;
 
         res.setHeader(
             "Content-Type",
-            "text/event-stream"
+            "text/event-stream; charset=utf-8"
         );
 
         res.setHeader(
@@ -185,13 +199,17 @@ export default async function handler(req, res) {
         );
 
 
+        /*
+         * Forward OpenRouter stream
+         */
+
         const reader =
-            openRouter.body.getReader();
+            response.body.getReader();
 
 
-        try{
+        try {
 
-            while(true){
+            while (true) {
 
                 const {
                     value,
@@ -199,7 +217,7 @@ export default async function handler(req, res) {
                 } = await reader.read();
 
 
-                if(done){
+                if (done) {
                     break;
                 }
 
@@ -210,12 +228,16 @@ export default async function handler(req, res) {
 
             }
 
-        }finally{
+        } finally {
 
             reader.releaseLock();
 
         }
 
+
+        /*
+         * Tell frontend stream is finished.
+         */
 
         res.write(
             "data: [DONE]\n\n"
@@ -224,20 +246,22 @@ export default async function handler(req, res) {
         res.end();
 
 
-    }catch(error){
+    } catch (error) {
 
         console.error(
-            "Chat API Error:",
+            "XenvitalTech API Error:",
             error
         );
 
 
-        if(!res.headersSent){
+        if (!res.headersSent) {
 
             return res.status(500).json({
+
                 error:
                     error?.message ||
                     "Internal server error."
+
             });
 
         }
@@ -246,5 +270,4 @@ export default async function handler(req, res) {
         res.end();
 
     }
-
 }
