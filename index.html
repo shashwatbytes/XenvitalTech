@@ -2,1481 +2,1764 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
-<meta name="theme-color" content="#111318">
-<meta name="description" content="XenvitalTech AI — AI Assistant by ShashwatBytes.">
-<title>XenvitalTech AI — ShashwatBytes</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0b0f19">
+
+<title>XenvitalTech AI Chatbot — ShashwatBytes</title>
+
+<meta
+    name="description"
+    content="XenvitalTech AI Chatbot by ShashwatBytes — a clean workspace for coding, study, projects, writing and problem solving."
+>
 
 <style>
-:root{
-    --text:#111827;
-    --muted:#667085;
-    --primary:#315bdc;
-    --primary-hover:#254bc2;
-    --danger:#d04444;
+/* =========================================================
+   XENVITALTECH AI
+   Production-style glass interface
+========================================================= */
 
-    --glass:rgba(255,255,255,.68);
-    --glass-strong:rgba(255,255,255,.80);
-    --glass-soft:rgba(255,255,255,.42);
-    --glass-border:rgba(255,255,255,.55);
+:root {
+    --bg: #0b0f17;
+    --surface: rgba(18, 24, 36, 0.72);
+    --surface-strong: rgba(20, 27, 41, 0.88);
+    --surface-soft: rgba(255, 255, 255, 0.07);
+    --text: #f5f7fb;
+    --muted: #9aa6b8;
+    --border: rgba(255, 255, 255, 0.12);
+    --border-strong: rgba(255, 255, 255, 0.18);
+    --primary: #3864df;
+    --primary-hover: #4772ea;
+    --danger: #ef5350;
+    --success: #36b37e;
 
-    --shadow:0 18px 55px rgba(0,0,0,.18);
-    --blur:18px;
+    --user-bubble: #315bd0;
+    --assistant-bubble: rgba(255,255,255,0.10);
 
-    --radius:20px;
-    --nav-height:66px;
+    --wallpaper-blur: 16px;
+    --wallpaper-overlay: rgba(5, 9, 16, 0.48);
+
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+
+    --shadow: 0 18px 50px rgba(0,0,0,.22);
 }
 
-body.dark{
-    --text:#f4f6fa;
-    --muted:#a7afbd;
-    --glass:rgba(15,19,27,.68);
-    --glass-strong:rgba(15,19,27,.82);
-    --glass-soft:rgba(15,19,27,.45);
-    --glass-border:rgba(255,255,255,.13);
+body.light {
+    --bg: #eef2f7;
+    --surface: rgba(255,255,255,.66);
+    --surface-strong: rgba(255,255,255,.88);
+    --surface-soft: rgba(20,30,50,.055);
+    --text: #172033;
+    --muted: #657085;
+    --border: rgba(20,30,50,.12);
+    --border-strong: rgba(20,30,50,.18);
+
+    --user-bubble: #315bd0;
+    --assistant-bubble: rgba(255,255,255,.70);
+
+    --wallpaper-overlay: rgba(245,248,252,.46);
 }
 
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 html,
-body{
-    width:100%;
-    height:100%;
-    overflow:hidden;
+body {
+    width: 100%;
+    height: 100%;
 }
 
-body{
+html {
+    overflow: hidden;
+}
+
+body {
+    min-height: 100dvh;
+    overflow: hidden;
     font-family:
         Inter,
         ui-sans-serif,
         -apple-system,
         BlinkMacSystemFont,
         "Segoe UI",
+        Roboto,
         Arial,
         sans-serif;
 
-    color:var(--text);
-    background:#101217;
-
-    -webkit-font-smoothing:antialiased;
+    background: var(--bg);
+    color: var(--text);
+    transition: background .2s ease, color .2s ease;
 }
 
 button,
-input{
-    font:inherit;
+input,
+textarea {
+    font: inherit;
 }
 
-button{
-    cursor:pointer;
+button {
+    cursor: pointer;
 }
 
 button:focus-visible,
-input:focus-visible{
-    outline:3px solid rgba(49,91,220,.22);
-    outline-offset:2px;
+input:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+.hidden {
+    display: none !important;
 }
 
 
-/* =====================================================
-   BACKGROUND
-===================================================== */
+/* =========================================================
+   BACKGROUND SYSTEM
+========================================================= */
 
-.background-layer{
-    position:fixed;
-    inset:0;
-    z-index:-10;
-    overflow:hidden;
-    background:#151820;
+.background-layer {
+    position: fixed;
+    inset: 0;
+    z-index: -10;
+    overflow: hidden;
+    background: var(--bg);
 }
 
-.background-image,
-.background-video{
-    position:absolute;
-    inset:0;
+.background-media {
+    position: absolute;
+    inset: -24px;
+    width: calc(100% + 48px);
+    height: calc(100% + 48px);
 
-    width:100%;
-    height:100%;
+    object-fit: cover;
 
-    object-fit:cover;
+    filter: blur(var(--wallpaper-blur));
+    transform: scale(1.04);
 
     transition:
-        opacity .35s ease,
-        filter .35s ease;
+        filter .25s ease,
+        opacity .25s ease;
+
+    opacity: 1;
 }
 
-.background-video{
-    opacity:0;
-    pointer-events:none;
+.background-overlay {
+    position: absolute;
+    inset: 0;
+    background: var(--wallpaper-overlay);
+    z-index: 2;
+    pointer-events: none;
 }
 
-.background-overlay{
-    position:absolute;
-    inset:0;
+.background-vignette {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
 
     background:
-        linear-gradient(
-            120deg,
-            rgba(5,9,16,.58),
-            rgba(5,9,16,.20),
-            rgba(5,9,16,.48)
-        );
-
-    pointer-events:none;
-}
-
-body.dark .background-overlay{
-    background:
-        linear-gradient(
-            120deg,
-            rgba(2,5,10,.76),
-            rgba(2,5,10,.32),
-            rgba(2,5,10,.72)
+        radial-gradient(
+            circle at center,
+            transparent 20%,
+            rgba(0,0,0,.16) 100%
         );
 }
 
+.background-hidden {
+    opacity: 0 !important;
+}
 
-/* =====================================================
+
+/* =========================================================
    AUTH
-===================================================== */
+========================================================= */
 
-.auth{
-    min-height:100dvh;
-    height:100%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
+.auth-screen {
+    width: 100%;
+    height: 100dvh;
 
-    padding:20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    overflow:auto;
+    padding: 20px;
 }
 
-.auth-card{
-    width:min(420px,100%);
+.auth-card {
+    width: min(420px, 100%);
 
-    padding:32px;
+    padding: 30px;
 
-    border:1px solid var(--glass-border);
-    border-radius:25px;
+    background: var(--surface-strong);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-lg);
 
-    background:var(--glass-strong);
+    box-shadow: var(--shadow);
 
-    backdrop-filter:blur(var(--blur)) saturate(150%);
-    -webkit-backdrop-filter:blur(var(--blur)) saturate(150%);
-
-    box-shadow:var(--shadow);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
 }
 
-.auth-logo{
-    width:58px;
-    height:58px;
+.auth-logo {
+    width: 58px;
+    height: 58px;
 
-    margin:auto;
+    margin: 0 auto;
 
-    display:grid;
-    place-items:center;
+    display: grid;
+    place-items: center;
 
-    border-radius:16px;
+    border-radius: 14px;
 
-    background:var(--primary);
-    color:#fff;
+    background: var(--primary);
+    color: white;
 
-    font-size:24px;
-    font-weight:850;
+    font-size: 24px;
+    font-weight: 800;
 
-    box-shadow:0 12px 30px rgba(49,91,220,.25);
+    box-shadow: 0 10px 30px rgba(56,100,223,.24);
 }
 
-.auth-card h1{
-    margin-top:17px;
+.auth-card h1 {
+    margin-top: 18px;
 
-    text-align:center;
+    text-align: center;
 
-    font-size:25px;
-    letter-spacing:-.03em;
+    font-size: 25px;
+    line-height: 1.2;
 }
 
-.auth-subtitle{
-    margin:7px 0 24px;
+.auth-subtitle {
+    margin-top: 7px;
 
-    text-align:center;
+    color: var(--muted);
+    text-align: center;
 
-    color:var(--muted);
-
-    font-size:13px;
+    font-size: 13px;
 }
 
-.form{
-    display:none;
+.form {
+    display: none;
+    margin-top: 24px;
 }
 
-.form.active{
-    display:block;
+.form.active {
+    display: block;
 }
 
-label{
-    display:block;
-
-    margin:14px 0 7px;
-
-    font-size:12px;
-    font-weight:700;
+.form-group {
+    margin-bottom: 15px;
 }
 
-input{
-    width:100%;
-    min-height:46px;
+.form label {
+    display: block;
 
-    padding:11px 13px;
+    margin-bottom: 7px;
 
-    border:1px solid rgba(100,110,125,.25);
-    border-radius:13px;
-
-    background:rgba(255,255,255,.58);
-    color:var(--text);
-
-    outline:none;
+    font-size: 12px;
+    font-weight: 600;
 }
 
-body.dark input{
-    background:rgba(0,0,0,.22);
+.form input {
+    width: 100%;
+
+    height: 46px;
+
+    padding: 0 13px;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+
+    background: var(--surface-soft);
+    color: var(--text);
+
+    outline: none;
+
+    transition:
+        border-color .18s ease,
+        background .18s ease;
 }
 
-input::placeholder{
-    color:#7b8492;
+.form input:focus {
+    border-color: var(--primary);
+    background: var(--surface);
 }
 
-input:focus{
-    border-color:var(--primary);
+.primary-button {
+    width: 100%;
+    height: 46px;
 
-    box-shadow:
-        0 0 0 3px rgba(49,91,220,.10);
+    margin-top: 5px;
+
+    border: 0;
+    border-radius: var(--radius-md);
+
+    background: var(--primary);
+    color: white;
+
+    font-weight: 700;
+
+    transition:
+        background .18s ease,
+        transform .18s ease;
 }
 
-.primary{
-    width:100%;
-    min-height:46px;
-
-    margin-top:19px;
-
-    border:1px solid var(--primary);
-    border-radius:13px;
-
-    background:var(--primary);
-    color:#fff;
-
-    font-weight:750;
-
-    transition:.16s ease;
+.primary-button:hover {
+    background: var(--primary-hover);
 }
 
-.primary:hover{
-    background:var(--primary-hover);
-    transform:translateY(-1px);
+.primary-button:active {
+    transform: translateY(1px);
 }
 
-.switch{
-    margin-top:17px;
+.form-switch {
+    margin-top: 17px;
 
-    text-align:center;
+    text-align: center;
 
-    color:var(--muted);
-
-    font-size:13px;
+    color: var(--muted);
+    font-size: 13px;
 }
 
-.switch span{
-    color:var(--primary);
-    font-weight:750;
-    cursor:pointer;
+.form-switch button {
+    border: 0;
+    background: transparent;
+    color: var(--primary);
+
+    font-weight: 700;
 }
 
-.error{
-    min-height:17px;
+.form-error {
+    min-height: 17px;
 
-    margin-top:8px;
+    margin-top: 8px;
 
-    color:var(--danger);
+    color: var(--danger);
 
-    font-size:12px;
-}
-
-
-/* =====================================================
-   APP
-===================================================== */
-
-.app{
-    display:none;
-
-    width:100%;
-    height:100dvh;
-
-    padding:16px;
-
-    gap:16px;
-
-    overflow:hidden;
+    font-size: 12px;
 }
 
 
-/* =====================================================
+/* =========================================================
+   APPLICATION
+========================================================= */
+
+.app {
+    width: 100%;
+    height: 100dvh;
+
+    display: none;
+}
+
+.app.visible {
+    display: flex;
+}
+
+
+/* =========================================================
    SIDEBAR
-===================================================== */
+========================================================= */
 
-.sidebar{
-    width:250px;
-    flex:none;
+.sidebar {
+    width: 255px;
+    flex: 0 0 255px;
 
-    display:flex;
-    flex-direction:column;
+    height: 100%;
 
-    padding:18px;
+    display: flex;
+    flex-direction: column;
 
-    border:1px solid var(--glass-border);
-    border-radius:22px;
+    padding: 18px;
 
-    background:var(--glass);
+    background: var(--surface);
+    border-right: 1px solid var(--border);
 
-    backdrop-filter:blur(var(--blur)) saturate(145%);
-    -webkit-backdrop-filter:blur(var(--blur)) saturate(145%);
-
-    box-shadow:var(--shadow);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
 }
 
-.brand{
-    display:flex;
-    align-items:center;
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 
-    gap:10px;
-
-    margin-bottom:22px;
+    margin-bottom: 22px;
 }
 
-.logo{
-    width:40px;
-    height:40px;
+.brand-logo {
+    width: 42px;
+    height: 42px;
 
-    display:grid;
-    place-items:center;
+    display: grid;
+    place-items: center;
 
-    flex:none;
+    border-radius: 11px;
 
-    border-radius:12px;
+    background: var(--primary);
+    color: white;
 
-    background:var(--primary);
-    color:#fff;
-
-    font-size:17px;
-    font-weight:850;
+    font-weight: 800;
 }
 
-.brand h2{
-    font-size:15px;
+.brand-text strong {
+    display: block;
+    font-size: 15px;
 }
 
-.brand small{
-    display:block;
+.brand-text span {
+    display: block;
 
-    margin-top:2px;
+    margin-top: 2px;
 
-    color:var(--muted);
-
-    font-size:10px;
+    color: var(--muted);
+    font-size: 11px;
 }
 
-.new-chat{
-    width:100%;
-    min-height:43px;
+.new-chat {
+    width: 100%;
+    height: 42px;
 
-    margin-bottom:22px;
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
 
-    border:1px solid var(--primary);
-    border-radius:12px;
+    background: var(--primary);
+    color: white;
 
-    background:var(--primary);
-    color:#fff;
+    font-size: 13px;
+    font-weight: 700;
 
-    font-size:13px;
-    font-weight:750;
+    transition: background .18s ease;
 }
 
-.nav-title{
-    margin:2px 4px 8px;
-
-    color:var(--muted);
-
-    font-size:10px;
-    font-weight:800;
-
-    text-transform:uppercase;
-    letter-spacing:.08em;
+.new-chat:hover {
+    background: var(--primary-hover);
 }
 
-.nav-btn{
-    width:100%;
-    min-height:40px;
+.sidebar-section-title {
+    margin: 24px 5px 8px;
 
-    display:flex;
-    align-items:center;
+    color: var(--muted);
 
-    gap:9px;
+    font-size: 10px;
+    font-weight: 700;
 
-    margin-bottom:4px;
-
-    padding:9px 10px;
-
-    border:1px solid transparent;
-    border-radius:11px;
-
-    background:transparent;
-
-    color:var(--muted);
-
-    text-align:left;
-
-    font-size:13px;
-    font-weight:600;
+    text-transform: uppercase;
+    letter-spacing: .08em;
 }
 
-.nav-btn:hover,
-.nav-btn.active{
-    background:rgba(255,255,255,.35);
-    border-color:var(--glass-border);
-    color:var(--primary);
+.nav-button {
+    width: 100%;
+
+    min-height: 42px;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 9px 11px;
+
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+
+    background: transparent;
+    color: var(--muted);
+
+    text-align: left;
+
+    transition:
+        background .18s ease,
+        color .18s ease,
+        border-color .18s ease;
 }
 
-body.dark .nav-btn:hover,
-body.dark .nav-btn.active{
-    background:rgba(255,255,255,.07);
+.nav-button:hover {
+    background: var(--surface-soft);
+    color: var(--text);
 }
 
-.nav-icon{
-    width:20px;
-
-    display:grid;
-    place-items:center;
-
-    font-size:13px;
+.nav-button.active {
+    background: var(--surface-soft);
+    border-color: var(--border);
+    color: var(--text);
 }
 
-.sidebar-bottom{
-    margin-top:auto;
+.nav-icon {
+    width: 21px;
 
-    padding-top:12px;
+    text-align: center;
 
-    border-top:1px solid rgba(100,110,125,.16);
+    font-size: 15px;
 }
 
-.profile-mini{
-    display:flex;
-    align-items:center;
+.sidebar-bottom {
+    margin-top: auto;
 
-    gap:9px;
+    padding-top: 14px;
 
-    padding:8px;
+    border-top: 1px solid var(--border);
 }
 
-.avatar{
-    width:34px;
-    height:34px;
+.profile-mini {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 
-    flex:none;
-
-    display:grid;
-    place-items:center;
-
-    border:1px solid rgba(100,110,125,.20);
-    border-radius:50%;
-
-    background:rgba(255,255,255,.42);
-
-    color:var(--text);
-
-    font-size:12px;
-    font-weight:800;
+    padding: 7px;
 }
 
-body.dark .avatar{
-    background:rgba(255,255,255,.08);
+.avatar {
+    width: 35px;
+    height: 35px;
+
+    flex: 0 0 35px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+
+    background: var(--primary);
+    color: white;
+
+    font-size: 13px;
+    font-weight: 700;
 }
 
-.profile-mini strong{
-    display:block;
-
-    font-size:12px;
+.profile-mini-text {
+    min-width: 0;
 }
 
-.profile-mini span{
-    display:block;
+.profile-mini-text strong {
+    display: block;
 
-    max-width:150px;
+    font-size: 12px;
 
-    overflow:hidden;
-    text-overflow:ellipsis;
-    white-space:nowrap;
-
-    color:var(--muted);
-
-    font-size:10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-.logout{
-    width:100%;
+.profile-mini-text span {
+    display: block;
 
-    margin-top:4px;
+    margin-top: 2px;
 
-    padding:9px;
+    color: var(--muted);
 
-    border:0;
-    border-radius:10px;
+    font-size: 10px;
 
-    background:transparent;
-
-    color:var(--danger);
-
-    text-align:left;
-
-    font-size:12px;
-    font-weight:650;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-.logout:hover{
-    background:rgba(208,68,68,.08);
+.logout-button {
+    width: 100%;
+
+    margin-top: 7px;
+
+    padding: 9px 10px;
+
+    border: 0;
+    border-radius: var(--radius-sm);
+
+    background: transparent;
+
+    color: var(--danger);
+
+    text-align: left;
+    font-size: 12px;
+}
+
+.logout-button:hover {
+    background: rgba(239,83,80,.08);
 }
 
 
-/* =====================================================
+/* =========================================================
    MAIN
-===================================================== */
+========================================================= */
 
-.main{
-    flex:1;
+.main {
+    min-width: 0;
+    flex: 1;
 
-    min-width:0;
+    height: 100%;
 
-    height:100%;
-
-    display:flex;
-    flex-direction:column;
-
-    overflow:hidden;
-
-    border:1px solid var(--glass-border);
-    border-radius:22px;
-
-    background:rgba(255,255,255,.38);
-
-    backdrop-filter:blur(22px) saturate(145%);
-    -webkit-backdrop-filter:blur(22px) saturate(145%);
-
-    box-shadow:var(--shadow);
-}
-
-body.dark .main{
-    background:rgba(10,14,21,.38);
+    display: flex;
+    flex-direction: column;
 }
 
 
-/* =====================================================
-   TOP BAR
-===================================================== */
+/* =========================================================
+   TOPBAR
+========================================================= */
 
-.topbar{
-    height:62px;
-    flex:none;
+.topbar {
+    height: 62px;
+    flex: 0 0 62px;
 
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-    padding:0 20px;
+    padding: 0 20px;
 
-    border-bottom:1px solid rgba(100,110,125,.14);
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
 
-    background:rgba(255,255,255,.24);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
 }
 
-body.dark .topbar{
-    background:rgba(0,0,0,.15);
+.page-title {
+    font-size: 15px;
+    font-weight: 700;
 }
 
-.page-title{
-    font-size:14px;
-    font-weight:800;
+.top-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
-.top-actions{
-    display:flex;
-    align-items:center;
+.icon-button {
+    width: 38px;
+    height: 38px;
 
-    gap:7px;
+    display: grid;
+    place-items: center;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+
+    background: var(--surface-soft);
+    color: var(--text);
+
+    transition: background .18s ease;
 }
 
-.icon{
-    width:38px;
-    height:38px;
-
-    display:grid;
-    place-items:center;
-
-    border:1px solid rgba(100,110,125,.20);
-    border-radius:11px;
-
-    background:rgba(255,255,255,.40);
-
-    color:var(--text);
-
-    font-size:16px;
-}
-
-body.dark .icon{
-    background:rgba(255,255,255,.07);
+.icon-button:hover {
+    background: var(--surface);
 }
 
 
-/* =====================================================
+/* =========================================================
    VIEWS
-===================================================== */
+========================================================= */
 
-.view{
-    display:none;
+.view {
+    display: none;
 
-    flex:1;
+    flex: 1;
+    min-height: 0;
 
-    min-height:0;
-
-    overflow:hidden;
+    overflow: hidden;
 }
 
-.view.active{
-    display:flex;
-    flex-direction:column;
+.view.active {
+    display: flex;
+    flex-direction: column;
 }
 
 
-/* =====================================================
+/* =========================================================
    CHAT
-===================================================== */
+========================================================= */
 
-.ai-chat{
-    flex:1;
+.chat-scroll {
+    flex: 1;
+    min-height: 0;
 
-    min-height:0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
 
-    overflow-y:auto;
-
-    padding:28px 20px 22px;
+    padding: 30px 20px 20px;
 }
 
-.messages{
-    width:100%;
-    max-width:850px;
-
-    margin:auto;
+.messages {
+    width: min(850px, 100%);
+    margin: 0 auto;
 }
 
-.message{
-    display:flex;
-    align-items:flex-start;
+.message {
+    display: flex;
+    gap: 10px;
 
-    gap:9px;
+    margin-bottom: 20px;
 
-    margin:17px 0;
+    animation: messageIn .16s ease;
 }
 
-.message.user{
-    flex-direction:row-reverse;
+.message.user {
+    justify-content: flex-end;
 }
 
-.bubble{
-    max-width:min(730px,78%);
-
-    padding:12px 15px;
-
-    border:1px solid rgba(110,120,135,.18);
-    border-radius:15px;
-
-    background:rgba(255,255,255,.54);
-
-    color:var(--text);
-
-    box-shadow:0 5px 18px rgba(0,0,0,.04);
-
-    font-size:14px;
-    line-height:1.58;
-
-    white-space:pre-wrap;
-    overflow-wrap:anywhere;
-
-    backdrop-filter:blur(12px);
-    -webkit-backdrop-filter:blur(12px);
+.message.user .avatar {
+    order: 2;
 }
 
-body.dark .bubble{
-    background:rgba(12,17,25,.52);
+.message-content {
+    max-width: min(720px, 78%);
 }
 
-.bot .bubble{
-    border-top-left-radius:5px;
+.message-bubble {
+    padding: 13px 15px;
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius-lg);
+
+    background: var(--assistant-bubble);
+
+    color: var(--text);
+
+    font-size: 14px;
+    line-height: 1.62;
+
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 }
 
-.user .bubble{
-    border-color:rgba(49,91,220,.45);
-
-    background:rgba(49,91,220,.92);
-
-    color:#fff;
-
-    border-top-right-radius:5px;
+.message.user .message-bubble {
+    background: var(--user-bubble);
+    border-color: transparent;
+    color: white;
 }
 
+.message-label {
+    margin-bottom: 5px;
 
-/* =====================================================
-   INPUT
-===================================================== */
+    color: var(--muted);
 
-.input-area{
-    flex:none;
-
-    padding:11px 20px 17px;
-
-    border-top:1px solid rgba(100,110,125,.14);
-
-    background:rgba(255,255,255,.20);
+    font-size: 10px;
+    font-weight: 600;
 }
 
-body.dark .input-area{
-    background:rgba(0,0,0,.12);
+.message.user .message-label {
+    text-align: right;
 }
 
-.input-box{
-    max-width:850px;
+.typing-bubble {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
 
-    margin:auto;
-
-    display:flex;
-
-    gap:8px;
-
-    padding:5px;
-
-    border:1px solid var(--glass-border);
-    border-radius:16px;
-
-    background:rgba(255,255,255,.52);
-
-    box-shadow:0 8px 25px rgba(0,0,0,.07);
-
-    backdrop-filter:blur(18px);
-    -webkit-backdrop-filter:blur(18px);
+    min-width: 62px;
 }
 
-body.dark .input-box{
-    background:rgba(12,17,25,.58);
+.typing-dot {
+    width: 5px;
+    height: 5px;
+
+    border-radius: 50%;
+
+    background: currentColor;
+
+    opacity: .55;
+
+    animation: typingPulse 1s infinite ease-in-out;
 }
 
-.input-box input{
-    flex:1;
-
-    min-width:0;
-
-    border:0;
-
-    background:transparent;
-
-    box-shadow:none;
+.typing-dot:nth-child(2) {
+    animation-delay: .12s;
 }
 
-.input-box input:focus{
-    border:0;
-
-    box-shadow:none;
+.typing-dot:nth-child(3) {
+    animation-delay: .24s;
 }
 
-.send{
-    width:45px;
-    height:45px;
+@keyframes typingPulse {
+    0%, 70%, 100% {
+        opacity: .25;
+        transform: translateY(0);
+    }
 
-    flex:none;
-
-    border:0;
-    border-radius:12px;
-
-    background:var(--primary);
-
-    color:#fff;
-
-    font-size:18px;
-    font-weight:800;
+    35% {
+        opacity: .9;
+        transform: translateY(-2px);
+    }
 }
 
-.send:disabled{
-    opacity:.55;
+@keyframes messageIn {
+    from {
+        opacity: 0;
+        transform: translateY(4px);
+    }
 
-    cursor:not-allowed;
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 
-/* =====================================================
-   PROFILE
-===================================================== */
+/* =========================================================
+   CHAT EMPTY
+========================================================= */
 
-.profile-view{
-    overflow-y:auto;
+.chat-empty {
+    min-height: 55vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 30px 15px;
 }
 
-.profile-content{
-    width:100%;
-    max-width:700px;
+.chat-empty-inner {
+    width: min(560px, 100%);
 
-    padding:32px 24px;
-
-    margin:auto;
+    text-align: center;
 }
 
-.profile-heading{
-    font-size:22px;
+.chat-empty-logo {
+    width: 48px;
+    height: 48px;
 
-    letter-spacing:-.025em;
+    margin: 0 auto 15px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 13px;
+
+    background: var(--primary);
+    color: white;
+
+    font-weight: 800;
 }
 
-.profile-description{
-    margin-top:6px;
-
-    color:var(--muted);
-
-    font-size:13px;
+.chat-empty h2 {
+    font-size: 22px;
 }
 
-.profile-section{
-    margin-top:25px;
+.chat-empty p {
+    margin-top: 8px;
 
-    padding:24px;
+    color: var(--muted);
 
-    border:1px solid var(--glass-border);
-    border-radius:18px;
-
-    background:rgba(255,255,255,.34);
-
-    backdrop-filter:blur(15px);
-    -webkit-backdrop-filter:blur(15px);
+    font-size: 13px;
 }
 
-body.dark .profile-section{
-    background:rgba(12,17,25,.40);
+.prompt-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+
+    margin-top: 20px;
 }
 
-.profile-large{
-    width:64px;
-    height:64px;
+.prompt-button {
+    padding: 11px 12px;
 
-    font-size:20px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+
+    background: var(--surface-soft);
+    color: var(--text);
+
+    text-align: left;
+    font-size: 12px;
+
+    transition:
+        background .18s ease,
+        border-color .18s ease;
 }
 
-.profile-name{
-    margin-top:13px;
-
-    font-size:16px;
-    font-weight:800;
-}
-
-.profile-email{
-    margin-top:4px;
-
-    color:var(--muted);
-
-    font-size:13px;
-}
-
-.profile-logout{
-    margin-top:24px;
-
-    padding:10px 14px;
-
-    border:1px solid rgba(208,68,68,.25);
-    border-radius:11px;
-
-    background:rgba(255,240,240,.55);
-
-    color:var(--danger);
-
-    font-size:13px;
-    font-weight:700;
+.prompt-button:hover {
+    background: var(--surface);
+    border-color: var(--border-strong);
 }
 
 
-/* =====================================================
+/* =========================================================
+   COMPOSER
+========================================================= */
+
+.composer-wrap {
+    flex: 0 0 auto;
+
+    padding: 12px 20px 18px;
+
+    background: linear-gradient(
+        to bottom,
+        transparent,
+        var(--surface) 24%
+    );
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.composer {
+    width: min(850px, 100%);
+
+    margin: 0 auto;
+
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+
+    padding: 7px;
+
+    border: 1px solid var(--border-strong);
+    border-radius: 15px;
+
+    background: var(--surface-strong);
+
+    box-shadow: 0 12px 35px rgba(0,0,0,.16);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+.composer textarea {
+    min-width: 0;
+    flex: 1;
+
+    min-height: 44px;
+    max-height: 140px;
+
+    padding: 11px 12px;
+
+    resize: none;
+
+    border: 0;
+    outline: 0;
+
+    background: transparent;
+
+    color: var(--text);
+
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.composer textarea::placeholder {
+    color: var(--muted);
+}
+
+.send-button {
+    width: 44px;
+    height: 44px;
+
+    flex: 0 0 44px;
+
+    border: 0;
+    border-radius: 11px;
+
+    background: var(--primary);
+    color: white;
+
+    display: grid;
+    place-items: center;
+
+    font-size: 18px;
+
+    transition:
+        background .18s ease,
+        opacity .18s ease;
+}
+
+.send-button:hover {
+    background: var(--primary-hover);
+}
+
+.send-button:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+}
+
+.composer-hint {
+    width: min(850px, 100%);
+
+    margin: 7px auto 0;
+
+    color: var(--muted);
+
+    text-align: center;
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   PROFILE / SETTINGS
+========================================================= */
+
+.page-scroll {
+    flex: 1;
+    min-height: 0;
+
+    overflow-y: auto;
+
+    padding: 30px 20px 50px;
+}
+
+.page-container {
+    width: min(820px, 100%);
+    margin: 0 auto;
+}
+
+.page-heading {
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.page-description {
+    margin-top: 6px;
+
+    color: var(--muted);
+
+    font-size: 13px;
+}
+
+.profile-panel,
+.settings-panel {
+    margin-top: 22px;
+
+    padding: 22px;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+
+    background: var(--surface);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+.profile-main {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.profile-large-avatar {
+    width: 62px;
+    height: 62px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 16px;
+
+    background: var(--primary);
+    color: white;
+
+    font-size: 23px;
+    font-weight: 700;
+}
+
+.profile-info h3 {
+    font-size: 16px;
+}
+
+.profile-info p {
+    margin-top: 4px;
+
+    color: var(--muted);
+
+    font-size: 12px;
+}
+
+.danger-button {
+    margin-top: 22px;
+
+    height: 42px;
+
+    padding: 0 15px;
+
+    border: 1px solid rgba(239,83,80,.25);
+    border-radius: var(--radius-md);
+
+    background: rgba(239,83,80,.08);
+
+    color: var(--danger);
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
    SETTINGS
-===================================================== */
+========================================================= */
 
-.settings-view{
-    overflow-y:auto;
+.settings-group {
+    padding: 20px 0;
+
+    border-bottom: 1px solid var(--border);
 }
 
-.settings-content{
-    width:100%;
-    max-width:760px;
-
-    margin:auto;
-
-    padding:30px 24px 50px;
+.settings-group:first-child {
+    padding-top: 0;
 }
 
-.settings-heading{
-    font-size:22px;
-    letter-spacing:-.025em;
+.settings-group:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
 }
 
-.settings-description{
-    margin-top:6px;
-
-    color:var(--muted);
-
-    font-size:13px;
+.settings-title {
+    font-size: 14px;
+    font-weight: 700;
 }
 
-.settings-section{
-    margin-top:22px;
+.settings-subtitle {
+    margin-top: 4px;
 
-    padding:20px;
+    color: var(--muted);
 
-    border:1px solid var(--glass-border);
-    border-radius:18px;
-
-    background:rgba(255,255,255,.34);
-
-    backdrop-filter:blur(15px);
-    -webkit-backdrop-filter:blur(15px);
+    font-size: 12px;
+    line-height: 1.5;
 }
 
-body.dark .settings-section{
-    background:rgba(12,17,25,.40);
+.setting-row {
+    margin-top: 16px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
 }
 
-.settings-section h3{
-    font-size:14px;
+.setting-row-text {
+    min-width: 0;
 }
 
-.settings-section p{
-    margin-top:4px;
+.setting-row-text strong {
+    display: block;
 
-    color:var(--muted);
-
-    font-size:12px;
+    font-size: 13px;
 }
 
-.wallpaper-grid{
-    display:grid;
+.setting-row-text span {
+    display: block;
 
-    grid-template-columns:
-        repeat(4,minmax(0,1fr));
+    margin-top: 3px;
 
-    gap:12px;
+    color: var(--muted);
 
-    margin-top:18px;
+    font-size: 11px;
 }
 
-.wallpaper-card{
-    position:relative;
+.switch {
+    width: 46px;
+    height: 26px;
 
-    overflow:hidden;
+    position: relative;
 
-    min-height:120px;
+    flex: 0 0 46px;
+}
 
-    border:2px solid transparent;
-    border-radius:15px;
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
 
-    background:rgba(255,255,255,.35);
+.switch-slider {
+    position: absolute;
+    inset: 0;
 
-    cursor:pointer;
+    border-radius: 20px;
+
+    background: rgba(130,140,155,.32);
+
+    transition: background .18s ease;
+
+    cursor: pointer;
+}
+
+.switch-slider::before {
+    content: "";
+
+    position: absolute;
+
+    width: 20px;
+    height: 20px;
+
+    left: 3px;
+    top: 3px;
+
+    border-radius: 50%;
+
+    background: white;
+
+    transition: transform .18s ease;
+}
+
+.switch input:checked + .switch-slider {
+    background: var(--primary);
+}
+
+.switch input:checked + .switch-slider::before {
+    transform: translateX(20px);
+}
+
+.range-row {
+    margin-top: 16px;
+}
+
+.range-label {
+    display: flex;
+    justify-content: space-between;
+
+    margin-bottom: 8px;
+
+    color: var(--muted);
+
+    font-size: 11px;
+}
+
+.range {
+    width: 100%;
+    accent-color: var(--primary);
+}
+
+.wallpaper-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 10px;
+
+    margin-top: 16px;
+}
+
+.wallpaper-option {
+    position: relative;
+
+    min-height: 135px;
+
+    overflow: hidden;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+
+    background: rgba(0,0,0,.18);
+
+    cursor: pointer;
 
     transition:
         border-color .18s ease,
         transform .18s ease;
 }
 
-.wallpaper-card:hover{
-    transform:translateY(-2px);
+.wallpaper-option:hover {
+    transform: translateY(-1px);
+    border-color: var(--border-strong);
 }
 
-.wallpaper-card.selected{
-    border-color:var(--primary);
+.wallpaper-option.selected {
+    border: 2px solid var(--primary);
 }
 
-.wallpaper-card img,
-.wallpaper-card video{
-    width:100%;
-    height:100%;
+.wallpaper-option video,
+.wallpaper-option img {
+    position: absolute;
+    inset: 0;
 
-    min-height:120px;
+    width: 100%;
+    height: 100%;
 
-    display:block;
-
-    object-fit:cover;
+    object-fit: cover;
 }
 
-.wallpaper-overlay{
-    position:absolute;
+.wallpaper-option::after {
+    content: "";
 
-    left:0;
-    right:0;
-    bottom:0;
+    position: absolute;
+    inset: 0;
 
-    padding:9px;
-
-    background:linear-gradient(
-        transparent,
-        rgba(0,0,0,.72)
+    background: linear-gradient(
+        to top,
+        rgba(0,0,0,.70),
+        transparent 55%
     );
-
-    color:#fff;
-
-    font-size:11px;
-    font-weight:700;
 }
 
-.wallpaper-check{
-    position:absolute;
+.wallpaper-name {
+    position: absolute;
 
-    top:8px;
-    right:8px;
+    left: 10px;
+    right: 10px;
+    bottom: 9px;
 
-    width:24px;
-    height:24px;
+    z-index: 3;
 
-    display:none;
-    place-items:center;
+    color: white;
 
-    border-radius:50%;
-
-    background:var(--primary);
-
-    color:#fff;
-
-    font-size:12px;
-    font-weight:900;
+    font-size: 11px;
+    font-weight: 700;
 }
 
-.wallpaper-card.selected .wallpaper-check{
-    display:grid;
+.selected-check {
+    position: absolute;
+
+    top: 8px;
+    right: 8px;
+
+    z-index: 5;
+
+    width: 25px;
+    height: 25px;
+
+    display: none;
+    place-items: center;
+
+    border-radius: 50%;
+
+    background: var(--primary);
+    color: white;
+
+    font-size: 12px;
+    font-weight: 800;
 }
 
-.custom-upload{
-    margin-top:16px;
-
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-
-    gap:12px;
-
-    padding:14px;
-
-    border:1px dashed rgba(100,110,125,.30);
-    border-radius:14px;
-
-    background:rgba(255,255,255,.22);
+.wallpaper-option.selected .selected-check {
+    display: grid;
 }
 
-.custom-upload-text strong{
-    display:block;
-    font-size:12px;
+.custom-upload {
+    margin-top: 14px;
+
+    padding: 17px;
+
+    border: 1px dashed var(--border-strong);
+    border-radius: var(--radius-md);
+
+    background: var(--surface-soft);
 }
 
-.custom-upload-text span{
-    display:block;
+.custom-upload strong {
+    display: block;
 
-    margin-top:3px;
-
-    color:var(--muted);
-
-    font-size:11px;
+    font-size: 13px;
 }
 
-.upload-button{
-    flex:none;
+.custom-upload p {
+    margin-top: 4px;
 
-    padding:9px 13px;
+    color: var(--muted);
 
-    border:1px solid var(--primary);
-    border-radius:10px;
-
-    background:var(--primary);
-
-    color:#fff;
-
-    font-size:12px;
-    font-weight:700;
+    font-size: 11px;
 }
 
-#wallpaperUpload{
-    display:none;
+.file-button {
+    display: inline-flex;
+    align-items: center;
+
+    height: 40px;
+
+    margin-top: 13px;
+
+    padding: 0 14px;
+
+    border-radius: var(--radius-md);
+
+    background: var(--primary);
+    color: white;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    cursor: pointer;
 }
 
-
-/* =====================================================
-   TOGGLES
-===================================================== */
-
-.setting-row{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-
-    gap:20px;
-
-    padding:13px 0;
-
-    border-bottom:1px solid rgba(100,110,125,.13);
+.file-button input {
+    display: none;
 }
 
-.setting-row:last-child{
-    border-bottom:0;
+.remove-wallpaper {
+    display: none;
+
+    margin-top: 10px;
+
+    height: 36px;
+
+    padding: 0 12px;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+
+    background: transparent;
+    color: var(--muted);
+
+    font-size: 11px;
 }
 
-.setting-label strong{
-    display:block;
-
-    font-size:13px;
-}
-
-.setting-label span{
-    display:block;
-
-    margin-top:3px;
-
-    color:var(--muted);
-
-    font-size:11px;
-}
-
-.toggle{
-    position:relative;
-
-    width:46px;
-    height:26px;
-
-    flex:none;
-
-    border:0;
-    border-radius:50px;
-
-    background:#aab1bd;
-}
-
-.toggle::after{
-    content:"";
-
-    position:absolute;
-
-    top:3px;
-    left:3px;
-
-    width:20px;
-    height:20px;
-
-    border-radius:50%;
-
-    background:#fff;
-
-    transition:.18s ease;
-
-    box-shadow:0 2px 5px rgba(0,0,0,.18);
-}
-
-.toggle.on{
-    background:var(--primary);
-}
-
-.toggle.on::after{
-    transform:translateX(20px);
-}
-
-.range-wrap{
-    margin-top:10px;
-}
-
-.range-wrap.hidden{
-    display:none;
-}
-
-.range-value{
-    color:var(--primary);
-
-    font-size:11px;
-    font-weight:750;
-}
-
-input[type="range"]{
-    width:100%;
-
-    min-height:0;
-
-    padding:0;
-
-    border:0;
-
-    background:transparent;
-
-    box-shadow:none;
-
-    accent-color:var(--primary);
+.remove-wallpaper.visible {
+    display: inline-flex;
+    align-items: center;
 }
 
 
-/* =====================================================
+/* =========================================================
    MOBILE NAV
-===================================================== */
+========================================================= */
 
-.mobile-nav{
-    display:none;
+.mobile-nav {
+    display: none;
 }
 
 
-/* =====================================================
-   MOBILE
-===================================================== */
+/* =========================================================
+   TOAST
+========================================================= */
 
-@media(max-width:800px){
+.toast {
+    position: fixed;
 
-    .app{
-        padding:0;
-        gap:0;
-    }
+    right: 18px;
+    bottom: 18px;
 
-    .sidebar{
-        display:none;
-    }
+    z-index: 5000;
 
-    .main{
-        height:100dvh;
+    width: min(330px, calc(100vw - 30px));
 
-        border:0;
-        border-radius:0;
-    }
+    padding: 13px 14px;
 
-    .topbar{
-        height:57px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
 
-        padding:0 13px;
-    }
+    background: var(--surface-strong);
+    color: var(--text);
 
-    .page-title{
-        font-size:14px;
-    }
+    box-shadow: var(--shadow);
 
-    .mobile-nav{
-        position:fixed;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
 
-        left:10px;
-        right:10px;
-        bottom:10px;
-
-        z-index:200;
-
-        height:60px;
-
-        display:flex;
-
-        gap:5px;
-
-        padding:5px;
-
-        border:1px solid var(--glass-border);
-        border-radius:17px;
-
-        background:var(--glass-strong);
-
-        box-shadow:0 12px 35px rgba(0,0,0,.16);
-
-        backdrop-filter:blur(22px) saturate(150%);
-        -webkit-backdrop-filter:blur(22px) saturate(150%);
-    }
-
-    .mobile-nav button{
-        flex:1;
-
-        border:0;
-        border-radius:12px;
-
-        background:transparent;
-
-        color:var(--muted);
-
-        font-size:10px;
-        font-weight:650;
-    }
-
-    .mobile-nav button.active{
-        background:rgba(49,91,220,.11);
-
-        color:var(--primary);
-    }
-
-    .mobile-nav .nav-icon{
-        display:block;
-
-        width:auto;
-
-        margin-bottom:2px;
-
-        font-size:14px;
-    }
-
-    .ai-chat{
-        padding:15px 11px 83px;
-    }
-
-    .message{
-        gap:7px;
-        margin:15px 0;
-    }
-
-    .bubble{
-        max-width:84%;
-
-        padding:10px 12px;
-
-        font-size:14px;
-    }
-
-    .input-area{
-        position:fixed;
-
-        left:0;
-        right:0;
-
-        bottom:68px;
-
-        z-index:150;
-
-        height:68px;
-
-        padding:8px 10px;
-
-        background:rgba(255,255,255,.25);
-
-        backdrop-filter:blur(18px);
-        -webkit-backdrop-filter:blur(18px);
-    }
-
-    .input-box{
-        height:52px;
-    }
-
-    .input-box input{
-        height:44px;
-        min-height:44px;
-
-        font-size:16px;
-    }
-
-    .send{
-        width:44px;
-        height:44px;
-    }
-
-    .profile-content,
-    .settings-content{
-        padding:25px 15px 95px;
-    }
-
-    .profile-section,
-    .settings-section{
-        padding:20px;
-    }
-
-    .wallpaper-grid{
-        grid-template-columns:
-            repeat(2,minmax(0,1fr));
-
-        gap:10px;
-    }
-
-    .wallpaper-card,
-    .wallpaper-card img,
-    .wallpaper-card video{
-        min-height:105px;
-    }
-
-    .custom-upload{
-        align-items:flex-start;
-        flex-direction:column;
-    }
-
-    .upload-button{
-        width:100%;
-    }
-
-    .auth{
-        padding:15px;
-    }
-
-    .auth-card{
-        padding:25px 20px;
-
-        border-radius:22px;
-    }
+    animation: toastIn .18s ease;
 }
 
-@media(max-width:380px){
+.toast strong {
+    display: block;
+    font-size: 12px;
+}
 
-    .bubble{
-        max-width:87%;
+.toast span {
+    display: block;
+
+    margin-top: 4px;
+
+    color: var(--muted);
+
+    font-size: 11px;
+}
+
+@keyframes toastIn {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
     }
 
-    .auth-card{
-        padding:22px 17px;
-    }
-
-    .wallpaper-card,
-    .wallpaper-card img,
-    .wallpaper-card video{
-        min-height:92px;
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
 
-/* =====================================================
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(140,150,170,.45) transparent;
+}
+
+::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(140,150,170,.38);
+    border-radius: 20px;
+}
+
+
+/* =========================================================
    REDUCED MOTION
-===================================================== */
+========================================================= */
 
-@media(prefers-reduced-motion:reduce){
-
+@media (prefers-reduced-motion: reduce) {
     *,
     *::before,
-    *::after{
-        transition:none!important;
-        animation:none!important;
-        scroll-behavior:auto!important;
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+    }
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .sidebar {
+        width: 220px;
+        flex-basis: 220px;
+    }
+
+    .wallpaper-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    html,
+    body {
+        overflow: hidden;
+    }
+
+    .app {
+        height: 100dvh;
+    }
+
+    .sidebar {
+        display: none;
+    }
+
+    .topbar {
+        height: 58px;
+        flex-basis: 58px;
+
+        padding: 0 12px;
+    }
+
+    .page-title {
+        font-size: 14px;
+    }
+
+    .icon-button {
+        width: 36px;
+        height: 36px;
+    }
+
+    .main {
+        padding-bottom: 67px;
+    }
+
+    .chat-scroll {
+        padding: 17px 10px 12px;
+    }
+
+    .message {
+        gap: 8px;
+        margin-bottom: 15px;
+    }
+
+    .message .avatar {
+        width: 31px;
+        height: 31px;
+        flex-basis: 31px;
+        font-size: 11px;
+    }
+
+    .message-content {
+        max-width: calc(100% - 42px);
+    }
+
+    .message-bubble {
+        padding: 11px 12px;
+
+        border-radius: 13px;
+
+        font-size: 14px;
+        line-height: 1.55;
+    }
+
+    .composer-wrap {
+        padding: 8px 9px 8px;
+    }
+
+    .composer {
+        padding: 5px;
+        border-radius: 13px;
+    }
+
+    .composer textarea {
+        min-height: 44px;
+
+        padding: 11px 9px;
+
+        font-size: 16px;
+    }
+
+    .send-button {
+        width: 44px;
+        height: 44px;
+        flex-basis: 44px;
+    }
+
+    .composer-hint {
+        display: none;
+    }
+
+    .page-scroll {
+        padding: 22px 12px 30px;
+    }
+
+    .page-heading {
+        font-size: 20px;
+    }
+
+    .profile-panel,
+    .settings-panel {
+        padding: 17px;
+        margin-top: 17px;
+    }
+
+    .wallpaper-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+
+    .wallpaper-option {
+        min-height: 125px;
+    }
+
+    .chat-empty {
+        min-height: 48vh;
+    }
+
+    .prompt-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .mobile-nav {
+        position: fixed;
+
+        left: 8px;
+        right: 8px;
+        bottom: calc(7px + env(safe-area-inset-bottom));
+
+        z-index: 300;
+
+        height: 58px;
+
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+
+        padding: 4px;
+
+        border: 1px solid var(--border-strong);
+        border-radius: 15px;
+
+        background: var(--surface-strong);
+
+        box-shadow: 0 12px 35px rgba(0,0,0,.20);
+
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+    }
+
+    .mobile-nav button {
+        border: 0;
+        border-radius: 11px;
+
+        background: transparent;
+        color: var(--muted);
+
+        font-size: 10px;
+        font-weight: 600;
+    }
+
+    .mobile-nav button.active {
+        background: var(--surface-soft);
+        color: var(--primary);
+    }
+
+    .mobile-nav .nav-icon {
+        display: block;
+
+        width: auto;
+
+        margin-bottom: 2px;
+
+        font-size: 16px;
+    }
+
+    .toast {
+        right: 12px;
+        bottom: 78px;
+    }
+}
+
+
+/* =========================================================
+   VERY SMALL DEVICES
+========================================================= */
+
+@media (max-width: 360px) {
+
+    .topbar {
+        padding: 0 9px;
+    }
+
+    .chat-scroll {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
+    .message-content {
+        max-width: calc(100% - 38px);
+    }
+
+    .wallpaper-option {
+        min-height: 110px;
+    }
+
+    .wallpaper-name {
+        font-size: 10px;
     }
 }
 </style>
 </head>
 
-<body>
 
-<!-- =====================================================
-     BACKGROUND SYSTEM
-===================================================== -->
+<body class="dark">
 
-<div class="background-layer">
+<!-- =======================================================
+     BACKGROUND
+======================================================= -->
 
-    <img
-        class="background-image"
-        id="backgroundImage"
-        src="assets/wallpapers/background-photo.jpg"
-        alt=""
-    >
+<div class="background-layer" aria-hidden="true">
 
     <video
-        class="background-video"
         id="backgroundVideo"
+        class="background-media"
         autoplay
         muted
         loop
@@ -1484,92 +1767,98 @@ input[type="range"]{
         preload="metadata"
     ></video>
 
-    <div
-        class="background-overlay"
-        id="backgroundOverlay"
-    ></div>
+    <img
+        id="backgroundImage"
+        class="background-media background-hidden"
+        alt=""
+    >
+
+    <div class="background-overlay"></div>
+    <div class="background-vignette"></div>
 
 </div>
 
 
-<!-- =====================================================
+<!-- =======================================================
      AUTH
-===================================================== -->
+======================================================= -->
 
-<section class="auth" id="auth">
+<section class="auth-screen" id="authScreen">
 
     <div class="auth-card">
 
-        <div class="auth-logo">
-            X
-        </div>
+        <div class="auth-logo">X</div>
 
         <h1>XenvitalTech</h1>
 
-        <div class="auth-subtitle">
-            AI Assistant by ShashwatBytes
-        </div>
+        <p class="auth-subtitle">
+            AI Chatbot by ShashwatBytes
+        </p>
 
 
         <!-- LOGIN -->
 
-        <form
-            class="form active"
-            id="loginForm"
-        >
+        <form class="form active" id="loginForm">
 
-            <label for="loginEmail">
-                Email
-            </label>
+            <div class="form-group">
 
-            <input
-                id="loginEmail"
-                type="email"
-                placeholder="Enter your email"
-                autocomplete="email"
-                required
-            >
+                <label for="loginEmail">
+                    Email
+                </label>
+
+                <input
+                    id="loginEmail"
+                    type="email"
+                    autocomplete="email"
+                    placeholder="Enter your email"
+                    required
+                >
+
+            </div>
 
 
-            <label for="loginPassword">
-                Password
-            </label>
+            <div class="form-group">
 
-            <input
-                id="loginPassword"
-                type="password"
-                placeholder="Enter your password"
-                autocomplete="current-password"
-                required
-            >
+                <label for="loginPassword">
+                    Password
+                </label>
+
+                <input
+                    id="loginPassword"
+                    type="password"
+                    autocomplete="current-password"
+                    placeholder="Enter your password"
+                    required
+                >
+
+            </div>
 
 
             <div
-                class="error"
+                class="form-error"
                 id="loginError"
-                role="alert"
+                aria-live="polite"
             ></div>
 
 
             <button
-                class="primary"
+                class="primary-button"
                 type="submit"
             >
                 Login
             </button>
 
 
-            <div class="switch">
+            <div class="form-switch">
 
                 New to XenvitalTech?
 
-                <span
+                <button
+                    type="button"
                     onclick="showSignup()"
-                    role="button"
-                    tabindex="0"
                 >
                     Create account
-                </span>
+                </button>
 
             </div>
 
@@ -1578,79 +1867,87 @@ input[type="range"]{
 
         <!-- SIGNUP -->
 
-        <form
-            class="form"
-            id="signupForm"
-        >
+        <form class="form" id="signupForm">
 
-            <label for="signupUsername">
-                Username
-            </label>
+            <div class="form-group">
 
-            <input
-                id="signupUsername"
-                type="text"
-                placeholder="@yourusername"
-                minlength="3"
-                maxlength="30"
-                autocomplete="username"
-                required
-            >
+                <label for="signupUsername">
+                    Username
+                </label>
 
+                <input
+                    id="signupUsername"
+                    type="text"
+                    autocomplete="username"
+                    placeholder="@yourusername"
+                    minlength="3"
+                    maxlength="30"
+                    required
+                >
 
-            <label for="signupEmail">
-                Email
-            </label>
-
-            <input
-                id="signupEmail"
-                type="email"
-                placeholder="Enter your email"
-                autocomplete="email"
-                required
-            >
+            </div>
 
 
-            <label for="signupPassword">
-                Password
-            </label>
+            <div class="form-group">
 
-            <input
-                id="signupPassword"
-                type="password"
-                placeholder="Create password"
-                minlength="6"
-                autocomplete="new-password"
-                required
-            >
+                <label for="signupEmail">
+                    Email
+                </label>
+
+                <input
+                    id="signupEmail"
+                    type="email"
+                    autocomplete="email"
+                    placeholder="Enter your email"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="signupPassword">
+                    Password
+                </label>
+
+                <input
+                    id="signupPassword"
+                    type="password"
+                    autocomplete="new-password"
+                    placeholder="Create password"
+                    minlength="6"
+                    required
+                >
+
+            </div>
 
 
             <div
-                class="error"
+                class="form-error"
                 id="signupError"
-                role="alert"
+                aria-live="polite"
             ></div>
 
 
             <button
-                class="primary"
+                class="primary-button"
                 type="submit"
             >
                 Create Account
             </button>
 
 
-            <div class="switch">
+            <div class="form-switch">
 
                 Already have an account?
 
-                <span
+                <button
+                    type="button"
                     onclick="showLogin()"
-                    role="button"
-                    tabindex="0"
                 >
                     Login
-                </span>
+                </button>
 
             </div>
 
@@ -1661,15 +1958,11 @@ input[type="range"]{
 </section>
 
 
-<!-- =====================================================
+<!-- =======================================================
      APP
-===================================================== -->
+======================================================= -->
 
-<section
-    class="app"
-    id="app"
->
-
+<section class="app" id="app">
 
     <!-- SIDEBAR -->
 
@@ -1677,19 +1970,19 @@ input[type="range"]{
 
         <div class="brand">
 
-            <div class="logo">
+            <div class="brand-logo">
                 X
             </div>
 
-            <div>
+            <div class="brand-text">
 
-                <h2>
+                <strong>
                     XenvitalTech
-                </h2>
+                </strong>
 
-                <small>
+                <span>
                     by ShashwatBytes
-                </small>
+                </span>
 
             </div>
 
@@ -1700,57 +1993,42 @@ input[type="range"]{
             class="new-chat"
             onclick="newAIChat()"
         >
-            + New AI Chat
+            + New chat
         </button>
 
 
-        <div class="nav-title">
+        <div class="sidebar-section-title">
             Workspace
         </div>
 
 
         <button
-            class="nav-btn active"
-            id="aiNav"
+            class="nav-button active"
+            id="desktopAiNav"
             onclick="showView('ai')"
         >
-
-            <span class="nav-icon">
-                AI
-            </span>
-
+            <span class="nav-icon">AI</span>
             XenvitalTech AI
-
         </button>
 
 
         <button
-            class="nav-btn"
-            id="profileNav"
+            class="nav-button"
+            id="desktopProfileNav"
             onclick="showView('profile')"
         >
-
-            <span class="nav-icon">
-                •
-            </span>
-
-            My Profile
-
+            <span class="nav-icon">◯</span>
+            Profile
         </button>
 
 
         <button
-            class="nav-btn"
-            id="settingsNav"
+            class="nav-button"
+            id="desktopSettingsNav"
             onclick="showView('settings')"
         >
-
-            <span class="nav-icon">
-                ⚙
-            </span>
-
+            <span class="nav-icon">⚙</span>
             Settings
-
         </button>
 
 
@@ -1765,7 +2043,7 @@ input[type="range"]{
                     U
                 </div>
 
-                <div>
+                <div class="profile-mini-text">
 
                     <strong id="miniUsername">
                         @user
@@ -1781,7 +2059,7 @@ input[type="range"]{
 
 
             <button
-                class="logout"
+                class="logout-button"
                 onclick="logout()"
             >
                 Logout
@@ -1795,7 +2073,6 @@ input[type="range"]{
     <!-- MAIN -->
 
     <main class="main">
-
 
         <!-- TOP BAR -->
 
@@ -1812,10 +2089,11 @@ input[type="range"]{
             <div class="top-actions">
 
                 <button
-                    class="icon"
+                    class="icon-button"
+                    id="themeButton"
                     onclick="toggleTheme()"
-                    aria-label="Toggle theme"
-                    title="Toggle theme"
+                    aria-label="Toggle appearance"
+                    title="Toggle appearance"
                 >
                     ◐
                 </button>
@@ -1835,28 +2113,69 @@ input[type="range"]{
         >
 
             <div
-                class="ai-chat"
-                id="aiScroll"
+                class="chat-scroll"
+                id="chatScroll"
             >
 
                 <div
                     class="messages"
-                    id="aiMessages"
+                    id="messages"
                 >
 
-                    <div class="message bot">
+                    <div
+                        class="chat-empty"
+                        id="chatEmpty"
+                    >
 
-                        <div class="avatar">
-                            X
+                        <div class="chat-empty-inner">
+
+                            <div class="chat-empty-logo">
+                                X
+                            </div>
+
+                            <h2>
+                                How can I help?
+                            </h2>
+
+                            <p>
+                                Ask about coding, study, projects,
+                                writing or problem solving.
+                            </p>
+
+
+                            <div class="prompt-grid">
+
+                                <button
+                                    class="prompt-button"
+                                    onclick="usePrompt('Explain this programming concept simply.')"
+                                >
+                                    Explain a programming concept
+                                </button>
+
+                                <button
+                                    class="prompt-button"
+                                    onclick="usePrompt('Help me debug my code.')"
+                                >
+                                    Help me debug code
+                                </button>
+
+                                <button
+                                    class="prompt-button"
+                                    onclick="usePrompt('Create a study plan for my upcoming exam.')"
+                                >
+                                    Create a study plan
+                                </button>
+
+                                <button
+                                    class="prompt-button"
+                                    onclick="usePrompt('Help me plan my software project.')"
+                                >
+                                    Plan a software project
+                                </button>
+
+                            </div>
+
                         </div>
-
-                        <div class="bubble">XenvitalTech AI by ShashwatBytes
-
-Hello. I'm your AI assistant.
-
-I can help with coding, study, projects, writing and problem solving.
-
-What would you like to work on today?</div>
 
                     </div>
 
@@ -1865,88 +2184,98 @@ What would you like to work on today?</div>
             </div>
 
 
-            <div class="input-area">
+            <div class="composer-wrap">
 
-                <div class="input-box">
+                <div class="composer">
 
-                    <input
+                    <textarea
                         id="aiInput"
-                        type="text"
+                        rows="1"
+                        maxlength="12000"
                         placeholder="Ask XenvitalTech anything..."
                         autocomplete="off"
-                        onkeydown="aiEnter(event)"
-                        aria-label="Message XenvitalTech AI"
-                    >
+                        aria-label="Message"
+                    ></textarea>
 
 
                     <button
-                        class="send"
-                        id="aiSend"
+                        class="send-button"
+                        id="sendButton"
                         onclick="sendAI()"
                         aria-label="Send message"
+                        title="Send message"
                     >
                         →
                     </button>
 
                 </div>
 
+
+                <div class="composer-hint">
+                    Enter to send · Shift + Enter for a new line
+                </div>
+
             </div>
 
         </section>
 
 
         <!-- =================================================
-             PROFILE
+             PROFILE VIEW
         ================================================== -->
 
         <section
-            class="view profile-view"
+            class="view"
             id="profileView"
         >
 
-            <div class="profile-content">
+            <div class="page-scroll">
 
-                <h2 class="profile-heading">
-                    My Profile
-                </h2>
+                <div class="page-container">
 
-                <p class="profile-description">
-                    Manage your XenvitalTech account information.
-                </p>
+                    <h1 class="page-heading">
+                        Profile
+                    </h1>
+
+                    <p class="page-description">
+                        Your XenvitalTech account information.
+                    </p>
 
 
-                <div class="profile-section">
+                    <div class="profile-panel">
 
-                    <div
-                        class="avatar profile-large"
-                        id="profileAvatar"
-                    >
-                        U
+                        <div class="profile-main">
+
+                            <div
+                                class="profile-large-avatar"
+                                id="profileAvatar"
+                            >
+                                U
+                            </div>
+
+                            <div class="profile-info">
+
+                                <h3 id="profileUsername">
+                                    @username
+                                </h3>
+
+                                <p id="profileEmail">
+                                    email
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <button
+                            class="danger-button"
+                            onclick="logout()"
+                        >
+                            Logout
+                        </button>
+
                     </div>
-
-
-                    <div
-                        class="profile-name"
-                        id="profileUsername"
-                    >
-                        @username
-                    </div>
-
-
-                    <div
-                        class="profile-email"
-                        id="profileEmail"
-                    >
-                        email
-                    </div>
-
-
-                    <button
-                        class="profile-logout"
-                        onclick="logout()"
-                    >
-                        Logout from XenvitalTech
-                    </button>
 
                 </div>
 
@@ -1956,290 +2285,254 @@ What would you like to work on today?</div>
 
 
         <!-- =================================================
-             SETTINGS
+             SETTINGS VIEW
         ================================================== -->
 
         <section
-            class="view settings-view"
+            class="view"
             id="settingsView"
         >
 
-            <div class="settings-content">
+            <div class="page-scroll">
 
-                <h2 class="settings-heading">
-                    Settings
-                </h2>
+                <div class="page-container">
 
-                <p class="settings-description">
-                    Customize how XenvitalTech AI looks on your device.
-                </p>
+                    <h1 class="page-heading">
+                        Settings
+                    </h1>
 
-
-                <!-- WALLPAPER -->
-
-                <div class="settings-section">
-
-                    <h3>
-                        Background wallpaper
-                    </h3>
-
-                    <p>
-                        Choose an image or animated background.
+                    <p class="page-description">
+                        Customize how XenvitalTech AI looks on your device.
                     </p>
 
 
-                    <div
-                        class="wallpaper-grid"
-                        id="wallpaperGrid"
-                    >
-
-                        <!-- Photo -->
-
-                        <button
-                            class="wallpaper-card"
-                            data-type="image"
-                            data-src="assets/wallpapers/background-photo.jpg"
-                            onclick="selectWallpaper(this)"
-                        >
-
-                            <img
-                                src="assets/wallpapers/background-photo.jpg"
-                                alt="Background photo"
-                            >
-
-                            <span class="wallpaper-overlay">
-                                Photo
-                            </span>
-
-                            <span class="wallpaper-check">
-                                ✓
-                            </span>
-
-                        </button>
+                    <div class="settings-panel">
 
 
-                        <!-- Video 1 -->
+                        <!-- APPEARANCE -->
 
-                        <button
-                            class="wallpaper-card"
-                            data-type="video"
-                            data-src="assets/wallpapers/wallpaper1.mp4"
-                            onclick="selectWallpaper(this)"
-                        >
+                        <div class="settings-group">
 
-                            <video
-                                src="assets/wallpapers/wallpaper1.mp4"
-                                muted
-                                autoplay
-                                loop
-                                playsinline
-                            ></video>
+                            <div class="settings-title">
+                                Appearance
+                            </div>
 
-                            <span class="wallpaper-overlay">
-                                Motion 01
-                            </span>
-
-                            <span class="wallpaper-check">
-                                ✓
-                            </span>
-
-                        </button>
+                            <div class="settings-subtitle">
+                                Adjust the interface appearance.
+                            </div>
 
 
-                        <!-- Video 2 -->
+                            <div class="setting-row">
 
-                        <button
-                            class="wallpaper-card"
-                            data-type="video"
-                            data-src="assets/wallpapers/wallpaper2.mp4"
-                            onclick="selectWallpaper(this)"
-                        >
+                                <div class="setting-row-text">
 
-                            <video
-                                src="assets/wallpapers/wallpaper2.mp4"
-                                muted
-                                autoplay
-                                loop
-                                playsinline
-                            ></video>
+                                    <strong>
+                                        Dark appearance
+                                    </strong>
 
-                            <span class="wallpaper-overlay">
-                                Motion 02
-                            </span>
+                                    <span>
+                                        Use a darker interface.
+                                    </span>
 
-                            <span class="wallpaper-check">
-                                ✓
-                            </span>
-
-                        </button>
+                                </div>
 
 
-                        <!-- Video 3 -->
+                                <label class="switch">
 
-                        <button
-                            class="wallpaper-card"
-                            data-type="video"
-                            data-src="assets/wallpapers/wallpaper3.mp4"
-                            onclick="selectWallpaper(this)"
-                        >
+                                    <input
+                                        type="checkbox"
+                                        id="darkModeSwitch"
+                                    >
 
-                            <video
-                                src="assets/wallpapers/wallpaper3.mp4"
-                                muted
-                                autoplay
-                                loop
-                                playsinline
-                            ></video>
+                                    <span class="switch-slider"></span>
 
-                            <span class="wallpaper-overlay">
-                                Motion 03
-                            </span>
-
-                            <span class="wallpaper-check">
-                                ✓
-                            </span>
-
-                        </button>
-
-                    </div>
-
-
-                    <!-- CUSTOM -->
-
-                    <div class="custom-upload">
-
-                        <div class="custom-upload-text">
-
-                            <strong>
-                                Custom wallpaper
-                            </strong>
-
-                            <span>
-                                Choose an image or video from your device.
-                            </span>
-
-                        </div>
-
-
-                        <label
-                            class="upload-button"
-                            for="wallpaperUpload"
-                        >
-                            Choose file
-                        </label>
-
-                        <input
-                            id="wallpaperUpload"
-                            type="file"
-                            accept="image/*,video/*"
-                        >
-
-                    </div>
-
-                </div>
-
-
-                <!-- DISPLAY -->
-
-                <div class="settings-section">
-
-                    <h3>
-                        Background effects
-                    </h3>
-
-                    <p>
-                        Control the amount of background blur.
-                    </p>
-
-
-                    <div class="setting-row">
-
-                        <div class="setting-label">
-
-                            <strong>
-                                Background blur
-                            </strong>
-
-                            <span>
-                                Blur the selected wallpaper behind the interface.
-                            </span>
-
-                        </div>
-
-
-                        <button
-                            class="toggle"
-                            id="blurToggle"
-                            onclick="toggleBackgroundBlur()"
-                            aria-label="Toggle background blur"
-                        ></button>
-
-                    </div>
-
-
-                    <div
-                        class="range-wrap"
-                        id="blurControls"
-                    >
-
-                        <div class="setting-row">
-
-                            <div class="setting-label">
-
-                                <strong>
-                                    Blur intensity
-                                </strong>
-
-                                <span>
-                                    Adjust background softness.
-                                </span>
+                                </label>
 
                             </div>
 
-                            <span
-                                class="range-value"
-                                id="blurValue"
+                        </div>
+
+
+                        <!-- WALLPAPER -->
+
+                        <div class="settings-group">
+
+                            <div class="settings-title">
+                                Background wallpaper
+                            </div>
+
+                            <div class="settings-subtitle">
+                                Choose an image or animated background.
+                                Your selection is saved on this device.
+                            </div>
+
+
+                            <div
+                                class="wallpaper-grid"
+                                id="wallpaperGrid"
                             >
-                                18px
-                            </span>
+
+                                <!-- generated by JS -->
+
+                            </div>
+
+
+                            <div class="custom-upload">
+
+                                <strong>
+                                    Custom wallpaper
+                                </strong>
+
+                                <p>
+                                    Choose an image or MP4 video from your device.
+                                </p>
+
+
+                                <label class="file-button">
+
+                                    Choose file
+
+                                    <input
+                                        type="file"
+                                        id="customWallpaperInput"
+                                        accept="image/*,video/mp4,video/webm"
+                                    >
+
+                                </label>
+
+
+                                <button
+                                    class="remove-wallpaper"
+                                    id="removeCustomWallpaper"
+                                    onclick="removeCustomWallpaper()"
+                                >
+                                    Remove custom wallpaper
+                                </button>
+
+                            </div>
 
                         </div>
 
 
-                        <input
-                            id="blurRange"
-                            type="range"
-                            min="0"
-                            max="40"
-                            value="18"
-                            oninput="changeBlur(this.value)"
-                        >
+                        <!-- BLUR -->
+
+                        <div class="settings-group">
+
+                            <div class="settings-title">
+                                Background blur
+                            </div>
+
+                            <div class="settings-subtitle">
+                                Control how strongly the wallpaper is blurred.
+                                The blur applies to the background only.
+                            </div>
+
+
+                            <div class="setting-row">
+
+                                <div class="setting-row-text">
+
+                                    <strong>
+                                        Blur background
+                                    </strong>
+
+                                    <span>
+                                        Keep the interface readable over the wallpaper.
+                                    </span>
+
+                                </div>
+
+
+                                <label class="switch">
+
+                                    <input
+                                        type="checkbox"
+                                        id="blurSwitch"
+                                    >
+
+                                    <span class="switch-slider"></span>
+
+                                </label>
+
+                            </div>
+
+
+                            <div class="range-row">
+
+                                <div class="range-label">
+
+                                    <span>
+                                        Blur intensity
+                                    </span>
+
+                                    <span id="blurValue">
+                                        16px
+                                    </span>
+
+                                </div>
+
+
+                                <input
+                                    class="range"
+                                    id="blurRange"
+                                    type="range"
+                                    min="0"
+                                    max="40"
+                                    step="1"
+                                    value="16"
+                                    aria-label="Background blur intensity"
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- OVERLAY -->
+
+                        <div class="settings-group">
+
+                            <div class="settings-title">
+                                Wallpaper readability
+                            </div>
+
+                            <div class="settings-subtitle">
+                                A subtle overlay keeps text readable without hiding the wallpaper.
+                            </div>
+
+
+                            <div class="range-row">
+
+                                <div class="range-label">
+
+                                    <span>
+                                        Overlay
+                                    </span>
+
+                                    <span id="overlayValue">
+                                        48%
+                                    </span>
+
+                                </div>
+
+
+                                <input
+                                    class="range"
+                                    id="overlayRange"
+                                    type="range"
+                                    min="10"
+                                    max="80"
+                                    step="1"
+                                    value="48"
+                                    aria-label="Wallpaper overlay"
+                                >
+
+                            </div>
+
+                        </div>
+
 
                     </div>
-
-                </div>
-
-
-                <!-- RESET -->
-
-                <div class="settings-section">
-
-                    <h3>
-                        Reset appearance
-                    </h3>
-
-                    <p>
-                        Restore the default XenvitalTech wallpaper and blur settings.
-                    </p>
-
-
-                    <button
-                        class="profile-logout"
-                        style="margin-top:16px"
-                        onclick="resetAppearance()"
-                    >
-                        Reset appearance
-                    </button>
 
                 </div>
 
@@ -2254,23 +2547,17 @@ What would you like to work on today?</div>
          MOBILE NAV
     ================================================== -->
 
-    <nav
-        class="mobile-nav"
-        aria-label="Main navigation"
-    >
+    <nav class="mobile-nav">
 
         <button
             id="mobileAi"
             class="active"
             onclick="showView('ai')"
         >
-
             <span class="nav-icon">
                 AI
             </span>
-
             AI
-
         </button>
 
 
@@ -2278,13 +2565,10 @@ What would you like to work on today?</div>
             id="mobileProfile"
             onclick="showView('profile')"
         >
-
             <span class="nav-icon">
-                •
+                ◯
             </span>
-
             Profile
-
         </button>
 
 
@@ -2292,13 +2576,10 @@ What would you like to work on today?</div>
             id="mobileSettings"
             onclick="showView('settings')"
         >
-
             <span class="nav-icon">
                 ⚙
             </span>
-
             Settings
-
         </button>
 
     </nav>
@@ -2306,44 +2587,88 @@ What would you like to work on today?</div>
 </section>
 
 
+<!-- =======================================================
+     TOAST
+======================================================= -->
+
+<div
+    id="toast"
+    class="toast hidden"
+    role="status"
+    aria-live="polite"
+>
+    <strong id="toastTitle"></strong>
+    <span id="toastMessage"></span>
+</div>
+
+
 <script>
+/* =========================================================
+   XENVITALTECH AI
+   Application logic
+========================================================= */
 
-/* =====================================================
-   HELPERS
-===================================================== */
-
-const $ = id =>
-    document.getElementById(id);
-
-
-/* =====================================================
-   USER SYSTEM
-===================================================== */
-
-let users =
-    JSON.parse(
-        localStorage.getItem(
-            "xenvital_users"
-        ) || "[]"
-    );
+const $ = (id) => document.getElementById(id);
 
 
-let currentUser =
-    JSON.parse(
-        localStorage.getItem(
-            "xenvital_currentUser"
-        ) || "null"
-    );
+/* =========================================================
+   USER DATA
+========================================================= */
 
+let users = JSON.parse(
+    localStorage.getItem("xenvital_users") || "[]"
+);
+
+let currentUser = JSON.parse(
+    localStorage.getItem("xenvital_currentUser") || "null"
+);
 
 let aiHistory = [];
 
 
-/* =====================================================
-   AUTH STORAGE
-===================================================== */
+/* =========================================================
+   WALLPAPER DEFINITIONS
+========================================================= */
 
-function saveUsers(){
+const WALLPAPERS = [
+    {
+        id: "wallpaper1",
+        name: "Motion 01",
+        type: "video",
+        src: "./assets/wallpapers/wallpaper1.mp4"
+    },
+    {
+        id: "wallpaper2",
+        name: "Motion 02",
+        type: "video",
+        src: "./assets/wallpapers/wallpaper%202.mp4"
+    },
+    {
+        id: "wallpaper3",
+        name: "Motion 03",
+        type: "video",
+        src: "./assets/wallpapers/wallpaper%203.mp4"
+    }
+];
+
+let wallpaperState = {
+    selected: localStorage.getItem("xenvital_wallpaper") || "wallpaper1",
+    blurEnabled:
+        localStorage.getItem("xenvital_blur_enabled") !== "false",
+    blur:
+        Number(localStorage.getItem("xenvital_blur") || 16),
+    overlay:
+        Number(localStorage.getItem("xenvital_overlay") || 48),
+    theme:
+        localStorage.getItem("xenvital_theme") || "dark"
+};
+
+
+/* =========================================================
+   USER STORAGE
+========================================================= */
+
+function saveUsers() {
 
     localStorage.setItem(
         "xenvital_users",
@@ -2353,7 +2678,7 @@ function saveUsers(){
 }
 
 
-function saveCurrent(){
+function saveCurrentUser() {
 
     localStorage.setItem(
         "xenvital_currentUser",
@@ -2363,111 +2688,87 @@ function saveCurrent(){
 }
 
 
-/* =====================================================
-   AUTH VIEWS
-===================================================== */
+/* =========================================================
+   AUTH UI
+========================================================= */
 
-function showSignup(){
+function showSignup() {
 
-    $("loginForm")
-        .classList
-        .remove("active");
-
-    $("signupForm")
-        .classList
-        .add("active");
+    $("loginForm").classList.remove("active");
+    $("signupForm").classList.add("active");
 
     $("loginError").textContent = "";
-
-}
-
-
-function showLogin(){
-
-    $("signupForm")
-        .classList
-        .remove("active");
-
-    $("loginForm")
-        .classList
-        .add("active");
-
     $("signupError").textContent = "";
 
 }
 
 
-/* =====================================================
-   SIGNUP
-===================================================== */
+function showLogin() {
 
-$("signupForm")
-.addEventListener(
+    $("signupForm").classList.remove("active");
+    $("loginForm").classList.add("active");
+
+    $("loginError").textContent = "";
+    $("signupError").textContent = "";
+
+}
+
+
+/* =========================================================
+   SIGNUP
+========================================================= */
+
+$("signupForm").addEventListener(
     "submit",
-    event => {
+    (event) => {
 
         event.preventDefault();
 
+        const username = $("signupUsername")
+            .value
+            .trim()
+            .toLowerCase()
+            .replace(/^@/, "");
 
-        const username =
-            $("signupUsername")
-                .value
-                .trim()
-                .toLowerCase()
-                .replace(/^@/, "");
-
-
-        const email =
-            $("signupEmail")
-                .value
-                .trim()
-                .toLowerCase();
-
+        const email = $("signupEmail")
+            .value
+            .trim()
+            .toLowerCase();
 
         const password =
             $("signupPassword").value;
 
-
         $("signupError").textContent = "";
 
+        if (!/^[a-z0-9_.-]{3,30}$/.test(username)) {
 
-        if(
-            !/^[a-z0-9_.-]{3,30}$/
-                .test(username)
-        ){
-
-            $("signupError")
-                .textContent =
+            $("signupError").textContent =
                 "Use 3–30 letters, numbers, _, . or -.";
 
             return;
         }
 
 
-        if(
+        if (
             users.some(
-                user =>
-                    user.username === username
+                (user) => user.username === username
             )
-        ){
+        ) {
 
-            $("signupError")
-                .textContent =
+            $("signupError").textContent =
                 "Username already exists.";
 
             return;
         }
 
 
-        if(
+        if (
             users.some(
-                user =>
-                    user.email === email
+                (user) => user.email === email
             )
-        ){
+        ) {
 
-            $("signupError")
-                .textContent =
+            $("signupError").textContent =
                 "Email already registered.";
 
             return;
@@ -2480,16 +2781,13 @@ $("signupForm")
             password
         };
 
-
         users.push(user);
 
         saveUsers();
 
-
         currentUser = user;
 
-        saveCurrent();
-
+        saveCurrentUser();
 
         openApp();
 
@@ -2497,54 +2795,43 @@ $("signupForm")
 );
 
 
-/* =====================================================
+/* =========================================================
    LOGIN
-===================================================== */
+========================================================= */
 
-$("loginForm")
-.addEventListener(
+$("loginForm").addEventListener(
     "submit",
-    event => {
+    (event) => {
 
         event.preventDefault();
 
-
-        const email =
-            $("loginEmail")
-                .value
-                .trim()
-                .toLowerCase();
-
+        const email = $("loginEmail")
+            .value
+            .trim()
+            .toLowerCase();
 
         const password =
             $("loginPassword").value;
 
+        const user = users.find(
+            (item) =>
+                item.email === email &&
+                item.password === password
+        );
 
-        const user =
-            users.find(
-                item =>
-                    item.email === email &&
-                    item.password === password
-            );
+        if (!user) {
 
-
-        if(!user){
-
-            $("loginError")
-                .textContent =
+            $("loginError").textContent =
                 "Invalid email or password.";
 
             return;
         }
 
-
         $("loginError").textContent = "";
-
 
         currentUser = user;
 
-        saveCurrent();
-
+        saveCurrentUser();
 
         openApp();
 
@@ -2552,340 +2839,571 @@ $("loginForm")
 );
 
 
-/* =====================================================
-   APP
-===================================================== */
+/* =========================================================
+   OPEN APPLICATION
+========================================================= */
 
-function openApp(){
+async function openApp() {
 
-    $("auth").style.display =
-        "none";
+    $("authScreen").style.display = "none";
 
-    $("app").style.display =
-        "flex";
-
+    $("app").classList.add("visible");
 
     updateProfile();
 
-    loadTheme();
+    applyTheme();
 
-    loadAppearance();
+    applyWallpaperSettings();
+
+    await initializeWallpaper();
+
+    renderWallpaperOptions();
 
     showView("ai");
 
 }
 
 
-function updateProfile(){
+/* =========================================================
+   PROFILE
+========================================================= */
 
-    if(!currentUser)
+function updateProfile() {
+
+    if (!currentUser) {
         return;
-
+    }
 
     const username =
         "@" + currentUser.username;
-
 
     const initial =
         currentUser.username
             .charAt(0)
             .toUpperCase();
 
-
-    $("miniUsername")
-        .textContent =
+    $("miniUsername").textContent =
         username;
 
-
-    $("miniEmail")
-        .textContent =
+    $("miniEmail").textContent =
         currentUser.email;
 
-
-    $("profileUsername")
-        .textContent =
+    $("profileUsername").textContent =
         username;
 
-
-    $("profileEmail")
-        .textContent =
+    $("profileEmail").textContent =
         currentUser.email;
 
-
-    $("miniAvatar")
-        .textContent =
+    $("miniAvatar").textContent =
         initial;
 
-
-    $("profileAvatar")
-        .textContent =
+    $("profileAvatar").textContent =
         initial;
 
 }
 
 
-function logout(){
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+function logout() {
 
     currentUser = null;
 
     aiHistory = [];
 
-
     localStorage.removeItem(
         "xenvital_currentUser"
     );
 
+    $("app").classList.remove("visible");
 
-    $("app").style.display =
-        "none";
-
-    $("auth").style.display =
-        "flex";
-
+    $("authScreen").style.display = "flex";
 
     $("loginEmail").value = "";
-
     $("loginPassword").value = "";
 
     $("loginError").textContent = "";
-
 
     showLogin();
 
 }
 
 
-/* =====================================================
+/* =========================================================
    VIEW SYSTEM
-===================================================== */
+========================================================= */
 
-function showView(view){
+function showView(view) {
 
     document
         .querySelectorAll(".view")
         .forEach(
-            element =>
-                element.classList
-                    .remove("active")
+            (element) =>
+                element.classList.remove("active")
         );
 
 
     document
-        .querySelectorAll(".nav-btn")
+        .querySelectorAll(".nav-button")
         .forEach(
-            element =>
-                element.classList
-                    .remove("active")
+            (element) =>
+                element.classList.remove("active")
         );
 
 
     document
         .querySelectorAll(".mobile-nav button")
         .forEach(
-            element =>
-                element.classList
-                    .remove("active")
+            (element) =>
+                element.classList.remove("active")
         );
 
 
-    const map = {
+    if (view === "ai") {
 
-        ai: [
-            "aiView",
-            "aiNav",
-            "mobileAi",
-            "XenvitalTech AI"
-        ],
+        $("aiView").classList.add("active");
 
-        profile: [
-            "profileView",
-            "profileNav",
-            "mobileProfile",
-            "My Profile"
-        ],
+        $("desktopAiNav")
+            .classList.add("active");
 
-        settings: [
-            "settingsView",
-            "settingsNav",
-            "mobileSettings",
-            "Settings"
-        ]
+        $("mobileAi")
+            .classList.add("active");
 
-    };
-
-
-    const item =
-        map[view];
-
-
-    if(!item)
-        return;
-
-
-    $(item[0])
-        .classList
-        .add("active");
-
-
-    if($(item[1])){
-
-        $(item[1])
-            .classList
-            .add("active");
-
-    }
-
-
-    if($(item[2])){
-
-        $(item[2])
-            .classList
-            .add("active");
-
-    }
-
-
-    $("pageTitle")
-        .textContent =
-        item[3];
-
-
-    if(view === "ai"){
+        $("pageTitle").textContent =
+            "XenvitalTech AI";
 
         setTimeout(
-            () =>
-                $("aiInput").focus(),
+            () => $("aiInput").focus(),
             100
         );
 
+        return;
+    }
+
+
+    if (view === "profile") {
+
+        $("profileView").classList.add("active");
+
+        $("desktopProfileNav")
+            .classList.add("active");
+
+        $("mobileProfile")
+            .classList.add("active");
+
+        $("pageTitle").textContent =
+            "Profile";
+
+        return;
+    }
+
+
+    if (view === "settings") {
+
+        $("settingsView").classList.add("active");
+
+        $("desktopSettingsNav")
+            .classList.add("active");
+
+        $("mobileSettings")
+            .classList.add("active");
+
+        $("pageTitle").textContent =
+            "Settings";
+
+        updateSettingsUI();
+
     }
 
 }
 
 
-/* =====================================================
-   THEME
-===================================================== */
+/* =========================================================
+   NEW CHAT
+========================================================= */
 
-function toggleTheme(){
-
-    document.body
-        .classList
-        .toggle("dark");
-
-
-    localStorage.setItem(
-        "xenvital_theme",
-        document.body.classList.contains(
-            "dark"
-        )
-        ? "dark"
-        : "light"
-    );
-
-}
-
-
-function loadTheme(){
-
-    document.body
-        .classList
-        .toggle(
-            "dark",
-            localStorage.getItem(
-                "xenvital_theme"
-            ) === "dark"
-        );
-
-}
-
-
-/* =====================================================
-   AI CHAT
-===================================================== */
-
-function newAIChat(){
+function newAIChat() {
 
     aiHistory = [];
 
+    $("messages").innerHTML = `
+        <div class="chat-empty" id="chatEmpty">
 
-    $("aiMessages")
-        .innerHTML = "";
+            <div class="chat-empty-inner">
 
+                <div class="chat-empty-logo">
+                    X
+                </div>
 
-    addAIMessage(
-        "XenvitalTech AI by ShashwatBytes\n\nNew chat started.\n\nHow can I help you today?",
-        "bot"
-    );
+                <h2>
+                    How can I help?
+                </h2>
 
+                <p>
+                    Ask about coding, study, projects,
+                    writing or problem solving.
+                </p>
+
+                <div class="prompt-grid">
+
+                    <button
+                        class="prompt-button"
+                        onclick="usePrompt('Explain this programming concept simply.')"
+                    >
+                        Explain a programming concept
+                    </button>
+
+                    <button
+                        class="prompt-button"
+                        onclick="usePrompt('Help me debug my code.')"
+                    >
+                        Help me debug code
+                    </button>
+
+                    <button
+                        class="prompt-button"
+                        onclick="usePrompt('Create a study plan for my upcoming exam.')"
+                    >
+                        Create a study plan
+                    </button>
+
+                    <button
+                        class="prompt-button"
+                        onclick="usePrompt('Help me plan my software project.')"
+                    >
+                        Plan a software project
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+    `;
 
     showView("ai");
 
 }
 
 
-function aiEnter(event){
+/* =========================================================
+   PROMPT SUGGESTIONS
+========================================================= */
 
-    if(
-        event.key === "Enter" &&
-        !event.shiftKey
-    ){
+function usePrompt(prompt) {
 
-        event.preventDefault();
+    $("aiInput").value = prompt;
 
-        sendAI();
+    autoResizeTextarea();
 
-    }
+    $("aiInput").focus();
 
 }
 
 
-async function sendAI(){
+/* =========================================================
+   TEXTAREA
+========================================================= */
+
+$("aiInput").addEventListener(
+    "input",
+    autoResizeTextarea
+);
+
+
+function autoResizeTextarea() {
+
+    const textarea = $("aiInput");
+
+    textarea.style.height = "auto";
+
+    textarea.style.height =
+        Math.min(
+            textarea.scrollHeight,
+            140
+        ) + "px";
+
+}
+
+
+$("aiInput").addEventListener(
+    "keydown",
+    (event) => {
+
+        if (
+            event.key === "Enter" &&
+            !event.shiftKey
+        ) {
+
+            event.preventDefault();
+
+            sendAI();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   AI MESSAGE
+========================================================= */
+
+function addMessage(
+    text,
+    type,
+    options = {}
+) {
+
+    const emptyState =
+        $("chatEmpty");
+
+    if (emptyState) {
+        emptyState.remove();
+    }
+
+
+    const message =
+        document.createElement("div");
+
+    message.className =
+        "message " + type;
+
+
+    if (options.id) {
+        message.id = options.id;
+    }
+
+
+    const avatar =
+        document.createElement("div");
+
+    avatar.className = "avatar";
+
+
+    if (type === "assistant") {
+
+        avatar.textContent = "X";
+
+    } else {
+
+        avatar.textContent =
+            currentUser?.username
+                ?.charAt(0)
+                ?.toUpperCase() || "U";
+
+    }
+
+
+    const content =
+        document.createElement("div");
+
+    content.className =
+        "message-content";
+
+
+    const label =
+        document.createElement("div");
+
+    label.className =
+        "message-label";
+
+    label.textContent =
+        type === "assistant"
+            ? "XenvitalTech AI"
+            : "You";
+
+
+    const bubble =
+        document.createElement("div");
+
+    bubble.className =
+        "message-bubble";
+
+    bubble.textContent =
+        text;
+
+
+    content.append(
+        label,
+        bubble
+    );
+
+
+    message.append(
+        avatar,
+        content
+    );
+
+
+    $("messages")
+        .appendChild(message);
+
+
+    scrollChatToBottom();
+
+}
+
+
+/* =========================================================
+   TYPING STATE
+========================================================= */
+
+function addTypingMessage() {
+
+    const emptyState =
+        $("chatEmpty");
+
+    if (emptyState) {
+        emptyState.remove();
+    }
+
+
+    const message =
+        document.createElement("div");
+
+    message.className =
+        "message assistant";
+
+    message.id =
+        "typingMessage";
+
+
+    const avatar =
+        document.createElement("div");
+
+    avatar.className =
+        "avatar";
+
+    avatar.textContent =
+        "X";
+
+
+    const content =
+        document.createElement("div");
+
+    content.className =
+        "message-content";
+
+
+    const label =
+        document.createElement("div");
+
+    label.className =
+        "message-label";
+
+    label.textContent =
+        "XenvitalTech AI";
+
+
+    const bubble =
+        document.createElement("div");
+
+    bubble.className =
+        "message-bubble typing-bubble";
+
+    bubble.setAttribute(
+        "aria-label",
+        "Generating response"
+    );
+
+
+    for (let i = 0; i < 3; i++) {
+
+        const dot =
+            document.createElement("span");
+
+        dot.className =
+            "typing-dot";
+
+        bubble.appendChild(dot);
+
+    }
+
+
+    content.append(
+        label,
+        bubble
+    );
+
+    message.append(
+        avatar,
+        content
+    );
+
+    $("messages")
+        .appendChild(message);
+
+
+    scrollChatToBottom();
+
+}
+
+
+/* =========================================================
+   SCROLL
+========================================================= */
+
+function scrollChatToBottom() {
+
+    const scroll =
+        $("chatScroll");
+
+    requestAnimationFrame(
+        () => {
+
+            scroll.scrollTop =
+                scroll.scrollHeight;
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   SEND AI
+========================================================= */
+
+async function sendAI() {
+
+    const input =
+        $("aiInput");
+
+    const sendButton =
+        $("sendButton");
 
     const text =
-        $("aiInput")
-            .value
-            .trim();
+        input.value.trim();
 
 
-    if(
-        !text ||
-        !currentUser
-    )
+    if (!text || !currentUser) {
         return;
+    }
 
 
-    addAIMessage(
+    addMessage(
         text,
         "user"
     );
 
 
-    $("aiInput").value = "";
+    input.value = "";
 
-    $("aiSend").disabled = true;
+    autoResizeTextarea();
 
+    sendButton.disabled = true;
 
-    const typingId =
-        "typing-" +
-        Date.now();
-
-
-    addAIMessage(
-        "Generating response…",
-        "bot",
-        typingId
-    );
+    addTypingMessage();
 
 
-    try{
+    try {
 
         aiHistory.push({
-
-            role:"user",
-
-            content:text
-
+            role: "user",
+            content: text
         });
 
 
@@ -2893,10 +3411,9 @@ async function sendAI(){
             await fetch(
                 "/api/chat",
                 {
+                    method: "POST",
 
-                    method:"POST",
-
-                    headers:{
+                    headers: {
                         "Content-Type":
                             "application/json",
 
@@ -2904,512 +3421,215 @@ async function sendAI(){
                             "application/json"
                     },
 
-                    body:
-                        JSON.stringify({
-
-                            message:text,
-
-                            messages:
-                                aiHistory
-
-                        })
-
+                    body: JSON.stringify({
+                        message: text,
+                        messages: aiHistory
+                    })
                 }
             );
 
 
-        const raw =
-            await response.text();
-
-
         let data = {};
 
-
-        try{
+        try {
 
             data =
-                raw
-                    ? JSON.parse(raw)
-                    : {};
+                await response.json();
 
-        }
-        catch{
+        } catch {
 
-            data = {
-
-                error:
-                    raw ||
-                    "Invalid server response."
-
-            };
+            data = {};
 
         }
 
 
         const typing =
-            $(typingId);
+            $("typingMessage");
 
-
-        if(typing)
+        if (typing) {
             typing.remove();
+        }
 
 
-        if(!response.ok){
+        if (!response.ok) {
+
+            console.error(
+                "Chat API error:",
+                data
+            );
 
             throw new Error(
-
-                data.error ||
-                data.message ||
                 "Unable to connect to the AI service."
-
             );
 
         }
 
 
         const reply =
-
-            data.reply ||
-
-            data.message ||
-
-            data.content ||
-
-            data.choices
-                ?. [0]
-                ?.message
-                ?.content ||
-
+            data?.reply ||
+            data?.message ||
+            data?.content ||
+            data?.choices?.[0]?.message?.content ||
             "";
 
 
-        if(!reply){
+        if (!reply) {
 
             throw new Error(
-                "No AI response was received."
+                "No response was returned."
             );
 
         }
 
 
         aiHistory.push({
-
-            role:"assistant",
-
-            content:reply
-
+            role: "assistant",
+            content: reply
         });
 
 
-        addAIMessage(
+        addMessage(
             reply,
-            "bot"
+            "assistant"
         );
 
 
-    }
-    catch(error){
-
-        const typing =
-            $(typingId);
-
-
-        if(typing)
-            typing.remove();
-
+    } catch (error) {
 
         console.error(
-            "XenvitalTech AI error:",
+            "XenvitalTech chat error:",
             error
         );
 
 
-        addAIMessage(
+        const typing =
+            $("typingMessage");
 
-            "Unable to get a response right now.\n\nPlease try again.",
-
-            "bot"
-
-        );
-
-    }
-    finally{
-
-        $("aiSend")
-            .disabled = false;
-
-
-        $("aiInput").focus();
-
-    }
-
-}
-
-
-function addAIMessage(
-    text,
-    type,
-    id
-){
-
-    const message =
-        document.createElement(
-            "div"
-        );
-
-
-    message.className =
-        "message " + type;
-
-
-    if(id)
-        message.id = id;
-
-
-    const avatar =
-        document.createElement(
-            "div"
-        );
-
-
-    avatar.className =
-        "avatar";
-
-
-    avatar.textContent =
-        type === "bot"
-        ? "X"
-        :
-        (
-            currentUser
-                ?.username
-                ?.charAt(0)
-                .toUpperCase()
-            ||
-            "U"
-        );
-
-
-    const bubble =
-        document.createElement(
-            "div"
-        );
-
-
-    bubble.className =
-        "bubble";
-
-
-    bubble.textContent =
-        text;
-
-
-    message.append(
-        avatar,
-        bubble
-    );
-
-
-    $("aiMessages")
-        .appendChild(message);
-
-
-    requestAnimationFrame(
-        () => {
-
-            $("aiScroll")
-                .scrollTop =
-                $("aiScroll")
-                    .scrollHeight;
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   WALLPAPER SYSTEM
-===================================================== */
-
-const DEFAULT_WALLPAPER = {
-
-    type:"image",
-
-    src:
-        "assets/wallpapers/background-photo.jpg"
-
-};
-
-
-function applyWallpaper(
-    type,
-    src
-){
-
-    const image =
-        $("backgroundImage");
-
-    const video =
-        $("backgroundVideo");
-
-
-    if(type === "video"){
-
-        image.style.opacity = "0";
-
-        video.style.opacity = "1";
-
-        if(
-            video.src !==
-            new URL(
-                src,
-                window.location.href
-            ).href
-        ){
-
-            video.src = src;
-
+        if (typing) {
+            typing.remove();
         }
 
 
-        video
-            .play()
-            .catch(
-                () => {}
-            );
+        addMessage(
+            "Unable to get a response right now. Please try again.",
+            "assistant"
+        );
 
-    }
-    else{
 
-        video.pause();
+    } finally {
 
-        video.removeAttribute("src");
+        sendButton.disabled = false;
 
-        video.load();
-
-        video.style.opacity = "0";
-
-        image.src = src;
-
-        image.style.opacity = "1";
+        input.focus();
 
     }
 
 }
 
 
-/* =====================================================
-   SELECT BUILT-IN WALLPAPER
-===================================================== */
+/* =========================================================
+   THEME
+========================================================= */
 
-function selectWallpaper(card){
+function applyTheme() {
 
-    const type =
-        card.dataset.type;
+    const dark =
+        wallpaperState.theme !== "light";
 
-
-    const src =
-        card.dataset.src;
-
-
-    applyWallpaper(
-        type,
-        src
+    document.body.classList.toggle(
+        "dark",
+        dark
     );
 
+    document.body.classList.toggle(
+        "light",
+        !dark
+    );
+
+    $("darkModeSwitch").checked =
+        dark;
+
+}
+
+
+function toggleTheme() {
+
+    wallpaperState.theme =
+        document.body.classList.contains("dark")
+            ? "light"
+            : "dark";
 
     localStorage.setItem(
-        "xenvital_wallpaper",
-        JSON.stringify({
-
-            type,
-            src
-
-        })
+        "xenvital_theme",
+        wallpaperState.theme
     );
 
-
-    document
-        .querySelectorAll(
-            ".wallpaper-card"
-        )
-        .forEach(
-            item =>
-                item.classList
-                    .remove("selected")
-        );
-
-
-    card.classList.add(
-        "selected"
-    );
+    applyTheme();
 
 }
 
 
-/* =====================================================
-   CUSTOM WALLPAPER
-===================================================== */
-
-$("wallpaperUpload")
-.addEventListener(
+$("darkModeSwitch").addEventListener(
     "change",
-    async event => {
+    () => {
 
-        const file =
-            event.target.files?.[0];
+        wallpaperState.theme =
+            $("darkModeSwitch").checked
+                ? "dark"
+                : "light";
 
+        localStorage.setItem(
+            "xenvital_theme",
+            wallpaperState.theme
+        );
 
-        if(!file)
-            return;
-
-
-        const isImage =
-            file.type.startsWith(
-                "image/"
-            );
-
-
-        const isVideo =
-            file.type.startsWith(
-                "video/"
-            );
-
-
-        if(
-            !isImage &&
-            !isVideo
-        ){
-
-            alert(
-                "Please select an image or video."
-            );
-
-            return;
-
-        }
-
-
-        const maxSize =
-            isVideo
-            ? 100 * 1024 * 1024
-            : 20 * 1024 * 1024;
-
-
-        if(file.size > maxSize){
-
-            alert(
-                isVideo
-                ? "Video must be smaller than 100 MB."
-                : "Image must be smaller than 20 MB."
-            );
-
-            return;
-
-        }
-
-
-        try{
-
-            const id =
-                await saveCustomWallpaper(
-                    file
-                );
-
-
-            const url =
-                URL.createObjectURL(
-                    file
-                );
-
-
-            applyWallpaper(
-                isVideo
-                ? "video"
-                : "image",
-                url
-            );
-
-
-            localStorage.setItem(
-                "xenvital_wallpaper",
-                JSON.stringify({
-
-                    type:
-                        isVideo
-                        ? "custom-video"
-                        : "custom-image",
-
-                    id
-
-                })
-            );
-
-
-            document
-                .querySelectorAll(
-                    ".wallpaper-card"
-                )
-                .forEach(
-                    item =>
-                        item.classList
-                            .remove("selected")
-                );
-
-
-        }
-        catch(error){
-
-            console.error(
-                "Custom wallpaper error:",
-                error
-            );
-
-
-            alert(
-                "Unable to save this wallpaper."
-            );
-
-        }
-
-
-        event.target.value = "";
+        applyTheme();
 
     }
 );
 
 
-/* =====================================================
-   INDEXEDDB CUSTOM WALLPAPERS
-===================================================== */
+/* =========================================================
+   WALLPAPER DATABASE
+========================================================= */
 
-function openWallpaperDB(){
+const DB_NAME =
+    "xenvital_wallpaper_db";
+
+const DB_VERSION = 1;
+
+const STORE_NAME =
+    "wallpapers";
+
+let wallpaperDB = null;
+
+
+function openWallpaperDB() {
 
     return new Promise(
-        (resolve,reject) => {
+        (resolve, reject) => {
 
             const request =
                 indexedDB.open(
-                    "XenvitalTechWallpapers",
-                    1
+                    DB_NAME,
+                    DB_VERSION
                 );
 
 
             request.onupgradeneeded =
-                event => {
+                () => {
 
                     const db =
-                        event.target.result;
+                        request.result;
 
-
-                    if(
-                        !db.objectStoreNames
-                            .contains("wallpapers")
-                    ){
+                    if (
+                        !db.objectStoreNames.contains(
+                            STORE_NAME
+                        )
+                    ) {
 
                         db.createObjectStore(
-                            "wallpapers"
+                            STORE_NAME
                         );
 
                     }
@@ -3418,17 +3638,22 @@ function openWallpaperDB(){
 
 
             request.onsuccess =
-                () =>
+                () => {
+
+                    wallpaperDB =
+                        request.result;
+
                     resolve(
-                        request.result
+                        wallpaperDB
                     );
+
+                };
 
 
             request.onerror =
-                () =>
-                    reject(
-                        request.error
-                    );
+                () => reject(
+                    request.error
+                );
 
         }
     );
@@ -3436,476 +3661,1028 @@ function openWallpaperDB(){
 }
 
 
-async function saveCustomWallpaper(
+function saveCustomWallpaper(
     file
-){
-
-    const db =
-        await openWallpaperDB();
-
+) {
 
     return new Promise(
-        (resolve,reject) => {
+        async (resolve, reject) => {
 
-            const id =
-                "custom_" +
-                Date.now();
+            try {
 
-
-            const transaction =
-                db.transaction(
-                    "wallpapers",
-                    "readwrite"
-                );
+                const db =
+                    wallpaperDB ||
+                    await openWallpaperDB();
 
 
-            transaction
-                .objectStore(
-                    "wallpapers"
-                )
-                .put(
+                const transaction =
+                    db.transaction(
+                        STORE_NAME,
+                        "readwrite"
+                    );
+
+
+                const store =
+                    transaction.objectStore(
+                        STORE_NAME
+                    );
+
+
+                store.put(
                     {
-                        blob:file,
-                        type:file.type,
-                        name:file.name
+                        name: file.name,
+                        type: file.type,
+                        blob: file
                     },
-                    id
+                    "custom"
                 );
 
 
-            transaction.oncomplete =
-                () =>
-                    resolve(id);
+                transaction.oncomplete =
+                    () => resolve();
 
 
-            transaction.onerror =
-                () =>
-                    reject(
+                transaction.onerror =
+                    () => reject(
                         transaction.error
                     );
 
+            } catch (error) {
+
+                reject(error);
+
+            }
+
         }
     );
 
 }
 
 
-async function getCustomWallpaper(
-    id
-){
-
-    const db =
-        await openWallpaperDB();
-
+function getCustomWallpaper() {
 
     return new Promise(
-        (resolve,reject) => {
+        async (resolve) => {
 
-            const transaction =
-                db.transaction(
-                    "wallpapers",
-                    "readonly"
-                );
+            try {
+
+                const db =
+                    wallpaperDB ||
+                    await openWallpaperDB();
 
 
-            const request =
+                const transaction =
+                    db.transaction(
+                        STORE_NAME,
+                        "readonly"
+                    );
+
+
+                const store =
+                    transaction.objectStore(
+                        STORE_NAME
+                    );
+
+
+                const request =
+                    store.get("custom");
+
+
+                request.onsuccess =
+                    () => {
+
+                        resolve(
+                            request.result || null
+                        );
+
+                    };
+
+
+                request.onerror =
+                    () => resolve(null);
+
+            } catch {
+
+                resolve(null);
+
+            }
+
+        }
+    );
+
+}
+
+
+function deleteCustomWallpaperDB() {
+
+    return new Promise(
+        async (resolve) => {
+
+            try {
+
+                const db =
+                    wallpaperDB ||
+                    await openWallpaperDB();
+
+
+                const transaction =
+                    db.transaction(
+                        STORE_NAME,
+                        "readwrite"
+                    );
+
+
                 transaction
-                    .objectStore(
-                        "wallpapers"
+                    .objectStore(STORE_NAME)
+                    .delete("custom");
+
+
+                transaction.oncomplete =
+                    () => resolve();
+
+                transaction.onerror =
+                    () => resolve();
+
+            } catch {
+
+                resolve();
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   INITIALIZE WALLPAPER
+========================================================= */
+
+async function initializeWallpaper() {
+
+    try {
+
+        await openWallpaperDB();
+
+    } catch (error) {
+
+        console.warn(
+            "Wallpaper storage unavailable:",
+            error
+        );
+
+    }
+
+
+    await applySelectedWallpaper();
+
+    updateSettingsUI();
+
+}
+
+
+/* =========================================================
+   APPLY WALLPAPER
+========================================================= */
+
+async function applySelectedWallpaper() {
+
+    const video =
+        $("backgroundVideo");
+
+    const image =
+        $("backgroundImage");
+
+
+    video.pause();
+
+    video.removeAttribute("src");
+
+    video.load();
+
+    video.classList.add(
+        "background-hidden"
+    );
+
+    image.removeAttribute("src");
+
+    image.classList.add(
+        "background-hidden"
+    );
+
+
+    /* CUSTOM */
+
+    if (
+        wallpaperState.selected === "custom"
+    ) {
+
+        const custom =
+            await getCustomWallpaper();
+
+
+        if (!custom?.blob) {
+
+            wallpaperState.selected =
+                "wallpaper1";
+
+            localStorage.setItem(
+                "xenvital_wallpaper",
+                "wallpaper1"
+            );
+
+            return applySelectedWallpaper();
+
+        }
+
+
+        const url =
+            URL.createObjectURL(
+                custom.blob
+            );
+
+
+        if (
+            custom.type.startsWith("video/")
+        ) {
+
+            video.src = url;
+
+            video.classList.remove(
+                "background-hidden"
+            );
+
+            video.load();
+
+            const playResult =
+                video.play();
+
+            if (
+                playResult &&
+                typeof playResult.catch === "function"
+            ) {
+
+                playResult.catch(
+                    () => {}
+                );
+
+            }
+
+        } else {
+
+            image.src = url;
+
+            image.classList.remove(
+                "background-hidden"
+            );
+
+        }
+
+        return;
+    }
+
+
+    /* DEFAULT VIDEO */
+
+    const selected =
+        WALLPAPERS.find(
+            (item) =>
+                item.id ===
+                wallpaperState.selected
+        ) ||
+        WALLPAPERS[0];
+
+
+    video.src =
+        selected.src;
+
+    video.classList.remove(
+        "background-hidden"
+    );
+
+    video.load();
+
+
+    const playResult =
+        video.play();
+
+    if (
+        playResult &&
+        typeof playResult.catch === "function"
+    ) {
+
+        playResult.catch(
+            () => {}
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   VIDEO ERROR HANDLING
+========================================================= */
+
+$("backgroundVideo").addEventListener(
+    "error",
+    () => {
+
+        console.warn(
+            "Wallpaper video could not be loaded."
+        );
+
+        $("backgroundVideo")
+            .classList.add(
+                "background-hidden"
+            );
+
+    }
+);
+
+
+/* =========================================================
+   WALLPAPER OPTIONS UI
+========================================================= */
+
+function renderWallpaperOptions() {
+
+    const grid =
+        $("wallpaperGrid");
+
+    grid.innerHTML = "";
+
+
+    WALLPAPERS.forEach(
+        (wallpaper) => {
+
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+            button.type =
+                "button";
+
+            button.className =
+                "wallpaper-option";
+
+
+            if (
+                wallpaperState.selected ===
+                wallpaper.id
+            ) {
+
+                button.classList.add(
+                    "selected"
+                );
+
+            }
+
+
+            button.dataset.id =
+                wallpaper.id;
+
+
+            const video =
+                document.createElement(
+                    "video"
+                );
+
+            video.src =
+                wallpaper.src;
+
+            video.muted = true;
+            video.loop = true;
+            video.autoplay = true;
+            video.playsInline = true;
+            video.preload = "metadata";
+
+
+            const name =
+                document.createElement(
+                    "div"
+                );
+
+            name.className =
+                "wallpaper-name";
+
+            name.textContent =
+                wallpaper.name;
+
+
+            const check =
+                document.createElement(
+                    "div"
+                );
+
+            check.className =
+                "selected-check";
+
+            check.textContent =
+                "✓";
+
+
+            button.append(
+                video,
+                name,
+                check
+            );
+
+
+            button.addEventListener(
+                "click",
+                () =>
+                    selectWallpaper(
+                        wallpaper.id
                     )
-                    .get(id);
+            );
 
 
-            request.onsuccess =
-                () =>
-                    resolve(
-                        request.result
-                    );
+            grid.appendChild(
+                button
+            );
 
 
-            request.onerror =
-                () =>
-                    reject(
-                        request.error
-                    );
+            const play =
+                video.play();
+
+            if (
+                play &&
+                typeof play.catch === "function"
+            ) {
+
+                play.catch(
+                    () => {}
+                );
+
+            }
 
         }
+    );
+
+
+    if (
+        wallpaperState.selected ===
+        "custom"
+    ) {
+
+        renderCustomSelectedState();
+
+    }
+
+}
+
+
+function renderCustomSelectedState() {
+
+    const grid =
+        $("wallpaperGrid");
+
+    const custom =
+        document.createElement(
+            "button"
+        );
+
+    custom.type =
+        "button";
+
+    custom.className =
+        "wallpaper-option selected";
+
+
+    const label =
+        document.createElement(
+            "div"
+        );
+
+    label.className =
+        "wallpaper-name";
+
+    label.textContent =
+        "Custom";
+
+
+    const check =
+        document.createElement(
+            "div"
+        );
+
+    check.className =
+        "selected-check";
+
+    check.textContent =
+        "✓";
+
+
+    custom.append(
+        label,
+        check
+    );
+
+
+    custom.addEventListener(
+        "click",
+        () =>
+            selectWallpaper(
+                "custom"
+            )
+    );
+
+
+    grid.appendChild(
+        custom
     );
 
 }
 
 
-/* =====================================================
-   LOAD SAVED WALLPAPER
-===================================================== */
+/* =========================================================
+   SELECT WALLPAPER
+========================================================= */
 
-async function loadAppearance(){
+async function selectWallpaper(
+    id
+) {
 
-    const saved =
-        JSON.parse(
-            localStorage.getItem(
-                "xenvital_wallpaper"
-            ) || "null"
-        );
+    if (
+        id === "custom"
+    ) {
 
+        const custom =
+            await getCustomWallpaper();
 
-    if(!saved){
+        if (!custom) {
 
-        applyWallpaper(
-            DEFAULT_WALLPAPER.type,
-            DEFAULT_WALLPAPER.src
-        );
+            showToast(
+                "No custom wallpaper",
+                "Choose an image or video first."
+            );
 
-
-        markSelectedWallpaper(
-            DEFAULT_WALLPAPER.src
-        );
-
-    }
-    else if(
-        saved.type ===
-            "custom-image" ||
-        saved.type ===
-            "custom-video"
-    ){
-
-        try{
-
-            const data =
-                await getCustomWallpaper(
-                    saved.id
-                );
-
-
-            if(data?.blob){
-
-                const url =
-                    URL.createObjectURL(
-                        data.blob
-                    );
-
-
-                applyWallpaper(
-                    saved.type ===
-                        "custom-video"
-                    ? "video"
-                    : "image",
-                    url
-                );
-
-            }
-            else{
-
-                resetWallpaper();
-
-            }
-
-        }
-        catch{
-
-            resetWallpaper();
-
+            return;
         }
 
     }
-    else{
-
-        applyWallpaper(
-            saved.type,
-            saved.src
-        );
 
 
-        markSelectedWallpaper(
-            saved.src
-        );
+    wallpaperState.selected =
+        id;
 
-    }
-
-
-    loadBlurSettings();
-
-}
-
-
-/* =====================================================
-   MARK SELECTED WALLPAPER
-===================================================== */
-
-function markSelectedWallpaper(
-    src
-){
-
-    document
-        .querySelectorAll(
-            ".wallpaper-card"
-        )
-        .forEach(
-            card => {
-
-                card.classList.toggle(
-                    "selected",
-                    card.dataset.src === src
-                );
-
-            }
-        );
-
-}
-
-
-/* =====================================================
-   BLUR
-===================================================== */
-
-function toggleBackgroundBlur(){
-
-    const toggle =
-        $("blurToggle");
-
-
-    const enabled =
-        !toggle.classList.contains(
-            "on"
-        );
-
-
-    toggle.classList.toggle(
-        "on",
-        enabled
+    localStorage.setItem(
+        "xenvital_wallpaper",
+        id
     );
+
+
+    await applySelectedWallpaper();
+
+    renderWallpaperOptions();
+
+    updateSettingsUI();
+
+}
+
+
+/* =========================================================
+   CUSTOM FILE
+========================================================= */
+
+$("customWallpaperInput")
+    .addEventListener(
+        "change",
+        async (event) => {
+
+            const file =
+                event.target.files?.[0];
+
+
+            if (!file) {
+                return;
+            }
+
+
+            const allowed =
+                file.type.startsWith("image/") ||
+                file.type === "video/mp4" ||
+                file.type === "video/webm";
+
+
+            if (!allowed) {
+
+                showToast(
+                    "Unsupported file",
+                    "Choose an image, MP4 or WebM video."
+                );
+
+                event.target.value = "";
+
+                return;
+            }
+
+
+            try {
+
+                await saveCustomWallpaper(
+                    file
+                );
+
+
+                wallpaperState.selected =
+                    "custom";
+
+
+                localStorage.setItem(
+                    "xenvital_wallpaper",
+                    "custom"
+                );
+
+
+                await applySelectedWallpaper();
+
+                renderWallpaperOptions();
+
+                updateSettingsUI();
+
+
+                showToast(
+                    "Wallpaper updated",
+                    "Your custom wallpaper is now active."
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "Custom wallpaper error:",
+                    error
+                );
+
+
+                showToast(
+                    "Could not save wallpaper",
+                    "Please try another file."
+                );
+
+            }
+
+
+            event.target.value = "";
+
+        }
+    );
+
+
+/* =========================================================
+   REMOVE CUSTOM WALLPAPER
+========================================================= */
+
+async function removeCustomWallpaper() {
+
+    await deleteCustomWallpaperDB();
+
+
+    wallpaperState.selected =
+        "wallpaper1";
 
 
     localStorage.setItem(
-        "xenvital_blur_enabled",
-        enabled
-        ? "1"
-        : "0"
+        "xenvital_wallpaper",
+        "wallpaper1"
     );
+
+
+    await applySelectedWallpaper();
+
+    renderWallpaperOptions();
+
+    updateSettingsUI();
+
+
+    showToast(
+        "Custom wallpaper removed",
+        "Motion 01 is active."
+    );
+
+}
+
+
+/* =========================================================
+   BLUR
+========================================================= */
+
+function applyBlur() {
+
+    const blur =
+        wallpaperState.blurEnabled
+            ? wallpaperState.blur
+            : 0;
+
+
+    document.documentElement.style.setProperty(
+        "--wallpaper-blur",
+        blur + "px"
+    );
+
+}
+
+
+$("blurSwitch").addEventListener(
+    "change",
+    () => {
+
+        wallpaperState.blurEnabled =
+            $("blurSwitch").checked;
+
+
+        localStorage.setItem(
+            "xenvital_blur_enabled",
+            String(
+                wallpaperState.blurEnabled
+            )
+        );
+
+
+        applyBlur();
+
+        updateSettingsUI();
+
+    }
+);
+
+
+$("blurRange").addEventListener(
+    "input",
+    () => {
+
+        wallpaperState.blur =
+            Number(
+                $("blurRange").value
+            );
+
+
+        localStorage.setItem(
+            "xenvital_blur",
+            String(
+                wallpaperState.blur
+            )
+        );
+
+
+        applyBlur();
+
+        updateSettingsUI();
+
+    }
+);
+
+
+/* =========================================================
+   OVERLAY
+========================================================= */
+
+function applyOverlay() {
+
+    const opacity =
+        wallpaperState.overlay / 100;
+
+
+    document.documentElement.style.setProperty(
+        "--wallpaper-overlay",
+        document.body.classList.contains("light")
+            ? `rgba(245,248,252,${opacity})`
+            : `rgba(5,9,16,${opacity})`
+    );
+
+}
+
+
+$("overlayRange").addEventListener(
+    "input",
+    () => {
+
+        wallpaperState.overlay =
+            Number(
+                $("overlayRange").value
+            );
+
+
+        localStorage.setItem(
+            "xenvital_overlay",
+            String(
+                wallpaperState.overlay
+            )
+        );
+
+
+        applyOverlay();
+
+        updateSettingsUI();
+
+    }
+);
+
+
+/* =========================================================
+   APPLY WALLPAPER SETTINGS
+========================================================= */
+
+function applyWallpaperSettings() {
+
+    applyBlur();
+
+    applyOverlay();
+
+}
+
+
+/* =========================================================
+   SETTINGS UI
+========================================================= */
+
+async function updateSettingsUI() {
+
+    $("darkModeSwitch").checked =
+        document.body.classList.contains("dark");
+
+
+    $("blurSwitch").checked =
+        wallpaperState.blurEnabled;
+
+
+    $("blurRange").value =
+        wallpaperState.blur;
+
+
+    $("blurValue").textContent =
+        wallpaperState.blur + "px";
+
+
+    $("overlayRange").value =
+        wallpaperState.overlay;
+
+
+    $("overlayValue").textContent =
+        wallpaperState.overlay + "%";
+
+
+    const custom =
+        await getCustomWallpaper();
+
+
+    $("removeCustomWallpaper")
+        .classList.toggle(
+            "visible",
+            Boolean(custom)
+        );
 
 
     applyBlur();
 
+    applyOverlay();
+
 }
 
 
-function changeBlur(
-    value
-){
+/* =========================================================
+   STARTUP
+========================================================= */
 
-    document.documentElement
-        .style
-        .setProperty(
-            "--blur",
-            value + "px"
+async function initializeApp() {
+
+    applyTheme();
+
+    applyWallpaperSettings();
+
+
+    if (currentUser) {
+
+        await openApp();
+
+    } else {
+
+        $("authScreen").style.display =
+            "flex";
+
+        $("app").classList.remove(
+            "visible"
         );
 
+    }
 
-    $("blurValue")
-        .textContent =
-        value + "px";
+}
 
 
-    localStorage.setItem(
-        "xenvital_blur_amount",
-        value
+initializeApp();
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+let toastTimer = null;
+
+
+function showToast(
+    title,
+    message
+) {
+
+    const toast =
+        $("toast");
+
+
+    $("toastTitle").textContent =
+        title;
+
+    $("toastMessage").textContent =
+        message;
+
+
+    toast.classList.remove(
+        "hidden"
     );
 
-}
+
+    clearTimeout(
+        toastTimer
+    );
 
 
-function applyBlur(){
+    toastTimer =
+        setTimeout(
+            () => {
 
-    const enabled =
-        localStorage.getItem(
-            "xenvital_blur_enabled"
-        ) !== "0";
+                toast.classList.add(
+                    "hidden"
+                );
 
-
-    const amount =
-        localStorage.getItem(
-            "xenvital_blur_amount"
-        ) || "18";
-
-
-    const finalBlur =
-        enabled
-        ? amount
-        : "0";
-
-
-    document.documentElement
-        .style
-        .setProperty(
-            "--blur",
-            finalBlur + "px"
-        );
-
-
-    $("blurToggle")
-        .classList
-        .toggle(
-            "on",
-            enabled
-        );
-
-
-    $("blurRange")
-        .value =
-        amount;
-
-
-    $("blurValue")
-        .textContent =
-        amount + "px";
-
-
-    $("blurControls")
-        .classList
-        .toggle(
-            "hidden",
-            !enabled
-        );
-
-}
-
-
-/* =====================================================
-   LOAD BLUR SETTINGS
-===================================================== */
-
-function loadBlurSettings(){
-
-    const enabled =
-        localStorage.getItem(
-            "xenvital_blur_enabled"
-        ) !== "0";
-
-
-    const amount =
-        localStorage.getItem(
-            "xenvital_blur_amount"
-        ) || "18";
-
-
-    $("blurToggle")
-        .classList
-        .toggle(
-            "on",
-            enabled
-        );
-
-
-    $("blurRange")
-        .value =
-        amount;
-
-
-    $("blurValue")
-        .textContent =
-        amount + "px";
-
-
-    $("blurControls")
-        .classList
-        .toggle(
-            "hidden",
-            !enabled
-        );
-
-
-    document.documentElement
-        .style
-        .setProperty(
-            "--blur",
-            enabled
-            ? amount + "px"
-            : "0px"
+            },
+            3500
         );
 
 }
 
 
-/* =====================================================
-   RESET APPEARANCE
-===================================================== */
+/* =========================================================
+   VISIBILITY / VIDEO PLAYBACK
+========================================================= */
 
-function resetWallpaper(){
+document.addEventListener(
+    "visibilitychange",
+    () => {
 
-    localStorage.removeItem(
-        "xenvital_wallpaper"
-    );
+        if (
+            document.hidden
+        ) {
 
+            $("backgroundVideo")
+                ?.pause();
 
-    applyWallpaper(
-        DEFAULT_WALLPAPER.type,
-        DEFAULT_WALLPAPER.src
-    );
+        } else {
 
-
-    markSelectedWallpaper(
-        DEFAULT_WALLPAPER.src
-    );
-
-}
+            const video =
+                $("backgroundVideo");
 
 
-function resetAppearance(){
+            if (
+                video &&
+                !video.classList.contains(
+                    "background-hidden"
+                )
+            ) {
 
-    localStorage.removeItem(
-        "xenvital_wallpaper"
-    );
+                const play =
+                    video.play();
 
-    localStorage.setItem(
-        "xenvital_blur_enabled",
-        "1"
-    );
+                if (
+                    play &&
+                    typeof play.catch === "function"
+                ) {
 
-    localStorage.setItem(
-        "xenvital_blur_amount",
-        "18"
-    );
+                    play.catch(
+                        () => {}
+                    );
 
+                }
 
-    applyWallpaper(
-        "image",
-        "assets/wallpapers/background-photo.jpg"
-    );
+            }
 
+        }
 
-    markSelectedWallpaper(
-        "assets/wallpapers/background-photo.jpg"
-    );
-
-
-    loadBlurSettings();
-
-}
+    }
+);
 
 
-/* =====================================================
-   START APPLICATION
-===================================================== */
+/* =========================================================
+   SAFETY: PREVENT DRAGGING BACKGROUND
+========================================================= */
 
-if(currentUser){
+$("backgroundImage").draggable =
+    false;
 
-    openApp();
-
-}
-else{
-
-    $("auth").style.display =
-        "flex";
-
-    $("app").style.display =
-        "none";
-
-
-    loadTheme();
-
-    loadAppearance();
-
-}
+$("backgroundVideo").draggable =
+    false;
 
 </script>
 
