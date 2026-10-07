@@ -1,1204 +1,928 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#0f172a">
-
-<title>XenvitalTech AI</title>
-
-<style>
-:root{
-    --bg:#eef2f7;
-    --surface:rgba(255,255,255,.76);
-    --surface2:rgba(255,255,255,.9);
-    --text:#172033;
-    --muted:#718096;
-    --border:rgba(100,116,139,.24);
-    --primary:#315bdc;
-    --primary2:#264fc7;
-    --assistant:rgba(255,255,255,.82);
-    --shadow:0 12px 35px rgba(15,23,42,.12);
-    --blur:18px;
-}
-
-body.dark{
-    --bg:#080c14;
-    --surface:rgba(15,23,42,.76);
-    --surface2:rgba(15,23,42,.9);
-    --text:#f1f5f9;
-    --muted:#94a3b8;
-    --border:rgba(148,163,184,.18);
-    --assistant:rgba(15,23,42,.82);
-    --shadow:0 15px 40px rgba(0,0,0,.3);
-}
-
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
-
-html,body{
-    width:100%;
-    height:100%;
-    overflow:hidden;
-}
-
-body{
-    font-family:
-        Inter,
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
-
-    background:var(--bg);
-    color:var(--text);
-    -webkit-font-smoothing:antialiased;
-}
-
-
-/* =========================================================
-   PERMANENT BACKGROUND
-========================================================= */
-
-#background{
-    position:fixed;
-    inset:0;
-    z-index:-10;
-    overflow:hidden;
-    background:#111827;
-}
-
-#backgroundVideo{
-    position:absolute;
-    inset:-2%;
-    width:104%;
-    height:104%;
-    object-fit:cover;
-
-    opacity:1;
-
-    filter:
-        blur(18px)
-        brightness(.82)
-        saturate(.9);
-
-    transform:scale(1.04);
-
-    transition:
-        filter .25s ease,
-        opacity .25s ease;
-}
-
-#backgroundOverlay{
-    position:absolute;
-    inset:0;
-
-    background:
-        linear-gradient(
-            180deg,
-            rgba(255,255,255,.38),
-            rgba(255,255,255,.25)
-        );
-
-    pointer-events:none;
-}
-
-body.dark #backgroundOverlay{
-    background:
-        rgba(4,8,18,.55);
-}
-
-body.wallpaper-hidden #backgroundVideo{
-    opacity:0;
-}
-
-body.wallpaper-hidden #backgroundOverlay{
-    background:var(--bg);
-}
-
-
-/* =========================================================
-   AUTH
-========================================================= */
-
-#authScreen{
-    width:100%;
-    height:100dvh;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    padding:20px;
-}
-
-.auth-card{
-    width:min(410px,100%);
-
-    padding:28px;
-
-    border:1px solid var(--border);
-    border-radius:22px;
-
-    background:var(--surface2);
-
-    backdrop-filter:blur(var(--blur));
-    -webkit-backdrop-filter:blur(var(--blur));
-
-    box-shadow:var(--shadow);
-}
-
-.auth-logo{
-    width:58px;
-    height:58px;
-
-    margin:0 auto 15px;
-
-    display:grid;
-    place-items:center;
-
-    border-radius:15px;
-
-    background:var(--primary);
-    color:#fff;
-
-    font-size:22px;
-    font-weight:800;
-}
-
-.auth-title{
-    text-align:center;
-
-    font-size:24px;
-    font-weight:750;
-}
-
-.auth-subtitle{
-    margin-top:6px;
-
-    text-align:center;
-
-    color:var(--muted);
-    font-size:13px;
-}
-
-.auth-form{
-    display:none;
-    margin-top:25px;
-}
-
-.auth-form.active{
-    display:block;
-}
-
-.field{
-    margin-bottom:15px;
-}
-
-.field label{
-    display:block;
-    margin-bottom:7px;
-
-    font-size:12px;
-    font-weight:650;
-}
-
-.input{
-    width:100%;
-    height:46px;
-
-    padding:0 13px;
-
-    border:1px solid var(--border);
-    border-radius:12px;
-
-    outline:none;
-
-    background:var(--surface);
-    color:var(--text);
-
-    font-size:14px;
-}
-
-.input:focus{
-    border-color:var(--primary);
-
-    box-shadow:
-        0 0 0 3px rgba(49,91,220,.12);
-}
-
-.primary-button{
-    width:100%;
-    height:46px;
-
-    border:0;
-    border-radius:12px;
-
-    background:var(--primary);
-    color:white;
-
-    font-weight:700;
-}
-
-.auth-error{
-    min-height:18px;
-
-    margin:6px 0;
-
-    color:#dc3d4b;
-    font-size:12px;
-}
-
-.auth-switch{
-    margin-top:17px;
-
-    text-align:center;
-
-    color:var(--muted);
-    font-size:12px;
-}
-
-.auth-switch button{
-    border:0;
-    background:none;
-
-    color:var(--primary);
-    font-weight:700;
-}
-
-
-/* =========================================================
-   APP
-========================================================= */
-
-#app{
-    display:none;
-
-    width:100%;
-    height:100dvh;
-}
-
-#app.visible{
-    display:flex;
-}
-
-
-/* =========================================================
-   SIDEBAR
-========================================================= */
-
-.sidebar{
-    width:245px;
-    flex:0 0 245px;
-
-    display:flex;
-    flex-direction:column;
-
-    padding:18px;
-
-    background:var(--surface);
-
-    border-right:1px solid var(--border);
-
-    backdrop-filter:blur(var(--blur));
-    -webkit-backdrop-filter:blur(var(--blur));
-}
-
-.brand{
-    display:flex;
-    align-items:center;
-    gap:10px;
-
-    margin-bottom:20px;
-}
-
-.brand-logo{
-    width:40px;
-    height:40px;
-
-    display:grid;
-    place-items:center;
-
-    border-radius:11px;
-
-    background:var(--primary);
-    color:white;
-
-    font-weight:800;
-}
-
-.brand-name{
-    font-size:15px;
-    font-weight:750;
-}
-
-.brand-sub{
-    margin-top:2px;
-
-    color:var(--muted);
-    font-size:10px;
-}
-
-.new-chat{
-    width:100%;
-    height:42px;
-
-    border:0;
-    border-radius:12px;
-
-    background:var(--primary);
-    color:white;
-
-    font-size:13px;
-    font-weight:700;
-}
-
-.sidebar-title{
-    margin:25px 5px 8px;
-
-    color:var(--muted);
-
-    font-size:10px;
-    font-weight:750;
-
-    text-transform:uppercase;
-    letter-spacing:.08em;
-}
-
-.nav{
-    width:100%;
-    min-height:42px;
-
-    display:flex;
-    align-items:center;
-
-    gap:10px;
-
-    margin-bottom:4px;
-    padding:9px 11px;
-
-    border:0;
-    border-radius:11px;
-
-    background:transparent;
-
-    color:var(--muted);
-
-    text-align:left;
-    font-size:13px;
-}
-
-.nav.active{
-    background:rgba(49,91,220,.11);
-    color:var(--primary);
-    font-weight:700;
-}
-
-.sidebar-spacer{
-    flex:1;
-}
-
-.sidebar-user{
-    display:flex;
-    align-items:center;
-    gap:9px;
-
-    padding:12px 5px;
-
-    border-top:1px solid var(--border);
-}
-
-.avatar{
-    width:34px;
-    height:34px;
-
-    display:grid;
-    place-items:center;
-
-    border-radius:50%;
-
-    background:var(--primary);
-    color:#fff;
-
-    font-size:12px;
-    font-weight:800;
-}
-
-.user-name{
-    font-size:12px;
-    font-weight:700;
-}
-
-.user-email{
-    margin-top:2px;
-
-    color:var(--muted);
-    font-size:10px;
-}
-
-.logout{
-    height:37px;
-
-    border:0;
-    border-radius:10px;
-
-    background:transparent;
-
-    color:#dc3d4b;
-
-    text-align:left;
-    padding:0 10px;
-
-    font-size:12px;
-}
-
-
-/* =========================================================
-   MAIN
-========================================================= */
-
-.main{
-    min-width:0;
-    flex:1;
-
-    height:100%;
-
-    display:flex;
-    flex-direction:column;
-
-    overflow:hidden;
-}
-
-.topbar{
-    height:68px;
-    flex:0 0 68px;
-
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-
-    padding:0 22px;
-
-    background:var(--surface);
-
-    border-bottom:1px solid var(--border);
-
-    backdrop-filter:blur(var(--blur));
-    -webkit-backdrop-filter:blur(var(--blur));
-}
-
-.title{
-    font-size:16px;
-    font-weight:750;
-}
-
-.theme{
-    width:40px;
-    height:40px;
-
-    border:1px solid var(--border);
-    border-radius:12px;
-
-    background:var(--surface);
-
-    color:var(--text);
-
-    font-size:16px;
-}
-
-
-/* =========================================================
-   VIEWS
-========================================================= */
-
-.view{
-    display:none;
-
-    min-height:0;
-    flex:1;
-
-    overflow:hidden;
-}
-
-.view.active{
-    display:flex;
-    flex-direction:column;
-}
-
-
-/* =========================================================
-   CHAT
-========================================================= */
-
-.chat-scroll{
-    flex:1;
-    min-height:0;
-
-    overflow-y:auto;
-
-    padding:
-        28px
-        20px
-        150px;
-}
-
-.messages{
-    width:min(900px,100%);
-    margin:auto;
-}
-
-.empty{
-    min-height:100%;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    text-align:center;
-}
-
-.empty-inner{
-    width:min(560px,100%);
-}
-
-.empty-logo{
-    width:50px;
-    height:50px;
-
-    margin:0 auto 15px;
-
-    display:grid;
-    place-items:center;
-
-    border-radius:14px;
-
-    background:var(--primary);
-    color:white;
-
-    font-weight:800;
-}
-
-.empty h2{
-    font-size:27px;
-}
-
-.empty p{
-    margin-top:8px;
-
-    color:var(--muted);
-    font-size:13px;
-}
-
-.suggestions{
-    margin-top:22px;
-
-    display:flex;
-    flex-wrap:wrap;
-
-    justify-content:center;
-
-    gap:8px;
-}
-
-.suggestion{
-    min-height:38px;
-
-    padding:8px 13px;
-
-    border:1px solid var(--border);
-    border-radius:10px;
-
-    background:var(--surface);
-
-    color:var(--text);
-
-    font-size:12px;
-}
-
-.message{
-    display:flex;
-    gap:9px;
-
-    margin-bottom:22px;
-}
-
-.message.user{
-    flex-direction:row-reverse;
-}
-
-.message-avatar{
-    width:34px;
-    height:34px;
-
-    flex:0 0 34px;
-
-    margin-top:19px;
-
-    display:grid;
-    place-items:center;
-
-    border-radius:50%;
-
-    background:var(--primary);
-    color:white;
-
-    font-size:11px;
-    font-weight:800;
-}
-
-.message-content{
-    max-width:min(720px,82%);
-}
-
-.message.user .message-content{
-    display:flex;
-    flex-direction:column;
-    align-items:flex-end;
-}
-
-.message-label{
-    margin-bottom:6px;
-
-    color:var(--muted);
-
-    font-size:11px;
-}
-
-.message-bubble{
-    padding:13px 16px;
-
-    border:1px solid var(--border);
-    border-radius:17px;
-
-    background:var(--assistant);
-
-    box-shadow:0 5px 18px rgba(15,23,42,.07);
-
-    color:var(--text);
-
-    font-size:14px;
-    line-height:1.65;
-
-    white-space:pre-wrap;
-    overflow-wrap:anywhere;
-}
-
-.message.user .message-bubble{
-    background:var(--primary);
-    color:white;
-
-    border-color:transparent;
-}
-
-.typing{
-    display:flex;
-    gap:5px;
-    align-items:center;
-}
-
-.dot{
-    width:6px;
-    height:6px;
-
-    border-radius:50%;
-
-    background:var(--muted);
-
-    animation:pulse .9s infinite;
-}
-
-.dot:nth-child(2){
-    animation-delay:.15s;
-}
-
-.dot:nth-child(3){
-    animation-delay:.3s;
-}
-
-@keyframes pulse{
-    0%,100%{
-        opacity:.25;
-    }
-
-    50%{
-        opacity:1;
-    }
-}
-
-
-/* =========================================================
-   COMPOSER
-========================================================= */
-
-.composer{
-    flex:0 0 auto;
-
-    padding:
-        9px
-        20px
-        16px;
-
-    background:
-        linear-gradient(
-            to top,
-            var(--surface2),
-            transparent
-        );
-}
-
-.composer-box{
-    width:min(900px,100%);
-    margin:auto;
-
-    display:flex;
-    align-items:flex-end;
-
-    gap:7px;
-
-    padding:6px;
-
-    border:1px solid var(--border);
-    border-radius:17px;
-
-    background:var(--surface2);
-
-    box-shadow:var(--shadow);
-
-    backdrop-filter:blur(var(--blur));
-    -webkit-backdrop-filter:blur(var(--blur));
-}
-
-textarea{
-    flex:1;
-    min-width:0;
-
-    min-height:46px;
-    max-height:150px;
-
-    resize:none;
-
-    border:0;
-    outline:0;
-
-    background:transparent;
-    color:var(--text);
-
-    padding:12px 9px;
-
-    font-size:14px;
-    line-height:1.45;
-}
-
-textarea::placeholder{
-    color:var(--muted);
-}
-
-.send{
-    width:46px;
-    height:46px;
-
-    flex:0 0 46px;
-
-    border:0;
-    border-radius:12px;
-
-    background:var(--primary);
-    color:white;
-
-    font-size:20px;
-}
-
-.send:disabled{
-    opacity:.55;
-}
-
-.hint{
-    width:min(900px,100%);
-    margin:6px auto 0;
-
-    text-align:center;
-
-    color:var(--muted);
-    font-size:9px;
-}
-
-
-/* =========================================================
-   PROFILE / SETTINGS
-========================================================= */
-
-.page-scroll{
-    flex:1;
-    min-height:0;
-
-    overflow-y:auto;
-
-    padding:30px 20px 110px;
-}
-
-.page{
-    width:min(780px,100%);
-    margin:auto;
-}
-
-.page h1{
-    font-size:23px;
-}
-
-.page-description{
-    margin:5px 0 25px;
-
-    color:var(--muted);
-    font-size:13px;
-}
-
-.panel{
-    padding:20px;
-
-    border:1px solid var(--border);
-    border-radius:17px;
-
-    background:var(--surface);
-
-    backdrop-filter:blur(var(--blur));
-    -webkit-backdrop-filter:blur(var(--blur));
-
-    box-shadow:var(--shadow);
-}
-
-.profile-top{
-    display:flex;
-    align-items:center;
-    gap:13px;
-}
-
-.large-avatar{
-    width:58px;
-    height:58px;
-
-    display:grid;
-    place-items:center;
-
-    border-radius:50%;
-
-    background:var(--primary);
-    color:white;
-
-    font-size:18px;
-    font-weight:800;
-}
-
-.profile-name{
-    font-weight:750;
-}
-
-.profile-email{
-    margin-top:3px;
-
-    color:var(--muted);
-    font-size:12px;
-}
-
-.danger{
-    margin-top:22px;
-
-    height:42px;
-
-    padding:0 14px;
-
-    border:1px solid rgba(220,61,75,.2);
-    border-radius:11px;
-
-    background:rgba(220,61,75,.07);
-
-    color:#dc3d4b;
-
-    font-size:12px;
-    font-weight:700;
-}
-
-
-/* =========================================================
-   SETTINGS
-========================================================= */
-
-.setting-section{
-    padding:18px 0;
-
-    border-bottom:1px solid var(--border);
-}
-
-.setting-section:first-child{
-    padding-top:0;
-}
-
-.setting-section:last-child{
-    border-bottom:0;
-    padding-bottom:0;
-}
-
-.setting-title{
-    font-size:14px;
-    font-weight:750;
-}
-
-.setting-description{
-    margin-top:4px;
-
-    color:var(--muted);
-    font-size:11px;
-    line-height:1.5;
-}
-
-.setting-row{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-
-    gap:20px;
-}
-
-.switch{
-    position:relative;
-
-    width:46px;
-    height:26px;
-
-    flex:0 0 46px;
-}
-
-.switch input{
-    display:none;
-}
-
-.switch-track{
-    position:absolute;
-    inset:0;
-
-    border-radius:20px;
-
-    background:#cbd5e1;
-}
-
-.switch-track:after{
-    content:"";
-
-    position:absolute;
-
-    width:20px;
-    height:20px;
-
-    top:3px;
-    left:3px;
-
-    border-radius:50%;
-
-    background:#fff;
-
-    transition:.18s;
-}
-
-.switch input:checked + .switch-track{
-    background:var(--primary);
-}
-
-.switch input:checked + .switch-track:after{
-    transform:translateX(20px);
-}
-
-.range-box{
-    margin-top:17px;
-}
-
-.range{
-    width:100%;
-
-    accent-color:var(--primary);
-}
-
-.range-value{
-    margin-top:6px;
-
-    color:var(--muted);
-    font-size:10px;
-}
-
-
-/* =========================================================
-   MOBILE NAV
-========================================================= */
-
-.mobile-nav{
-    display:none;
-}
-
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media(max-width:700px){
-
-    #app.visible{
-        display:block;
-    }
-
-    .sidebar{
-        display:none;
-    }
-
-    .topbar{
-        height:58px;
-        padding:0 16px;
-    }
-
-    .title{
-        font-size:15px;
-    }
-
-    .theme{
-        width:38px;
-        height:38px;
-    }
-
-    .chat-scroll{
-        padding:
-            17px
-            10px
-            145px;
-    }
-
-    .message-content{
-        max-width:calc(100% - 40px);
-    }
-
-    .message-bubble{
-        padding:11px 13px;
-
-        font-size:14px;
-    }
-
-    .composer{
-        position:fixed;
-
-        left:0;
-        right:0;
-        bottom:70px;
-
-        z-index:20;
-
-        padding:8px 10px;
-    }
-
-    .composer-box{
-        border-radius:16px;
-    }
-
-    textarea{
-        font-size:16px;
-    }
-
-    .hint{
-        display:none;
-    }
-
-    .mobile-nav{
-        position:fixed;
-
-        left:10px;
-        right:10px;
-        bottom:8px;
-
-        z-index:30;
-
-        height:62px;
-
-        display:flex;
-
-        padding:5px;
-
-        border:1px solid var(--border);
-        border-radius:17px;
-
-        background:var(--surface2);
-
-        box-shadow:var(--shadow);
-
-        backdrop-filter:blur(var(--blur));
-        -webkit-backdrop-filter:blur(var(--blur));
-    }
-
-    .mobile-nav button{
-        flex:1;
-
-        border:0;
-        border-radius:12px;
-
-        background:transparent;
-
-        color:var(--muted);
-
-        font-size:10px;
-    }
-
-    .mobile-nav button.active{
-        background:rgba(49,91,220,.1);
-        color:var(--primary);
-        font-weight:700;
-    }
-
-    .mobile-icon{
-        display:block;
-
-        margin-bottom:3px;
-
-        font-size:18px;
-    }
-
-    .page-scroll{
-        padding:
-            22px
-            13px
-            95px;
-    }
-
-    .panel{
-        padding:16px;
-    }
-}
-
-@media(max-width:390px){
-
-    .message-avatar{
-        width:30px;
-        height:30px;
-        flex-basis:30px;
-    }
-
-    .message-content{
-        max-width:calc(100% - 37px);
-    }
-
-    .message-bubble{
-        font-size:13px;
-    }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="XenvitalTech AI by ShashwatBytes - Intelligent AI assistant.">
+
+    <meta name="theme-color" content="#080b14">
+
+    <title>XenvitalTech AI | ShashwatBytes</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #070a12;
+            --panel: rgba(15, 20, 34, 0.66);
+            --panel-strong: rgba(12, 17, 30, 0.86);
+            --border: rgba(255,255,255,0.10);
+            --text: #f5f7ff;
+            --muted: #9da6bb;
+            --accent: #7c5cff;
+            --accent2: #00d9ff;
+            --danger: #ff5577;
+            --shadow: 0 25px 80px rgba(0,0,0,.38);
+        }
+
+        body.light {
+            --bg: #eef2f8;
+            --panel: rgba(255,255,255,.66);
+            --panel-strong: rgba(255,255,255,.90);
+            --border: rgba(0,0,0,.08);
+            --text: #111827;
+            --muted: #64748b;
+            --shadow: 0 20px 60px rgba(30,41,59,.18);
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            font-family:
+                Inter,
+                ui-sans-serif,
+                system-ui,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        button,
+        input,
+        textarea {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        /* =========================
+           BACKGROUND VIDEO
+        ========================== */
+
+        #background {
+            position: fixed;
+            inset: 0;
+            z-index: -10;
+            overflow: hidden;
+            background: #05070d;
+        }
+
+        #backgroundVideo {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: blur(0px);
+            transform: scale(1.04);
+            transition: filter .35s ease;
+        }
+
+        #backgroundOverlay {
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(4,7,15,.82),
+                    rgba(8,11,25,.52),
+                    rgba(3,8,18,.82)
+                );
+        }
+
+        body.light #backgroundOverlay {
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(240,244,250,.72),
+                    rgba(255,255,255,.50),
+                    rgba(226,232,240,.76)
+                );
+        }
+
+        /* =========================
+           APP
+        ========================== */
+
+        .app {
+            width: 100%;
+            height: 100dvh;
+            display: flex;
+            position: relative;
+        }
+
+        /* =========================
+           SIDEBAR
+        ========================== */
+
+        .sidebar {
+            width: 255px;
+            height: 100%;
+            padding: 18px;
+
+            display: flex;
+            flex-direction: column;
+
+            background: rgba(7,10,20,.58);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+
+            border-right: 1px solid var(--border);
+        }
+
+        body.light .sidebar {
+            background: rgba(255,255,255,.55);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 7px 6px 25px;
+        }
+
+        .brand-logo {
+            width: 42px;
+            height: 42px;
+            border-radius: 14px;
+
+            display: grid;
+            place-items: center;
+
+            font-weight: 900;
+            font-size: 17px;
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--accent),
+                    var(--accent2)
+                );
+
+            box-shadow:
+                0 10px 35px rgba(124,92,255,.35);
+        }
+
+        .brand-title {
+            font-size: 15px;
+            font-weight: 800;
+        }
+
+        .brand-subtitle {
+            margin-top: 3px;
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .nav {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .nav-btn {
+            border: 1px solid transparent;
+            background: transparent;
+            color: var(--muted);
+
+            width: 100%;
+            padding: 13px 14px;
+            border-radius: 14px;
+
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            text-align: left;
+            transition: .2s ease;
+        }
+
+        .nav-btn:hover,
+        .nav-btn.active {
+            color: var(--text);
+            background: rgba(255,255,255,.07);
+            border-color: var(--border);
+        }
+
+        .nav-icon {
+            width: 22px;
+            text-align: center;
+        }
+
+        .sidebar-bottom {
+            margin-top: auto;
+        }
+
+        .profile-mini {
+            padding: 12px;
+            border-radius: 17px;
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,.045);
+        }
+
+        .profile-mini-name {
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .profile-mini-email {
+            margin-top: 3px;
+            font-size: 11px;
+            color: var(--muted);
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* =========================
+           MAIN
+        ========================== */
+
+        .main {
+            min-width: 0;
+            flex: 1;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .topbar {
+            height: 72px;
+            padding: 0 22px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            border-bottom: 1px solid var(--border);
+            background: rgba(5,8,16,.30);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        body.light .topbar {
+            background: rgba(255,255,255,.34);
+        }
+
+        .mobile-brand {
+            display: none;
+            align-items: center;
+            gap: 10px;
+            font-weight: 800;
+        }
+
+        .topbar-title {
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 13px;
+
+            display: grid;
+            place-items: center;
+
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,.055);
+            color: var(--text);
+
+            transition: .2s ease;
+        }
+
+        .icon-btn:hover {
+            background: rgba(255,255,255,.11);
+            transform: translateY(-1px);
+        }
+
+        /* =========================
+           PAGES
+        ========================== */
+
+        .page {
+            display: none;
+            flex: 1;
+            min-height: 0;
+        }
+
+        .page.active {
+            display: flex;
+        }
+
+        /* =========================
+           CHAT
+        ========================== */
+
+        #chatPage {
+            flex-direction: column;
+        }
+
+        .messages {
+            flex: 1;
+            min-height: 0;
+            overflow-y: auto;
+            padding: 30px clamp(16px, 5vw, 70px);
+            scroll-behavior: smooth;
+        }
+
+        .welcome {
+            min-height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .welcome-card {
+            width: min(680px, 100%);
+            padding: 40px 25px;
+        }
+
+        .welcome-logo {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 18px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 23px;
+
+            font-size: 28px;
+            font-weight: 900;
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--accent),
+                    var(--accent2)
+                );
+
+            box-shadow:
+                0 20px 60px rgba(0,217,255,.18);
+        }
+
+        .welcome h1 {
+            font-size: clamp(27px, 5vw, 43px);
+            letter-spacing: -1.5px;
+        }
+
+        .welcome p {
+            max-width: 520px;
+            margin: 12px auto 0;
+            color: var(--muted);
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        .message-row {
+            width: 100%;
+            display: flex;
+            margin: 0 auto 18px;
+        }
+
+        .message-row.user {
+            justify-content: flex-end;
+        }
+
+        .message-row.assistant {
+            justify-content: flex-start;
+        }
+
+        .message {
+            max-width: min(780px, 88%);
+            padding: 13px 16px;
+
+            border-radius: 18px;
+
+            line-height: 1.65;
+            font-size: 14px;
+
+            white-space: pre-wrap;
+            word-break: break-word;
+
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 35px rgba(0,0,0,.10);
+        }
+
+        .message.user {
+            color: white;
+            border-bottom-right-radius: 5px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(124,92,255,.92),
+                    rgba(0,190,255,.76)
+                );
+        }
+
+        .message.assistant {
+            border-bottom-left-radius: 5px;
+            background: rgba(15,20,34,.70);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        body.light .message.assistant {
+            background: rgba(255,255,255,.74);
+        }
+
+        .typing {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 3px;
+        }
+
+        .typing span {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--muted);
+            animation: typing 1.1s infinite;
+        }
+
+        .typing span:nth-child(2) {
+            animation-delay: .15s;
+        }
+
+        .typing span:nth-child(3) {
+            animation-delay: .3s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: translateY(0);
+                opacity: .35;
+            }
+            30% {
+                transform: translateY(-4px);
+                opacity: 1;
+            }
+        }
+
+        /* =========================
+           INPUT
+        ========================== */
+
+        .composer-wrap {
+            padding: 12px clamp(12px, 5vw, 70px) 18px;
+        }
+
+        .composer {
+            width: min(850px, 100%);
+            margin: auto;
+
+            display: flex;
+            align-items: flex-end;
+            gap: 10px;
+
+            padding: 10px;
+
+            border-radius: 20px;
+            border: 1px solid var(--border);
+
+            background: rgba(10,14,27,.67);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+
+            box-shadow: var(--shadow);
+        }
+
+        body.light .composer {
+            background: rgba(255,255,255,.76);
+        }
+
+        #messageInput {
+            flex: 1;
+            resize: none;
+            outline: none;
+            border: 0;
+
+            max-height: 130px;
+            min-height: 43px;
+
+            padding: 11px 10px;
+
+            background: transparent;
+            color: var(--text);
+
+            line-height: 1.45;
+        }
+
+        #messageInput::placeholder {
+            color: var(--muted);
+        }
+
+        .send-btn {
+            width: 43px;
+            height: 43px;
+            flex: 0 0 43px;
+
+            border: 0;
+            border-radius: 14px;
+
+            color: white;
+            font-size: 17px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--accent),
+                    var(--accent2)
+                );
+
+            box-shadow: 0 10px 30px rgba(124,92,255,.25);
+
+            transition: .2s ease;
+        }
+
+        .send-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .send-btn:disabled {
+            opacity: .5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .composer-note {
+            text-align: center;
+            margin-top: 8px;
+            color: var(--muted);
+            font-size: 10px;
+        }
+
+        /* =========================
+           PROFILE / SETTINGS
+        ========================== */
+
+        .content-page {
+            overflow-y: auto;
+            padding: 30px clamp(16px, 5vw, 70px);
+        }
+
+        .settings-container {
+            width: min(800px, 100%);
+            margin: 0 auto;
+        }
+
+        .section-title {
+            margin-bottom: 20px;
+        }
+
+        .section-title h2 {
+            font-size: 25px;
+        }
+
+        .section-title p {
+            margin-top: 6px;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .settings-card {
+            padding: 20px;
+            margin-bottom: 15px;
+
+            border: 1px solid var(--border);
+            border-radius: 20px;
+
+            background: var(--panel);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+
+            box-shadow: 0 15px 45px rgba(0,0,0,.10);
+        }
+
+        .profile-head {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .avatar {
+            width: 58px;
+            height: 58px;
+            border-radius: 18px;
+
+            display: grid;
+            place-items: center;
+
+            color: white;
+            font-weight: 900;
+            font-size: 20px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--accent),
+                    var(--accent2)
+                );
+        }
+
+        .profile-info h3 {
+            font-size: 17px;
+        }
+
+        .profile-info p {
+            color: var(--muted);
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .setting-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+
+            padding: 15px 0;
+
+            border-bottom: 1px solid var(--border);
+        }
+
+        .setting-row:last-child {
+            border-bottom: 0;
+        }
+
+        .setting-name {
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .setting-description {
+            margin-top: 4px;
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .switch {
+            position: relative;
+            width: 46px;
+            height: 26px;
+            flex: 0 0 auto;
+        }
+
+        .switch input {
+            display: none;
+        }
+
+        .slider {
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+            background: rgba(255,255,255,.13);
+            border: 1px solid var(--border);
+            transition: .2s;
+        }
+
+        .slider::before {
+            content: "";
+            position: absolute;
+
+            width: 20px;
+            height: 20px;
+
+            left: 2px;
+            top: 2px;
+
+            border-radius: 50%;
+            background: white;
+
+            transition: .2s;
+        }
+
+        .switch input:checked + .slider {
+            background: var(--accent);
+        }
+
+        .switch input:checked + .slider::before {
+            transform: translateX(20px);
+        }
+
+        .range {
+            width: 140px;
+            accent-color: var(--accent);
+        }
+
+        .logout-btn {
+            width: 100%;
+            padding: 12px 15px;
+
+            border: 1px solid rgba(255,85,119,.25);
+            border-radius: 13px;
+
+            background: rgba(255,85,119,.08);
+            color: #ff718d;
+
+            font-weight: 700;
+        }
+
+        /* =========================
+           MOBILE NAV
+        ========================== */
+
+        .bottom-nav {
+            display: none;
+        }
+
+        /* =========================
+           TOAST
+        ========================== */
+
+        #toast {
+            position: fixed;
+            left: 50%;
+            bottom: 25px;
+
+            transform: translate(-50%, 20px);
+
+            padding: 11px 16px;
+
+            border: 1px solid var(--border);
+            border-radius: 13px;
+
+            background: var(--panel-strong);
+            color: var(--text);
+
+            font-size: 12px;
+
+            opacity: 0;
+            pointer-events: none;
+
+            transition: .25s ease;
+            z-index: 100;
+        }
+
+        #toast.show {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================== */
+
+        @media (max-width: 760px) {
+
+            .sidebar {
+                display: none;
+            }
+
+            .mobile-brand {
+                display: flex;
+            }
+
+            .topbar {
+                height: 62px;
+                padding: 0 13px;
+            }
+
+            .topbar-title {
+                display: none;
+            }
+
+            .messages {
+                padding: 20px 12px;
+            }
+
+            .message {
+                max-width: 91%;
+                font-size: 13px;
+            }
+
+            .welcome-card {
+                padding: 25px 10px;
+            }
+
+            .welcome h1 {
+                font-size: 29px;
+            }
+
+            .composer-wrap {
+                padding: 8px 10px 8px;
+                padding-bottom: calc(75px + env(safe-area-inset-bottom));
+            }
+
+            .composer {
+                border-radius: 18px;
+            }
+
+            .bottom-nav {
+                position: fixed;
+                left: 10px;
+                right: 10px;
+                bottom: calc(8px + env(safe-area-inset-bottom));
+
+                height: 59px;
+
+                display: flex;
+                align-items: center;
+                justify-content: space-around;
+
+                border: 1px solid var(--border);
+                border-radius: 19px;
+
+                background: rgba(10,14,26,.80);
+                backdrop-filter: blur(25px);
+                -webkit-backdrop-filter: blur(25px);
+
+                box-shadow: var(--shadow);
+
+                z-index: 50;
+            }
+
+            body.light .bottom-nav {
+                background: rgba(255,255,255,.82);
+            }
+
+            .bottom-btn {
+                width: 80px;
+                height: 45px;
+
+                border: 0;
+                border-radius: 13px;
+
+                background: transparent;
+                color: var(--muted);
+
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 2px;
+
+                font-size: 9px;
+            }
+
+            .bottom-btn span:first-child {
+                font-size: 17px;
+            }
+
+            .bottom-btn.active {
+                color: var(--text);
+                background: rgba(255,255,255,.08);
+            }
+
+            .content-page {
+                padding: 20px 13px 100px;
+            }
+
+            .settings-card {
+                padding: 16px;
+            }
+
+            .setting-row {
+                gap: 12px;
+            }
+
+            .range {
+                width: 100px;
+            }
+
+            #toast {
+                bottom: 85px;
+            }
+        }
+    </style>
 </head>
-
 
 <body>
 
-<!-- =========================================================
-     PERMANENT WALLPAPER
-========================================================= -->
+<!-- =========================
+     PERMANENT WALLPAPER 3
+========================== -->
 
 <div id="background">
-
     <video
         id="backgroundVideo"
         autoplay
@@ -1208,415 +932,155 @@ textarea::placeholder{
         preload="auto"
     >
         <source
-            src="assets/wallpapers/wallpaper1.mp4"
+            src="assets/wallpapers/wallpaper 3.mp4"
             type="video/mp4"
         >
     </video>
 
     <div id="backgroundOverlay"></div>
-
 </div>
 
 
-<!-- =========================================================
-     AUTH
-========================================================= -->
+<div class="app">
 
-<section id="authScreen">
-
-    <div class="auth-card">
-
-        <div class="auth-logo">
-            X
-        </div>
-
-        <div class="auth-title">
-            XenvitalTech AI
-        </div>
-
-        <div class="auth-subtitle">
-            AI assistant by ShashwatBytes
-        </div>
-
-
-        <!-- LOGIN -->
-
-        <form
-            class="auth-form active"
-            id="loginForm"
-        >
-
-            <div class="field">
-
-                <label>
-                    Email
-                </label>
-
-                <input
-                    class="input"
-                    id="loginEmail"
-                    type="email"
-                    placeholder="Enter your email"
-                    required
-                >
-
-            </div>
-
-
-            <div class="field">
-
-                <label>
-                    Password
-                </label>
-
-                <input
-                    class="input"
-                    id="loginPassword"
-                    type="password"
-                    placeholder="Enter your password"
-                    required
-                >
-
-            </div>
-
-
-            <div
-                class="auth-error"
-                id="loginError"
-            ></div>
-
-
-            <button
-                class="primary-button"
-                type="submit"
-            >
-                Login
-            </button>
-
-
-            <div class="auth-switch">
-
-                Don't have an account?
-
-                <button
-                    type="button"
-                    id="showSignup"
-                >
-                    Create account
-                </button>
-
-            </div>
-
-        </form>
-
-
-        <!-- SIGNUP -->
-
-        <form
-            class="auth-form"
-            id="signupForm"
-        >
-
-            <div class="field">
-
-                <label>
-                    Username
-                </label>
-
-                <input
-                    class="input"
-                    id="signupUsername"
-                    type="text"
-                    placeholder="yourusername"
-                    minlength="3"
-                    required
-                >
-
-            </div>
-
-
-            <div class="field">
-
-                <label>
-                    Email
-                </label>
-
-                <input
-                    class="input"
-                    id="signupEmail"
-                    type="email"
-                    placeholder="Enter your email"
-                    required
-                >
-
-            </div>
-
-
-            <div class="field">
-
-                <label>
-                    Password
-                </label>
-
-                <input
-                    class="input"
-                    id="signupPassword"
-                    type="password"
-                    placeholder="Create password"
-                    minlength="6"
-                    required
-                >
-
-            </div>
-
-
-            <div
-                class="auth-error"
-                id="signupError"
-            ></div>
-
-
-            <button
-                class="primary-button"
-                type="submit"
-            >
-                Create account
-            </button>
-
-
-            <div class="auth-switch">
-
-                Already have an account?
-
-                <button
-                    type="button"
-                    id="showLogin"
-                >
-                    Login
-                </button>
-
-            </div>
-
-        </form>
-
-    </div>
-
-</section>
-
-
-<!-- =========================================================
-     APP
-========================================================= -->
-
-<section id="app">
-
-    <!-- SIDEBAR -->
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
 
     <aside class="sidebar">
 
         <div class="brand">
-
-            <div class="brand-logo">
-                X
-            </div>
+            <div class="brand-logo">X</div>
 
             <div>
-
-                <div class="brand-name">
-                    XenvitalTech
-                </div>
-
-                <div class="brand-sub">
-                    by ShashwatBytes
-                </div>
-
+                <div class="brand-title">XenvitalTech AI</div>
+                <div class="brand-subtitle">by ShashwatBytes</div>
             </div>
-
         </div>
 
+        <nav class="nav">
 
-        <button
-            class="new-chat"
-            id="newChat"
-        >
-            + New chat
-        </button>
-
-
-        <div class="sidebar-title">
-            Workspace
-        </div>
-
-
-        <button
-            class="nav active"
-            data-view="ai"
-        >
-            AI
-            <span>
-                XenvitalTech AI
-            </span>
-        </button>
-
-
-        <button
-            class="nav"
-            data-view="profile"
-        >
-            ○
-            <span>
-                Profile
-            </span>
-        </button>
-
-
-        <button
-            class="nav"
-            data-view="settings"
-        >
-            ⚙
-            <span>
-                Settings
-            </span>
-        </button>
-
-
-        <div class="sidebar-spacer"></div>
-
-
-        <div class="sidebar-user">
-
-            <div
-                class="avatar"
-                id="sideAvatar"
+            <button
+                class="nav-btn active"
+                data-page="chatPage"
             >
-                U
-            </div>
+                <span class="nav-icon">✦</span>
+                <span>AI Assistant</span>
+            </button>
 
-            <div>
+            <button
+                class="nav-btn"
+                data-page="profilePage"
+            >
+                <span class="nav-icon">◉</span>
+                <span>Profile</span>
+            </button>
 
+            <button
+                class="nav-btn"
+                data-page="settingsPage"
+            >
+                <span class="nav-icon">⚙</span>
+                <span>Settings</span>
+            </button>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <div class="profile-mini">
                 <div
-                    class="user-name"
-                    id="sideUsername"
+                    class="profile-mini-name"
+                    id="sideName"
                 >
-                    @user
+                    Shashwat
                 </div>
 
                 <div
-                    class="user-email"
+                    class="profile-mini-email"
                     id="sideEmail"
                 >
-                    email
+                    XenvitalTech AI
                 </div>
-
             </div>
 
         </div>
-
-
-        <button
-            class="logout"
-            id="logout"
-        >
-            Logout
-        </button>
 
     </aside>
 
 
-    <!-- MAIN -->
+    <!-- =========================
+         MAIN
+    ========================== -->
 
     <main class="main">
-
 
         <!-- TOPBAR -->
 
         <header class="topbar">
 
-            <div
-                class="title"
-                id="pageTitle"
-            >
+            <div class="mobile-brand">
+                <div class="brand-logo"
+                     style="width:36px;height:36px;border-radius:12px;font-size:15px;">
+                    X
+                </div>
+
+                <span>XenvitalTech AI</span>
+            </div>
+
+            <div class="topbar-title">
                 XenvitalTech AI
             </div>
 
+            <div class="topbar-right">
 
-            <button
-                class="theme"
-                id="themeButton"
-            >
-                ◐
-            </button>
+                <button
+                    class="icon-btn"
+                    id="themeBtn"
+                    title="Toggle theme"
+                >
+                    ☾
+                </button>
+
+            </div>
 
         </header>
 
 
-        <!-- =================================================
-             AI
-        ================================================== -->
+        <!-- =========================
+             CHAT PAGE
+        ========================== -->
 
         <section
-            class="view active"
-            id="aiView"
+            class="page active"
+            id="chatPage"
         >
 
             <div
-                class="chat-scroll"
-                id="chatScroll"
+                class="messages"
+                id="messages"
             >
 
                 <div
-                    class="messages"
-                    id="messages"
+                    class="welcome"
+                    id="welcome"
                 >
 
-                    <div
-                        class="empty"
-                        id="empty"
-                    >
+                    <div class="welcome-card">
 
-                        <div class="empty-inner">
-
-                            <div class="empty-logo">
-                                X
-                            </div>
-
-                            <h2>
-                                How can I help you?
-                            </h2>
-
-                            <p>
-                                Ask about coding, study,
-                                projects, writing or problem solving.
-                            </p>
-
-
-                            <div class="suggestions">
-
-                                <button
-                                    class="suggestion"
-                                    data-prompt="Explain this programming concept simply."
-                                >
-                                    Explain a concept
-                                </button>
-
-                                <button
-                                    class="suggestion"
-                                    data-prompt="Help me debug my code."
-                                >
-                                    Help me debug code
-                                </button>
-
-                                <button
-                                    class="suggestion"
-                                    data-prompt="Create a study plan for me."
-                                >
-                                    Create a study plan
-                                </button>
-
-                            </div>
-
+                        <div class="welcome-logo">
+                            X
                         </div>
+
+                        <h1>
+                            How can I help you?
+                        </h1>
+
+                        <p>
+                            Welcome to XenvitalTech AI by ShashwatBytes.
+                            Ask questions, solve problems, write code,
+                            learn concepts and more.
+                        </p>
 
                     </div>
 
@@ -1625,1401 +1089,814 @@ textarea::placeholder{
             </div>
 
 
-            <!-- COMPOSER -->
+            <div class="composer-wrap">
 
-            <div class="composer">
-
-                <div class="composer-box">
+                <form
+                    class="composer"
+                    id="chatForm"
+                >
 
                     <textarea
-                        id="input"
+                        id="messageInput"
                         rows="1"
-                        placeholder="Ask XenvitalTech anything..."
+                        placeholder="Message XenvitalTech AI..."
+                        autocomplete="off"
                     ></textarea>
 
+                    <button
+                        class="send-btn"
+                        id="sendBtn"
+                        type="submit"
+                        title="Send"
+                    >
+                        ➤
+                    </button>
+
+                </form>
+
+                <div class="composer-note">
+                    XenvitalTech AI can make mistakes. Verify important information.
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             PROFILE PAGE
+        ========================== -->
+
+        <section
+            class="page content-page"
+            id="profilePage"
+        >
+
+            <div class="settings-container">
+
+                <div class="section-title">
+                    <h2>Profile</h2>
+                    <p>Your XenvitalTech AI profile.</p>
+                </div>
+
+                <div class="settings-card">
+
+                    <div class="profile-head">
+
+                        <div
+                            class="avatar"
+                            id="profileAvatar"
+                        >
+                            S
+                        </div>
+
+                        <div class="profile-info">
+
+                            <h3 id="profileName">
+                                Shashwat Mishra
+                            </h3>
+
+                            <p id="profileEmail">
+                                shashwatbytes
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="settings-card">
+
+                    <div class="setting-row">
+
+                        <div>
+                            <div class="setting-name">
+                                Product
+                            </div>
+
+                            <div class="setting-description">
+                                XenvitalTech AI
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="setting-row">
+
+                        <div>
+                            <div class="setting-name">
+                                Developer
+                            </div>
+
+                            <div class="setting-description">
+                                ShashwatBytes
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="setting-row">
+
+                        <div>
+                            <div class="setting-name">
+                                Website
+                            </div>
+
+                            <div class="setting-description">
+                                xenvitaltech.vercel.app
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             SETTINGS PAGE
+        ========================== -->
+
+        <section
+            class="page content-page"
+            id="settingsPage"
+        >
+
+            <div class="settings-container">
+
+                <div class="section-title">
+                    <h2>Settings</h2>
+                    <p>Customize your XenvitalTech AI experience.</p>
+                </div>
+
+
+                <!-- Appearance -->
+
+                <div class="settings-card">
+
+                    <div class="setting-row">
+
+                        <div>
+                            <div class="setting-name">
+                                Dark Mode
+                            </div>
+
+                            <div class="setting-description">
+                                Switch between dark and light interface.
+                            </div>
+                        </div>
+
+                        <label class="switch">
+                            <input
+                                type="checkbox"
+                                id="darkModeToggle"
+                                checked
+                            >
+                            <span class="slider"></span>
+                        </label>
+
+                    </div>
+
+
+                    <!-- Background Blur -->
+
+                    <div class="setting-row">
+
+                        <div>
+                            <div class="setting-name">
+                                Background Blur
+                            </div>
+
+                            <div class="setting-description">
+                                Blur the permanent Wallpaper 3 background.
+                            </div>
+                        </div>
+
+                        <label class="switch">
+                            <input
+                                type="checkbox"
+                                id="blurToggle"
+                                checked
+                            >
+                            <span class="slider"></span>
+                        </label>
+
+                    </div>
+
+
+                    <!-- Blur Intensity -->
+
+                    <div class="setting-row">
+
+                        <div>
+                            <div class="setting-name">
+                                Blur Intensity
+                            </div>
+
+                            <div class="setting-description">
+                                Adjust wallpaper blur intensity.
+                            </div>
+                        </div>
+
+                        <input
+                            class="range"
+                            id="blurRange"
+                            type="range"
+                            min="0"
+                            max="18"
+                            value="7"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- Permanent Wallpaper -->
+
+                <div class="settings-card">
+
+                    <div class="setting-row">
+
+                        <div>
+                            <div class="setting-name">
+                                Background Wallpaper
+                            </div>
+
+                            <div class="setting-description">
+                                Permanently using Wallpaper 3.
+                            </div>
+                        </div>
+
+                        <strong style="font-size:12px;">
+                            Wallpaper 3
+                        </strong>
+
+                    </div>
+
+                    <video
+                        autoplay
+                        muted
+                        loop
+                        playsinline
+                        preload="metadata"
+                        style="
+                            width:100%;
+                            height:180px;
+                            object-fit:cover;
+                            border-radius:15px;
+                            border:1px solid var(--border);
+                            margin-top:12px;
+                        "
+                    >
+                        <source
+                            src="assets/wallpapers/wallpaper 3.mp4"
+                            type="video/mp4"
+                        >
+                    </video>
+
+                </div>
+
+
+                <!-- Logout -->
+
+                <div class="settings-card">
 
                     <button
-                        class="send"
-                        id="send"
+                        class="logout-btn"
+                        id="clearChatBtn"
                     >
-                        →
+                        Clear Chat History
                     </button>
 
                 </div>
 
-
-                <div class="hint">
-                    Enter to send · Shift + Enter for new line
-                </div>
-
             </div>
 
         </section>
-
-
-        <!-- =================================================
-             PROFILE
-        ================================================== -->
-
-        <section
-            class="view"
-            id="profileView"
-        >
-
-            <div class="page-scroll">
-
-                <div class="page">
-
-                    <h1>
-                        Profile
-                    </h1>
-
-                    <p class="page-description">
-                        Manage your XenvitalTech account.
-                    </p>
-
-
-                    <div class="panel">
-
-                        <div class="profile-top">
-
-                            <div
-                                class="large-avatar"
-                                id="profileAvatar"
-                            >
-                                U
-                            </div>
-
-                            <div>
-
-                                <div
-                                    class="profile-name"
-                                    id="profileUsername"
-                                >
-                                    @user
-                                </div>
-
-                                <div
-                                    class="profile-email"
-                                    id="profileEmail"
-                                >
-                                    email
-                                </div>
-
-                            </div>
-
-                        </div>
-
-
-                        <button
-                            class="danger"
-                            id="profileLogout"
-                        >
-                            Logout
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             SETTINGS
-        ================================================== -->
-
-        <section
-            class="view"
-            id="settingsView"
-        >
-
-            <div class="page-scroll">
-
-                <div class="page">
-
-                    <h1>
-                        Settings
-                    </h1>
-
-                    <p class="page-description">
-                        Customize the appearance of XenvitalTech AI.
-                    </p>
-
-
-                    <div class="panel">
-
-
-                        <!-- PERMANENT WALLPAPER -->
-
-                        <div class="setting-section">
-
-                            <div class="setting-title">
-                                Background wallpaper
-                            </div>
-
-                            <div class="setting-description">
-                                XenvitalTech uses wallpaper1.mp4 as its permanent animated background.
-                            </div>
-
-
-                            <div
-                                style="
-                                    margin-top:15px;
-                                    border-radius:14px;
-                                    overflow:hidden;
-                                    border:1px solid var(--border);
-                                    aspect-ratio:16/9;
-                                    background:#111827;
-                                "
-                            >
-
-                                <video
-                                    muted
-                                    autoplay
-                                    loop
-                                    playsinline
-                                    preload="metadata"
-                                    style="
-                                        width:100%;
-                                        height:100%;
-                                        object-fit:cover;
-                                        display:block;
-                                    "
-                                >
-                                    <source
-                                        src="assets/wallpapers/wallpaper1.mp4"
-                                        type="video/mp4"
-                                    >
-                                </video>
-
-                            </div>
-
-                            <div
-                                style="
-                                    margin-top:9px;
-                                    color:var(--muted);
-                                    font-size:10px;
-                                "
-                            >
-                                Active wallpaper: wallpaper1.mp4
-                            </div>
-
-                        </div>
-
-
-                        <!-- BLUR -->
-
-                        <div class="setting-section">
-
-                            <div class="setting-row">
-
-                                <div>
-
-                                    <div class="setting-title">
-                                        Background blur
-                                    </div>
-
-                                    <div class="setting-description">
-                                        Turn wallpaper blur on or off.
-                                    </div>
-
-                                </div>
-
-
-                                <label class="switch">
-
-                                    <input
-                                        type="checkbox"
-                                        id="blurToggle"
-                                        checked
-                                    >
-
-                                    <span class="switch-track"></span>
-
-                                </label>
-
-                            </div>
-
-
-                            <div class="range-box">
-
-                                <input
-                                    class="range"
-                                    id="blurRange"
-                                    type="range"
-                                    min="0"
-                                    max="30"
-                                    value="18"
-                                >
-
-                                <div
-                                    class="range-value"
-                                    id="blurValue"
-                                >
-                                    18px blur
-                                </div>
-
-                            </div>
-
-                        </div>
-
-
-                        <!-- SHOW WALLPAPER -->
-
-                        <div class="setting-section">
-
-                            <div class="setting-row">
-
-                                <div>
-
-                                    <div class="setting-title">
-                                        Show wallpaper
-                                    </div>
-
-                                    <div class="setting-description">
-                                        Hide or show the permanent background.
-                                    </div>
-
-                                </div>
-
-
-                                <label class="switch">
-
-                                    <input
-                                        type="checkbox"
-                                        id="wallpaperToggle"
-                                        checked
-                                    >
-
-                                    <span class="switch-track"></span>
-
-                                </label>
-
-                            </div>
-
-                        </div>
-
-
-                        <!-- DARK MODE -->
-
-                        <div class="setting-section">
-
-                            <div class="setting-row">
-
-                                <div>
-
-                                    <div class="setting-title">
-                                        Dark mode
-                                    </div>
-
-                                    <div class="setting-description">
-                                        Use a darker interface.
-                                    </div>
-
-                                </div>
-
-
-                                <label class="switch">
-
-                                    <input
-                                        type="checkbox"
-                                        id="darkToggle"
-                                    >
-
-                                    <span class="switch-track"></span>
-
-                                </label>
-
-                            </div>
-
-                        </div>
-
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
 
     </main>
 
-
-    <!-- MOBILE NAV -->
-
-    <nav class="mobile-nav">
-
-        <button
-            class="active"
-            data-mobile="ai"
-        >
-            <span class="mobile-icon">
-                AI
-            </span>
-            AI
-        </button>
+</div>
 
 
-        <button
-            data-mobile="profile"
-        >
-            <span class="mobile-icon">
-                ○
-            </span>
-            Profile
-        </button>
+<!-- =========================
+     MOBILE BOTTOM NAV
+========================== -->
+
+<nav class="bottom-nav">
+
+    <button
+        class="bottom-btn active"
+        data-page="chatPage"
+    >
+        <span>✦</span>
+        <span>AI</span>
+    </button>
+
+    <button
+        class="bottom-btn"
+        data-page="profilePage"
+    >
+        <span>◉</span>
+        <span>Profile</span>
+    </button>
+
+    <button
+        class="bottom-btn"
+        data-page="settingsPage"
+    >
+        <span>⚙</span>
+        <span>Settings</span>
+    </button>
+
+</nav>
 
 
-        <button
-            data-mobile="settings"
-        >
-            <span class="mobile-icon">
-                ⚙
-            </span>
-            Settings
-        </button>
-
-    </nav>
-
-</section>
+<div id="toast"></div>
 
 
 <script>
-/* =========================================================
-   STORAGE
-========================================================= */
+/* =====================================================
+   XENVITALTECH AI
+   FRONTEND
+===================================================== */
 
-let users =
-    JSON.parse(
-        localStorage.getItem("xenvital_users") || "[]"
-    );
-
-let currentUser =
-    JSON.parse(
-        localStorage.getItem("xenvital_currentUser") || "null"
-    );
-
-let history = [];
-
-
-/* =========================================================
-   ELEMENTS
-========================================================= */
-
-const authScreen =
-    document.getElementById("authScreen");
-
-const app =
-    document.getElementById("app");
-
-const input =
-    document.getElementById("input");
-
-const sendButton =
-    document.getElementById("send");
-
-const messages =
-    document.getElementById("messages");
-
-const chatScroll =
-    document.getElementById("chatScroll");
+const API_URL = "/api/chat";
 
 const backgroundVideo =
     document.getElementById("backgroundVideo");
 
+const messagesContainer =
+    document.getElementById("messages");
 
-/* =========================================================
-   AUTH
-========================================================= */
+const welcome =
+    document.getElementById("welcome");
 
-document
-.getElementById("showSignup")
-.addEventListener("click", () => {
+const chatForm =
+    document.getElementById("chatForm");
 
-    document
-    .getElementById("loginForm")
-    .classList
-    .remove("active");
+const messageInput =
+    document.getElementById("messageInput");
 
-    document
-    .getElementById("signupForm")
-    .classList
-    .add("active");
+const sendBtn =
+    document.getElementById("sendBtn");
 
-});
+const toast =
+    document.getElementById("toast");
 
 
-document
-.getElementById("showLogin")
-.addEventListener("click", () => {
+let conversation = [];
 
-    document
-    .getElementById("signupForm")
-    .classList
-    .remove("active");
-
-    document
-    .getElementById("loginForm")
-    .classList
-    .add("active");
-
-});
+let isSending = false;
 
 
-document
-.getElementById("signupForm")
-.addEventListener("submit", e => {
+/* =====================================================
+   PERMANENT WALLPAPER 3
+===================================================== */
 
-    e.preventDefault();
+function startPermanentWallpaper() {
 
-    const username =
-        document
-        .getElementById("signupUsername")
-        .value
-        .trim()
-        .toLowerCase()
-        .replace(/^@/, "");
+    const video =
+        document.getElementById("backgroundVideo");
 
-    const email =
-        document
-        .getElementById("signupEmail")
-        .value
-        .trim()
-        .toLowerCase();
+    const wallpaper =
+        "assets/wallpapers/wallpaper 3.mp4";
 
-    const password =
-        document
-        .getElementById("signupPassword")
-        .value;
+    video.src = wallpaper;
 
-    const error =
-        document
-        .getElementById("signupError");
+    video.muted = true;
+    video.loop = true;
+    video.playsInline = true;
 
+    video.load();
 
-    error.textContent = "";
+    const playVideo = () => {
 
+        video.play().catch(() => {});
 
-    if(
-        users.some(
-            u => u.username === username
-        )
-    ){
-
-        error.textContent =
-            "Username already exists.";
-
-        return;
-
-    }
-
-
-    if(
-        users.some(
-            u => u.email === email
-        )
-    ){
-
-        error.textContent =
-            "Email already registered.";
-
-        return;
-
-    }
-
-
-    const user = {
-        username,
-        email,
-        password
     };
 
+    playVideo();
 
-    users.push(user);
-
-    localStorage.setItem(
-        "xenvital_users",
-        JSON.stringify(users)
+    video.addEventListener(
+        "loadeddata",
+        playVideo
     );
 
-
-    currentUser = user;
-
-    localStorage.setItem(
-        "xenvital_currentUser",
-        JSON.stringify(currentUser)
+    video.addEventListener(
+        "canplay",
+        playVideo
     );
 
-
-    openApp();
-
-});
-
-
-document
-.getElementById("loginForm")
-.addEventListener("submit", e => {
-
-    e.preventDefault();
-
-    const email =
-        document
-        .getElementById("loginEmail")
-        .value
-        .trim()
-        .toLowerCase();
-
-    const password =
-        document
-        .getElementById("loginPassword")
-        .value;
-
-
-    const user =
-        users.find(
-            u =>
-                u.email === email &&
-                u.password === password
-        );
-
-
-    if(!user){
-
-        document
-        .getElementById("loginError")
-        .textContent =
-            "Invalid email or password.";
-
-        return;
-
-    }
-
-
-    currentUser = user;
-
-    localStorage.setItem(
-        "xenvital_currentUser",
-        JSON.stringify(currentUser)
-    );
-
-
-    openApp();
-
-});
-
-
-/* =========================================================
-   USER
-========================================================= */
-
-function updateUser(){
-
-    if(!currentUser) return;
-
-    const initial =
-        currentUser.username
-        .charAt(0)
-        .toUpperCase();
-
-
-    document
-    .getElementById("sideAvatar")
-    .textContent = initial;
-
-    document
-    .getElementById("sideUsername")
-    .textContent =
-        "@" + currentUser.username;
-
-    document
-    .getElementById("sideEmail")
-    .textContent =
-        currentUser.email;
-
-
-    document
-    .getElementById("profileAvatar")
-    .textContent = initial;
-
-    document
-    .getElementById("profileUsername")
-    .textContent =
-        "@" + currentUser.username;
-
-    document
-    .getElementById("profileEmail")
-    .textContent =
-        currentUser.email;
-
-}
-
-
-function logout(){
-
-    currentUser = null;
-
-    history = [];
-
-    localStorage.removeItem(
-        "xenvital_currentUser"
-    );
-
-
-    app.classList.remove("visible");
-
-    authScreen.style.display =
-        "flex";
-
-}
-
-
-document
-.getElementById("logout")
-.addEventListener(
-    "click",
-    logout
-);
-
-document
-.getElementById("profileLogout")
-.addEventListener(
-    "click",
-    logout
-);
-
-
-/* =========================================================
-   THEME
-========================================================= */
-
-function loadTheme(){
-
-    const dark =
-        localStorage.getItem(
-            "xenvital_theme"
-        ) === "dark";
-
-
-    document.body
-    .classList
-    .toggle(
-        "dark",
-        dark
-    );
-
-
-    document
-    .getElementById("darkToggle")
-    .checked = dark;
-
-}
-
-
-function setTheme(dark){
-
-    document.body
-    .classList
-    .toggle(
-        "dark",
-        dark
-    );
-
-
-    localStorage.setItem(
-        "xenvital_theme",
-        dark
-        ? "dark"
-        : "light"
-    );
-
-}
-
-
-document
-.getElementById("themeButton")
-.addEventListener(
-    "click",
-    () => {
-
-        const dark =
-            !document.body
-            .classList
-            .contains("dark");
-
-        setTheme(dark);
-
-        document
-        .getElementById("darkToggle")
-        .checked = dark;
-
-    }
-);
-
-
-document
-.getElementById("darkToggle")
-.addEventListener(
-    "change",
-    e => {
-
-        setTheme(
-            e.target.checked
-        );
-
-    }
-);
-
-
-/* =========================================================
-   NAVIGATION
-========================================================= */
-
-function showView(view){
-
-    document
-    .querySelectorAll(".view")
-    .forEach(
-        v =>
-            v.classList.remove(
-                "active"
-            )
-    );
-
-
-    document
-    .getElementById(
-        view + "View"
-    )
-    .classList.add("active");
-
-
-    document
-    .querySelectorAll(".nav")
-    .forEach(
-        n =>
-            n.classList.toggle(
-                "active",
-                n.dataset.view === view
-            )
-    );
-
-
-    document
-    .querySelectorAll(".mobile-nav button")
-    .forEach(
-        n =>
-            n.classList.toggle(
-                "active",
-                n.dataset.mobile === view
-            )
-    );
-
-
-    const titles = {
-        ai:"XenvitalTech AI",
-        profile:"Profile",
-        settings:"Settings"
-    };
-
-
-    document
-    .getElementById("pageTitle")
-    .textContent =
-        titles[view];
-
-}
-
-
-document
-.querySelectorAll(".nav")
-.forEach(
-    n =>
-        n.addEventListener(
-            "click",
-            () => showView(
-                n.dataset.view
-            )
-        )
-);
-
-
-document
-.querySelectorAll(".mobile-nav button")
-.forEach(
-    n =>
-        n.addEventListener(
-            "click",
-            () => showView(
-                n.dataset.mobile
-            )
-        )
-);
-
-
-/* =========================================================
-   NEW CHAT
-========================================================= */
-
-function newChat(){
-
-    history = [];
-
-    messages.innerHTML = `
-
-        <div
-            class="empty"
-            id="empty"
-        >
-
-            <div class="empty-inner">
-
-                <div class="empty-logo">
-                    X
-                </div>
-
-                <h2>
-                    How can I help you?
-                </h2>
-
-                <p>
-                    Ask about coding, study,
-                    projects, writing or problem solving.
-                </p>
-
-                <div class="suggestions">
-
-                    <button
-                        class="suggestion"
-                        data-prompt="Explain this programming concept simply."
-                    >
-                        Explain a concept
-                    </button>
-
-                    <button
-                        class="suggestion"
-                        data-prompt="Help me debug my code."
-                    >
-                        Help me debug code
-                    </button>
-
-                    <button
-                        class="suggestion"
-                        data-prompt="Create a study plan for me."
-                    >
-                        Create a study plan
-                    </button>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    `;
-
-
-    bindSuggestions();
-
-}
-
-
-document
-.getElementById("newChat")
-.addEventListener(
-    "click",
-    newChat
-);
-
-
-/* =========================================================
-   CHAT
-========================================================= */
-
-function scrollBottom(){
-
-    requestAnimationFrame(
+    video.addEventListener(
+        "pause",
         () => {
 
-            chatScroll.scrollTop =
-                chatScroll.scrollHeight;
+            if (!document.hidden) {
+                playVideo();
+            }
 
         }
     );
 
+    document.addEventListener(
+        "visibilitychange",
+        () => {
+
+            if (!document.hidden) {
+                playVideo();
+            }
+
+        }
+    );
 }
 
+startPermanentWallpaper();
 
-function removeEmpty(){
 
-    const empty =
-        document.getElementById("empty");
+/* =====================================================
+   LOCAL STORAGE
+===================================================== */
 
-    if(empty){
-        empty.remove();
+function loadConversation() {
+
+    try {
+
+        const saved =
+            localStorage.getItem(
+                "xenvitaltech_conversation"
+            );
+
+        if (saved) {
+
+            conversation =
+                JSON.parse(saved);
+
+        }
+
+    } catch {
+
+        conversation = [];
+
     }
 
 }
 
 
+function saveConversation() {
+
+    localStorage.setItem(
+        "xenvitaltech_conversation",
+        JSON.stringify(
+            conversation.slice(-20)
+        )
+    );
+
+}
+
+
+/* =====================================================
+   RENDER SAVED MESSAGES
+===================================================== */
+
+function renderSavedMessages() {
+
+    if (!conversation.length) {
+        return;
+    }
+
+    if (welcome) {
+        welcome.remove();
+    }
+
+    conversation.forEach(message => {
+
+        if (
+            message.role === "user" ||
+            message.role === "assistant"
+        ) {
+
+            addMessage(
+                message.content,
+                message.role,
+                false
+            );
+
+        }
+
+    });
+
+}
+
+
+/* =====================================================
+   ADD MESSAGE
+===================================================== */
+
 function addMessage(
     text,
-    type
-){
+    role,
+    save = true
+) {
 
-    removeEmpty();
+    if (welcome) {
+        welcome.remove();
+    }
 
-
-    const wrapper =
+    const row =
         document.createElement("div");
 
-    wrapper.className =
-        "message " + type;
-
-
-    const avatar =
-        document.createElement("div");
-
-    avatar.className =
-        "message-avatar";
-
-
-    avatar.textContent =
-        type === "assistant"
-        ? "X"
-        : (
-            currentUser?.username
-            ?.charAt(0)
-            ?.toUpperCase()
-            || "U"
-        );
-
-
-    const content =
-        document.createElement("div");
-
-    content.className =
-        "message-content";
-
-
-    const label =
-        document.createElement("div");
-
-    label.className =
-        "message-label";
-
-    label.textContent =
-        type === "assistant"
-        ? "XenvitalTech AI"
-        : "You";
-
+    row.className =
+        `message-row ${role}`;
 
     const bubble =
         document.createElement("div");
 
     bubble.className =
-        "message-bubble";
+        `message ${role}`;
 
     bubble.textContent =
         text;
 
+    row.appendChild(bubble);
 
-    content.append(
-        label,
-        bubble
-    );
+    messagesContainer.appendChild(row);
 
+    scrollToBottom();
 
-    wrapper.append(
-        avatar,
-        content
-    );
+    if (save) {
 
+        conversation.push({
+            role: role,
+            content: text
+        });
 
-    messages.appendChild(
-        wrapper
-    );
+        saveConversation();
 
-
-    scrollBottom();
+    }
 
     return bubble;
-
 }
 
 
-function addTyping(){
+/* =====================================================
+   TYPING INDICATOR
+===================================================== */
 
-    removeEmpty();
+function addTyping() {
 
-
-    const wrapper =
+    const row =
         document.createElement("div");
 
-    wrapper.className =
-        "message assistant";
+    row.className =
+        "message-row assistant";
 
-    wrapper.id =
+    row.id =
         "typingMessage";
 
+    const bubble =
+        document.createElement("div");
 
-    wrapper.innerHTML = `
+    bubble.className =
+        "message assistant";
 
-        <div class="message-avatar">
-            X
+    bubble.innerHTML = `
+        <div class="typing">
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
-
-        <div class="message-content">
-
-            <div class="message-label">
-                XenvitalTech AI
-            </div>
-
-            <div class="message-bubble">
-
-                <div class="typing">
-
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-
-                </div>
-
-            </div>
-
-        </div>
-
     `;
 
+    row.appendChild(bubble);
 
-    messages.appendChild(
-        wrapper
-    );
+    messagesContainer.appendChild(row);
 
-
-    scrollBottom();
-
-
-    return wrapper;
+    scrollToBottom();
 
 }
 
 
-/* =========================================================
-   AI API
-========================================================= */
+function removeTyping() {
 
-async function sendMessage(){
+    const typing =
+        document.getElementById(
+            "typingMessage"
+        );
 
-    const text =
-        input.value.trim();
+    if (typing) {
+        typing.remove();
+    }
+
+}
 
 
-    if(
-        !text ||
-        sendButton.disabled
-    ){
+/* =====================================================
+   SCROLL
+===================================================== */
+
+function scrollToBottom() {
+
+    requestAnimationFrame(() => {
+
+        messagesContainer.scrollTop =
+            messagesContainer.scrollHeight;
+
+    });
+
+}
+
+
+/* =====================================================
+   SEND MESSAGE
+===================================================== */
+
+async function sendMessage(text) {
+
+    if (!text || isSending) {
         return;
     }
 
+    isSending = true;
+
+    sendBtn.disabled = true;
 
     addMessage(
         text,
         "user"
     );
 
+    messageInput.value = "";
 
-    input.value = "";
+    messageInput.style.height =
+        "43px";
 
-    resizeInput();
-
-
-    history.push({
-        role:"user",
-        content:text
-    });
+    addTyping();
 
 
-    /*
-       Keep only recent messages.
-       This reduces request size and latency.
-    */
+    try {
 
-    const recentHistory =
-        history.slice(-10);
+        /*
+         * Only send a limited history
+         * to keep requests fast.
+         */
 
+        const history =
+            conversation
+                .slice(-12)
+                .map(item => ({
+                    role: item.role,
+                    content: item.content
+                }));
 
-    sendButton.disabled = true;
-
-
-    const typing =
-        addTyping();
-
-
-    try{
 
         const response =
             await fetch(
-                "/api/chat",
+                API_URL,
                 {
-                    method:"POST",
+                    method: "POST",
 
-                    headers:{
+                    headers: {
                         "Content-Type":
-                            "application/json",
-
-                        "Accept":
-                            "application/json, text/plain, */*"
+                            "application/json"
                     },
 
-                    body:
-                        JSON.stringify({
-                            message:text,
-                            messages:recentHistory
-                        })
+                    body: JSON.stringify({
+                        messages: history
+                    })
                 }
             );
 
 
-        if(!response.ok){
+        let data = {};
 
-            let errorText =
-                "AI request failed.";
+        try {
 
-            try{
-
-                const errorData =
-                    await response.json();
-
-                if(
-                    errorData?.error
-                ){
-                    errorText =
-                        errorData.error;
-                }
-
-            }catch{}
-
-            throw new Error(
-                errorText
-            );
-
-        }
-
-
-        /*
-           Remove typing indicator.
-        */
-
-        if(typing){
-            typing.remove();
-        }
-
-
-        const contentType =
-            response.headers
-            .get("content-type")
-            || "";
-
-
-        /*
-           CASE 1:
-           Existing api/chat.js
-           returns JSON:
-           { reply:"..." }
-        */
-
-        if(
-            contentType.includes(
-                "application/json"
-            )
-        ){
-
-            const data =
+            data =
                 await response.json();
 
+        } catch {
 
-            const reply =
-                data?.reply;
+            data = {};
 
-
-            if(!reply){
-
-                throw new Error(
-                    "No reply received from AI."
-                );
-
-            }
+        }
 
 
-            addMessage(
-                reply,
-                "assistant"
+        if (!response.ok) {
+
+            throw new Error(
+                data?.error ||
+                `Server error (${response.status})`
             );
 
-
-            history.push({
-                role:"assistant",
-                content:reply
-            });
-
-
-            return;
-
         }
 
 
-        /*
-           CASE 2:
-           Streaming/plain text response.
-        */
-
-        const reader =
-            response.body
-            ?.getReader();
+        const reply =
+            data?.reply;
 
 
-        if(!reader){
+        if (!reply) {
 
-            const reply =
-                await response.text();
-
-            addMessage(
-                reply,
-                "assistant"
+            throw new Error(
+                "AI returned an empty response."
             );
 
-            history.push({
-                role:"assistant",
-                content:reply
-            });
-
-            return;
-
         }
 
 
-        const bubble =
-            addMessage(
-                "",
-                "assistant"
-            );
+        removeTyping();
 
 
-        const decoder =
-            new TextDecoder();
+        addMessage(
+            reply,
+            "assistant"
+        );
 
 
-        let fullReply = "";
+    } catch (error) {
 
-
-        while(true){
-
-            const {
-                value,
-                done
-            } =
-                await reader.read();
-
-
-            if(done) break;
-
-
-            const chunk =
-                decoder.decode(
-                    value,
-                    {stream:true}
-                );
-
-
-            fullReply +=
-                chunk;
-
-
-            bubble.textContent =
-                fullReply;
-
-
-            scrollBottom();
-
-        }
-
-
-        const finalChunk =
-            decoder.decode();
-
-
-        if(finalChunk){
-
-            fullReply +=
-                finalChunk;
-
-            bubble.textContent =
-                fullReply;
-
-        }
-
-
-        history.push({
-            role:"assistant",
-            content:fullReply
-        });
-
-
-    }catch(error){
+        removeTyping();
 
         console.error(
-            "XenvitalTech API error:",
+            "XenvitalTech AI error:",
             error
         );
 
 
-        if(typing){
-            typing.remove();
-        }
-
+        /*
+         * Show the REAL backend error.
+         * This makes Vercel/OpenRouter
+         * debugging much easier.
+         */
 
         addMessage(
-            "Sorry, I couldn't generate a response right now. Please try again.",
+            "⚠️ " +
+            (
+                error?.message ||
+                "Unable to get a response."
+            ),
             "assistant"
         );
 
-    }finally{
+    } finally {
 
-        sendButton.disabled =
-            false;
+        isSending = false;
 
-        input.focus();
+        sendBtn.disabled = false;
+
+        messageInput.focus();
 
     }
 
 }
 
 
-sendButton
-.addEventListener(
-    "click",
-    sendMessage
+/* =====================================================
+   CHAT FORM
+===================================================== */
+
+chatForm.addEventListener(
+    "submit",
+    event => {
+
+        event.preventDefault();
+
+        const text =
+            messageInput.value.trim();
+
+        if (!text) {
+            return;
+        }
+
+        sendMessage(text);
+
+    }
 );
 
 
-input
-.addEventListener(
+/* =====================================================
+   ENTER TO SEND
+===================================================== */
+
+messageInput.addEventListener(
     "keydown",
-    e => {
+    event => {
 
-        if(
-            e.key === "Enter" &&
-            !e.shiftKey
-        ){
+        if (
+            event.key === "Enter" &&
+            !event.shiftKey
+        ) {
 
-            e.preventDefault();
+            event.preventDefault();
 
-            sendMessage();
+            chatForm.requestSubmit();
 
         }
 
@@ -3027,146 +1904,154 @@ input
 );
 
 
-/* =========================================================
-   TEXTAREA RESIZE
-========================================================= */
+/* =====================================================
+   AUTO RESIZE TEXTAREA
+===================================================== */
 
-function resizeInput(){
-
-    input.style.height =
-        "auto";
-
-    input.style.height =
-        Math.min(
-            input.scrollHeight,
-            150
-        ) + "px";
-
-}
-
-
-input.addEventListener(
+messageInput.addEventListener(
     "input",
-    resizeInput
+    () => {
+
+        messageInput.style.height =
+            "43px";
+
+        messageInput.style.height =
+            Math.min(
+                messageInput.scrollHeight,
+                130
+            ) + "px";
+
+    }
 );
 
 
-/* =========================================================
-   SUGGESTIONS
-========================================================= */
+/* =====================================================
+   PAGE NAVIGATION
+===================================================== */
 
-function bindSuggestions(){
+function openPage(pageId) {
 
     document
-    .querySelectorAll(".suggestion")
-    .forEach(
-        button => {
+        .querySelectorAll(".page")
+        .forEach(page => {
 
-            button.onclick =
-                () => {
-
-                    input.value =
-                        button.dataset.prompt;
-
-                    resizeInput();
-
-                    sendMessage();
-
-                };
-
-        }
-    );
-
-}
-
-bindSuggestions();
-
-
-/* =========================================================
-   PERMANENT WALLPAPER
-========================================================= */
-
-function startPermanentWallpaper(){
-
-    /*
-       Always use wallpaper1.mp4.
-       No wallpaper selection is allowed.
-    */
-
-    backgroundVideo.src =
-        "assets/wallpapers/wallpaper1.mp4";
-
-
-    backgroundVideo.load();
-
-
-    const play =
-        () => {
-
-            backgroundVideo
-            .play()
-            .catch(
-                () => {}
+            page.classList.toggle(
+                "active",
+                page.id === pageId
             );
 
-        };
-
-
-    play();
-
-
-    /*
-       Mobile browsers can sometimes pause
-       autoplay videos. Restart when needed.
-    */
-
-    backgroundVideo
-    .addEventListener(
-        "pause",
-        () => {
-
-            if(
-                !document.hidden
-            ){
-
-                backgroundVideo
-                .play()
-                .catch(
-                    () => {}
-                );
-
-            }
-
-        }
-    );
+        });
 
 
     document
-    .addEventListener(
-        "visibilitychange",
-        () => {
+        .querySelectorAll(
+            ".nav-btn, .bottom-btn"
+        )
+        .forEach(button => {
 
-            if(
-                !document.hidden
-            ){
+            button.classList.toggle(
+                "active",
+                button.dataset.page === pageId
+            );
 
-                backgroundVideo
-                .play()
-                .catch(
-                    () => {}
+        });
+
+}
+
+
+document
+    .querySelectorAll(
+        ".nav-btn, .bottom-btn"
+    )
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                openPage(
+                    button.dataset.page
                 );
 
             }
+        );
 
-        }
+    });
+
+
+/* =====================================================
+   THEME
+===================================================== */
+
+const themeBtn =
+    document.getElementById("themeBtn");
+
+const darkModeToggle =
+    document.getElementById(
+        "darkModeToggle"
+    );
+
+
+function applyTheme(isDark) {
+
+    document.body.classList.toggle(
+        "light",
+        !isDark
+    );
+
+    darkModeToggle.checked =
+        isDark;
+
+    themeBtn.textContent =
+        isDark ? "☾" : "☀";
+
+    localStorage.setItem(
+        "xenvitaltech_dark",
+        isDark ? "1" : "0"
     );
 
 }
 
 
-/* =========================================================
+const savedTheme =
+    localStorage.getItem(
+        "xenvitaltech_dark"
+    );
+
+applyTheme(
+    savedTheme !== "0"
+);
+
+
+themeBtn.addEventListener(
+    "click",
+    () => {
+
+        applyTheme(
+            !document.body.classList.contains(
+                "light"
+            )
+        );
+
+    }
+);
+
+
+darkModeToggle.addEventListener(
+    "change",
+    () => {
+
+        applyTheme(
+            darkModeToggle.checked
+        );
+
+    }
+);
+
+
+/* =====================================================
    BLUR
-========================================================= */
+===================================================== */
 
 const blurToggle =
     document.getElementById(
@@ -3178,231 +2063,219 @@ const blurRange =
         "blurRange"
     );
 
-const blurValue =
-    document.getElementById(
-        "blurValue"
-    );
 
-
-function applyBlur(){
+function updateBlur() {
 
     const enabled =
         blurToggle.checked;
 
-
     const amount =
-        enabled
-        ? Number(
-            blurRange.value
-        )
-        : 0;
-
+        blurRange.value;
 
     backgroundVideo.style.filter =
-        `
-        blur(${amount}px)
-        brightness(.82)
-        saturate(.9)
-        `;
-
-
-    if(amount > 0){
-
-        backgroundVideo.style.transform =
-            "scale(1.05)";
-
-    }else{
-
-        backgroundVideo.style.transform =
-            "scale(1.02)";
-
-    }
-
-
-    blurValue.textContent =
         enabled
-        ? amount + "px blur"
-        : "Blur off";
-
+            ? `blur(${amount}px)`
+            : "blur(0px)";
 
     localStorage.setItem(
-        "xenvital_blur_enabled",
-        enabled
-        ? "1"
-        : "0"
+        "xenvitaltech_blur_enabled",
+        enabled ? "1" : "0"
     );
 
-
     localStorage.setItem(
-        "xenvital_blur_amount",
+        "xenvitaltech_blur_amount",
         amount
     );
 
 }
 
 
+const savedBlurEnabled =
+    localStorage.getItem(
+        "xenvitaltech_blur_enabled"
+    );
+
+const savedBlurAmount =
+    localStorage.getItem(
+        "xenvitaltech_blur_amount"
+    );
+
+
+if (savedBlurEnabled !== null) {
+
+    blurToggle.checked =
+        savedBlurEnabled === "1";
+
+}
+
+
+if (savedBlurAmount !== null) {
+
+    blurRange.value =
+        savedBlurAmount;
+
+}
+
+
 blurToggle.addEventListener(
     "change",
-    applyBlur
+    updateBlur
 );
-
 
 blurRange.addEventListener(
     "input",
-    applyBlur
+    updateBlur
 );
 
+updateBlur();
 
-/* =========================================================
-   WALLPAPER SHOW / HIDE
-========================================================= */
 
-const wallpaperToggle =
-    document.getElementById(
-        "wallpaperToggle"
+/* =====================================================
+   CLEAR CHAT
+===================================================== */
+
+document
+    .getElementById("clearChatBtn")
+    .addEventListener(
+        "click",
+        () => {
+
+            conversation = [];
+
+            localStorage.removeItem(
+                "xenvitaltech_conversation"
+            );
+
+            messagesContainer.innerHTML = "";
+
+            const welcomeDiv =
+                document.createElement("div");
+
+            welcomeDiv.className =
+                "welcome";
+
+            welcomeDiv.id =
+                "welcome";
+
+            welcomeDiv.innerHTML = `
+                <div class="welcome-card">
+
+                    <div class="welcome-logo">
+                        X
+                    </div>
+
+                    <h1>
+                        How can I help you?
+                    </h1>
+
+                    <p>
+                        Welcome to XenvitalTech AI by ShashwatBytes.
+                        Ask questions, solve problems, write code,
+                        learn concepts and more.
+                    </p>
+
+                </div>
+            `;
+
+            messagesContainer.appendChild(
+                welcomeDiv
+            );
+
+            showToast(
+                "Chat history cleared."
+            );
+
+            openPage("chatPage");
+
+        }
     );
 
 
-function applyWallpaperVisibility(){
+/* =====================================================
+   TOAST
+===================================================== */
 
-    const visible =
-        wallpaperToggle.checked;
+let toastTimer;
 
+function showToast(message) {
 
-    document.body
-    .classList
-    .toggle(
-        "wallpaper-hidden",
-        !visible
-    );
+    toast.textContent =
+        message;
 
+    toast.classList.add("show");
 
-    localStorage.setItem(
-        "xenvital_wallpaper_visible",
-        visible
-        ? "1"
-        : "0"
-    );
+    clearTimeout(toastTimer);
+
+    toastTimer =
+        setTimeout(() => {
+
+            toast.classList.remove(
+                "show"
+            );
+
+        }, 2200);
 
 }
 
 
-wallpaperToggle.addEventListener(
-    "change",
-    applyWallpaperVisibility
-);
+/* =====================================================
+   PROFILE
+===================================================== */
+
+const savedName =
+    localStorage.getItem(
+        "xenvitaltech_name"
+    ) ||
+    "Shashwat Mishra";
+
+const savedEmail =
+    localStorage.getItem(
+        "xenvitaltech_email"
+    ) ||
+    "ShashwatBytes";
 
 
-/* =========================================================
-   SETTINGS LOAD
-========================================================= */
-
-function loadSettings(){
-
-    const dark =
-        localStorage.getItem(
-            "xenvital_theme"
-        ) === "dark";
+document.getElementById(
+    "profileName"
+).textContent =
+    savedName;
 
 
-    setTheme(dark);
+document.getElementById(
+    "profileEmail"
+).textContent =
+    savedEmail;
 
 
-    document
-    .getElementById("darkToggle")
-    .checked = dark;
+document.getElementById(
+    "sideName"
+).textContent =
+    savedName;
 
 
-    const blurEnabled =
-        localStorage.getItem(
-            "xenvital_blur_enabled"
-        ) !== "0";
+document.getElementById(
+    "sideEmail"
+).textContent =
+    savedEmail;
 
 
-    const blurAmount =
-        Number(
-            localStorage.getItem(
-                "xenvital_blur_amount"
-            ) || 18
-        );
+document.getElementById(
+    "profileAvatar"
+).textContent =
+    savedName
+        .charAt(0)
+        .toUpperCase();
 
 
-    blurToggle.checked =
-        blurEnabled;
+/* =====================================================
+   LOAD OLD CHAT
+===================================================== */
 
+loadConversation();
 
-    blurRange.value =
-        Math.max(
-            0,
-            Math.min(
-                30,
-                blurAmount
-            )
-        );
+renderSavedMessages();
 
-
-    applyBlur();
-
-
-    const visible =
-        localStorage.getItem(
-            "xenvital_wallpaper_visible"
-        ) !== "0";
-
-
-    wallpaperToggle.checked =
-        visible;
-
-
-    applyWallpaperVisibility();
-
-}
-
-
-/* =========================================================
-   OPEN APP
-========================================================= */
-
-function openApp(){
-
-    authScreen.style.display =
-        "none";
-
-    app.classList.add(
-        "visible"
-    );
-
-
-    updateUser();
-
-    loadSettings();
-
-    startPermanentWallpaper();
-
-    showView("ai");
-
-}
-
-
-/* =========================================================
-   INITIAL
-========================================================= */
-
-if(currentUser){
-
-    openApp();
-
-}else{
-
-    authScreen.style.display =
-        "flex";
-
-    app.classList.remove(
-        "visible"
-    );
-
-}
-
+messageInput.focus();
 
 </script>
 
