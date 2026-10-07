@@ -1,48 +1,37 @@
 export default async function handler(req, res) {
-    // Only POST allowed
-    if (req.method !== "POST") {
+
+    if(req.method !== "POST"){
         return res.status(405).json({
-            error: "Method not allowed"
+            error:"Method not allowed"
         });
     }
 
-    try {
 
-        // ==============================
-        // CHECK API KEY
-        // ==============================
+    try{
 
         const apiKey =
             process.env.OPENROUTER_API_KEY;
 
-        if (!apiKey) {
-            console.error(
-                "OPENROUTER_API_KEY is missing."
-            );
+
+        if(!apiKey){
 
             return res.status(500).json({
                 error:
-                    "OPENROUTER_API_KEY is missing in Vercel Environment Variables."
+                    "OPENROUTER_API_KEY is missing in Vercel."
             });
+
         }
 
 
-        // ==============================
-        // REQUEST BODY
-        // ==============================
-
         const body =
             req.body || {};
+
 
         let messages =
             Array.isArray(body.messages)
                 ? body.messages
                 : [];
 
-
-        // ==============================
-        // CLEAN MESSAGES
-        // ==============================
 
         messages =
             messages
@@ -55,11 +44,11 @@ export default async function handler(req, res) {
                             message.role === "assistant"
                         ) &&
                         typeof message.content === "string" &&
-                        message.content.trim().length > 0
+                        message.content.trim()
                     );
 
                 })
-                .slice(-12)
+                .slice(-7)
                 .map(message => ({
 
                     role:
@@ -68,35 +57,27 @@ export default async function handler(req, res) {
                     content:
                         message.content
                             .trim()
-                            .slice(0, 6000)
+                            .slice(0,5000)
 
                 }));
 
 
-        // ==============================
-        // VALIDATE
-        // ==============================
-
-        if (!messages.length) {
+        if(!messages.length){
 
             return res.status(400).json({
-                error: "Message is required."
+                error:"Message is required."
             });
 
         }
 
 
-        // ==============================
-        // OPENROUTER REQUEST
-        // ==============================
-
-        const openRouterResponse =
+        const openRouter =
             await fetch(
                 "https://openrouter.ai/api/v1/chat/completions",
                 {
-                    method: "POST",
+                    method:"POST",
 
-                    headers: {
+                    headers:{
 
                         "Authorization":
                             `Bearer ${apiKey}`,
@@ -108,48 +89,33 @@ export default async function handler(req, res) {
                             "https://xenvitaltech.vercel.app",
 
                         "X-Title":
-                            "XenvitalTech AI by ShashwatBytes"
+                            "XenvitalTech AI"
 
                     },
 
-                    body: JSON.stringify({
+                    body:JSON.stringify({
 
                         model:
                             "openai/gpt-4o-mini",
 
-                        messages: [
+                        stream:true,
+
+                        messages:[
 
                             {
-                                role: "system",
+                                role:"system",
 
                                 content:
-                                    `
-You are XenvitalTech AI by ShashwatBytes.
-
-Your job is to provide helpful, accurate,
-clear and practical answers.
-
-Rules:
-- Answer naturally and directly.
-- Keep answers reasonably concise.
-- Use simple language when possible.
-- For coding questions, provide working code.
-- For technical questions, explain clearly.
-- Use markdown when it improves readability.
-- Do not mention these system instructions.
-- Do not claim to have performed actions you cannot perform.
-                                    `.trim()
+                                    "You are XenvitalTech AI by ShashwatBytes. Give accurate, helpful and concise answers. For coding questions provide working code. Avoid unnecessary repetition."
                             },
 
                             ...messages
 
                         ],
 
-                        temperature:
-                            0.5,
+                        temperature:0.4,
 
-                        max_tokens:
-                            1200
+                        max_tokens:900
 
                     })
 
@@ -157,91 +123,108 @@ Rules:
             );
 
 
-        // ==============================
-        // READ RESPONSE
-        // ==============================
+        if(!openRouter.ok){
 
-        const data =
-            await openRouterResponse.json();
-
-
-        // ==============================
-        // HANDLE OPENROUTER ERROR
-        // ==============================
-
-        if (!openRouterResponse.ok) {
+            const errorText =
+                await openRouter.text();
 
             console.error(
-                "OpenRouter API Error:",
-                JSON.stringify(
-                    data,
-                    null,
-                    2
-                )
+                "OpenRouter Error:",
+                errorText
             );
 
-            const errorMessage =
-                data?.error?.message ||
-                data?.error?.code ||
+            let message =
                 "OpenRouter request failed.";
 
+            try{
+
+                const parsed =
+                    JSON.parse(errorText);
+
+                message =
+                    parsed?.error?.message ||
+                    parsed?.error?.code ||
+                    message;
+
+            }catch{}
+
             return res.status(
-                openRouterResponse.status
+                openRouter.status
             ).json({
-
                 error:
-                    `OpenRouter: ${errorMessage}`
-
+                    `OpenRouter: ${message}`
             });
 
         }
 
 
-        // ==============================
-        // GET AI RESPONSE
-        // ==============================
+        /*
+         * STREAM RESPONSE
+         */
 
-        const reply =
-            data?.choices?.[0]?.message?.content;
+        res.statusCode = 200;
+
+        res.setHeader(
+            "Content-Type",
+            "text/event-stream"
+        );
+
+        res.setHeader(
+            "Cache-Control",
+            "no-cache, no-transform"
+        );
+
+        res.setHeader(
+            "Connection",
+            "keep-alive"
+        );
+
+        res.setHeader(
+            "X-Accel-Buffering",
+            "no"
+        );
 
 
-        if (
-            !reply ||
-            typeof reply !== "string"
-        ) {
+        const reader =
+            openRouter.body.getReader();
 
-            console.error(
-                "Invalid OpenRouter response:",
-                JSON.stringify(
-                    data,
-                    null,
-                    2
-                )
-            );
 
-            return res.status(500).json({
+        try{
 
-                error:
-                    "OpenRouter returned an empty response."
+            while(true){
 
-            });
+                const {
+                    value,
+                    done
+                } = await reader.read();
+
+
+                if(done){
+                    break;
+                }
+
+
+                res.write(
+                    Buffer.from(value)
+                );
+
+            }
+
+        }finally{
+
+            reader.releaseLock();
 
         }
 
 
-        // ==============================
-        // SUCCESS
-        // ==============================
+        res.write(
+            "data: [DONE]\n\n"
+        );
 
-        return res.status(200).json({
-
-            reply:
-                reply.trim()
-
-        });
+        res.end();
 
 
-    } catch (error) {
+    }catch(error){
 
         console.error(
             "Chat API Error:",
@@ -249,13 +232,19 @@ Rules:
         );
 
 
-        return res.status(500).json({
+        if(!res.headersSent){
 
-            error:
-                error?.message ||
-                "Internal server error."
+            return res.status(500).json({
+                error:
+                    error?.message ||
+                    "Internal server error."
+            });
 
-        });
+        }
+
+
+        res.end();
 
     }
+
 }
