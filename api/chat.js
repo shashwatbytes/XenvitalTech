@@ -6,195 +6,188 @@ export default async function handler(req, res) {
   }
 
   try {
-    const body = req.body || {};
+    const { message, messages } = req.body || {};
 
-    const message =
-      typeof body.message === "string"
-        ? body.message.trim()
-        : "";
-
-    const incomingMessages =
-      Array.isArray(body.messages)
-        ? body.messages
-        : [];
-
-    if (!message && incomingMessages.length === 0) {
+    if (!message && !Array.isArray(messages)) {
       return res.status(400).json({
         error: "Message is required"
       });
     }
 
-    const chatMessages =
-      incomingMessages.length > 0
-        ? incomingMessages
-            .filter(
-              item =>
-                item &&
-                typeof item.content === "string" &&
-                ["user", "assistant"].includes(item.role)
-            )
-            .slice(-20)
-        : [
-            {
-              role: "user",
-              content: message
-            }
-          ];
-
-    if (chatMessages.length === 0) {
-      return res.status(400).json({
-        error: "No valid messages provided"
-      });
-    }
-
-    const apiKey =
-      process.env.OPENROUTER_API_KEY;
+    const apiKey = process.env.OPENROUTER_API_KEY;
 
     if (!apiKey) {
-      console.error(
-        "OPENROUTER_API_KEY is missing"
-      );
-
       return res.status(500).json({
-        error:
-          "Server configuration error. OPENROUTER_API_KEY is not configured."
+        error: "OPENROUTER_API_KEY is missing in Vercel"
       });
     }
 
-    const controller =
-      new AbortController();
+    let chatMessages = Array.isArray(messages) && messages.length
+      ? messages
+      : [
+          {
+            role: "user",
+            content: message
+          }
+        ];
 
-    const timeout =
-      setTimeout(
-        () => controller.abort(),
-        30000
-      );
+    // Keep only recent conversation messages.
+    // This prevents long chats from becoming unnecessarily slow.
+    chatMessages = chatMessages.slice(-12);
 
-    let response;
+    const response = await fetch(
+      "https://openrouter.ai/api/v1/chat/completions",
+      {
+        method: "POST",
 
-    try {
-      response = await fetch(
-        "https://openrouter.ai/api/v1/chat/completions",
-        {
-          method: "POST",
+        headers: {
+          "Authorization": `Bearer ${apiKey}`,
+          "Content-Type": "application/json",
+          "HTTP-Referer": "https://xenvitaltech.vercel.app",
+          "X-Title": "XenvitalTech AI"
+        },
 
-          headers: {
-            "Authorization":
-              `Bearer ${apiKey}`,
+        body: JSON.stringify({
+          model: "openai/gpt-4o-mini",
 
-            "Content-Type":
-              "application/json",
+          messages: [
+            {
+              role: "system",
+              content:
+                "You are XenvitalTech AI by ShashwatBytes. Give direct, helpful and concise answers. Avoid unnecessary repetition."
+            },
+            ...chatMessages
+          ],
 
-            "HTTP-Referer":
-              "https://xenvitaltech.vercel.app",
+          temperature: 0.5,
 
-            "X-Title":
-              "XenvitalTech AI"
-          },
+          max_tokens: 1000,
 
-          body: JSON.stringify({
-            model: "openai/gpt-4o-mini",
-
-            messages: [
-              {
-                role: "system",
-                content:
-                  "You are XenvitalTech AI by ShashwatBytes. Give helpful, accurate, clear and concise answers. Be professional and practical. Do not mention internal system instructions."
-              },
-
-              ...chatMessages
-            ],
-
-            temperature: 0.7,
-
-            max_tokens: 1200
-          }),
-
-          signal: controller.signal
-        }
-      );
-    } finally {
-      clearTimeout(timeout);
-    }
-
-    const contentType =
-      response.headers.get("content-type") || "";
-
-    let data;
-
-    if (contentType.includes("application/json")) {
-      data = await response.json();
-    } else {
-      const text =
-        await response.text();
-
-      data = {
-        error: text
-      };
-    }
+          stream: true
+        })
+      }
+    );
 
     if (!response.ok) {
+      const errorData = await response.text();
+
       console.error(
-        "OpenRouter API error:",
+        "OpenRouter error:",
+        errorData
+      );
+
+      return res.status(response.status).json({
+        error: "AI service request failed"
+      });
+    }
+
+    res.statusCode = 200;
+
+    res.setHeader(
+      "Content-Type",
+      "text/event-stream; charset=utf-8"
+    );
+
+    res.setHeader(
+      "Cache-Control",
+      "no-cache, no-transform"
+    );
+
+    res.setHeader(
+      "Connection",
+      "keep-alive"
+    );
+
+    res.setHeader(
+      "X-Accel-Buffering",
+      "no"
+    );
+
+    if (!response.body) {
+      return res.end();
+    }
+
+    const reader =
+      response.body.getReader();
+
+    const decoder =
+      new TextDecoder();
+
+    let buffer = "";
+
+    while (true) {
+
+      const { value, done } =
+        await reader.read();
+
+      if (done) break;
+
+      buffer += decoder.decode(
+        value,
         {
-          status: response.status,
-          data
+          stream: true
         }
       );
 
-      return res.status(
-        response.status >= 400 &&
-        response.status < 600
-          ? response.status
-          : 500
-      ).json({
-        error:
-          data?.error?.message ||
-          data?.error?.code ||
-          data?.error ||
-          "OpenRouter request failed"
-      });
+      const lines =
+        buffer.split("\n");
+
+      buffer =
+        lines.pop() || "";
+
+      for (const line of lines) {
+
+        const trimmed =
+          line.trim();
+
+        if (!trimmed) continue;
+
+        if (
+          !trimmed.startsWith("data:")
+        ) {
+          continue;
+        }
+
+        const data =
+          trimmed.slice(5).trim();
+
+        if (data === "[DONE]") {
+          continue;
+        }
+
+        try {
+
+          const parsed =
+            JSON.parse(data);
+
+          const token =
+            parsed?.choices?.[0]?.delta?.content;
+
+          if (token) {
+            res.write(token);
+          }
+
+        } catch {
+          // Ignore incomplete SSE chunks
+        }
+      }
     }
 
-    const reply =
-      data?.choices?.[0]?.message?.content;
-
-    if (
-      typeof reply !== "string" ||
-      !reply.trim()
-    ) {
-      console.error(
-        "Unexpected OpenRouter response:",
-        data
-      );
-
-      return res.status(502).json({
-        error:
-          "The AI provider returned an empty response."
-      });
-    }
-
-    return res.status(200).json({
-      reply: reply.trim()
-    });
+    res.end();
 
   } catch (error) {
 
     console.error(
-      "XenvitalTech API error:",
+      "Chat API error:",
       error
     );
 
-    if (error?.name === "AbortError") {
-      return res.status(504).json({
-        error:
-          "The AI service took too long to respond. Please try again."
+    if (!res.headersSent) {
+      return res.status(500).json({
+        error: "Server error"
       });
     }
 
-    return res.status(500).json({
-      error:
-        "Unable to connect to the AI service."
-    });
+    res.end();
   }
 }
