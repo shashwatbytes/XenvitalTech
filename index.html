@@ -3,87 +3,145 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
-<meta name="theme-color" content="#101319">
-<meta name="description" content="XenvitalTech AI — AI assistant by ShashwatBytes.">
+<meta name="theme-color" content="#111318">
+<meta name="description" content="XenvitalTech AI — AI Assistant by ShashwatBytes.">
 <title>XenvitalTech AI — ShashwatBytes</title>
 
 <style>
 :root{
-    --glass:rgba(255,255,255,.72);
-    --glass-strong:rgba(255,255,255,.84);
-    --glass-dark:rgba(12,16,24,.70);
-    --glass-dark-strong:rgba(12,16,24,.84);
     --text:#111827;
     --muted:#667085;
-    --border:rgba(255,255,255,.48);
-    --border-dark:rgba(255,255,255,.12);
     --primary:#315bdc;
     --primary-hover:#254bc2;
-    --danger:#c93636;
+    --danger:#d04444;
+
+    --glass:rgba(255,255,255,.68);
+    --glass-strong:rgba(255,255,255,.80);
+    --glass-soft:rgba(255,255,255,.42);
+    --glass-border:rgba(255,255,255,.55);
+
     --shadow:0 18px 55px rgba(0,0,0,.18);
-    --blur:22px;
+    --blur:18px;
+
     --radius:20px;
-    --nav-height:68px;
+    --nav-height:66px;
 }
 
-*{box-sizing:border-box;margin:0;padding:0}
+body.dark{
+    --text:#f4f6fa;
+    --muted:#a7afbd;
+    --glass:rgba(15,19,27,.68);
+    --glass-strong:rgba(15,19,27,.82);
+    --glass-soft:rgba(15,19,27,.45);
+    --glass-border:rgba(255,255,255,.13);
+}
 
-html,body{
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html,
+body{
     width:100%;
     height:100%;
     overflow:hidden;
 }
 
 body{
-    font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+    font-family:
+        Inter,
+        ui-sans-serif,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
     color:var(--text);
-    background:#111;
+    background:#101217;
+
     -webkit-font-smoothing:antialiased;
 }
 
-button,input{font:inherit}
-button{cursor:pointer}
-button:focus-visible,input:focus-visible{
-    outline:3px solid rgba(49,91,220,.25);
+button,
+input{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+button:focus-visible,
+input:focus-visible{
+    outline:3px solid rgba(49,91,220,.22);
     outline-offset:2px;
 }
 
-/* ---------- BACKGROUND ---------- */
 
-.background{
+/* =====================================================
+   BACKGROUND
+===================================================== */
+
+.background-layer{
     position:fixed;
     inset:0;
-    z-index:-5;
-    background-image:url("./background.jpg");
-    background-size:cover;
-    background-position:center 42%;
-    transform:scale(1.025);
+    z-index:-10;
+    overflow:hidden;
+    background:#151820;
 }
 
-.background::after{
-    content:"";
+.background-image,
+.background-video{
     position:absolute;
     inset:0;
-    background:
-        linear-gradient(120deg,rgba(5,10,18,.60),rgba(8,12,20,.18) 50%,rgba(5,10,18,.50)),
-        rgba(255,255,255,.06);
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    transition:
+        opacity .35s ease,
+        filter .35s ease;
 }
 
-body.dark .background::after{
-    background:
-        linear-gradient(120deg,rgba(3,7,13,.78),rgba(4,8,15,.34),rgba(2,6,12,.72));
-}
-
-body::before{
-    content:"";
-    position:fixed;
-    inset:0;
-    z-index:-4;
+.background-video{
+    opacity:0;
     pointer-events:none;
-    background:linear-gradient(to bottom,rgba(0,0,0,.14),rgba(0,0,0,.08));
 }
 
-/* ---------- AUTH ---------- */
+.background-overlay{
+    position:absolute;
+    inset:0;
+
+    background:
+        linear-gradient(
+            120deg,
+            rgba(5,9,16,.58),
+            rgba(5,9,16,.20),
+            rgba(5,9,16,.48)
+        );
+
+    pointer-events:none;
+}
+
+body.dark .background-overlay{
+    background:
+        linear-gradient(
+            120deg,
+            rgba(2,5,10,.76),
+            rgba(2,5,10,.32),
+            rgba(2,5,10,.72)
+        );
+}
+
+
+/* =====================================================
+   AUTH
+===================================================== */
 
 .auth{
     min-height:100dvh;
@@ -91,58 +149,80 @@ body::before{
     display:flex;
     align-items:center;
     justify-content:center;
+
     padding:20px;
+
     overflow:auto;
 }
 
 .auth-card{
     width:min(420px,100%);
+
     padding:32px;
-    border:1px solid var(--border);
-    border-radius:26px;
-    background:var(--glass);
+
+    border:1px solid var(--glass-border);
+    border-radius:25px;
+
+    background:var(--glass-strong);
+
     backdrop-filter:blur(var(--blur)) saturate(150%);
     -webkit-backdrop-filter:blur(var(--blur)) saturate(150%);
-    box-shadow:var(--shadow);
-}
 
-.auth-logo,.logo{
-    display:grid;
-    place-items:center;
-    background:rgba(49,91,220,.92);
-    color:#fff;
-    font-weight:850;
+    box-shadow:var(--shadow);
 }
 
 .auth-logo{
     width:58px;
     height:58px;
+
     margin:auto;
-    border-radius:17px;
+
+    display:grid;
+    place-items:center;
+
+    border-radius:16px;
+
+    background:var(--primary);
+    color:#fff;
+
     font-size:24px;
-    box-shadow:0 12px 28px rgba(49,91,220,.25);
+    font-weight:850;
+
+    box-shadow:0 12px 30px rgba(49,91,220,.25);
 }
 
-.auth h1{
+.auth-card h1{
     margin-top:17px;
+
     text-align:center;
+
     font-size:25px;
     letter-spacing:-.03em;
 }
 
 .auth-subtitle{
     margin:7px 0 24px;
+
     text-align:center;
+
     color:var(--muted);
+
     font-size:13px;
 }
 
-.form{display:none}
-.form.active{display:block}
+.form{
+    display:none;
+}
+
+.form.active{
+    display:block;
+}
 
 label{
     display:block;
+
     margin:14px 0 7px;
+
     font-size:12px;
     font-weight:700;
 }
@@ -150,31 +230,47 @@ label{
 input{
     width:100%;
     min-height:46px;
+
     padding:11px 13px;
-    border:1px solid rgba(130,140,155,.28);
+
+    border:1px solid rgba(100,110,125,.25);
     border-radius:13px;
+
     background:rgba(255,255,255,.58);
     color:var(--text);
+
     outline:none;
 }
 
-input::placeholder{color:#7b8492}
+body.dark input{
+    background:rgba(0,0,0,.22);
+}
+
+input::placeholder{
+    color:#7b8492;
+}
 
 input:focus{
     border-color:var(--primary);
-    background:rgba(255,255,255,.82);
-    box-shadow:0 0 0 3px rgba(49,91,220,.10);
+
+    box-shadow:
+        0 0 0 3px rgba(49,91,220,.10);
 }
 
 .primary{
     width:100%;
     min-height:46px;
+
     margin-top:19px;
+
     border:1px solid var(--primary);
     border-radius:13px;
+
     background:var(--primary);
     color:#fff;
+
     font-weight:750;
+
     transition:.16s ease;
 }
 
@@ -185,8 +281,11 @@ input:focus{
 
 .switch{
     margin-top:17px;
+
     text-align:center;
+
     color:var(--muted);
+
     font-size:13px;
 }
 
@@ -198,77 +297,122 @@ input:focus{
 
 .error{
     min-height:17px;
+
     margin-top:8px;
+
     color:var(--danger);
+
     font-size:12px;
 }
 
-/* ---------- APP ---------- */
+
+/* =====================================================
+   APP
+===================================================== */
 
 .app{
     display:none;
+
     width:100%;
     height:100dvh;
+
     padding:16px;
+
     gap:16px;
+
     overflow:hidden;
 }
 
-/* ---------- SIDEBAR ---------- */
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
 
 .sidebar{
-    width:248px;
+    width:250px;
     flex:none;
+
     display:flex;
     flex-direction:column;
+
     padding:18px;
-    border:1px solid var(--border);
+
+    border:1px solid var(--glass-border);
     border-radius:22px;
+
     background:var(--glass);
+
     backdrop-filter:blur(var(--blur)) saturate(145%);
     -webkit-backdrop-filter:blur(var(--blur)) saturate(145%);
+
     box-shadow:var(--shadow);
 }
 
 .brand{
     display:flex;
     align-items:center;
+
     gap:10px;
+
     margin-bottom:22px;
 }
 
 .logo{
     width:40px;
     height:40px;
-    border-radius:12px;
+
+    display:grid;
+    place-items:center;
+
     flex:none;
+
+    border-radius:12px;
+
+    background:var(--primary);
+    color:#fff;
+
+    font-size:17px;
+    font-weight:850;
 }
 
-.brand h2{font-size:15px}
+.brand h2{
+    font-size:15px;
+}
+
 .brand small{
     display:block;
+
     margin-top:2px;
+
     color:var(--muted);
+
     font-size:10px;
 }
 
 .new-chat{
     width:100%;
     min-height:43px;
+
     margin-bottom:22px;
-    border:1px solid rgba(49,91,220,.85);
+
+    border:1px solid var(--primary);
     border-radius:12px;
+
     background:var(--primary);
     color:#fff;
+
     font-size:13px;
     font-weight:750;
 }
 
 .nav-title{
     margin:2px 4px 8px;
+
     color:var(--muted);
+
     font-size:10px;
     font-weight:800;
+
     text-transform:uppercase;
     letter-spacing:.08em;
 }
@@ -276,117 +420,189 @@ input:focus{
 .nav-btn{
     width:100%;
     min-height:40px;
+
     display:flex;
     align-items:center;
+
     gap:9px;
+
     margin-bottom:4px;
+
     padding:9px 10px;
+
     border:1px solid transparent;
     border-radius:11px;
+
     background:transparent;
-    color:#4d5665;
+
+    color:var(--muted);
+
     text-align:left;
+
     font-size:13px;
     font-weight:600;
 }
 
 .nav-btn:hover,
 .nav-btn.active{
-    background:rgba(255,255,255,.45);
-    border-color:rgba(255,255,255,.5);
+    background:rgba(255,255,255,.35);
+    border-color:var(--glass-border);
     color:var(--primary);
+}
+
+body.dark .nav-btn:hover,
+body.dark .nav-btn.active{
+    background:rgba(255,255,255,.07);
 }
 
 .nav-icon{
     width:20px;
+
     display:grid;
     place-items:center;
+
     font-size:13px;
 }
 
 .sidebar-bottom{
     margin-top:auto;
+
     padding-top:12px;
-    border-top:1px solid rgba(100,110,125,.18);
+
+    border-top:1px solid rgba(100,110,125,.16);
 }
 
 .profile-mini{
     display:flex;
     align-items:center;
+
     gap:9px;
+
     padding:8px;
 }
 
 .avatar{
     width:34px;
     height:34px;
+
     flex:none;
+
     display:grid;
     place-items:center;
+
     border:1px solid rgba(100,110,125,.20);
     border-radius:50%;
-    background:rgba(255,255,255,.48);
+
+    background:rgba(255,255,255,.42);
+
     color:var(--text);
+
     font-size:12px;
     font-weight:800;
 }
 
+body.dark .avatar{
+    background:rgba(255,255,255,.08);
+}
+
 .profile-mini strong{
     display:block;
+
     font-size:12px;
 }
 
 .profile-mini span{
     display:block;
+
     max-width:150px;
+
     overflow:hidden;
     text-overflow:ellipsis;
     white-space:nowrap;
+
     color:var(--muted);
+
     font-size:10px;
 }
 
 .logout{
     width:100%;
+
     margin-top:4px;
+
     padding:9px;
+
     border:0;
     border-radius:10px;
+
     background:transparent;
+
     color:var(--danger);
+
     text-align:left;
+
     font-size:12px;
     font-weight:650;
 }
 
-.logout:hover{background:rgba(201,54,54,.08)}
+.logout:hover{
+    background:rgba(208,68,68,.08);
+}
 
-/* ---------- MAIN GLASS ---------- */
+
+/* =====================================================
+   MAIN
+===================================================== */
 
 .main{
     flex:1;
+
     min-width:0;
+
     height:100%;
+
     display:flex;
     flex-direction:column;
+
     overflow:hidden;
-    border:1px solid var(--border);
+
+    border:1px solid var(--glass-border);
     border-radius:22px;
-    background:rgba(255,255,255,.48);
-    backdrop-filter:blur(24px) saturate(145%);
-    -webkit-backdrop-filter:blur(24px) saturate(145%);
+
+    background:rgba(255,255,255,.38);
+
+    backdrop-filter:blur(22px) saturate(145%);
+    -webkit-backdrop-filter:blur(22px) saturate(145%);
+
     box-shadow:var(--shadow);
 }
+
+body.dark .main{
+    background:rgba(10,14,21,.38);
+}
+
+
+/* =====================================================
+   TOP BAR
+===================================================== */
 
 .topbar{
     height:62px;
     flex:none;
+
     display:flex;
     align-items:center;
     justify-content:space-between;
+
     padding:0 20px;
-    border-bottom:1px solid rgba(100,110,125,.15);
-    background:rgba(255,255,255,.34);
+
+    border-bottom:1px solid rgba(100,110,125,.14);
+
+    background:rgba(255,255,255,.24);
+}
+
+body.dark .topbar{
+    background:rgba(0,0,0,.15);
 }
 
 .page-title{
@@ -394,25 +610,46 @@ input:focus{
     font-weight:800;
 }
 
-.top-actions{display:flex;gap:7px}
+.top-actions{
+    display:flex;
+    align-items:center;
+
+    gap:7px;
+}
 
 .icon{
     width:38px;
     height:38px;
+
     display:grid;
     place-items:center;
+
     border:1px solid rgba(100,110,125,.20);
     border-radius:11px;
-    background:rgba(255,255,255,.45);
+
+    background:rgba(255,255,255,.40);
+
     color:var(--text);
+
+    font-size:16px;
 }
 
-/* ---------- VIEWS ---------- */
+body.dark .icon{
+    background:rgba(255,255,255,.07);
+}
+
+
+/* =====================================================
+   VIEWS
+===================================================== */
 
 .view{
     display:none;
+
     flex:1;
+
     min-height:0;
+
     overflow:hidden;
 }
 
@@ -421,44 +658,67 @@ input:focus{
     flex-direction:column;
 }
 
-/* ---------- CHAT ---------- */
+
+/* =====================================================
+   CHAT
+===================================================== */
 
 .ai-chat{
     flex:1;
+
     min-height:0;
+
     overflow-y:auto;
+
     padding:28px 20px 22px;
 }
 
 .messages{
     width:100%;
     max-width:850px;
+
     margin:auto;
 }
 
 .message{
     display:flex;
     align-items:flex-start;
+
     gap:9px;
+
     margin:17px 0;
 }
 
-.message.user{flex-direction:row-reverse}
+.message.user{
+    flex-direction:row-reverse;
+}
 
 .bubble{
     max-width:min(730px,78%);
+
     padding:12px 15px;
+
     border:1px solid rgba(110,120,135,.18);
     border-radius:15px;
+
+    background:rgba(255,255,255,.54);
+
     color:var(--text);
-    background:rgba(255,255,255,.58);
+
     box-shadow:0 5px 18px rgba(0,0,0,.04);
+
     font-size:14px;
     line-height:1.58;
+
     white-space:pre-wrap;
     overflow-wrap:anywhere;
+
     backdrop-filter:blur(12px);
     -webkit-backdrop-filter:blur(12px);
+}
+
+body.dark .bubble{
+    background:rgba(12,17,25,.52);
 }
 
 .bot .bubble{
@@ -467,192 +727,609 @@ input:focus{
 
 .user .bubble{
     border-color:rgba(49,91,220,.45);
+
     background:rgba(49,91,220,.92);
+
     color:#fff;
+
     border-top-right-radius:5px;
 }
 
-/* ---------- INPUT ---------- */
+
+/* =====================================================
+   INPUT
+===================================================== */
 
 .input-area{
     flex:none;
+
     padding:11px 20px 17px;
+
     border-top:1px solid rgba(100,110,125,.14);
-    background:rgba(255,255,255,.27);
+
+    background:rgba(255,255,255,.20);
+}
+
+body.dark .input-area{
+    background:rgba(0,0,0,.12);
 }
 
 .input-box{
     max-width:850px;
+
     margin:auto;
+
     display:flex;
+
     gap:8px;
+
     padding:5px;
-    border:1px solid rgba(255,255,255,.55);
+
+    border:1px solid var(--glass-border);
     border-radius:16px;
-    background:rgba(255,255,255,.55);
+
+    background:rgba(255,255,255,.52);
+
     box-shadow:0 8px 25px rgba(0,0,0,.07);
+
     backdrop-filter:blur(18px);
     -webkit-backdrop-filter:blur(18px);
 }
 
+body.dark .input-box{
+    background:rgba(12,17,25,.58);
+}
+
 .input-box input{
-    min-height:44px;
+    flex:1;
+
+    min-width:0;
+
     border:0;
+
     background:transparent;
+
     box-shadow:none;
 }
 
 .input-box input:focus{
     border:0;
+
     box-shadow:none;
 }
 
 .send{
     width:45px;
     height:45px;
+
     flex:none;
+
     border:0;
     border-radius:12px;
+
     background:var(--primary);
+
     color:#fff;
+
     font-size:18px;
     font-weight:800;
 }
 
 .send:disabled{
     opacity:.55;
+
     cursor:not-allowed;
 }
 
-/* ---------- PROFILE ---------- */
 
-.profile-view{overflow-y:auto}
+/* =====================================================
+   PROFILE
+===================================================== */
+
+.profile-view{
+    overflow-y:auto;
+}
 
 .profile-content{
     width:100%;
     max-width:700px;
+
     padding:32px 24px;
+
     margin:auto;
 }
 
 .profile-heading{
     font-size:22px;
+
     letter-spacing:-.025em;
 }
 
 .profile-description{
     margin-top:6px;
+
     color:var(--muted);
+
     font-size:13px;
 }
 
 .profile-section{
     margin-top:25px;
+
     padding:24px;
-    border:1px solid rgba(255,255,255,.48);
+
+    border:1px solid var(--glass-border);
     border-radius:18px;
-    background:rgba(255,255,255,.42);
-    backdrop-filter:blur(16px);
-    -webkit-backdrop-filter:blur(16px);
+
+    background:rgba(255,255,255,.34);
+
+    backdrop-filter:blur(15px);
+    -webkit-backdrop-filter:blur(15px);
+}
+
+body.dark .profile-section{
+    background:rgba(12,17,25,.40);
 }
 
 .profile-large{
     width:64px;
     height:64px;
+
     font-size:20px;
 }
 
 .profile-name{
     margin-top:13px;
+
     font-size:16px;
     font-weight:800;
 }
 
 .profile-email{
     margin-top:4px;
+
     color:var(--muted);
+
     font-size:13px;
 }
 
 .profile-logout{
     margin-top:24px;
+
     padding:10px 14px;
-    border:1px solid rgba(201,54,54,.24);
+
+    border:1px solid rgba(208,68,68,.25);
     border-radius:11px;
+
     background:rgba(255,240,240,.55);
+
     color:var(--danger);
+
     font-size:13px;
     font-weight:700;
 }
 
-/* ---------- MOBILE ---------- */
 
-.mobile-nav{display:none}
+/* =====================================================
+   SETTINGS
+===================================================== */
+
+.settings-view{
+    overflow-y:auto;
+}
+
+.settings-content{
+    width:100%;
+    max-width:760px;
+
+    margin:auto;
+
+    padding:30px 24px 50px;
+}
+
+.settings-heading{
+    font-size:22px;
+    letter-spacing:-.025em;
+}
+
+.settings-description{
+    margin-top:6px;
+
+    color:var(--muted);
+
+    font-size:13px;
+}
+
+.settings-section{
+    margin-top:22px;
+
+    padding:20px;
+
+    border:1px solid var(--glass-border);
+    border-radius:18px;
+
+    background:rgba(255,255,255,.34);
+
+    backdrop-filter:blur(15px);
+    -webkit-backdrop-filter:blur(15px);
+}
+
+body.dark .settings-section{
+    background:rgba(12,17,25,.40);
+}
+
+.settings-section h3{
+    font-size:14px;
+}
+
+.settings-section p{
+    margin-top:4px;
+
+    color:var(--muted);
+
+    font-size:12px;
+}
+
+.wallpaper-grid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,minmax(0,1fr));
+
+    gap:12px;
+
+    margin-top:18px;
+}
+
+.wallpaper-card{
+    position:relative;
+
+    overflow:hidden;
+
+    min-height:120px;
+
+    border:2px solid transparent;
+    border-radius:15px;
+
+    background:rgba(255,255,255,.35);
+
+    cursor:pointer;
+
+    transition:
+        border-color .18s ease,
+        transform .18s ease;
+}
+
+.wallpaper-card:hover{
+    transform:translateY(-2px);
+}
+
+.wallpaper-card.selected{
+    border-color:var(--primary);
+}
+
+.wallpaper-card img,
+.wallpaper-card video{
+    width:100%;
+    height:100%;
+
+    min-height:120px;
+
+    display:block;
+
+    object-fit:cover;
+}
+
+.wallpaper-overlay{
+    position:absolute;
+
+    left:0;
+    right:0;
+    bottom:0;
+
+    padding:9px;
+
+    background:linear-gradient(
+        transparent,
+        rgba(0,0,0,.72)
+    );
+
+    color:#fff;
+
+    font-size:11px;
+    font-weight:700;
+}
+
+.wallpaper-check{
+    position:absolute;
+
+    top:8px;
+    right:8px;
+
+    width:24px;
+    height:24px;
+
+    display:none;
+    place-items:center;
+
+    border-radius:50%;
+
+    background:var(--primary);
+
+    color:#fff;
+
+    font-size:12px;
+    font-weight:900;
+}
+
+.wallpaper-card.selected .wallpaper-check{
+    display:grid;
+}
+
+.custom-upload{
+    margin-top:16px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:12px;
+
+    padding:14px;
+
+    border:1px dashed rgba(100,110,125,.30);
+    border-radius:14px;
+
+    background:rgba(255,255,255,.22);
+}
+
+.custom-upload-text strong{
+    display:block;
+    font-size:12px;
+}
+
+.custom-upload-text span{
+    display:block;
+
+    margin-top:3px;
+
+    color:var(--muted);
+
+    font-size:11px;
+}
+
+.upload-button{
+    flex:none;
+
+    padding:9px 13px;
+
+    border:1px solid var(--primary);
+    border-radius:10px;
+
+    background:var(--primary);
+
+    color:#fff;
+
+    font-size:12px;
+    font-weight:700;
+}
+
+#wallpaperUpload{
+    display:none;
+}
+
+
+/* =====================================================
+   TOGGLES
+===================================================== */
+
+.setting-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:20px;
+
+    padding:13px 0;
+
+    border-bottom:1px solid rgba(100,110,125,.13);
+}
+
+.setting-row:last-child{
+    border-bottom:0;
+}
+
+.setting-label strong{
+    display:block;
+
+    font-size:13px;
+}
+
+.setting-label span{
+    display:block;
+
+    margin-top:3px;
+
+    color:var(--muted);
+
+    font-size:11px;
+}
+
+.toggle{
+    position:relative;
+
+    width:46px;
+    height:26px;
+
+    flex:none;
+
+    border:0;
+    border-radius:50px;
+
+    background:#aab1bd;
+}
+
+.toggle::after{
+    content:"";
+
+    position:absolute;
+
+    top:3px;
+    left:3px;
+
+    width:20px;
+    height:20px;
+
+    border-radius:50%;
+
+    background:#fff;
+
+    transition:.18s ease;
+
+    box-shadow:0 2px 5px rgba(0,0,0,.18);
+}
+
+.toggle.on{
+    background:var(--primary);
+}
+
+.toggle.on::after{
+    transform:translateX(20px);
+}
+
+.range-wrap{
+    margin-top:10px;
+}
+
+.range-wrap.hidden{
+    display:none;
+}
+
+.range-value{
+    color:var(--primary);
+
+    font-size:11px;
+    font-weight:750;
+}
+
+input[type="range"]{
+    width:100%;
+
+    min-height:0;
+
+    padding:0;
+
+    border:0;
+
+    background:transparent;
+
+    box-shadow:none;
+
+    accent-color:var(--primary);
+}
+
+
+/* =====================================================
+   MOBILE NAV
+===================================================== */
+
+.mobile-nav{
+    display:none;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
 
 @media(max-width:800px){
+
     .app{
         padding:0;
         gap:0;
     }
 
-    .sidebar{display:none}
+    .sidebar{
+        display:none;
+    }
 
     .main{
         height:100dvh;
+
         border:0;
         border-radius:0;
-        background:rgba(255,255,255,.48);
     }
 
     .topbar{
         height:57px;
+
         padding:0 13px;
     }
 
-    .page-title{font-size:14px}
+    .page-title{
+        font-size:14px;
+    }
 
     .mobile-nav{
         position:fixed;
+
         left:10px;
         right:10px;
         bottom:10px;
+
         z-index:200;
+
         height:60px;
+
         display:flex;
+
         gap:5px;
+
         padding:5px;
-        border:1px solid rgba(255,255,255,.58);
+
+        border:1px solid var(--glass-border);
         border-radius:17px;
-        background:rgba(255,255,255,.72);
+
+        background:var(--glass-strong);
+
         box-shadow:0 12px 35px rgba(0,0,0,.16);
+
         backdrop-filter:blur(22px) saturate(150%);
         -webkit-backdrop-filter:blur(22px) saturate(150%);
     }
 
     .mobile-nav button{
         flex:1;
+
         border:0;
         border-radius:12px;
+
         background:transparent;
-        color:#667085;
-        font-size:11px;
+
+        color:var(--muted);
+
+        font-size:10px;
         font-weight:650;
     }
 
     .mobile-nav button.active{
         background:rgba(49,91,220,.11);
+
         color:var(--primary);
     }
 
     .mobile-nav .nav-icon{
         display:block;
+
         width:auto;
+
         margin-bottom:2px;
-        font-size:15px;
+
+        font-size:14px;
     }
 
     .ai-chat{
-        padding:15px 11px 82px;
+        padding:15px 11px 83px;
     }
 
     .message{
@@ -662,32 +1339,40 @@ input:focus{
 
     .bubble{
         max-width:84%;
+
         padding:10px 12px;
+
         font-size:14px;
     }
 
     .input-area{
         position:fixed;
+
         left:0;
         right:0;
+
         bottom:68px;
+
         z-index:150;
+
         height:68px;
+
         padding:8px 10px;
-        border-top:1px solid rgba(255,255,255,.45);
-        background:rgba(255,255,255,.38);
+
+        background:rgba(255,255,255,.25);
+
         backdrop-filter:blur(18px);
         -webkit-backdrop-filter:blur(18px);
     }
 
     .input-box{
         height:52px;
-        padding:4px;
     }
 
     .input-box input{
         height:44px;
         min-height:44px;
+
         font-size:16px;
     }
 
@@ -696,34 +1381,79 @@ input:focus{
         height:44px;
     }
 
-    .profile-content{
+    .profile-content,
+    .settings-content{
         padding:25px 15px 95px;
     }
 
-    .profile-section{padding:20px}
+    .profile-section,
+    .settings-section{
+        padding:20px;
+    }
 
-    .auth{padding:15px}
+    .wallpaper-grid{
+        grid-template-columns:
+            repeat(2,minmax(0,1fr));
+
+        gap:10px;
+    }
+
+    .wallpaper-card,
+    .wallpaper-card img,
+    .wallpaper-card video{
+        min-height:105px;
+    }
+
+    .custom-upload{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .upload-button{
+        width:100%;
+    }
+
+    .auth{
+        padding:15px;
+    }
 
     .auth-card{
         padding:25px 20px;
-        border-radius:22px;
-    }
 
-    .background{
-        background-position:center 36%;
+        border-radius:22px;
     }
 }
 
 @media(max-width:380px){
-    .bubble{max-width:87%}
-    .auth-card{padding:22px 17px}
+
+    .bubble{
+        max-width:87%;
+    }
+
+    .auth-card{
+        padding:22px 17px;
+    }
+
+    .wallpaper-card,
+    .wallpaper-card img,
+    .wallpaper-card video{
+        min-height:92px;
+    }
 }
 
+
+/* =====================================================
+   REDUCED MOTION
+===================================================== */
+
 @media(prefers-reduced-motion:reduce){
-    *,*::before,*::after{
-        scroll-behavior:auto!important;
+
+    *,
+    *::before,
+    *::after{
         transition:none!important;
         animation:none!important;
+        scroll-behavior:auto!important;
     }
 }
 </style>
@@ -731,12 +1461,48 @@ input:focus{
 
 <body>
 
-<div class="background" aria-hidden="true"></div>
+<!-- =====================================================
+     BACKGROUND SYSTEM
+===================================================== -->
+
+<div class="background-layer">
+
+    <img
+        class="background-image"
+        id="backgroundImage"
+        src="assets/wallpapers/background-photo.jpg"
+        alt=""
+    >
+
+    <video
+        class="background-video"
+        id="backgroundVideo"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+    ></video>
+
+    <div
+        class="background-overlay"
+        id="backgroundOverlay"
+    ></div>
+
+</div>
+
+
+<!-- =====================================================
+     AUTH
+===================================================== -->
 
 <section class="auth" id="auth">
+
     <div class="auth-card">
 
-        <div class="auth-logo">X</div>
+        <div class="auth-logo">
+            X
+        </div>
 
         <h1>XenvitalTech</h1>
 
@@ -744,9 +1510,18 @@ input:focus{
             AI Assistant by ShashwatBytes
         </div>
 
-        <form class="form active" id="loginForm">
 
-            <label for="loginEmail">Email</label>
+        <!-- LOGIN -->
+
+        <form
+            class="form active"
+            id="loginForm"
+        >
+
+            <label for="loginEmail">
+                Email
+            </label>
+
             <input
                 id="loginEmail"
                 type="email"
@@ -755,7 +1530,11 @@ input:focus{
                 required
             >
 
-            <label for="loginPassword">Password</label>
+
+            <label for="loginPassword">
+                Password
+            </label>
+
             <input
                 id="loginPassword"
                 type="password"
@@ -764,14 +1543,26 @@ input:focus{
                 required
             >
 
-            <div class="error" id="loginError" role="alert"></div>
 
-            <button class="primary" type="submit">
+            <div
+                class="error"
+                id="loginError"
+                role="alert"
+            ></div>
+
+
+            <button
+                class="primary"
+                type="submit"
+            >
                 Login
             </button>
 
+
             <div class="switch">
+
                 New to XenvitalTech?
+
                 <span
                     onclick="showSignup()"
                     role="button"
@@ -779,13 +1570,23 @@ input:focus{
                 >
                     Create account
                 </span>
+
             </div>
 
         </form>
 
-        <form class="form" id="signupForm">
 
-            <label for="signupUsername">Username</label>
+        <!-- SIGNUP -->
+
+        <form
+            class="form"
+            id="signupForm"
+        >
+
+            <label for="signupUsername">
+                Username
+            </label>
+
             <input
                 id="signupUsername"
                 type="text"
@@ -796,7 +1597,11 @@ input:focus{
                 required
             >
 
-            <label for="signupEmail">Email</label>
+
+            <label for="signupEmail">
+                Email
+            </label>
+
             <input
                 id="signupEmail"
                 type="email"
@@ -805,7 +1610,11 @@ input:focus{
                 required
             >
 
-            <label for="signupPassword">Password</label>
+
+            <label for="signupPassword">
+                Password
+            </label>
+
             <input
                 id="signupPassword"
                 type="password"
@@ -815,14 +1624,26 @@ input:focus{
                 required
             >
 
-            <div class="error" id="signupError" role="alert"></div>
 
-            <button class="primary" type="submit">
+            <div
+                class="error"
+                id="signupError"
+                role="alert"
+            ></div>
+
+
+            <button
+                class="primary"
+                type="submit"
+            >
                 Create Account
             </button>
 
+
             <div class="switch">
+
                 Already have an account?
+
                 <span
                     onclick="showLogin()"
                     role="button"
@@ -830,64 +1651,139 @@ input:focus{
                 >
                     Login
                 </span>
+
             </div>
 
         </form>
+
     </div>
+
 </section>
 
 
-<section class="app" id="app">
+<!-- =====================================================
+     APP
+===================================================== -->
+
+<section
+    class="app"
+    id="app"
+>
+
+
+    <!-- SIDEBAR -->
 
     <aside class="sidebar">
 
         <div class="brand">
-            <div class="logo">X</div>
+
+            <div class="logo">
+                X
+            </div>
 
             <div>
-                <h2>XenvitalTech</h2>
-                <small>by ShashwatBytes</small>
+
+                <h2>
+                    XenvitalTech
+                </h2>
+
+                <small>
+                    by ShashwatBytes
+                </small>
+
             </div>
+
         </div>
 
-        <button class="new-chat" onclick="newAIChat()">
+
+        <button
+            class="new-chat"
+            onclick="newAIChat()"
+        >
             + New AI Chat
         </button>
 
-        <div class="nav-title">Workspace</div>
+
+        <div class="nav-title">
+            Workspace
+        </div>
+
 
         <button
             class="nav-btn active"
             id="aiNav"
             onclick="showView('ai')"
         >
-            <span class="nav-icon">AI</span>
+
+            <span class="nav-icon">
+                AI
+            </span>
+
             XenvitalTech AI
+
         </button>
+
 
         <button
             class="nav-btn"
             id="profileNav"
             onclick="showView('profile')"
         >
-            <span class="nav-icon">•</span>
+
+            <span class="nav-icon">
+                •
+            </span>
+
             My Profile
+
         </button>
+
+
+        <button
+            class="nav-btn"
+            id="settingsNav"
+            onclick="showView('settings')"
+        >
+
+            <span class="nav-icon">
+                ⚙
+            </span>
+
+            Settings
+
+        </button>
+
 
         <div class="sidebar-bottom">
 
             <div class="profile-mini">
 
-                <div class="avatar" id="miniAvatar">U</div>
+                <div
+                    class="avatar"
+                    id="miniAvatar"
+                >
+                    U
+                </div>
 
                 <div>
-                    <strong id="miniUsername">@user</strong>
-                    <span id="miniEmail">email</span>
+
+                    <strong id="miniUsername">
+                        @user
+                    </strong>
+
+                    <span id="miniEmail">
+                        email
+                    </span>
+
                 </div>
 
             </div>
 
-            <button class="logout" onclick="logout()">
+
+            <button
+                class="logout"
+                onclick="logout()"
+            >
                 Logout
             </button>
 
@@ -896,13 +1792,22 @@ input:focus{
     </aside>
 
 
+    <!-- MAIN -->
+
     <main class="main">
+
+
+        <!-- TOP BAR -->
 
         <header class="topbar">
 
-            <div class="page-title" id="pageTitle">
+            <div
+                class="page-title"
+                id="pageTitle"
+            >
                 XenvitalTech AI
             </div>
+
 
             <div class="top-actions">
 
@@ -920,15 +1825,30 @@ input:focus{
         </header>
 
 
-        <section class="view active" id="aiView">
+        <!-- =================================================
+             AI VIEW
+        ================================================== -->
 
-            <div class="ai-chat" id="aiScroll">
+        <section
+            class="view active"
+            id="aiView"
+        >
 
-                <div class="messages" id="aiMessages">
+            <div
+                class="ai-chat"
+                id="aiScroll"
+            >
+
+                <div
+                    class="messages"
+                    id="aiMessages"
+                >
 
                     <div class="message bot">
 
-                        <div class="avatar">X</div>
+                        <div class="avatar">
+                            X
+                        </div>
 
                         <div class="bubble">XenvitalTech AI by ShashwatBytes
 
@@ -958,12 +1878,12 @@ What would you like to work on today?</div>
                         aria-label="Message XenvitalTech AI"
                     >
 
+
                     <button
                         class="send"
                         id="aiSend"
                         onclick="sendAI()"
                         aria-label="Send message"
-                        title="Send message"
                     >
                         →
                     </button>
@@ -975,7 +1895,14 @@ What would you like to work on today?</div>
         </section>
 
 
-        <section class="view profile-view" id="profileView">
+        <!-- =================================================
+             PROFILE
+        ================================================== -->
+
+        <section
+            class="view profile-view"
+            id="profileView"
+        >
 
             <div class="profile-content">
 
@@ -987,6 +1914,7 @@ What would you like to work on today?</div>
                     Manage your XenvitalTech account information.
                 </p>
 
+
                 <div class="profile-section">
 
                     <div
@@ -996,6 +1924,7 @@ What would you like to work on today?</div>
                         U
                     </div>
 
+
                     <div
                         class="profile-name"
                         id="profileUsername"
@@ -1003,12 +1932,14 @@ What would you like to work on today?</div>
                         @username
                     </div>
 
+
                     <div
                         class="profile-email"
                         id="profileEmail"
                     >
                         email
                     </div>
+
 
                     <button
                         class="profile-logout"
@@ -1023,26 +1954,351 @@ What would you like to work on today?</div>
 
         </section>
 
+
+        <!-- =================================================
+             SETTINGS
+        ================================================== -->
+
+        <section
+            class="view settings-view"
+            id="settingsView"
+        >
+
+            <div class="settings-content">
+
+                <h2 class="settings-heading">
+                    Settings
+                </h2>
+
+                <p class="settings-description">
+                    Customize how XenvitalTech AI looks on your device.
+                </p>
+
+
+                <!-- WALLPAPER -->
+
+                <div class="settings-section">
+
+                    <h3>
+                        Background wallpaper
+                    </h3>
+
+                    <p>
+                        Choose an image or animated background.
+                    </p>
+
+
+                    <div
+                        class="wallpaper-grid"
+                        id="wallpaperGrid"
+                    >
+
+                        <!-- Photo -->
+
+                        <button
+                            class="wallpaper-card"
+                            data-type="image"
+                            data-src="assets/wallpapers/background-photo.jpg"
+                            onclick="selectWallpaper(this)"
+                        >
+
+                            <img
+                                src="assets/wallpapers/background-photo.jpg"
+                                alt="Background photo"
+                            >
+
+                            <span class="wallpaper-overlay">
+                                Photo
+                            </span>
+
+                            <span class="wallpaper-check">
+                                ✓
+                            </span>
+
+                        </button>
+
+
+                        <!-- Video 1 -->
+
+                        <button
+                            class="wallpaper-card"
+                            data-type="video"
+                            data-src="assets/wallpapers/wallpaper1.mp4"
+                            onclick="selectWallpaper(this)"
+                        >
+
+                            <video
+                                src="assets/wallpapers/wallpaper1.mp4"
+                                muted
+                                autoplay
+                                loop
+                                playsinline
+                            ></video>
+
+                            <span class="wallpaper-overlay">
+                                Motion 01
+                            </span>
+
+                            <span class="wallpaper-check">
+                                ✓
+                            </span>
+
+                        </button>
+
+
+                        <!-- Video 2 -->
+
+                        <button
+                            class="wallpaper-card"
+                            data-type="video"
+                            data-src="assets/wallpapers/wallpaper2.mp4"
+                            onclick="selectWallpaper(this)"
+                        >
+
+                            <video
+                                src="assets/wallpapers/wallpaper2.mp4"
+                                muted
+                                autoplay
+                                loop
+                                playsinline
+                            ></video>
+
+                            <span class="wallpaper-overlay">
+                                Motion 02
+                            </span>
+
+                            <span class="wallpaper-check">
+                                ✓
+                            </span>
+
+                        </button>
+
+
+                        <!-- Video 3 -->
+
+                        <button
+                            class="wallpaper-card"
+                            data-type="video"
+                            data-src="assets/wallpapers/wallpaper3.mp4"
+                            onclick="selectWallpaper(this)"
+                        >
+
+                            <video
+                                src="assets/wallpapers/wallpaper3.mp4"
+                                muted
+                                autoplay
+                                loop
+                                playsinline
+                            ></video>
+
+                            <span class="wallpaper-overlay">
+                                Motion 03
+                            </span>
+
+                            <span class="wallpaper-check">
+                                ✓
+                            </span>
+
+                        </button>
+
+                    </div>
+
+
+                    <!-- CUSTOM -->
+
+                    <div class="custom-upload">
+
+                        <div class="custom-upload-text">
+
+                            <strong>
+                                Custom wallpaper
+                            </strong>
+
+                            <span>
+                                Choose an image or video from your device.
+                            </span>
+
+                        </div>
+
+
+                        <label
+                            class="upload-button"
+                            for="wallpaperUpload"
+                        >
+                            Choose file
+                        </label>
+
+                        <input
+                            id="wallpaperUpload"
+                            type="file"
+                            accept="image/*,video/*"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- DISPLAY -->
+
+                <div class="settings-section">
+
+                    <h3>
+                        Background effects
+                    </h3>
+
+                    <p>
+                        Control the amount of background blur.
+                    </p>
+
+
+                    <div class="setting-row">
+
+                        <div class="setting-label">
+
+                            <strong>
+                                Background blur
+                            </strong>
+
+                            <span>
+                                Blur the selected wallpaper behind the interface.
+                            </span>
+
+                        </div>
+
+
+                        <button
+                            class="toggle"
+                            id="blurToggle"
+                            onclick="toggleBackgroundBlur()"
+                            aria-label="Toggle background blur"
+                        ></button>
+
+                    </div>
+
+
+                    <div
+                        class="range-wrap"
+                        id="blurControls"
+                    >
+
+                        <div class="setting-row">
+
+                            <div class="setting-label">
+
+                                <strong>
+                                    Blur intensity
+                                </strong>
+
+                                <span>
+                                    Adjust background softness.
+                                </span>
+
+                            </div>
+
+                            <span
+                                class="range-value"
+                                id="blurValue"
+                            >
+                                18px
+                            </span>
+
+                        </div>
+
+
+                        <input
+                            id="blurRange"
+                            type="range"
+                            min="0"
+                            max="40"
+                            value="18"
+                            oninput="changeBlur(this.value)"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- RESET -->
+
+                <div class="settings-section">
+
+                    <h3>
+                        Reset appearance
+                    </h3>
+
+                    <p>
+                        Restore the default XenvitalTech wallpaper and blur settings.
+                    </p>
+
+
+                    <button
+                        class="profile-logout"
+                        style="margin-top:16px"
+                        onclick="resetAppearance()"
+                    >
+                        Reset appearance
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
     </main>
 
 
-    <nav class="mobile-nav" aria-label="Main navigation">
+    <!-- =================================================
+         MOBILE NAV
+    ================================================== -->
+
+    <nav
+        class="mobile-nav"
+        aria-label="Main navigation"
+    >
 
         <button
             id="mobileAi"
             class="active"
             onclick="showView('ai')"
         >
-            <span class="nav-icon">AI</span>
+
+            <span class="nav-icon">
+                AI
+            </span>
+
             AI
+
         </button>
+
 
         <button
             id="mobileProfile"
             onclick="showView('profile')"
         >
-            <span class="nav-icon">•</span>
+
+            <span class="nav-icon">
+                •
+            </span>
+
             Profile
+
+        </button>
+
+
+        <button
+            id="mobileSettings"
+            onclick="showView('settings')"
+        >
+
+            <span class="nav-icon">
+                ⚙
+            </span>
+
+            Settings
+
         </button>
 
     </nav>
@@ -1051,285 +2307,522 @@ What would you like to work on today?</div>
 
 
 <script>
-const $ = id => document.getElementById(id);
 
-let users = JSON.parse(
-    localStorage.getItem("xenvital_users") || "[]"
-);
+/* =====================================================
+   HELPERS
+===================================================== */
 
-let currentUser = JSON.parse(
-    localStorage.getItem("xenvital_currentUser") || "null"
-);
+const $ = id =>
+    document.getElementById(id);
+
+
+/* =====================================================
+   USER SYSTEM
+===================================================== */
+
+let users =
+    JSON.parse(
+        localStorage.getItem(
+            "xenvital_users"
+        ) || "[]"
+    );
+
+
+let currentUser =
+    JSON.parse(
+        localStorage.getItem(
+            "xenvital_currentUser"
+        ) || "null"
+    );
+
 
 let aiHistory = [];
 
 
-/* ---------- AUTH STORAGE ---------- */
+/* =====================================================
+   AUTH STORAGE
+===================================================== */
 
 function saveUsers(){
+
     localStorage.setItem(
         "xenvital_users",
         JSON.stringify(users)
     );
+
 }
 
+
 function saveCurrent(){
+
     localStorage.setItem(
         "xenvital_currentUser",
         JSON.stringify(currentUser)
     );
+
 }
 
 
-/* ---------- AUTH VIEWS ---------- */
+/* =====================================================
+   AUTH VIEWS
+===================================================== */
 
 function showSignup(){
-    $("loginForm").classList.remove("active");
-    $("signupForm").classList.add("active");
+
+    $("loginForm")
+        .classList
+        .remove("active");
+
+    $("signupForm")
+        .classList
+        .add("active");
+
     $("loginError").textContent = "";
+
 }
+
 
 function showLogin(){
-    $("signupForm").classList.remove("active");
-    $("loginForm").classList.add("active");
+
+    $("signupForm")
+        .classList
+        .remove("active");
+
+    $("loginForm")
+        .classList
+        .add("active");
+
     $("signupError").textContent = "";
+
 }
 
 
-/* ---------- SIGNUP ---------- */
+/* =====================================================
+   SIGNUP
+===================================================== */
 
-$("signupForm").addEventListener("submit", event => {
+$("signupForm")
+.addEventListener(
+    "submit",
+    event => {
 
-    event.preventDefault();
+        event.preventDefault();
 
-    const username = $("signupUsername")
-        .value
-        .trim()
-        .toLowerCase()
-        .replace(/^@/, "");
 
-    const email = $("signupEmail")
-        .value
-        .trim()
-        .toLowerCase();
+        const username =
+            $("signupUsername")
+                .value
+                .trim()
+                .toLowerCase()
+                .replace(/^@/, "");
 
-    const password = $("signupPassword").value;
 
-    $("signupError").textContent = "";
+        const email =
+            $("signupEmail")
+                .value
+                .trim()
+                .toLowerCase();
 
-    if(!/^[a-z0-9_.-]{3,30}$/.test(username)){
-        $("signupError").textContent =
-            "Use 3–30 letters, numbers, _, . or -.";
-        return;
+
+        const password =
+            $("signupPassword").value;
+
+
+        $("signupError").textContent = "";
+
+
+        if(
+            !/^[a-z0-9_.-]{3,30}$/
+                .test(username)
+        ){
+
+            $("signupError")
+                .textContent =
+                "Use 3–30 letters, numbers, _, . or -.";
+
+            return;
+        }
+
+
+        if(
+            users.some(
+                user =>
+                    user.username === username
+            )
+        ){
+
+            $("signupError")
+                .textContent =
+                "Username already exists.";
+
+            return;
+        }
+
+
+        if(
+            users.some(
+                user =>
+                    user.email === email
+            )
+        ){
+
+            $("signupError")
+                .textContent =
+                "Email already registered.";
+
+            return;
+        }
+
+
+        const user = {
+            username,
+            email,
+            password
+        };
+
+
+        users.push(user);
+
+        saveUsers();
+
+
+        currentUser = user;
+
+        saveCurrent();
+
+
+        openApp();
+
     }
+);
 
-    if(users.some(u => u.username === username)){
-        $("signupError").textContent =
-            "Username already exists.";
-        return;
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+$("loginForm")
+.addEventListener(
+    "submit",
+    event => {
+
+        event.preventDefault();
+
+
+        const email =
+            $("loginEmail")
+                .value
+                .trim()
+                .toLowerCase();
+
+
+        const password =
+            $("loginPassword").value;
+
+
+        const user =
+            users.find(
+                item =>
+                    item.email === email &&
+                    item.password === password
+            );
+
+
+        if(!user){
+
+            $("loginError")
+                .textContent =
+                "Invalid email or password.";
+
+            return;
+        }
+
+
+        $("loginError").textContent = "";
+
+
+        currentUser = user;
+
+        saveCurrent();
+
+
+        openApp();
+
     }
-
-    if(users.some(u => u.email === email)){
-        $("signupError").textContent =
-            "Email already registered.";
-        return;
-    }
-
-    const user = {
-        username,
-        email,
-        password
-    };
-
-    users.push(user);
-    saveUsers();
-
-    currentUser = user;
-    saveCurrent();
-
-    openApp();
-});
+);
 
 
-/* ---------- LOGIN ---------- */
-
-$("loginForm").addEventListener("submit", event => {
-
-    event.preventDefault();
-
-    const email = $("loginEmail")
-        .value
-        .trim()
-        .toLowerCase();
-
-    const password = $("loginPassword").value;
-
-    const user = users.find(
-        u =>
-            u.email === email &&
-            u.password === password
-    );
-
-    if(!user){
-        $("loginError").textContent =
-            "Invalid email or password.";
-        return;
-    }
-
-    $("loginError").textContent = "";
-
-    currentUser = user;
-    saveCurrent();
-
-    openApp();
-});
-
-
-/* ---------- APP ---------- */
+/* =====================================================
+   APP
+===================================================== */
 
 function openApp(){
 
-    $("auth").style.display = "none";
-    $("app").style.display = "flex";
+    $("auth").style.display =
+        "none";
+
+    $("app").style.display =
+        "flex";
+
 
     updateProfile();
+
     loadTheme();
+
+    loadAppearance();
+
     showView("ai");
+
 }
 
 
 function updateProfile(){
 
-    if(!currentUser) return;
+    if(!currentUser)
+        return;
 
-    const username = "@" + currentUser.username;
+
+    const username =
+        "@" + currentUser.username;
+
 
     const initial =
-        currentUser.username.charAt(0).toUpperCase();
+        currentUser.username
+            .charAt(0)
+            .toUpperCase();
 
-    $("miniUsername").textContent = username;
-    $("miniEmail").textContent = currentUser.email;
 
-    $("profileUsername").textContent = username;
-    $("profileEmail").textContent = currentUser.email;
+    $("miniUsername")
+        .textContent =
+        username;
 
-    $("miniAvatar").textContent = initial;
-    $("profileAvatar").textContent = initial;
+
+    $("miniEmail")
+        .textContent =
+        currentUser.email;
+
+
+    $("profileUsername")
+        .textContent =
+        username;
+
+
+    $("profileEmail")
+        .textContent =
+        currentUser.email;
+
+
+    $("miniAvatar")
+        .textContent =
+        initial;
+
+
+    $("profileAvatar")
+        .textContent =
+        initial;
+
 }
 
 
 function logout(){
 
     currentUser = null;
+
     aiHistory = [];
+
 
     localStorage.removeItem(
         "xenvital_currentUser"
     );
 
-    $("app").style.display = "none";
-    $("auth").style.display = "flex";
+
+    $("app").style.display =
+        "none";
+
+    $("auth").style.display =
+        "flex";
+
 
     $("loginEmail").value = "";
+
     $("loginPassword").value = "";
+
     $("loginError").textContent = "";
 
+
     showLogin();
+
 }
 
 
-/* ---------- VIEWS ---------- */
+/* =====================================================
+   VIEW SYSTEM
+===================================================== */
 
 function showView(view){
 
-    document.querySelectorAll(".view")
-        .forEach(v => v.classList.remove("active"));
+    document
+        .querySelectorAll(".view")
+        .forEach(
+            element =>
+                element.classList
+                    .remove("active")
+        );
 
-    document.querySelectorAll(".nav-btn")
-        .forEach(v => v.classList.remove("active"));
 
-    document.querySelectorAll(".mobile-nav button")
-        .forEach(v => v.classList.remove("active"));
+    document
+        .querySelectorAll(".nav-btn")
+        .forEach(
+            element =>
+                element.classList
+                    .remove("active")
+        );
+
+
+    document
+        .querySelectorAll(".mobile-nav button")
+        .forEach(
+            element =>
+                element.classList
+                    .remove("active")
+        );
+
 
     const map = {
+
         ai: [
             "aiView",
             "aiNav",
             "mobileAi",
             "XenvitalTech AI"
         ],
+
         profile: [
             "profileView",
             "profileNav",
             "mobileProfile",
             "My Profile"
+        ],
+
+        settings: [
+            "settingsView",
+            "settingsNav",
+            "mobileSettings",
+            "Settings"
         ]
+
     };
 
-    const item = map[view];
 
-    if(!item) return;
+    const item =
+        map[view];
 
-    $(item[0]).classList.add("active");
+
+    if(!item)
+        return;
+
+
+    $(item[0])
+        .classList
+        .add("active");
+
 
     if($(item[1])){
-        $(item[1]).classList.add("active");
+
+        $(item[1])
+            .classList
+            .add("active");
+
     }
+
 
     if($(item[2])){
-        $(item[2]).classList.add("active");
+
+        $(item[2])
+            .classList
+            .add("active");
+
     }
 
-    $("pageTitle").textContent = item[3];
+
+    $("pageTitle")
+        .textContent =
+        item[3];
+
 
     if(view === "ai"){
-        setTimeout(() => $("aiInput").focus(), 100);
+
+        setTimeout(
+            () =>
+                $("aiInput").focus(),
+            100
+        );
+
     }
+
 }
 
 
-/* ---------- THEME ---------- */
+/* =====================================================
+   THEME
+===================================================== */
 
 function toggleTheme(){
 
-    document.body.classList.toggle("dark");
+    document.body
+        .classList
+        .toggle("dark");
+
 
     localStorage.setItem(
         "xenvital_theme",
-        document.body.classList.contains("dark")
-            ? "dark"
-            : "light"
+        document.body.classList.contains(
+            "dark"
+        )
+        ? "dark"
+        : "light"
     );
+
 }
 
 
 function loadTheme(){
 
-    document.body.classList.toggle(
-        "dark",
-        localStorage.getItem("xenvital_theme") === "dark"
-    );
+    document.body
+        .classList
+        .toggle(
+            "dark",
+            localStorage.getItem(
+                "xenvital_theme"
+            ) === "dark"
+        );
+
 }
 
 
-/* ---------- NEW CHAT ---------- */
+/* =====================================================
+   AI CHAT
+===================================================== */
 
 function newAIChat(){
 
     aiHistory = [];
 
-    $("aiMessages").innerHTML = "";
+
+    $("aiMessages")
+        .innerHTML = "";
+
 
     addAIMessage(
         "XenvitalTech AI by ShashwatBytes\n\nNew chat started.\n\nHow can I help you today?",
         "bot"
     );
 
+
     showView("ai");
+
 }
 
-
-/* ---------- INPUT ---------- */
 
 function aiEnter(event){
 
@@ -1337,28 +2830,46 @@ function aiEnter(event){
         event.key === "Enter" &&
         !event.shiftKey
     ){
+
         event.preventDefault();
+
         sendAI();
+
     }
+
 }
 
 
-/* ---------- AI ---------- */
-
 async function sendAI(){
 
-    const text = $("aiInput")
-        .value
-        .trim();
+    const text =
+        $("aiInput")
+            .value
+            .trim();
 
-    if(!text || !currentUser) return;
 
-    addAIMessage(text, "user");
+    if(
+        !text ||
+        !currentUser
+    )
+        return;
+
+
+    addAIMessage(
+        text,
+        "user"
+    );
+
 
     $("aiInput").value = "";
+
     $("aiSend").disabled = true;
 
-    const typingId = "typing-" + Date.now();
+
+    const typingId =
+        "typing-" +
+        Date.now();
+
 
     addAIMessage(
         "Generating response…",
@@ -1366,154 +2877,1036 @@ async function sendAI(){
         typingId
     );
 
+
     try{
 
         aiHistory.push({
-            role: "user",
-            content: text
+
+            role:"user",
+
+            content:text
+
         });
 
-        const response = await fetch(
-            "/api/chat",
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
-                },
-                body: JSON.stringify({
-                    message: text,
-                    messages: aiHistory
-                })
-            }
-        );
 
-        const raw = await response.text();
+        const response =
+            await fetch(
+                "/api/chat",
+                {
+
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                            "application/json",
+
+                        "Accept":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify({
+
+                            message:text,
+
+                            messages:
+                                aiHistory
+
+                        })
+
+                }
+            );
+
+
+        const raw =
+            await response.text();
+
 
         let data = {};
 
+
         try{
-            data = raw ? JSON.parse(raw) : {};
-        }catch{
+
+            data =
+                raw
+                    ? JSON.parse(raw)
+                    : {};
+
+        }
+        catch{
+
             data = {
-                error: raw || "Invalid server response."
+
+                error:
+                    raw ||
+                    "Invalid server response."
+
             };
+
         }
 
-        const typing = $(typingId);
 
-        if(typing) typing.remove();
+        const typing =
+            $(typingId);
+
+
+        if(typing)
+            typing.remove();
+
 
         if(!response.ok){
+
             throw new Error(
+
                 data.error ||
                 data.message ||
                 "Unable to connect to the AI service."
+
             );
+
         }
 
+
         const reply =
+
             data.reply ||
+
             data.message ||
+
             data.content ||
-            data.choices?.[0]?.message?.content ||
+
+            data.choices
+                ?. [0]
+                ?.message
+                ?.content ||
+
             "";
 
+
         if(!reply){
+
             throw new Error(
                 "No AI response was received."
             );
+
         }
 
+
         aiHistory.push({
-            role: "assistant",
-            content: reply
+
+            role:"assistant",
+
+            content:reply
+
         });
 
-        addAIMessage(reply, "bot");
 
-    }catch(error){
+        addAIMessage(
+            reply,
+            "bot"
+        );
 
-        const typing = $(typingId);
 
-        if(typing) typing.remove();
+    }
+    catch(error){
+
+        const typing =
+            $(typingId);
+
+
+        if(typing)
+            typing.remove();
+
 
         console.error(
             "XenvitalTech AI error:",
             error
         );
 
+
         addAIMessage(
+
             "Unable to get a response right now.\n\nPlease try again.",
+
             "bot"
+
         );
 
-    }finally{
-
-        $("aiSend").disabled = false;
-        $("aiInput").focus();
     }
+    finally{
+
+        $("aiSend")
+            .disabled = false;
+
+
+        $("aiInput").focus();
+
+    }
+
 }
 
 
-/* ---------- MESSAGE ---------- */
-
-function addAIMessage(text, type, id){
+function addAIMessage(
+    text,
+    type,
+    id
+){
 
     const message =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
+
 
     message.className =
         "message " + type;
 
-    if(id){
+
+    if(id)
         message.id = id;
-    }
+
 
     const avatar =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
-    avatar.className = "avatar";
+
+    avatar.className =
+        "avatar";
+
 
     avatar.textContent =
         type === "bot"
-            ? "X"
-            : (
-                currentUser?.username
-                    ?.charAt(0)
-                    .toUpperCase()
-                || "U"
-            );
+        ? "X"
+        :
+        (
+            currentUser
+                ?.username
+                ?.charAt(0)
+                .toUpperCase()
+            ||
+            "U"
+        );
+
 
     const bubble =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
-    bubble.className = "bubble";
-    bubble.textContent = text;
+
+    bubble.className =
+        "bubble";
+
+
+    bubble.textContent =
+        text;
+
 
     message.append(
         avatar,
         bubble
     );
 
-    $("aiMessages").appendChild(message);
 
-    requestAnimationFrame(() => {
-        $("aiScroll").scrollTop =
-            $("aiScroll").scrollHeight;
-    });
+    $("aiMessages")
+        .appendChild(message);
+
+
+    requestAnimationFrame(
+        () => {
+
+            $("aiScroll")
+                .scrollTop =
+                $("aiScroll")
+                    .scrollHeight;
+
+        }
+    );
+
 }
 
 
-/* ---------- START ---------- */
+/* =====================================================
+   WALLPAPER SYSTEM
+===================================================== */
+
+const DEFAULT_WALLPAPER = {
+
+    type:"image",
+
+    src:
+        "assets/wallpapers/background-photo.jpg"
+
+};
+
+
+function applyWallpaper(
+    type,
+    src
+){
+
+    const image =
+        $("backgroundImage");
+
+    const video =
+        $("backgroundVideo");
+
+
+    if(type === "video"){
+
+        image.style.opacity = "0";
+
+        video.style.opacity = "1";
+
+        if(
+            video.src !==
+            new URL(
+                src,
+                window.location.href
+            ).href
+        ){
+
+            video.src = src;
+
+        }
+
+
+        video
+            .play()
+            .catch(
+                () => {}
+            );
+
+    }
+    else{
+
+        video.pause();
+
+        video.removeAttribute("src");
+
+        video.load();
+
+        video.style.opacity = "0";
+
+        image.src = src;
+
+        image.style.opacity = "1";
+
+    }
+
+}
+
+
+/* =====================================================
+   SELECT BUILT-IN WALLPAPER
+===================================================== */
+
+function selectWallpaper(card){
+
+    const type =
+        card.dataset.type;
+
+
+    const src =
+        card.dataset.src;
+
+
+    applyWallpaper(
+        type,
+        src
+    );
+
+
+    localStorage.setItem(
+        "xenvital_wallpaper",
+        JSON.stringify({
+
+            type,
+            src
+
+        })
+    );
+
+
+    document
+        .querySelectorAll(
+            ".wallpaper-card"
+        )
+        .forEach(
+            item =>
+                item.classList
+                    .remove("selected")
+        );
+
+
+    card.classList.add(
+        "selected"
+    );
+
+}
+
+
+/* =====================================================
+   CUSTOM WALLPAPER
+===================================================== */
+
+$("wallpaperUpload")
+.addEventListener(
+    "change",
+    async event => {
+
+        const file =
+            event.target.files?.[0];
+
+
+        if(!file)
+            return;
+
+
+        const isImage =
+            file.type.startsWith(
+                "image/"
+            );
+
+
+        const isVideo =
+            file.type.startsWith(
+                "video/"
+            );
+
+
+        if(
+            !isImage &&
+            !isVideo
+        ){
+
+            alert(
+                "Please select an image or video."
+            );
+
+            return;
+
+        }
+
+
+        const maxSize =
+            isVideo
+            ? 100 * 1024 * 1024
+            : 20 * 1024 * 1024;
+
+
+        if(file.size > maxSize){
+
+            alert(
+                isVideo
+                ? "Video must be smaller than 100 MB."
+                : "Image must be smaller than 20 MB."
+            );
+
+            return;
+
+        }
+
+
+        try{
+
+            const id =
+                await saveCustomWallpaper(
+                    file
+                );
+
+
+            const url =
+                URL.createObjectURL(
+                    file
+                );
+
+
+            applyWallpaper(
+                isVideo
+                ? "video"
+                : "image",
+                url
+            );
+
+
+            localStorage.setItem(
+                "xenvital_wallpaper",
+                JSON.stringify({
+
+                    type:
+                        isVideo
+                        ? "custom-video"
+                        : "custom-image",
+
+                    id
+
+                })
+            );
+
+
+            document
+                .querySelectorAll(
+                    ".wallpaper-card"
+                )
+                .forEach(
+                    item =>
+                        item.classList
+                            .remove("selected")
+                );
+
+
+        }
+        catch(error){
+
+            console.error(
+                "Custom wallpaper error:",
+                error
+            );
+
+
+            alert(
+                "Unable to save this wallpaper."
+            );
+
+        }
+
+
+        event.target.value = "";
+
+    }
+);
+
+
+/* =====================================================
+   INDEXEDDB CUSTOM WALLPAPERS
+===================================================== */
+
+function openWallpaperDB(){
+
+    return new Promise(
+        (resolve,reject) => {
+
+            const request =
+                indexedDB.open(
+                    "XenvitalTechWallpapers",
+                    1
+                );
+
+
+            request.onupgradeneeded =
+                event => {
+
+                    const db =
+                        event.target.result;
+
+
+                    if(
+                        !db.objectStoreNames
+                            .contains("wallpapers")
+                    ){
+
+                        db.createObjectStore(
+                            "wallpapers"
+                        );
+
+                    }
+
+                };
+
+
+            request.onsuccess =
+                () =>
+                    resolve(
+                        request.result
+                    );
+
+
+            request.onerror =
+                () =>
+                    reject(
+                        request.error
+                    );
+
+        }
+    );
+
+}
+
+
+async function saveCustomWallpaper(
+    file
+){
+
+    const db =
+        await openWallpaperDB();
+
+
+    return new Promise(
+        (resolve,reject) => {
+
+            const id =
+                "custom_" +
+                Date.now();
+
+
+            const transaction =
+                db.transaction(
+                    "wallpapers",
+                    "readwrite"
+                );
+
+
+            transaction
+                .objectStore(
+                    "wallpapers"
+                )
+                .put(
+                    {
+                        blob:file,
+                        type:file.type,
+                        name:file.name
+                    },
+                    id
+                );
+
+
+            transaction.oncomplete =
+                () =>
+                    resolve(id);
+
+
+            transaction.onerror =
+                () =>
+                    reject(
+                        transaction.error
+                    );
+
+        }
+    );
+
+}
+
+
+async function getCustomWallpaper(
+    id
+){
+
+    const db =
+        await openWallpaperDB();
+
+
+    return new Promise(
+        (resolve,reject) => {
+
+            const transaction =
+                db.transaction(
+                    "wallpapers",
+                    "readonly"
+                );
+
+
+            const request =
+                transaction
+                    .objectStore(
+                        "wallpapers"
+                    )
+                    .get(id);
+
+
+            request.onsuccess =
+                () =>
+                    resolve(
+                        request.result
+                    );
+
+
+            request.onerror =
+                () =>
+                    reject(
+                        request.error
+                    );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   LOAD SAVED WALLPAPER
+===================================================== */
+
+async function loadAppearance(){
+
+    const saved =
+        JSON.parse(
+            localStorage.getItem(
+                "xenvital_wallpaper"
+            ) || "null"
+        );
+
+
+    if(!saved){
+
+        applyWallpaper(
+            DEFAULT_WALLPAPER.type,
+            DEFAULT_WALLPAPER.src
+        );
+
+
+        markSelectedWallpaper(
+            DEFAULT_WALLPAPER.src
+        );
+
+    }
+    else if(
+        saved.type ===
+            "custom-image" ||
+        saved.type ===
+            "custom-video"
+    ){
+
+        try{
+
+            const data =
+                await getCustomWallpaper(
+                    saved.id
+                );
+
+
+            if(data?.blob){
+
+                const url =
+                    URL.createObjectURL(
+                        data.blob
+                    );
+
+
+                applyWallpaper(
+                    saved.type ===
+                        "custom-video"
+                    ? "video"
+                    : "image",
+                    url
+                );
+
+            }
+            else{
+
+                resetWallpaper();
+
+            }
+
+        }
+        catch{
+
+            resetWallpaper();
+
+        }
+
+    }
+    else{
+
+        applyWallpaper(
+            saved.type,
+            saved.src
+        );
+
+
+        markSelectedWallpaper(
+            saved.src
+        );
+
+    }
+
+
+    loadBlurSettings();
+
+}
+
+
+/* =====================================================
+   MARK SELECTED WALLPAPER
+===================================================== */
+
+function markSelectedWallpaper(
+    src
+){
+
+    document
+        .querySelectorAll(
+            ".wallpaper-card"
+        )
+        .forEach(
+            card => {
+
+                card.classList.toggle(
+                    "selected",
+                    card.dataset.src === src
+                );
+
+            }
+        );
+
+}
+
+
+/* =====================================================
+   BLUR
+===================================================== */
+
+function toggleBackgroundBlur(){
+
+    const toggle =
+        $("blurToggle");
+
+
+    const enabled =
+        !toggle.classList.contains(
+            "on"
+        );
+
+
+    toggle.classList.toggle(
+        "on",
+        enabled
+    );
+
+
+    localStorage.setItem(
+        "xenvital_blur_enabled",
+        enabled
+        ? "1"
+        : "0"
+    );
+
+
+    applyBlur();
+
+}
+
+
+function changeBlur(
+    value
+){
+
+    document.documentElement
+        .style
+        .setProperty(
+            "--blur",
+            value + "px"
+        );
+
+
+    $("blurValue")
+        .textContent =
+        value + "px";
+
+
+    localStorage.setItem(
+        "xenvital_blur_amount",
+        value
+    );
+
+}
+
+
+function applyBlur(){
+
+    const enabled =
+        localStorage.getItem(
+            "xenvital_blur_enabled"
+        ) !== "0";
+
+
+    const amount =
+        localStorage.getItem(
+            "xenvital_blur_amount"
+        ) || "18";
+
+
+    const finalBlur =
+        enabled
+        ? amount
+        : "0";
+
+
+    document.documentElement
+        .style
+        .setProperty(
+            "--blur",
+            finalBlur + "px"
+        );
+
+
+    $("blurToggle")
+        .classList
+        .toggle(
+            "on",
+            enabled
+        );
+
+
+    $("blurRange")
+        .value =
+        amount;
+
+
+    $("blurValue")
+        .textContent =
+        amount + "px";
+
+
+    $("blurControls")
+        .classList
+        .toggle(
+            "hidden",
+            !enabled
+        );
+
+}
+
+
+/* =====================================================
+   LOAD BLUR SETTINGS
+===================================================== */
+
+function loadBlurSettings(){
+
+    const enabled =
+        localStorage.getItem(
+            "xenvital_blur_enabled"
+        ) !== "0";
+
+
+    const amount =
+        localStorage.getItem(
+            "xenvital_blur_amount"
+        ) || "18";
+
+
+    $("blurToggle")
+        .classList
+        .toggle(
+            "on",
+            enabled
+        );
+
+
+    $("blurRange")
+        .value =
+        amount;
+
+
+    $("blurValue")
+        .textContent =
+        amount + "px";
+
+
+    $("blurControls")
+        .classList
+        .toggle(
+            "hidden",
+            !enabled
+        );
+
+
+    document.documentElement
+        .style
+        .setProperty(
+            "--blur",
+            enabled
+            ? amount + "px"
+            : "0px"
+        );
+
+}
+
+
+/* =====================================================
+   RESET APPEARANCE
+===================================================== */
+
+function resetWallpaper(){
+
+    localStorage.removeItem(
+        "xenvital_wallpaper"
+    );
+
+
+    applyWallpaper(
+        DEFAULT_WALLPAPER.type,
+        DEFAULT_WALLPAPER.src
+    );
+
+
+    markSelectedWallpaper(
+        DEFAULT_WALLPAPER.src
+    );
+
+}
+
+
+function resetAppearance(){
+
+    localStorage.removeItem(
+        "xenvital_wallpaper"
+    );
+
+    localStorage.setItem(
+        "xenvital_blur_enabled",
+        "1"
+    );
+
+    localStorage.setItem(
+        "xenvital_blur_amount",
+        "18"
+    );
+
+
+    applyWallpaper(
+        "image",
+        "assets/wallpapers/background-photo.jpg"
+    );
+
+
+    markSelectedWallpaper(
+        "assets/wallpapers/background-photo.jpg"
+    );
+
+
+    loadBlurSettings();
+
+}
+
+
+/* =====================================================
+   START APPLICATION
+===================================================== */
 
 if(currentUser){
+
     openApp();
-}else{
-    $("auth").style.display = "flex";
-    $("app").style.display = "none";
-    loadTheme();
+
 }
+else{
+
+    $("auth").style.display =
+        "flex";
+
+    $("app").style.display =
+        "none";
+
+
+    loadTheme();
+
+    loadAppearance();
+
+}
+
 </script>
 
 </body>
