@@ -2,3001 +2,2285 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
-<meta name="theme-color" content="#090d16">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#f7f8fa">
+<meta name="description" content="XenvitalTech AI — A focused AI assistant by ShashwatBytes.">
+<meta name="color-scheme" content="light dark">
+
 <title>XenvitalTech AI — ShashwatBytes</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:Inter,Arial,sans-serif}
+/* =========================================================
+   DESIGN SYSTEM
+========================================================= */
 
-:root{
- --bg:#f5f7fb;
- --card:#fff;
- --text:#172033;
- --muted:#718096;
- --border:#e4e8f0;
- --primary:#5b5ff7;
- --secondary:#7c3aed;
- --bot:#eef1f7;
- --danger:#ef4444;
-}
+:root {
+    --bg: #f7f8fa;
+    --surface: #ffffff;
+    --surface-soft: #f1f3f6;
 
-body.dark{
- --bg:#090d16;
- --card:#111827;
- --text:#f5f7ff;
- --muted:#9ca8bb;
- --border:#263244;
- --bot:#1c2635;
-}
+    --text: #151922;
+    --text-secondary: #626b7a;
+    --text-tertiary: #8b93a1;
 
-html,body{
- width:100%;
- height:100%;
- overflow:hidden
-}
+    --border: #e1e5ea;
+    --border-strong: #d2d7df;
 
-body{
- background:var(--bg);
- color:var(--text)
-}
+    --primary: #3157d5;
+    --primary-hover: #2849b8;
+    --primary-soft: #edf1ff;
 
-button,input{
- font:inherit
-}
+    --bot: #f0f2f5;
+    --danger: #c93636;
+    --danger-soft: #fff0f0;
 
-button{
- cursor:pointer
-}
+    --shadow-sm: 0 2px 8px rgba(16, 24, 40, 0.05);
+    --shadow-md: 0 10px 30px rgba(16, 24, 40, 0.08);
 
-.auth{
- min-height:100dvh;
- height:100%;
- display:flex;
- align-items:center;
- justify-content:center;
- padding:20px;
- overflow:auto
-}
+    --radius-sm: 7px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
 
-.auth-card{
- width:100%;
- max-width:430px;
- background:var(--card);
- border:1px solid var(--border);
- border-radius:24px;
- padding:30px;
- box-shadow:0 20px 60px rgba(0,0,0,.08)
+    --sidebar-width: 260px;
+    --topbar-height: 62px;
+    --mobile-nav-height: 64px;
 }
 
-.auth-logo,.logo{
- display:grid;
- place-items:center;
- color:#fff;
- font-weight:800;
- background:linear-gradient(135deg,var(--primary),var(--secondary))
-}
+/* Dark mode */
 
-.auth-logo{
- width:65px;
- height:65px;
- border-radius:19px;
- margin:auto;
- font-size:28px
-}
+body.dark {
+    --bg: #0d1117;
+    --surface: #141a22;
+    --surface-soft: #1b222d;
 
-.auth-card h1{
- text-align:center;
- margin-top:18px;
- font-size:25px
-}
+    --text: #f1f4f8;
+    --text-secondary: #a3adbb;
+    --text-tertiary: #778292;
 
-.auth-subtitle{
- text-align:center;
- color:var(--muted);
- font-size:13px;
- margin:8px 0 25px
-}
+    --border: #28313d;
+    --border-strong: #34404e;
 
-.form{
- display:none
-}
+    --primary: #6d8cff;
+    --primary-hover: #819aff;
+    --primary-soft: #1b2644;
 
-.form.active{
- display:block
-}
+    --bot: #1b222d;
+    --danger: #f07171;
+    --danger-soft: #351c1c;
 
-label{
- display:block;
- font-size:12px;
- font-weight:600;
- margin:14px 0 7px
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.18);
+    --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.28);
 }
+
 
-input{
- width:100%;
- padding:13px;
- border:1px solid var(--border);
- border-radius:11px;
- outline:none;
- background:var(--bg);
- color:var(--text)
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-input:focus{
- border-color:var(--primary)
+html,
+body {
+    width: 100%;
+    height: 100%;
 }
 
-.primary{
- width:100%;
- border:0;
- padding:13px;
- margin-top:20px;
- border-radius:11px;
- background:linear-gradient(135deg,var(--primary),var(--secondary));
- color:white;
- font-weight:700
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family:
+        Inter,
+        ui-sans-serif,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
 }
 
-.switch{
- text-align:center;
- margin-top:18px;
- font-size:13px;
- color:var(--muted)
+button,
+input {
+    font: inherit;
 }
 
-.switch span{
- color:var(--primary);
- cursor:pointer;
- font-weight:700
+button {
+    cursor: pointer;
 }
 
-.error{
- color:var(--danger);
- font-size:12px;
- margin-top:10px
+button:focus-visible,
+input:focus-visible {
+    outline: 3px solid rgba(49, 87, 213, 0.18);
+    outline-offset: 2px;
 }
+
+
+/* =========================================================
+   AUTHENTICATION
+========================================================= */
 
-.app{
- display:none;
- width:100%;
- height:100dvh;
- overflow:hidden
+.auth {
+    width: 100%;
+    min-height: 100dvh;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    overflow-y: auto;
 }
 
-.sidebar{
- width:275px;
- flex:none;
- background:var(--card);
- border-right:1px solid var(--border);
- padding:18px;
- display:flex;
- flex-direction:column;
- height:100%
+.auth-card {
+    width: 100%;
+    max-width: 410px;
+    padding: 32px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
 }
 
-.brand{
- display:flex;
- gap:10px;
- align-items:center;
- margin-bottom:22px
+.auth-logo {
+    width: 52px;
+    height: 52px;
+    margin: 0 auto;
+    display: grid;
+    place-items: center;
+
+    background: var(--primary);
+    color: #ffffff;
+
+    border-radius: var(--radius-md);
+
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.04em;
 }
 
-.logo{
- width:43px;
- height:43px;
- border-radius:13px
+.auth-card h1 {
+    margin-top: 18px;
+    text-align: center;
+    font-size: 24px;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
 }
 
-.brand h2{
- font-size:16px
+.auth-subtitle {
+    margin-top: 7px;
+    margin-bottom: 26px;
+
+    text-align: center;
+
+    color: var(--text-secondary);
+    font-size: 13px;
+    line-height: 1.5;
 }
 
-.brand small{
- color:var(--muted)
+.form {
+    display: none;
 }
 
-.new-chat{
- border:0;
- background:var(--primary);
- color:white;
- padding:12px;
- border-radius:11px;
- font-weight:600;
- margin-bottom:18px
+.form.active {
+    display: block;
 }
+
+label {
+    display: block;
+    margin: 15px 0 7px;
 
-.nav-title{
- color:var(--muted);
- font-size:11px;
- text-transform:uppercase;
- margin:10px 4px
+    color: var(--text);
+    font-size: 12px;
+    font-weight: 650;
 }
 
-.nav-btn{
- width:100%;
- padding:12px;
- background:transparent;
- color:var(--text);
- border:0;
- border-radius:10px;
- text-align:left;
- margin-bottom:4px
+input {
+    width: 100%;
+    min-height: 44px;
+
+    padding: 10px 12px;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+
+    outline: none;
+
+    background: var(--surface);
+    color: var(--text);
+
+    transition:
+        border-color 150ms ease,
+        box-shadow 150ms ease;
 }
 
-.nav-btn:hover,
-.nav-btn.active{
- background:var(--bot)
+input::placeholder {
+    color: var(--text-tertiary);
 }
 
-.sidebar-bottom{
- margin-top:auto;
- border-top:1px solid var(--border);
- padding-top:10px
+input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(49, 87, 213, 0.10);
 }
+
+.primary {
+    width: 100%;
+    min-height: 44px;
 
-.profile-mini{
- display:flex;
- align-items:center;
- gap:10px;
- padding:10px
+    margin-top: 20px;
+    padding: 10px 14px;
+
+    border: 1px solid var(--primary);
+    border-radius: var(--radius-md);
+
+    background: var(--primary);
+    color: #ffffff;
+
+    font-weight: 700;
+
+    transition:
+        background 150ms ease,
+        border-color 150ms ease;
 }
 
-.avatar{
- width:36px;
- height:36px;
- border-radius:50%;
- display:grid;
- place-items:center;
- color:white;
- background:linear-gradient(135deg,var(--primary),var(--secondary));
- font-weight:700;
- flex:none
+.primary:hover {
+    background: var(--primary-hover);
+    border-color: var(--primary-hover);
 }
+
+.switch {
+    margin-top: 18px;
+
+    text-align: center;
 
-.profile-mini strong{
- display:block;
- font-size:13px
+    color: var(--text-secondary);
+    font-size: 13px;
 }
 
-.profile-mini span{
- display:block;
- color:var(--muted);
- font-size:11px;
- overflow:hidden;
- text-overflow:ellipsis;
- white-space:nowrap;
- max-width:170px
+.switch span {
+    color: var(--primary);
+    font-weight: 700;
+    cursor: pointer;
 }
 
-.logout{
- width:100%;
- padding:10px;
- border:0;
- background:transparent;
- color:var(--danger);
- text-align:left;
- border-radius:9px
+.switch span:hover {
+    text-decoration: underline;
 }
 
-.logout:hover{
- background:rgba(239,68,68,.08)
+.error {
+    min-height: 17px;
+    margin-top: 9px;
+
+    color: var(--danger);
+    font-size: 12px;
+    line-height: 1.4;
 }
+
+
+/* =========================================================
+   APPLICATION
+========================================================= */
 
-.main{
- flex:1;
- display:flex;
- flex-direction:column;
- min-width:0;
- height:100%;
- overflow:hidden
+.app {
+    display: none;
+
+    width: 100%;
+    height: 100dvh;
+
+    overflow: hidden;
 }
+
 
-.topbar{
- height:65px;
- flex:none;
- padding:0 20px;
- background:var(--card);
- border-bottom:1px solid var(--border);
- display:flex;
- align-items:center;
- justify-content:space-between
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.sidebar {
+    width: var(--sidebar-width);
+    flex: none;
+
+    display: flex;
+    flex-direction: column;
+
+    height: 100%;
+
+    padding: 18px;
+
+    background: var(--surface);
+    border-right: 1px solid var(--border);
 }
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 
-.page-title{
- font-weight:700
+    margin-bottom: 24px;
 }
 
-.top-actions{
- display:flex;
- gap:8px;
- align-items:center
+.logo {
+    width: 40px;
+    height: 40px;
+
+    display: grid;
+    place-items: center;
+
+    flex: none;
+
+    background: var(--primary);
+    color: #ffffff;
+
+    border-radius: var(--radius-md);
+
+    font-size: 17px;
+    font-weight: 800;
 }
 
-.icon{
- width:38px;
- height:38px;
- border:1px solid var(--border);
- border-radius:10px;
- background:var(--card);
- color:var(--text);
- position:relative
+.brand h2 {
+    font-size: 15px;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
 }
 
-/* Notification button */
+.brand small {
+    display: block;
+    margin-top: 2px;
 
-.notification-btn{
- width:42px;
- height:42px;
- border:1px solid var(--border);
- border-radius:11px;
- background:var(--card);
- color:var(--text);
- font-size:19px;
- position:relative;
- display:grid;
- place-items:center
+    color: var(--text-tertiary);
+    font-size: 11px;
 }
 
-.notification-btn:hover{
- background:var(--bot)
+.new-chat {
+    width: 100%;
+    min-height: 42px;
+
+    margin-bottom: 22px;
+    padding: 10px 12px;
+
+    border: 1px solid var(--primary);
+    border-radius: var(--radius-md);
+
+    background: var(--primary);
+    color: #ffffff;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    transition:
+        background 150ms ease,
+        border-color 150ms ease;
 }
 
-.notification-badge{
- position:absolute;
- top:-5px;
- right:-5px;
- min-width:19px;
- height:19px;
- padding:0 5px;
- border-radius:20px;
- background:var(--danger);
- color:white;
- font-size:10px;
- font-weight:800;
- display:none;
- align-items:center;
- justify-content:center;
- border:2px solid var(--card)
+.new-chat:hover {
+    background: var(--primary-hover);
+    border-color: var(--primary-hover);
 }
+
+.nav-title {
+    margin: 4px 4px 8px;
 
-.notification-badge.show{
- display:flex
+    color: var(--text-tertiary);
+
+    font-size: 10px;
+    font-weight: 750;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
 }
+
+.nav-btn {
+    width: 100%;
+    min-height: 40px;
+
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    margin-bottom: 3px;
+    padding: 9px 10px;
+
+    border: 0;
+    border-radius: var(--radius-sm);
+
+    background: transparent;
+    color: var(--text-secondary);
 
-/* Notification dropdown */
+    text-align: left;
 
-.notification-panel{
- position:fixed;
- top:72px;
- right:20px;
- width:330px;
- max-width:calc(100vw - 30px);
- max-height:430px;
- overflow-y:auto;
- background:var(--card);
- border:1px solid var(--border);
- border-radius:16px;
- box-shadow:0 20px 50px rgba(0,0,0,.18);
- z-index:1000;
- display:none
+    font-size: 13px;
+    font-weight: 550;
+
+    transition:
+        background 150ms ease,
+        color 150ms ease;
 }
 
-.notification-panel.show{
- display:block
+.nav-btn:hover {
+    background: var(--surface-soft);
+    color: var(--text);
 }
 
-.notification-head{
- padding:14px 16px;
- border-bottom:1px solid var(--border);
- display:flex;
- justify-content:space-between;
- align-items:center
+.nav-btn.active {
+    background: var(--primary-soft);
+    color: var(--primary);
+    font-weight: 700;
 }
+
+.nav-icon {
+    width: 20px;
+
+    display: inline-grid;
+    place-items: center;
 
-.notification-head strong{
- font-size:14px
+    font-size: 14px;
 }
 
-.clear-notifications{
- border:0;
- background:transparent;
- color:var(--primary);
- font-size:11px;
- font-weight:700
+.sidebar-bottom {
+    margin-top: auto;
+    padding-top: 12px;
+
+    border-top: 1px solid var(--border);
 }
 
-.notification-item{
- padding:13px 15px;
- border-bottom:1px solid var(--border);
- display:flex;
- gap:10px;
- align-items:center;
- cursor:pointer
+.profile-mini {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    padding: 8px;
 }
+
+.avatar {
+    width: 34px;
+    height: 34px;
 
-.notification-item:hover{
- background:var(--bot)
+    display: grid;
+    place-items: center;
+
+    flex: none;
+
+    border: 1px solid var(--border-strong);
+    border-radius: 50%;
+
+    background: var(--surface-soft);
+    color: var(--text);
+
+    font-size: 12px;
+    font-weight: 750;
 }
 
-.notification-item:last-child{
- border-bottom:0
+.profile-mini strong {
+    display: block;
+
+    font-size: 12px;
+    line-height: 1.3;
 }
+
+.profile-mini span {
+    display: block;
 
-.notification-item .notification-icon{
- width:38px;
- height:38px;
- border-radius:50%;
- display:grid;
- place-items:center;
- background:linear-gradient(135deg,var(--primary),var(--secondary));
- color:white;
- flex:none;
- font-size:16px
+    max-width: 165px;
+
+    margin-top: 2px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    color: var(--text-tertiary);
+    font-size: 10px;
 }
+
+.logout {
+    width: 100%;
+    min-height: 38px;
+
+    margin-top: 4px;
+    padding: 8px;
+
+    border: 0;
+    border-radius: var(--radius-sm);
 
-.notification-content{
- min-width:0
+    background: transparent;
+    color: var(--danger);
+
+    text-align: left;
+
+    font-size: 12px;
+    font-weight: 650;
 }
 
-.notification-content strong{
- display:block;
- font-size:13px
+.logout:hover {
+    background: var(--danger-soft);
 }
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.main {
+    flex: 1;
+
+    min-width: 0;
+    height: 100%;
 
-.notification-content span{
- display:block;
- color:var(--muted);
- font-size:11px;
- margin-top:3px;
- overflow:hidden;
- text-overflow:ellipsis;
- white-space:nowrap
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
 }
+
+
+/* =========================================================
+   TOP BAR
+========================================================= */
+
+.topbar {
+    height: var(--topbar-height);
+    flex: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 20px;
 
-.notification-time{
- margin-left:auto;
- color:var(--muted);
- font-size:9px;
- flex:none
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
 }
 
-.notification-empty{
- padding:35px 15px;
- text-align:center;
- color:var(--muted);
- font-size:13px
+.page-title {
+    color: var(--text);
+
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
 }
 
-.view{
- display:none;
- flex:1;
- min-height:0;
- overflow:hidden
+.top-actions {
+    display: flex;
+    align-items: center;
+    gap: 7px;
 }
+
+.icon {
+    width: 38px;
+    height: 38px;
+
+    display: grid;
+    place-items: center;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+
+    background: var(--surface);
+    color: var(--text-secondary);
 
-.view.active{
- display:flex;
- flex-direction:column
+    font-size: 16px;
+
+    transition:
+        background 150ms ease,
+        color 150ms ease,
+        border-color 150ms ease;
 }
 
-.ai-chat{
- flex:1;
- min-height:0;
- overflow-y:auto;
- padding:30px 20px 20px
+.icon:hover {
+    background: var(--surface-soft);
+    color: var(--text);
+    border-color: var(--border-strong);
 }
+
+
+/* =========================================================
+   VIEWS
+========================================================= */
 
-.messages{
- max-width:850px;
- margin:auto
+.view {
+    display: none;
+
+    flex: 1;
+    min-height: 0;
+
+    overflow: hidden;
 }
 
-.message{
- display:flex;
- gap:10px;
- margin:18px 0
+.view.active {
+    display: flex;
+    flex-direction: column;
 }
+
 
-.message.user{
- flex-direction:row-reverse
+/* =========================================================
+   AI CHAT
+========================================================= */
+
+.ai-chat {
+    flex: 1;
+    min-height: 0;
+
+    overflow-y: auto;
+
+    padding: 30px 20px 24px;
+
+    scroll-behavior: smooth;
 }
 
-.bubble{
- max-width:75%;
- padding:12px 15px;
- border-radius:14px;
- line-height:1.55;
- font-size:14px;
- white-space:pre-wrap;
- overflow-wrap:anywhere
+.messages {
+    width: 100%;
+    max-width: 860px;
+
+    margin: 0 auto;
 }
+
+.message {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
 
-.bot .bubble{
- background:var(--bot);
- border-top-left-radius:4px
+    margin: 20px 0;
 }
 
-.user .bubble{
- background:var(--primary);
- color:white;
- border-top-right-radius:4px
+.message.user {
+    flex-direction: row-reverse;
 }
 
-.input-area{
- flex:none;
- padding:12px 20px 18px;
- border-top:1px solid var(--border);
- background:var(--card);
- z-index:10
+.message .avatar {
+    margin-top: 1px;
 }
+
+.bubble {
+    max-width: min(760px, 78%);
+
+    padding: 11px 14px;
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius-md);
+
+    color: var(--text);
+
+    font-size: 14px;
+    line-height: 1.6;
 
-.input-box{
- max-width:850px;
- margin:auto;
- display:flex;
- gap:8px
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
 }
 
-.input-box input{
- flex:1;
- min-width:0
+.bot .bubble {
+    background: var(--bot);
+    border-top-left-radius: 4px;
 }
 
-.send{
- width:48px;
- height:48px;
- flex:none;
- border:0;
- border-radius:11px;
- color:white;
- background:var(--primary)
+.user .bubble {
+    background: var(--primary);
+    border-color: var(--primary);
+
+    color: #ffffff;
+
+    border-top-right-radius: 4px;
 }
+
+
+/* =========================================================
+   CHAT INPUT
+========================================================= */
+
+.input-area {
+    flex: none;
+
+    padding: 12px 20px 18px;
 
-.send:disabled{
- opacity:.55;
- cursor:not-allowed
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+
+    z-index: 10;
 }
+
+.input-box {
+    width: 100%;
+    max-width: 860px;
+
+    margin: 0 auto;
 
-.friends{
- padding:30px;
- overflow-y:auto;
- height:100%
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
-.search-box{
- max-width:650px;
- display:flex;
- gap:8px;
- margin-top:20px
+.input-box input {
+    flex: 1;
+    min-width: 0;
+    min-height: 46px;
 }
+
+.send {
+    width: 46px;
+    height: 46px;
+
+    flex: none;
+
+    display: grid;
+    place-items: center;
 
-.search-box input{
- flex:1
+    border: 1px solid var(--primary);
+    border-radius: var(--radius-md);
+
+    background: var(--primary);
+    color: #ffffff;
+
+    font-size: 17px;
+    font-weight: 700;
+
+    transition:
+        background 150ms ease,
+        border-color 150ms ease;
 }
 
-.search-btn,
-.chat-btn{
- border:0;
- background:var(--primary);
- color:white;
- border-radius:11px
+.send:hover:not(:disabled) {
+    background: var(--primary-hover);
+    border-color: var(--primary-hover);
 }
 
-.search-btn{
- padding:0 18px
+.send:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
 }
 
-.friend-result{
- max-width:650px;
- margin-top:18px;
- padding:15px;
- background:var(--card);
- border:1px solid var(--border);
- border-radius:14px;
- display:flex;
- align-items:center;
- justify-content:space-between;
- gap:12px
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+.profile-view {
+    overflow-y: auto;
 }
+
+.profile-content {
+    width: 100%;
+    max-width: 700px;
 
-.friend-info{
- display:flex;
- gap:10px;
- align-items:center
+    padding: 34px 24px;
+    margin: 0 auto;
 }
 
-.chat-btn{
- padding:9px 14px
+.profile-heading {
+    font-size: 22px;
+    letter-spacing: -0.02em;
 }
 
-.private-header{
- height:60px;
- flex:none;
- padding:10px 20px;
- border-bottom:1px solid var(--border);
- display:flex;
- align-items:center;
- gap:10px;
- background:var(--card)
+.profile-description {
+    margin-top: 6px;
+
+    color: var(--text-secondary);
+    font-size: 13px;
+    line-height: 1.5;
 }
+
+.profile-section {
+    margin-top: 28px;
+
+    padding-top: 24px;
 
-.private-messages{
- flex:1;
- min-height:0;
- overflow-y:auto;
- padding:20px
+    border-top: 1px solid var(--border);
 }
 
-.private-input{
- flex:none;
- padding:12px 20px;
- background:var(--card);
- border-top:1px solid var(--border);
- display:flex;
- gap:8px
+.profile-large {
+    width: 64px;
+    height: 64px;
+
+    font-size: 20px;
 }
 
-.private-input input{
- flex:1;
- min-width:0
+.profile-name {
+    margin-top: 14px;
+
+    font-size: 16px;
+    font-weight: 750;
 }
+
+.profile-email {
+    margin-top: 4px;
 
-.empty{
- color:var(--muted);
- text-align:center;
- padding:40px 15px
+    color: var(--text-secondary);
+    font-size: 13px;
 }
 
-.typing{
- opacity:.7;
- font-style:italic
+.profile-logout {
+    width: 220px;
+    max-width: 100%;
+
+    margin-top: 26px;
+    padding: 10px 14px;
+
+    border: 1px solid rgba(201, 54, 54, 0.25);
+    border-radius: var(--radius-md);
+
+    background: var(--danger-soft);
+    color: var(--danger);
+
+    font-size: 13px;
+    font-weight: 700;
 }
+
 
-.profile-logout{
- margin-top:25px;
- width:220px;
- max-width:100%;
- padding:12px;
- border:0;
- border-radius:11px;
- background:rgba(239,68,68,.1);
- color:var(--danger);
- font-weight:700
+/* =========================================================
+   EMPTY / STATUS
+========================================================= */
+
+.empty {
+    padding: 42px 15px;
+
+    color: var(--text-tertiary);
+
+    text-align: center;
+
+    font-size: 13px;
 }
 
-.mobile-nav{
- display:none
+.typing {
+    color: var(--text-secondary);
 }
+
+
+/* =========================================================
+   MOBILE NAVIGATION
+========================================================= */
 
-.nav-icon{
- display:inline-block;
- width:25px;
- text-align:center
+.mobile-nav {
+    display: none;
 }
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 750px) {
+
+    :root {
+        --mobile-nav-height: 62px;
+    }
+
+    html,
+    body {
+        overflow: hidden;
+    }
+
+    .app {
+        height: 100dvh;
+        min-height: 100dvh;
+    }
+
+    .sidebar {
+        display: none;
+    }
+
+    .topbar {
+        height: 56px;
+        padding: 0 12px;
+    }
+
+    .main {
+        height: 100dvh;
+
+        padding-bottom: var(--mobile-nav-height);
+    }
+
+    .page-title {
+        font-size: 13px;
+    }
+
+    .mobile-nav {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
 
-@media(max-width:750px){
+        z-index: 200;
 
- html,body{
-  width:100%;
-  height:100%;
-  overflow:hidden
- }
+        height: calc(
+            var(--mobile-nav-height) +
+            env(safe-area-inset-bottom)
+        );
 
- .app{
-  height:100dvh;
-  min-height:100dvh;
-  overflow:hidden
- }
+        display: flex;
 
- .sidebar{
-  display:none
- }
+        padding: 4px 8px env(safe-area-inset-bottom);
 
- .topbar{
-  height:58px;
-  padding:0 12px
- }
+        background: var(--surface);
+        border-top: 1px solid var(--border);
+    }
 
- .main{
-  height:100dvh;
-  min-height:0;
-  padding-bottom:70px;
-  overflow:hidden
- }
+    .mobile-nav button {
+        flex: 1;
 
- .view{
-  height:100%;
-  min-height:0
- }
+        height: 54px;
 
- .mobile-nav{
-  position:fixed;
-  z-index:200;
-  left:0;
-  right:0;
-  bottom:0;
-  height:70px;
-  display:flex;
-  background:var(--card);
-  border-top:1px solid var(--border);
-  padding:5px 0 calc(5px + env(safe-area-inset-bottom))
- }
+        border: 0;
+        border-radius: var(--radius-sm);
 
- .mobile-nav button{
-  flex:1;
-  border:0;
-  background:transparent;
-  color:var(--muted);
-  font-size:11px;
-  border-radius:10px;
-  height:60px
- }
-
- .mobile-nav button.active{
-  color:var(--primary);
-  background:var(--bot);
-  font-weight:700
- }
+        background: transparent;
+        color: var(--text-tertiary);
 
- .mobile-nav .nav-icon{
-  display:block;
-  width:auto;
-  font-size:20px;
-  margin-bottom:2px
- }
-
- #aiView{
-  position:relative;
-  height:100%;
-  min-height:0
- }
+        font-size: 11px;
+        font-weight: 600;
 
- .ai-chat{
-  height:100%;
-  min-height:0;
-  overflow-y:auto;
-  padding:15px 12px 85px
- }
-
- .messages{
-  width:100%
- }
+        transition:
+            background 150ms ease,
+            color 150ms ease;
+    }
 
- .bubble{
-  max-width:84%;
-  font-size:14px
- }
+    .mobile-nav button.active {
+        background: var(--primary-soft);
+        color: var(--primary);
+    }
 
- .input-area{
-  position:fixed;
-  left:0;
-  right:0;
-  bottom:70px;
-  width:100%;
-  height:70px;
-  z-index:150;
-  padding:9px 10px;
-  background:var(--card);
-  border-top:1px solid var(--border);
-  box-shadow:0 -4px 15px rgba(0,0,0,.08)
- }
+    .mobile-nav .nav-icon {
+        display: block;
 
- .input-box{
-  width:100%;
-  max-width:none;
-  height:52px;
-  display:flex;
-  gap:8px
- }
+        width: auto;
 
- .input-box input{
-  height:52px;
-  font-size:16px;
-  padding:12px
- }
+        margin-bottom: 3px;
 
- .send{
-  width:52px;
-  height:52px
- }
+        font-size: 17px;
+    }
 
- #privateView{
-  height:100%;
-  min-height:0
- }
+    .ai-chat {
+        padding: 16px 12px 84px;
+    }
 
- .private-messages{
-  padding:14px 12px 80px
- }
+    .messages {
+        width: 100%;
+    }
 
- .private-input{
-  position:fixed;
-  left:0;
-  right:0;
-  bottom:70px;
-  width:100%;
-  height:70px;
-  z-index:150;
-  padding:9px 10px;
-  background:var(--card);
-  box-shadow:0 -4px 15px rgba(0,0,0,.08)
- }
+    .message {
+        gap: 8px;
+        margin: 16px 0;
+    }
 
- .private-input input{
-  height:52px;
-  font-size:16px
- }
+    .bubble {
+        max-width: 84%;
 
- .private-input .send{
-  width:52px;
-  height:52px
- }
+        padding: 10px 12px;
 
- .private-header{
-  height:58px;
-  padding:9px 12px
- }
+        font-size: 14px;
+    }
 
- .friends{
-  padding:20px 13px
- }
+    .input-area {
+        position: fixed;
 
- .friend-result{
-  padding:12px
- }
+        left: 0;
+        right: 0;
+        bottom: var(--mobile-nav-height);
 
- .auth{
-  padding:15px
- }
+        width: 100%;
+        height: 68px;
 
- .auth-card{
-  padding:24px
- }
+        padding: 8px 10px;
 
- .notification-panel{
-  top:63px;
-  right:10px;
-  width:calc(100vw - 20px);
-  max-height:380px
- }
+        background: var(--surface);
 
+        box-shadow: 0 -5px 16px rgba(0, 0, 0, 0.05);
+    }
+
+    .input-box {
+        height: 52px;
+    }
+
+    .input-box input {
+        height: 52px;
+        min-height: 52px;
+
+        padding: 11px;
+
+        font-size: 16px;
+    }
+
+    .send {
+        width: 52px;
+        height: 52px;
+    }
+
+    .profile-content {
+        padding: 26px 16px;
+    }
+
+    .profile-heading {
+        font-size: 20px;
+    }
+
+    .auth {
+        padding: 16px;
+    }
+
+    .auth-card {
+        padding: 24px 20px;
+    }
+}
+
+
+/* Smaller phones */
+
+@media (max-width: 360px) {
+
+    .auth-card {
+        padding: 22px 17px;
+    }
+
+    .bubble {
+        max-width: 87%;
+    }
+
+    .profile-content {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+}
+
+
+/* Desktop */
+
+@media (min-width: 751px) {
+
+    .mobile-nav {
+        display: none !important;
+    }
 }
+
+
+/* Reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
 
-@media(min-width:751px){
- .mobile-nav{
-  display:none!important
- }
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
 }
 </style>
 </head>
 
 <body>
 
+<!-- =======================================================
+     AUTHENTICATION
+======================================================= -->
+
 <section class="auth" id="auth">
 
-<div class="auth-card">
+    <div class="auth-card">
 
-<div class="auth-logo">X</div>
+        <div class="auth-logo" aria-hidden="true">
+            X
+        </div>
 
-<h1>XenvitalTech</h1>
+        <h1>XenvitalTech</h1>
 
-<div class="auth-subtitle">
-AI Assistant by ShashwatBytes
-</div>
+        <div class="auth-subtitle">
+            AI Assistant by ShashwatBytes
+        </div>
 
-<form class="form active" id="loginForm">
 
-<label>Email</label>
+        <!-- LOGIN -->
 
-<input
- id="loginEmail"
- type="email"
- placeholder="Enter your email"
- required
->
+        <form class="form active" id="loginForm">
 
-<label>Password</label>
+            <label for="loginEmail">
+                Email
+            </label>
 
-<input
- id="loginPassword"
- type="password"
- placeholder="Enter your password"
- required
->
+            <input
+                id="loginEmail"
+                type="email"
+                placeholder="Enter your email"
+                autocomplete="email"
+                required
+            >
 
-<div class="error" id="loginError"></div>
+            <label for="loginPassword">
+                Password
+            </label>
 
-<button class="primary" type="submit">
-Login
-</button>
+            <input
+                id="loginPassword"
+                type="password"
+                placeholder="Enter your password"
+                autocomplete="current-password"
+                required
+            >
 
-<div class="switch">
-New to XenvitalTech?
-<span onclick="showSignup()">Create account</span>
-</div>
+            <div
+                class="error"
+                id="loginError"
+                role="alert"
+                aria-live="polite"
+            ></div>
 
-</form>
+            <button
+                class="primary"
+                type="submit"
+            >
+                Login
+            </button>
 
-<form class="form" id="signupForm">
+            <div class="switch">
+                New to XenvitalTech?
+                <span
+                    onclick="showSignup()"
+                    role="button"
+                    tabindex="0"
+                    onkeydown="switchSignupKeyboard(event)"
+                >
+                    Create account
+                </span>
+            </div>
 
-<label>Username</label>
+        </form>
 
-<input
- id="signupUsername"
- type="text"
- placeholder="@yourusername"
- minlength="3"
- maxlength="30"
- required
->
 
-<label>Email</label>
+        <!-- SIGNUP -->
 
-<input
- id="signupEmail"
- type="email"
- placeholder="Enter your email"
- required
->
+        <form class="form" id="signupForm">
 
-<label>Password</label>
+            <label for="signupUsername">
+                Username
+            </label>
 
-<input
- id="signupPassword"
- type="password"
- placeholder="Create password"
- minlength="6"
- required
->
+            <input
+                id="signupUsername"
+                type="text"
+                placeholder="@yourusername"
+                minlength="3"
+                maxlength="30"
+                autocomplete="username"
+                required
+            >
 
-<div class="error" id="signupError"></div>
+            <label for="signupEmail">
+                Email
+            </label>
 
-<button class="primary" type="submit">
-Create Account
-</button>
+            <input
+                id="signupEmail"
+                type="email"
+                placeholder="Enter your email"
+                autocomplete="email"
+                required
+            >
 
-<div class="switch">
-Already have an account?
-<span onclick="showLogin()">Login</span>
-</div>
+            <label for="signupPassword">
+                Password
+            </label>
 
-</form>
+            <input
+                id="signupPassword"
+                type="password"
+                placeholder="Create password"
+                minlength="6"
+                autocomplete="new-password"
+                required
+            >
 
-</div>
+            <div
+                class="error"
+                id="signupError"
+                role="alert"
+                aria-live="polite"
+            ></div>
+
+            <button
+                class="primary"
+                type="submit"
+            >
+                Create Account
+            </button>
+
+            <div class="switch">
+                Already have an account?
+                <span
+                    onclick="showLogin()"
+                    role="button"
+                    tabindex="0"
+                    onkeydown="switchLoginKeyboard(event)"
+                >
+                    Login
+                </span>
+            </div>
+
+        </form>
+
+    </div>
+
 </section>
 
+
+<!-- =======================================================
+     APPLICATION
+======================================================= -->
 
 <section class="app" id="app">
 
-<aside class="sidebar">
-
-<div class="brand">
-
-<div class="logo">X</div>
-
-<div>
-<h2>XenvitalTech</h2>
-<small>by ShashwatBytes</small>
-</div>
+    <!-- SIDEBAR -->
 
-</div>
+    <aside class="sidebar">
 
-<button class="new-chat" onclick="newAIChat()">
-＋ New AI Chat
-</button>
+        <div class="brand">
 
-<div class="nav-title">
-Workspace
-</div>
+            <div class="logo" aria-hidden="true">
+                X
+            </div>
 
-<button
- class="nav-btn active"
- id="aiNav"
- onclick="showView('ai')"
->
-<span class="nav-icon">🤖</span>
-XenvitalTech AI
-</button>
+            <div>
+                <h2>XenvitalTech</h2>
+                <small>by ShashwatBytes</small>
+            </div>
 
-<button
- class="nav-btn"
- id="friendsNav"
- onclick="showView('friends')"
->
-<span class="nav-icon">👥</span>
-Find Friends
-</button>
+        </div>
 
-<button
- class="nav-btn"
- id="profileNav"
- onclick="showView('profile')"
->
-<span class="nav-icon">👤</span>
-My Profile
-</button>
 
-<div class="sidebar-bottom">
+        <button
+            class="new-chat"
+            onclick="newAIChat()"
+        >
+            + New AI Chat
+        </button>
 
-<div class="profile-mini">
 
-<div class="avatar" id="miniAvatar">
-U
-</div>
+        <div class="nav-title">
+            Workspace
+        </div>
 
-<div>
-<strong id="miniUsername">@user</strong>
-<span id="miniEmail">email</span>
-</div>
 
-</div>
+        <button
+            class="nav-btn active"
+            id="aiNav"
+            onclick="showView('ai')"
+        >
+            <span class="nav-icon" aria-hidden="true">
+                AI
+            </span>
 
-<button class="logout" onclick="logout()">
-↪ Logout
-</button>
+            XenvitalTech AI
+        </button>
 
-</div>
 
-</aside>
+        <button
+            class="nav-btn"
+            id="profileNav"
+            onclick="showView('profile')"
+        >
+            <span class="nav-icon" aria-hidden="true">
+                •
+            </span>
 
+            My Profile
+        </button>
 
-<main class="main">
 
-<header class="topbar">
+        <div class="sidebar-bottom">
 
-<div class="page-title" id="pageTitle">
-XenvitalTech AI
-</div>
+            <div class="profile-mini">
 
-<div class="top-actions">
+                <div
+                    class="avatar"
+                    id="miniAvatar"
+                    aria-hidden="true"
+                >
+                    U
+                </div>
 
-<button
- class="notification-btn"
- id="notificationButton"
- onclick="toggleNotifications()"
- aria-label="Notifications"
->
-🔔
-<span
- class="notification-badge"
- id="notificationBadge"
->
-0
-</span>
-</button>
+                <div>
+                    <strong id="miniUsername">
+                        @user
+                    </strong>
 
-<button
- class="icon"
- onclick="toggleTheme()"
- aria-label="Toggle theme"
->
-◐
-</button>
+                    <span id="miniEmail">
+                        email
+                    </span>
+                </div>
 
-</div>
+            </div>
 
-</header>
 
+            <button
+                class="logout"
+                onclick="logout()"
+            >
+                Logout
+            </button>
 
-<!-- Notification Panel -->
+        </div>
 
-<div
- class="notification-panel"
- id="notificationPanel"
->
+    </aside>
 
-<div class="notification-head">
 
-<strong>Notifications</strong>
+    <!-- MAIN -->
 
-<button
- class="clear-notifications"
- onclick="clearNotifications()"
->
-Clear all
-</button>
+    <main class="main">
 
-</div>
+        <!-- TOP BAR -->
 
-<div id="notificationList">
+        <header class="topbar">
 
-<div class="notification-empty">
-No new notifications 🔔
-</div>
+            <div
+                class="page-title"
+                id="pageTitle"
+            >
+                XenvitalTech AI
+            </div>
 
-</div>
+            <div class="top-actions">
 
-</div>
+                <button
+                    class="icon"
+                    onclick="toggleTheme()"
+                    aria-label="Toggle theme"
+                    title="Toggle theme"
+                >
+                    ◐
+                </button>
 
+            </div>
 
-<!-- AI VIEW -->
+        </header>
 
-<section class="view active" id="aiView">
 
-<div class="ai-chat" id="aiScroll">
+        <!-- =================================================
+             AI VIEW
+        ================================================== -->
 
-<div class="messages" id="aiMessages">
+        <section
+            class="view active"
+            id="aiView"
+        >
 
-<div class="message bot">
+            <div
+                class="ai-chat"
+                id="aiScroll"
+                aria-live="polite"
+            >
 
-<div class="avatar">
-X
-</div>
+                <div
+                    class="messages"
+                    id="aiMessages"
+                >
 
-<div class="bubble">XenvitalTech AI by ShashwatBytes
+                    <div class="message bot">
 
-Hello! 👋
+                        <div
+                            class="avatar"
+                            aria-hidden="true"
+                        >
+                            X
+                        </div>
 
-I'm your AI assistant.
+                        <div class="bubble">
+XenvitalTech AI by ShashwatBytes
 
-I can help you with coding, study, projects, writing and problem solving.
+Hello. I'm your AI assistant.
 
-What would you like to do today? 🚀</div>
+I can help with coding, study, projects, writing and problem solving.
 
-</div>
+What would you like to work on today?
+                        </div>
 
-</div>
+                    </div>
 
-</div>
+                </div>
 
+            </div>
 
-<div class="input-area">
 
-<div class="input-box">
+            <!-- CHAT INPUT -->
 
-<input
- id="aiInput"
- placeholder="Ask XenvitalTech anything..."
- onkeydown="aiEnter(event)"
- autocomplete="off"
->
+            <div class="input-area">
 
-<button
- class="send"
- id="aiSend"
- onclick="sendAI()"
->
-➤
-</button>
+                <div class="input-box">
 
-</div>
+                    <input
+                        id="aiInput"
+                        type="text"
+                        placeholder="Ask XenvitalTech anything..."
+                        onkeydown="aiEnter(event)"
+                        autocomplete="off"
+                        aria-label="Message XenvitalTech AI"
+                    >
 
-</div>
+                    <button
+                        class="send"
+                        id="aiSend"
+                        onclick="sendAI()"
+                        aria-label="Send message"
+                        title="Send message"
+                    >
+                        →
+                    </button>
 
-</section>
+                </div>
 
+            </div>
 
-<!-- FRIENDS VIEW -->
+        </section>
 
-<section class="view" id="friendsView">
 
-<div class="friends">
+        <!-- =================================================
+             PROFILE VIEW
+        ================================================== -->
 
-<h2>
-Find Friends 👥
-</h2>
+        <section
+            class="view profile-view"
+            id="profileView"
+        >
 
-<p style="color:var(--muted);margin-top:7px">
-Search a registered username and start a private chat.
-</p>
+            <div class="profile-content">
 
-<div class="search-box">
+                <h2 class="profile-heading">
+                    My Profile
+                </h2>
 
-<input
- id="friendSearch"
- placeholder="Search @username"
- onkeydown="friendEnter(event)"
->
+                <p class="profile-description">
+                    Manage your XenvitalTech account information.
+                </p>
 
-<button
- class="search-btn"
- onclick="searchFriend()"
->
-Search
-</button>
 
-</div>
+                <div class="profile-section">
 
-<div id="friendResult"></div>
+                    <div
+                        class="avatar profile-large"
+                        id="profileAvatar"
+                        aria-hidden="true"
+                    >
+                        U
+                    </div>
 
-</div>
+                    <div
+                        class="profile-name"
+                        id="profileUsername"
+                    >
+                        @username
+                    </div>
 
-</section>
+                    <div
+                        class="profile-email"
+                        id="profileEmail"
+                    >
+                        email
+                    </div>
 
 
-<!-- PRIVATE CHAT -->
+                    <button
+                        class="profile-logout"
+                        onclick="logout()"
+                    >
+                        Logout from XenvitalTech
+                    </button>
 
-<section class="view" id="privateView">
+                </div>
 
-<div class="private-header">
+            </div>
 
-<button
- class="icon"
- onclick="showView('friends')"
->
-←
-</button>
+        </section>
 
-<div
- class="avatar"
- id="privateAvatar"
->
-F
-</div>
+    </main>
 
-<strong id="privateUsername">
-@friend
-</strong>
 
-</div>
+    <!-- MOBILE NAVIGATION -->
 
-<div
- class="private-messages"
- id="privateMessages"
-></div>
+    <nav
+        class="mobile-nav"
+        aria-label="Main navigation"
+    >
 
-<div class="private-input">
+        <button
+            id="mobileAi"
+            class="active"
+            onclick="showView('ai')"
+        >
+            <span
+                class="nav-icon"
+                aria-hidden="true"
+            >
+                AI
+            </span>
 
-<input
- id="privateInput"
- placeholder="Write a message..."
- onkeydown="privateEnter(event)"
- autocomplete="off"
->
+            AI
+        </button>
 
-<button
- class="send"
- onclick="sendPrivateMessage()"
->
-➤
-</button>
 
-</div>
+        <button
+            id="mobileProfile"
+            onclick="showView('profile')"
+        >
+            <span
+                class="nav-icon"
+                aria-hidden="true"
+            >
+                •
+            </span>
 
-</section>
+            Profile
+        </button>
 
-
-<!-- PROFILE -->
-
-<section class="view" id="profileView">
-
-<div class="friends">
-
-<h2>
-My Profile 👤
-</h2>
-
-<div style="margin-top:25px">
-
-<div
- class="avatar"
- style="width:70px;height:70px;font-size:25px"
- id="profileAvatar"
->
-U
-</div>
-
-<h3
- style="margin-top:15px"
- id="profileUsername"
->
-@username
-</h3>
-
-<p
- style="color:var(--muted);margin-top:5px"
- id="profileEmail"
->
-email
-</p>
-
-<button
- class="profile-logout"
- onclick="logout()"
->
-↪ Logout from XenvitalTech
-</button>
-
-</div>
-
-</div>
-
-</section>
-
-</main>
-
-
-<nav class="mobile-nav">
-
-<button
- id="mobileAi"
- class="active"
- onclick="showView('ai')"
->
-<span class="nav-icon">🤖</span>
-AI
-</button>
-
-<button
- id="mobileFriends"
- onclick="showView('friends')"
->
-<span class="nav-icon">👥</span>
-Friends
-</button>
-
-<button
- id="mobileProfile"
- onclick="showView('profile')"
->
-<span class="nav-icon">👤</span>
-Profile
-</button>
-
-</nav>
+    </nav>
 
 </section>
 
 
 <script>
 
-const $=id=>document.getElementById(id);
+/* =========================================================
+   BASIC HELPERS
+========================================================= */
 
-let users=
- JSON.parse(
-  localStorage.getItem("xenvital_users")||"[]"
- );
-
-let currentUser=
- JSON.parse(
-  localStorage.getItem("xenvital_currentUser")||"null"
- );
-
-let activeFriend="";
-let aiHistory=[];
+const $ = id => document.getElementById(id);
 
 
-/* =========================
+/* =========================================================
    USER SYSTEM
-========================= */
-
-function saveUsers(){
- localStorage.setItem(
-  "xenvital_users",
-  JSON.stringify(users)
- );
-}
-
-function saveCurrent(){
- localStorage.setItem(
-  "xenvital_currentUser",
-  JSON.stringify(currentUser)
- );
-}
-
-function showSignup(){
-
- $("loginForm").classList.remove("active");
- $("signupForm").classList.add("active");
-
- $("loginError").textContent="";
-}
-
-function showLogin(){
-
- $("signupForm").classList.remove("active");
- $("loginForm").classList.add("active");
-
- $("signupError").textContent="";
-}
-
-
-/* SIGNUP */
-
-$("signupForm").addEventListener("submit",e=>{
-
- e.preventDefault();
-
- const username=
-  $("signupUsername").value
-  .trim()
-  .toLowerCase()
-  .replace(/^@/,"");
-
- const email=
-  $("signupEmail").value
-  .trim()
-  .toLowerCase();
-
- const password=
-  $("signupPassword").value;
-
- $("signupError").textContent="";
-
- if(!/^[a-z0-9_.-]{3,30}$/.test(username)){
-
-  $("signupError").textContent=
-   "Use 3-30 letters, numbers, _, . or -.";
-
-  return;
- }
-
- if(users.some(u=>u.username===username)){
-
-  $("signupError").textContent=
-   "Username already exists.";
-
-  return;
- }
-
- if(users.some(u=>u.email===email)){
-
-  $("signupError").textContent=
-   "Email already registered.";
-
-  return;
- }
-
- const user={
-  username,
-  email,
-  password
- };
-
- users.push(user);
-
- saveUsers();
-
- currentUser=user;
-
- saveCurrent();
-
- openApp();
-
-});
-
-
-/* LOGIN */
-
-$("loginForm").addEventListener("submit",e=>{
-
- e.preventDefault();
-
- const email=
-  $("loginEmail").value
-  .trim()
-  .toLowerCase();
-
- const password=
-  $("loginPassword").value;
-
- const user=
-  users.find(
-   u=>
-    u.email===email &&
-    u.password===password
-  );
-
- if(!user){
-
-  $("loginError").textContent=
-   "Invalid email or password.";
-
-  return;
- }
-
- $("loginError").textContent="";
-
- currentUser=user;
-
- saveCurrent();
-
- openApp();
-
-});
-
-
-/* =========================
-   APP
-========================= */
-
-function openApp(){
-
- $("auth").style.display="none";
- $("app").style.display="flex";
-
- updateProfile();
-
- loadTheme();
-
- loadNotifications();
-
- showView("ai");
-
- requestNotificationPermission();
-
- startMessageWatcher();
-}
-
-
-function updateProfile(){
-
- if(!currentUser)return;
-
- const name="@"+currentUser.username;
-
- const initial=
-  currentUser.username
-  .charAt(0)
-  .toUpperCase();
-
- $("miniUsername").textContent=name;
-
- $("miniEmail").textContent=
-  currentUser.email;
-
- $("profileUsername").textContent=name;
-
- $("profileEmail").textContent=
-  currentUser.email;
-
- $("miniAvatar").textContent=
-  initial;
-
- $("profileAvatar").textContent=
-  initial;
-}
-
-
-function logout(){
-
- currentUser=null;
-
- aiHistory=[];
-
- activeFriend="";
-
- localStorage.removeItem(
-  "xenvital_currentUser"
- );
-
- $("app").style.display="none";
-
- $("auth").style.display="flex";
-
- $("loginEmail").value="";
-
- $("loginPassword").value="";
-
- $("loginError").textContent="";
-
- showLogin();
-
-}
-
-
-/* =========================
-   VIEW SYSTEM
-========================= */
-
-function showView(view){
-
- document
-  .querySelectorAll(".view")
-  .forEach(v=>
-   v.classList.remove("active")
-  );
-
- document
-  .querySelectorAll(".nav-btn")
-  .forEach(v=>
-   v.classList.remove("active")
-  );
-
- document
-  .querySelectorAll(".mobile-nav button")
-  .forEach(v=>
-   v.classList.remove("active")
-  );
-
-
- if(view==="private"){
-
-  $("privateView")
-   .classList.add("active");
-
-  $("pageTitle").textContent=
-   "Private Chat";
-
-  renderPrivateChat();
-
-  return;
- }
-
-
- const map={
-
-  ai:[
-   "aiView",
-   "aiNav",
-   "mobileAi",
-   "XenvitalTech AI"
-  ],
-
-  friends:[
-   "friendsView",
-   "friendsNav",
-   "mobileFriends",
-   "Find Friends"
-  ],
-
-  profile:[
-   "profileView",
-   "profileNav",
-   "mobileProfile",
-   "My Profile"
-  ]
-
- };
-
-
- const item=map[view];
-
- if(!item)return;
-
- $(item[0]).classList.add("active");
-
- $(item[1]).classList.add("active");
-
- $(item[2]).classList.add("active");
-
- $("pageTitle").textContent=
-  item[3];
-
-
- if(view==="ai"){
-
-  setTimeout(
-   ()=>$("aiInput").focus(),
-   100
-  );
-
- }
-
-}
-
-
-/* =========================
-   THEME
-========================= */
-
-function toggleTheme(){
-
- document.body.classList.toggle("dark");
-
- localStorage.setItem(
-  "xenvital_theme",
-  document.body.classList.contains("dark")
-   ?"dark"
-   :"light"
- );
-
-}
-
-function loadTheme(){
-
- document.body.classList.toggle(
-  "dark",
-  localStorage.getItem("xenvital_theme")==="dark"
- );
-
-}
-
-
-/* =========================
-   AI CHAT
-========================= */
-
-function newAIChat(){
-
- aiHistory=[];
-
- $("aiMessages").innerHTML="";
-
- addAIMessage(
-  "XenvitalTech AI by ShashwatBytes\n\nNew chat started. 👋\n\nHow can I help you today?",
-  "bot"
- );
-
- showView("ai");
-
-}
-
-
-function aiEnter(e){
-
- if(
-  e.key==="Enter" &&
-  !e.shiftKey
- ){
-
-  e.preventDefault();
-
-  sendAI();
-
- }
-
-}
-
-
-async function sendAI(){
-
- const text=
-  $("aiInput").value.trim();
-
- if(!text||!currentUser)return;
-
- addAIMessage(
-  text,
-  "user"
- );
-
- $("aiInput").value="";
-
- $("aiSend").disabled=true;
-
- const typingId=
-  "typing-"+Date.now();
-
- addAIMessage(
-  "Thinking…",
-  "bot",
-  typingId
- );
-
-
- try{
-
-  aiHistory.push({
-   role:"user",
-   content:text
-  });
-
-
-  const response=
-   await fetch(
-    "/api/chat",
-    {
-     method:"POST",
-
-     headers:{
-      "Content-Type":
-       "application/json",
-
-      "Accept":
-       "application/json"
-     },
-
-     body:JSON.stringify({
-      message:text,
-      messages:aiHistory
-     })
-
-    }
-   );
-
-
-  const raw=
-   await response.text();
-
-  let data={};
-
-  try{
-
-   data=
-    raw
-     ?JSON.parse(raw)
-     :{};
-
-  }catch{
-
-   data={
-    error:
-     raw ||
-     "Invalid server response"
-   };
-
-  }
-
-
-  $(typingId)?.remove();
-
-
-  if(!response.ok){
-
-   throw new Error(
-    data.error ||
-    data.message ||
-    ("Server error "+response.status)
-   );
-
-  }
-
-
-  const reply=
-   data.reply ||
-   data.message ||
-   data.content ||
-   data.choices?.[0]?.message?.content ||
-   "";
-
-
-  if(!reply){
-
-   throw new Error(
-    "No AI reply received from /api/chat."
-   );
-
-  }
-
-
-  aiHistory.push({
-   role:"assistant",
-   content:reply
-  });
-
-  addAIMessage(
-   reply,
-   "bot"
-  );
-
-
- }catch(err){
-
-  $(typingId)?.remove();
-
-  let msg=
-   err.message ||
-   "Unknown error";
-
-
-  if(
-   msg
-    .toLowerCase()
-    .includes("user not found")
-  ){
-
-   msg=
-    "OpenRouter model/user configuration problem. Check your /api/chat.js model name and OPENROUTER_API_KEY in Vercel.";
-
-  }
-
-
-  addAIMessage(
-   "AI connection failed: "+
-   msg+
-   "\n\nMake sure /api/chat.js is deployed and OPENROUTER_API_KEY is added in Vercel Environment Variables.",
-   "bot"
-  );
-
-
- }finally{
-
-  $("aiSend").disabled=false;
-
-  $("aiInput").focus();
-
- }
-
-}
-
-
-function addAIMessage(
- text,
- type,
- id
-){
-
- const area=
-  $("aiMessages");
-
- const div=
-  document.createElement("div");
-
- div.className=
-  "message "+type;
-
- if(id)
-  div.id=id;
-
-
- const av=
-  document.createElement("div");
-
- av.className="avatar";
-
- av.textContent=
-  type==="bot"
-   ?"X"
-   :
-   (
-    currentUser
-     ?.username
-     ?.charAt(0)
-     .toUpperCase()
-    ||
-    "U"
-   );
-
-
- const bubble=
-  document.createElement("div");
-
- bubble.className="bubble";
-
- bubble.textContent=text;
-
- div.append(
-  av,
-  bubble
- );
-
- area.appendChild(div);
-
-
- requestAnimationFrame(()=>{
-
-  $("aiScroll").scrollTop=
-   $("aiScroll").scrollHeight;
-
- });
-
-}
-
-
-/* =========================
-   FRIEND SEARCH
-========================= */
-
-function friendEnter(e){
-
- if(e.key==="Enter"){
-
-  e.preventDefault();
-
-  searchFriend();
-
- }
-
-}
-
-
-function searchFriend(){
-
- const q=
-  $("friendSearch")
-  .value
-  .trim()
-  .toLowerCase()
-  .replace(/^@/,"");
-
- $("friendResult").innerHTML="";
-
-
- if(!q){
-
-  $("friendResult").innerHTML=
-   '<div class="empty">Enter a username.</div>';
-
-  return;
-
- }
-
-
- const friend=
-  users.find(
-   u=>
-    u.username===q &&
-    u.username!==currentUser.username
-  );
-
-
- if(!friend){
-
-  $("friendResult").innerHTML=
-   '<div class="empty">No user found with @'+
-   escapeHTML(q)+
-   '</div>';
-
-  return;
-
- }
-
-
- $("friendResult").innerHTML=
-
- `<div class="friend-result">
-
-  <div class="friend-info">
-
-   <div class="avatar">
-    ${friend.username
-      .charAt(0)
-      .toUpperCase()}
-   </div>
-
-   <div>
-
-    <strong>
-     @${escapeHTML(friend.username)}
-    </strong>
-
-    <div
-     style="color:var(--muted);font-size:11px"
-    >
-     XenvitalTech user
-    </div>
-
-   </div>
-
-  </div>
-
-  <button
-   class="chat-btn"
-   onclick="openPrivateChat('${escapeJS(friend.username)}')"
-  >
-   Message
-  </button>
-
- </div>`;
-
-}
-
-
-function escapeHTML(s){
-
- return s.replace(
-  /[&<>"']/g,
-  m=>({
-
-   "&":"&amp;",
-   "<":"&lt;",
-   ">":"&gt;",
-   '"':"&quot;",
-   "'":"&#039;"
-
-  }[m])
- );
-
-}
-
-
-function escapeJS(s){
-
- return s
-  .replace(/\\/g,"\\\\")
-  .replace(/'/g,"\\'");
-
-}
-
-
-/* =========================
-   PRIVATE CHAT
-========================= */
-
-function chatKey(a,b){
-
- return "xenvital_chat_"+
-  [a,b]
-   .sort()
-   .join("__");
-
-}
-
-
-function openPrivateChat(username){
-
- activeFriend=username;
-
- $("privateUsername").textContent=
-  "@"+username;
-
- $("privateAvatar").textContent=
-  username
-   .charAt(0)
-   .toUpperCase();
-
- /* Clear notifications from this friend */
-
- clearFriendNotifications(username);
-
- renderPrivateChat();
-
- showView("private");
-
- setTimeout(
-  ()=>$("privateInput").focus(),
-  100
- );
-
-}
-
-
-function renderPrivateChat(){
-
- if(
-  !currentUser ||
-  !activeFriend
- )return;
-
-
- const msgs=
-  JSON.parse(
-   localStorage.getItem(
-    chatKey(
-     currentUser.username,
-     activeFriend
-    )
-   )||"[]"
-  );
-
-
- $("privateMessages").innerHTML="";
-
-
- if(!msgs.length){
-
-  $("privateMessages").innerHTML=
-   '<div class="empty">No messages yet. Start the conversation 👋</div>';
-
-  return;
-
- }
-
-
- msgs.forEach(m=>
-  addPrivateBubble(
-   m.text,
-   m.from===currentUser.username
-  )
- );
-
-
- $("privateMessages").scrollTop=
-  $("privateMessages").scrollHeight;
-
-}
-
-
-function addPrivateBubble(
- text,
- mine
-){
-
- const div=
-  document.createElement("div");
-
- div.className=
-  "message "+
-  (mine?"user":"bot");
-
-
- const av=
-  document.createElement("div");
-
- av.className="avatar";
-
- av.textContent=
-  mine
-   ?
-   currentUser.username
-    .charAt(0)
-    .toUpperCase()
-   :
-   activeFriend
-    .charAt(0)
-    .toUpperCase();
-
-
- const b=
-  document.createElement("div");
-
- b.className="bubble";
-
- b.textContent=text;
-
- div.append(av,b);
-
- $("privateMessages")
-  .appendChild(div);
-
-}
-
-
-function sendPrivateMessage(){
-
- const text=
-  $("privateInput")
-  .value
-  .trim();
-
- if(
-  !text ||
-  !activeFriend ||
-  !currentUser
- )return;
-
-
- const key=
-  chatKey(
-   currentUser.username,
-   activeFriend
-  );
-
-
- const msgs=
-  JSON.parse(
-   localStorage.getItem(key)||"[]"
-  );
-
-
- msgs.push({
-
-  from:
-   currentUser.username,
-
-  to:
-   activeFriend,
-
-  text:text,
-
-  at:
-   Date.now()
-
- });
-
-
- localStorage.setItem(
-  key,
-  JSON.stringify(msgs)
- );
-
-
- $("privateInput").value="";
-
- renderPrivateChat();
-
-}
-
-
-function privateEnter(e){
-
- if(e.key==="Enter"){
-
-  e.preventDefault();
-
-  sendPrivateMessage();
-
- }
-
-}
-
-
-/* =====================================================
-   🔔 NOTIFICATION SYSTEM
-===================================================== */
-
-function notificationKey(){
-
- return "xenvital_notifications_"+
-  (
-   currentUser
-    ?currentUser.username
-    :"guest"
-  );
-
-}
-
-
-/* Get notifications */
-
-function getNotifications(){
-
- if(!currentUser)return[];
-
- return JSON.parse(
-  localStorage.getItem(
-   notificationKey()
-  )||"[]"
- );
-
-}
-
-
-/* Save notifications */
-
-function saveNotifications(list){
-
- if(!currentUser)return;
-
- localStorage.setItem(
-  notificationKey(),
-  JSON.stringify(list)
- );
-
-}
-
-
-/* Load notifications */
-
-function loadNotifications(){
-
- if(!currentUser)return;
-
- updateNotificationUI();
-
-}
-
-
-/* Update bell badge + panel */
-
-function updateNotificationUI(){
-
- const list=
-  getNotifications();
-
- const badge=
-  $("notificationBadge");
-
- if(list.length>0){
-
-  badge.textContent=
-   list.length>99
-    ?"99+"
-    :list.length;
-
-  badge.classList.add("show");
-
- }else{
-
-  badge.classList.remove("show");
-
- }
-
-
- renderNotifications();
-
-}
-
-
-/* Render notification panel */
-
-function renderNotifications(){
-
- const list=
-  getNotifications();
-
- const area=
-  $("notificationList");
-
-
- if(!list.length){
-
-  area.innerHTML=
-   '<div class="notification-empty">No new notifications 🔔</div>';
-
-  return;
-
- }
-
-
- area.innerHTML="";
-
-
- list
-  .slice()
-  .reverse()
-  .forEach(n=>{
-
-   const item=
-    document.createElement("div");
-
-   item.className=
-    "notification-item";
-
-   item.onclick=()=>{
-    openPrivateChat(
-     n.from
-    );
-   };
-
-
-   const icon=
-    document.createElement("div");
-
-   icon.className=
-    "notification-icon";
-
-   icon.textContent="💬";
-
-
-   const content=
-    document.createElement("div");
-
-   content.className=
-    "notification-content";
-
-
-   const strong=
-    document.createElement("strong");
-
-   strong.textContent=
-    "New message from @"+
-    n.from;
-
-
-   const span=
-    document.createElement("span");
-
-   span.textContent=
-    n.preview ||
-    "You received a new message";
-
-
-   const time=
-    document.createElement("div");
-
-   time.className=
-    "notification-time";
-
-   time.textContent=
-    formatTime(n.at);
-
-
-   content.append(
-    strong,
-    span
-   );
-
-   item.append(
-    icon,
-    content,
-    time
-   );
-
-   area.appendChild(item);
-
-  });
-
-}
-
-
-/* Toggle notification panel */
-
-function toggleNotifications(){
-
- const panel=
-  $("notificationPanel");
-
- panel.classList.toggle(
-  "show"
- );
-
- updateNotificationUI();
-
-}
-
-
-/* Clear all */
-
-function clearNotifications(){
-
- saveNotifications([]);
-
- updateNotificationUI();
-
-}
-
-
-/* Clear notifications from one friend */
-
-function clearFriendNotifications(username){
-
- if(!currentUser)return;
-
- const list=
-  getNotifications()
-   .filter(
-    n=>n.from!==username
-   );
-
- saveNotifications(list);
-
- updateNotificationUI();
-
-}
-
-
-/* Add new notification */
-
-function addMessageNotification(
- from,
- text
-){
-
- if(
-  !currentUser ||
-  from===currentUser.username
- )return;
-
-
- /* Don't notify if already inside that friend's chat */
-
- if(
-  activeFriend===from &&
-  $("privateView").classList.contains("active")
- ){
-  return;
- }
-
-
- const list=
-  getNotifications();
-
-
- /* Avoid duplicate notification */
-
- const already=
-  list.some(
-   n=>
-    n.from===from &&
-    n.messageId===text
-  );
-
-
- if(already)return;
-
-
- list.push({
-
-  id:
-   Date.now()+"_"+Math.random(),
-
-  from:from,
-
-  preview:text,
-
-  messageId:text,
-
-  at:Date.now()
-
- });
-
-
- saveNotifications(list);
-
- updateNotificationUI();
-
- showToast(
-  "New message from @"+from,
-  text
- );
-
- showBrowserNotification(
-  from,
-  text
- );
-
-}
-
-
-/* Toast notification */
-
-function showToast(
- title,
- message
-){
-
- const old=
-  document.getElementById(
-   "xenvitalToast"
-  );
-
- if(old)old.remove();
-
-
- const toast=
-  document.createElement("div");
-
- toast.id=
-  "xenvitalToast";
-
-
- toast.style.cssText=`
-
- position:fixed;
- right:20px;
- bottom:25px;
- z-index:3000;
- width:320px;
- max-width:calc(100vw - 30px);
- padding:14px 16px;
- background:var(--card);
- color:var(--text);
- border:1px solid var(--border);
- border-radius:15px;
- box-shadow:0 15px 45px rgba(0,0,0,.25);
- cursor:pointer;
- animation:xenvitalToastIn .3s ease;
- `;
-
-
- toast.innerHTML=
-  `<div style="
-    font-weight:800;
-    font-size:13px;
-    margin-bottom:5px;
-  ">🔔 ${escapeHTML(title)}</div>
-  <div style="
-    color:var(--muted);
-    font-size:12px;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    white-space:nowrap;
-  ">${escapeHTML(message)}</div>`;
-
-
- toast.onclick=()=>{
-
-  const username=
-   title
-    .replace(
-     "New message from @",
-     ""
+========================================================= */
+
+let users =
+    JSON.parse(
+        localStorage.getItem("xenvital_users") || "[]"
     );
 
-  toast.remove();
+let currentUser =
+    JSON.parse(
+        localStorage.getItem("xenvital_currentUser") || "null"
+    );
 
-  openPrivateChat(
-   username
-  );
-
- };
-
-
- document.body.appendChild(toast);
+let aiHistory = [];
 
 
- setTimeout(()=>{
+function saveUsers() {
 
-  if(toast)
-   toast.remove();
-
- },5000);
+    localStorage.setItem(
+        "xenvital_users",
+        JSON.stringify(users)
+    );
 
 }
 
 
-/* Browser notification */
+function saveCurrent() {
 
-function requestNotificationPermission(){
-
- if(
-  "Notification" in window &&
-  Notification.permission==="default"
- ){
-
-  Notification.requestPermission()
-   .catch(()=>{});
-
- }
+    localStorage.setItem(
+        "xenvital_currentUser",
+        JSON.stringify(currentUser)
+    );
 
 }
 
 
-function showBrowserNotification(
- from,
- text
-){
+/* =========================================================
+   AUTH VIEW
+========================================================= */
 
- if(
-  !("Notification" in window)
- )return;
+function showSignup() {
 
+    $("loginForm").classList.remove("active");
+    $("signupForm").classList.add("active");
 
- if(
-  Notification.permission!=="granted"
- )return;
-
-
- try{
-
-  const notification=
-   new Notification(
-    "New message from @"+from,
-    {
-     body:text,
-     icon:"",
-     tag:
-      "xenvital-"+from
-    }
-   );
-
-
-  notification.onclick=()=>{
-
-   window.focus();
-
-   openPrivateChat(
-    from
-   );
-
-   notification.close();
-
-  };
-
- }catch(e){
-
-  console.log(
-   "Browser notification unavailable",
-   e
-  );
-
- }
+    $("loginError").textContent = "";
 
 }
 
 
-/* Time formatter */
+function showLogin() {
 
-function formatTime(timestamp){
+    $("signupForm").classList.remove("active");
+    $("loginForm").classList.add("active");
 
- const diff=
-  Date.now()-timestamp;
-
- if(diff<60000)
-  return "now";
-
- if(diff<3600000)
-  return Math.floor(
-   diff/60000
-  )+"m";
-
- if(diff<86400000)
-  return Math.floor(
-   diff/3600000
-  )+"h";
-
- return new Date(
-  timestamp
- ).toLocaleDateString();
+    $("signupError").textContent = "";
 
 }
 
 
-/* =====================================================
-   MESSAGE WATCHER
-===================================================== */
+function switchSignupKeyboard(event) {
 
-let messageWatcher=null;
-
-let knownMessageState={};
-
-
-function startMessageWatcher(){
-
- if(messageWatcher){
-
-  clearInterval(
-   messageWatcher
-  );
-
- }
-
-
- if(!currentUser)return;
-
-
- /* Save current message counts */
-
- users.forEach(user=>{
-
-  if(
-   user.username===
-   currentUser.username
-  )return;
-
-
-  const key=
-   chatKey(
-    currentUser.username,
-    user.username
-   );
-
-
-  const msgs=
-   JSON.parse(
-    localStorage.getItem(key)||"[]"
-   );
-
-
-  knownMessageState[
-   user.username
-  ]=
-   msgs.length;
-
- });
-
-
- /*
-  Check every 1 second for
-  new messages
- */
-
- messageWatcher=
-  setInterval(
-   checkForNewMessages,
-   1000
-  );
-
-}
-
-
-function checkForNewMessages(){
-
- if(!currentUser)return;
-
-
- /*
-  Reload users so newly
-  created local users are detected
- */
-
- users=
-  JSON.parse(
-   localStorage.getItem(
-    "xenvital_users"
-   )||"[]"
-  );
-
-
- users.forEach(user=>{
-
-  if(
-   user.username===
-   currentUser.username
-  )return;
-
-
-  const key=
-   chatKey(
-    currentUser.username,
-    user.username
-   );
-
-
-  const msgs=
-   JSON.parse(
-    localStorage.getItem(key)||"[]"
-   );
-
-
-  const previous=
-   knownMessageState[
-    user.username
-   ]||0;
-
-
-  if(msgs.length>previous){
-
-   const newMessages=
-    msgs.slice(previous);
-
-
-   newMessages.forEach(message=>{
-
-    if(
-     message.from===
-     user.username
-    ){
-
-     addMessageNotification(
-      user.username,
-      message.text
-     );
-
+    if (
+        event.key === "Enter" ||
+        event.key === " "
+    ) {
+        event.preventDefault();
+        showSignup();
     }
 
-   });
-
-  }
+}
 
 
-  knownMessageState[
-   user.username
-  ]=msgs.length;
+function switchLoginKeyboard(event) {
 
- });
+    if (
+        event.key === "Enter" ||
+        event.key === " "
+    ) {
+        event.preventDefault();
+        showLogin();
+    }
 
 }
 
 
-/* =====================================================
-   CLOSE NOTIFICATION WHEN CLICKING OUTSIDE
-===================================================== */
+/* =========================================================
+   SIGNUP
+========================================================= */
 
-document.addEventListener(
- "click",
- function(e){
+$("signupForm").addEventListener(
+    "submit",
+    event => {
 
-  const panel=
-   $("notificationPanel");
+        event.preventDefault();
 
-  const button=
-   $("notificationButton");
+        const username =
+            $("signupUsername")
+                .value
+                .trim()
+                .toLowerCase()
+                .replace(/^@/, "");
+
+        const email =
+            $("signupEmail")
+                .value
+                .trim()
+                .toLowerCase();
+
+        const password =
+            $("signupPassword").value;
+
+        $("signupError").textContent = "";
 
 
-  if(
-   panel.classList.contains("show") &&
-   !panel.contains(e.target) &&
-   !button.contains(e.target)
-  ){
+        if (
+            !/^[a-z0-9_.-]{3,30}$/.test(username)
+        ) {
 
-   panel.classList.remove(
-    "show"
-   );
+            $("signupError").textContent =
+                "Use 3–30 letters, numbers, _, . or -.";
 
-  }
+            return;
 
- }
+        }
+
+
+        if (
+            users.some(
+                user => user.username === username
+            )
+        ) {
+
+            $("signupError").textContent =
+                "Username already exists.";
+
+            return;
+
+        }
+
+
+        if (
+            users.some(
+                user => user.email === email
+            )
+        ) {
+
+            $("signupError").textContent =
+                "Email already registered.";
+
+            return;
+
+        }
+
+
+        const user = {
+            username,
+            email,
+            password
+        };
+
+
+        users.push(user);
+
+        saveUsers();
+
+        currentUser = user;
+
+        saveCurrent();
+
+        openApp();
+
+    }
 );
 
 
-/* =========================
+/* =========================================================
+   LOGIN
+========================================================= */
+
+$("loginForm").addEventListener(
+    "submit",
+    event => {
+
+        event.preventDefault();
+
+        const email =
+            $("loginEmail")
+                .value
+                .trim()
+                .toLowerCase();
+
+        const password =
+            $("loginPassword").value;
+
+
+        const user =
+            users.find(
+                item =>
+                    item.email === email &&
+                    item.password === password
+            );
+
+
+        if (!user) {
+
+            $("loginError").textContent =
+                "Invalid email or password.";
+
+            return;
+
+        }
+
+
+        $("loginError").textContent = "";
+
+        currentUser = user;
+
+        saveCurrent();
+
+        openApp();
+
+    }
+);
+
+
+/* =========================================================
+   OPEN APPLICATION
+========================================================= */
+
+function openApp() {
+
+    $("auth").style.display = "none";
+    $("app").style.display = "flex";
+
+    updateProfile();
+    loadTheme();
+    showView("ai");
+
+}
+
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+function updateProfile() {
+
+    if (!currentUser) {
+        return;
+    }
+
+
+    const username =
+        "@" + currentUser.username;
+
+
+    const initial =
+        currentUser.username
+            .charAt(0)
+            .toUpperCase();
+
+
+    $("miniUsername").textContent =
+        username;
+
+    $("miniEmail").textContent =
+        currentUser.email;
+
+    $("profileUsername").textContent =
+        username;
+
+    $("profileEmail").textContent =
+        currentUser.email;
+
+    $("miniAvatar").textContent =
+        initial;
+
+    $("profileAvatar").textContent =
+        initial;
+
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+function logout() {
+
+    currentUser = null;
+
+    aiHistory = [];
+
+
+    localStorage.removeItem(
+        "xenvital_currentUser"
+    );
+
+
+    $("app").style.display = "none";
+    $("auth").style.display = "flex";
+
+
+    $("loginEmail").value = "";
+    $("loginPassword").value = "";
+
+    $("loginError").textContent = "";
+
+    showLogin();
+
+}
+
+
+/* =========================================================
+   VIEW SYSTEM
+========================================================= */
+
+function showView(view) {
+
+    document
+        .querySelectorAll(".view")
+        .forEach(element => {
+            element.classList.remove("active");
+        });
+
+
+    document
+        .querySelectorAll(".nav-btn")
+        .forEach(element => {
+            element.classList.remove("active");
+        });
+
+
+    document
+        .querySelectorAll(".mobile-nav button")
+        .forEach(element => {
+            element.classList.remove("active");
+        });
+
+
+    const map = {
+
+        ai: [
+            "aiView",
+            "aiNav",
+            "mobileAi",
+            "XenvitalTech AI"
+        ],
+
+        profile: [
+            "profileView",
+            "profileNav",
+            "mobileProfile",
+            "My Profile"
+        ]
+
+    };
+
+
+    const item = map[view];
+
+    if (!item) {
+        return;
+    }
+
+
+    $(item[0]).classList.add("active");
+
+
+    if ($(item[1])) {
+        $(item[1]).classList.add("active");
+    }
+
+
+    if ($(item[2])) {
+        $(item[2]).classList.add("active");
+    }
+
+
+    $("pageTitle").textContent =
+        item[3];
+
+
+    if (view === "ai") {
+
+        setTimeout(
+            () => $("aiInput").focus(),
+            100
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   THEME
+========================================================= */
+
+function toggleTheme() {
+
+    document.body.classList.toggle("dark");
+
+
+    localStorage.setItem(
+        "xenvital_theme",
+        document.body.classList.contains("dark")
+            ? "dark"
+            : "light"
+    );
+
+}
+
+
+function loadTheme() {
+
+    document.body.classList.toggle(
+        "dark",
+        localStorage.getItem("xenvital_theme") === "dark"
+    );
+
+}
+
+
+/* =========================================================
+   NEW AI CHAT
+========================================================= */
+
+function newAIChat() {
+
+    aiHistory = [];
+
+    $("aiMessages").innerHTML = "";
+
+
+    addAIMessage(
+        "XenvitalTech AI by ShashwatBytes\n\nNew chat started.\n\nHow can I help you today?",
+        "bot"
+    );
+
+
+    showView("ai");
+
+}
+
+
+/* =========================================================
+   ENTER TO SEND
+========================================================= */
+
+function aiEnter(event) {
+
+    if (
+        event.key === "Enter" &&
+        !event.shiftKey
+    ) {
+
+        event.preventDefault();
+
+        sendAI();
+
+    }
+
+}
+
+
+/* =========================================================
+   AI CHAT
+========================================================= */
+
+async function sendAI() {
+
+    const text =
+        $("aiInput")
+            .value
+            .trim();
+
+
+    if (
+        !text ||
+        !currentUser
+    ) {
+        return;
+    }
+
+
+    addAIMessage(
+        text,
+        "user"
+    );
+
+
+    $("aiInput").value = "";
+
+    $("aiSend").disabled = true;
+
+
+    const typingId =
+        "typing-" + Date.now();
+
+
+    addAIMessage(
+        "Generating response…",
+        "bot",
+        typingId
+    );
+
+
+    try {
+
+        aiHistory.push({
+            role: "user",
+            content: text
+        });
+
+
+        const response =
+            await fetch(
+                "/api/chat",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json",
+
+                        "Accept":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        message: text,
+                        messages: aiHistory
+                    })
+                }
+            );
+
+
+        const raw =
+            await response.text();
+
+
+        let data = {};
+
+
+        try {
+
+            data =
+                raw
+                    ? JSON.parse(raw)
+                    : {};
+
+        } catch {
+
+            data = {
+                error:
+                    raw ||
+                    "Invalid server response."
+            };
+
+        }
+
+
+        const typingElement =
+            $(typingId);
+
+        if (typingElement) {
+            typingElement.remove();
+        }
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error ||
+                data.message ||
+                "Unable to connect to the AI service."
+            );
+
+        }
+
+
+        const reply =
+            data.reply ||
+            data.message ||
+            data.content ||
+            data.choices?.[0]?.message?.content ||
+            "";
+
+
+        if (!reply) {
+
+            throw new Error(
+                "No AI response was received."
+            );
+
+        }
+
+
+        aiHistory.push({
+            role: "assistant",
+            content: reply
+        });
+
+
+        addAIMessage(
+            reply,
+            "bot"
+        );
+
+
+    } catch (error) {
+
+        const typingElement =
+            $(typingId);
+
+        if (typingElement) {
+            typingElement.remove();
+        }
+
+
+        console.error(
+            "XenvitalTech AI error:",
+            error
+        );
+
+
+        addAIMessage(
+            "Unable to connect to XenvitalTech AI right now.\n\nPlease try again in a moment.",
+            "bot"
+        );
+
+
+    } finally {
+
+        $("aiSend").disabled = false;
+
+        $("aiInput").focus();
+
+    }
+
+}
+
+
+/* =========================================================
+   ADD AI MESSAGE
+========================================================= */
+
+function addAIMessage(
+    text,
+    type,
+    id
+) {
+
+    const area =
+        $("aiMessages");
+
+
+    const message =
+        document.createElement("div");
+
+
+    message.className =
+        "message " + type;
+
+
+    if (id) {
+        message.id = id;
+    }
+
+
+    const avatar =
+        document.createElement("div");
+
+
+    avatar.className = "avatar";
+
+
+    avatar.textContent =
+        type === "bot"
+            ? "X"
+            :
+            (
+                currentUser?.username
+                    ?.charAt(0)
+                    .toUpperCase()
+                ||
+                "U"
+            );
+
+
+    const bubble =
+        document.createElement("div");
+
+
+    bubble.className = "bubble";
+
+    bubble.textContent = text;
+
+
+    message.append(
+        avatar,
+        bubble
+    );
+
+
+    area.appendChild(message);
+
+
+    requestAnimationFrame(() => {
+
+        $("aiScroll").scrollTop =
+            $("aiScroll").scrollHeight;
+
+    });
+
+}
+
+
+/* =========================================================
    START APPLICATION
-========================= */
+========================================================= */
 
-if(currentUser){
+if (currentUser) {
 
- openApp();
+    openApp();
 
-}else{
+} else {
 
- $("auth").style.display="flex";
+    $("auth").style.display = "flex";
+    $("app").style.display = "none";
 
- $("app").style.display="none";
-
- loadTheme();
+    loadTheme();
 
 }
 
 </script>
-
-
-<style>
-
-/* Toast animation */
-
-@keyframes xenvitalToastIn{
-
- from{
-  opacity:0;
-  transform:
-   translateY(20px)
-   scale(.96);
- }
-
- to{
-  opacity:1;
-  transform:
-   translateY(0)
-   scale(1);
- }
-
-}
-
-</style>
 
 </body>
 </html>
